@@ -12,6 +12,7 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/lu` | `lung-meridian-chart.html` | Lung (LU) |
 | `/li` | `li-meridian-chart.html` | Large Intestine (LI) |
 | `/li2` | `li-v2-meridian-chart.html` | Large Intestine (LI), V2 |
+| `/li3` | `li-v3-meridian-chart.html` | Large Intestine (LI), V3 — one plate, two views |
 | `/ht` | `ht-meridian-chart.html` | Heart (HT) |
 | `/ht2` | `ht-v2-meridian-chart.html` | Heart (HT), V2 |
 | `/sp2` | `sp-v2-meridian-chart.html` | Spleen (SP), V2 |
