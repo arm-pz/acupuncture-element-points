@@ -16,11 +16,17 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/ht` | `ht-meridian-chart.html` | Heart (HT) |
 | `/ht2` | `ht-v2-meridian-chart.html` | Heart (HT), V2 |
 | `/sp2` | `sp-v2-meridian-chart.html` | Spleen (SP), V2 |
+| `/sp3` | `sp-v3-meridian-chart.html` | Spleen (SP), V3 — one plate, two views |
 | `/st2` | `st-v2-meridian-chart.html` | Stomach (ST), V2 |
+| `/st3` | `st-v3-meridian-chart.html` | Stomach (ST), V3 — one plate, two views |
 | `/bl2` | `bl-v2-meridian-chart.html` | Bladder (BL), V2 |
+| `/bl3` | `bl-v3-meridian-chart.html` | Bladder (BL), V3 — one plate, two views |
 | `/ki2` | `ki-v2-meridian-chart.html` | Kidney (KI), V2 |
+| `/ki3` | `ki-v3-meridian-chart.html` | Kidney (KI), V3 — one plate, two views |
 | `/gb2` | `gb-v2-meridian-chart.html` | Gallbladder (GB), V2 |
+| `/gb3` | `gb-v3-meridian-chart.html` | Gallbladder (GB), V3 — one plate, two views |
 | `/lr2` | `lr-v2-meridian-chart.html` | Liver (LR), V2 |
+| `/lr3` | `lr-v3-meridian-chart.html` | Liver (LR), V3 — one plate, two views |
 | `/si` | `si-meridian-chart.html` | Small Intestine (SI) |
 | `/pc` | `pc-meridian-chart.html` | Pericardium (PC) |
 | `/tb` | `tb-meridian-chart.html` | Triple Burner (TB) |
@@ -38,7 +44,7 @@ Then open <http://127.0.0.1:4174>. The server maps the routes above to files. Pa
 - Five Shu assignments verified against classical 五輸穴 tables and WHO-standard point lists.
 - Yin channels follow Wood → Fire → Earth → Metal → Water; Yang channels follow Metal → Water → Wood → Fire → Earth. Luo-Connecting and Xi-Cleft points are always skipped.
 - Named traps confirmed: TE Sea = TE10, LR River = LR4 and Sea = LR8, GB set = GB44/43/41/38/34.
-- On the V2 charts, only the five Shu points are interactive; other printed dots mark non-Shu points.
+- On the V2 and V3 charts, only the five Shu points are interactive; other printed dots mark non-Shu points.
 - No per-point outbound links, by design.
 
 ## Licensing
