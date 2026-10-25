@@ -64,6 +64,7 @@ Then open <http://127.0.0.1:4174>. The server maps the routes above to files. Pa
 - **Arm plates (`/ht4`, `/pc4`, `/si4`, `/tb4`):** reuse the same Dimitrius arm drawing (mirrored for the back view, palm creases removed there), CC BY-SA 3.0. Channel lines and Shu points are drawn for this project.
 - **Leg plates (`/st4`, `/sp4`, `/lr4`, `/gb4`, `/bl4`, `/ki4`):** line art traced from the user-supplied leg charts (Kidney chart for the inner side, Gallbladder chart for the outer side, Stomach charts for the front bones and foot; provenance to be confirmed). The front-view shin outline is traced from “Homo sapiens” by Ivy Livingstone, BIODIDAC (https://omeka.uottawa.ca/biodidac/items/show/5101), CC BY-NC 4.0 — non-commercial use only. Channel lines and Shu points are drawn for this project.
 - **LI arm plate (`/li4`):** side-view line art made from a user-supplied LI illustration, provenance to be confirmed.
+- **`commons/`:** standalone SVG files of the arm plates built on the CC BY-SA lung drawing (LU, HT, PC, SI, TB), with sources and licences in `commons/README.md`.
 - **All other channel charts:** user-supplied, provenance to be confirmed. Not licensed for redistribution.
 - **Per-point location diagrams:** nalaayan.com, provisional source; licensing review pending.
 - Point categories were cross-checked against nalaayan.com per-point badges (provisional source).
