@@ -13,7 +13,7 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/li` | `li-meridian-chart.html` | Large Intestine (LI) |
 | `/li2` | `li-v2-meridian-chart.html` | Large Intestine (LI), V2 |
 | `/li3` | `li-v3-meridian-chart.html` | Large Intestine (LI), V3 — one plate, two views |
-| `/li4` | `li-v4-meridian-chart.html` | Large Intestine (LI), V4 — arm plate in the LU style (back view) |
+| `/li4` | `li-v4-meridian-chart.html` | Large Intestine (LI), V4 — arm plate in the LU style (side view, thumb forward) |
 | `/ht` | `ht-meridian-chart.html` | Heart (HT) |
 | `/ht2` | `ht-v2-meridian-chart.html` | Heart (HT), V2 |
 | `/ht4` | `ht-v4-meridian-chart.html` | Heart (HT), V4 — arm plate in the LU style (palm view) |
@@ -55,7 +55,8 @@ Then open <http://127.0.0.1:4174>. The server maps the routes above to files. Pa
 ## Licensing
 
 - **Lung (LU):** based on [“Points of lung channel” by Dimitrius, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Points_of_lung_channel.svg), CC BY-SA 3.0. Relabelled P → LU and non-Shu points removed. That derivative imagery remains CC BY-SA 3.0.
-- **Arm plates (`/li4`, `/ht4`, `/pc4`, `/si4`, `/tb4`):** reuse the same Dimitrius arm drawing (mirrored for the back view, palm creases removed there), CC BY-SA 3.0. Channel lines and Shu points are drawn for this project.
+- **Arm plates (`/ht4`, `/pc4`, `/si4`, `/tb4`):** reuse the same Dimitrius arm drawing (mirrored for the back view, palm creases removed there), CC BY-SA 3.0. Channel lines and Shu points are drawn for this project.
+- **LI arm plate (`/li4`):** side-view line art made from a user-supplied LI illustration, provenance to be confirmed.
 - **All other channel charts:** user-supplied, provenance to be confirmed. Not licensed for redistribution.
 - **Per-point location diagrams:** nalaayan.com, provisional source; licensing review pending.
 - Point categories were cross-checked against nalaayan.com per-point badges (provisional source).
