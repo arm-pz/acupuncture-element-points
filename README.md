@@ -13,23 +13,34 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/li` | `li-meridian-chart.html` | Large Intestine (LI) |
 | `/li2` | `li-v2-meridian-chart.html` | Large Intestine (LI), V2 |
 | `/li3` | `li-v3-meridian-chart.html` | Large Intestine (LI), V3 — one plate, two views |
+| `/li4` | `li-v4-meridian-chart.html` | Large Intestine (LI), V4 — arm plate in the LU style (side view, thumb forward) |
 | `/ht` | `ht-meridian-chart.html` | Heart (HT) |
 | `/ht2` | `ht-v2-meridian-chart.html` | Heart (HT), V2 |
+| `/ht4` | `ht-v4-meridian-chart.html` | Heart (HT), V4 — arm plate in the LU style (palm view) |
 | `/sp2` | `sp-v2-meridian-chart.html` | Spleen (SP), V2 |
 | `/sp3` | `sp-v3-meridian-chart.html` | Spleen (SP), V3 — one plate, two views |
+| `/sp4` | `sp-v4-meridian-chart.html` | Spleen (SP), V4 — leg plate in the LU style (inner side) |
 | `/st2` | `st-v2-meridian-chart.html` | Stomach (ST), V2 |
 | `/st3` | `st-v3-meridian-chart.html` | Stomach (ST), V3 — one plate, two views |
+| `/st4` | `st-v4-meridian-chart.html` | Stomach (ST), V4 — leg plate in the LU style (front view) |
 | `/bl2` | `bl-v2-meridian-chart.html` | Bladder (BL), V2 |
 | `/bl3` | `bl-v3-meridian-chart.html` | Bladder (BL), V3 — one plate, two views |
+| `/bl4` | `bl-v4-meridian-chart.html` | Bladder (BL), V4 — leg plate in the LU style (outer side) |
 | `/ki2` | `ki-v2-meridian-chart.html` | Kidney (KI), V2 |
 | `/ki3` | `ki-v3-meridian-chart.html` | Kidney (KI), V3 — one plate, two views |
+| `/ki4` | `ki-v4-meridian-chart.html` | Kidney (KI), V4 — leg plate in the LU style (inner side) |
 | `/gb2` | `gb-v2-meridian-chart.html` | Gallbladder (GB), V2 |
 | `/gb3` | `gb-v3-meridian-chart.html` | Gallbladder (GB), V3 — one plate, two views |
+| `/gb4` | `gb-v4-meridian-chart.html` | Gallbladder (GB), V4 — leg plate in the LU style (outer side) |
 | `/lr2` | `lr-v2-meridian-chart.html` | Liver (LR), V2 |
 | `/lr3` | `lr-v3-meridian-chart.html` | Liver (LR), V3 — one plate, two views |
+| `/lr4` | `lr-v4-meridian-chart.html` | Liver (LR), V4 — leg plate in the LU style (front view) |
 | `/si` | `si-meridian-chart.html` | Small Intestine (SI) |
+| `/si4` | `si-v4-meridian-chart.html` | Small Intestine (SI), V4 — arm plate in the LU style (back view) |
 | `/pc` | `pc-meridian-chart.html` | Pericardium (PC) |
+| `/pc4` | `pc-v4-meridian-chart.html` | Pericardium (PC), V4 — arm plate in the LU style (palm view) |
 | `/tb` | `tb-meridian-chart.html` | Triple Burner (TB) |
+| `/tb4` | `tb-v4-meridian-chart.html` | Triple Burner (TB), V4 — arm plate in the LU style (back view) |
 
 ## Run
 
@@ -50,6 +61,10 @@ Then open <http://127.0.0.1:4174>. The server maps the routes above to files. Pa
 ## Licensing
 
 - **Lung (LU):** based on [“Points of lung channel” by Dimitrius, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Points_of_lung_channel.svg), CC BY-SA 3.0. Relabelled P → LU and non-Shu points removed. That derivative imagery remains CC BY-SA 3.0.
+- **Arm plates (`/ht4`, `/pc4`, `/si4`, `/tb4`):** reuse the same Dimitrius arm drawing (mirrored for the back view, palm creases removed there), CC BY-SA 3.0. Channel lines and Shu points are drawn for this project.
+- **Leg plates (`/st4`, `/sp4`, `/lr4`, `/gb4`, `/bl4`, `/ki4`):** line art traced from the user-supplied leg charts (Kidney chart for the inner side, Gallbladder chart for the outer side, Stomach charts for the front bones and foot; provenance to be confirmed). The front-view shin outline is traced from “Homo sapiens” by Ivy Livingstone, BIODIDAC (https://omeka.uottawa.ca/biodidac/items/show/5101), CC BY-NC 4.0 — non-commercial use only. Channel lines and Shu points are drawn for this project.
+- **LI arm plate (`/li4`):** side-view line art made from a user-supplied LI illustration, provenance to be confirmed.
+- **`commons/`:** standalone SVG files of the arm plates built on the CC BY-SA lung drawing (LU, HT, PC, SI, TB), with sources and licences in `commons/README.md`.
 - **All other channel charts:** user-supplied, provenance to be confirmed. Not licensed for redistribution.
 - **Per-point location diagrams:** nalaayan.com, provisional source; licensing review pending.
 - Point categories were cross-checked against nalaayan.com per-point badges (provisional source).
