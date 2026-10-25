@@ -19,16 +19,22 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/ht4` | `ht-v4-meridian-chart.html` | Heart (HT), V4 — arm plate in the LU style (palm view) |
 | `/sp2` | `sp-v2-meridian-chart.html` | Spleen (SP), V2 |
 | `/sp3` | `sp-v3-meridian-chart.html` | Spleen (SP), V3 — one plate, two views |
+| `/sp4` | `sp-v4-meridian-chart.html` | Spleen (SP), V4 — leg plate in the LU style (front of knee) |
 | `/st2` | `st-v2-meridian-chart.html` | Stomach (ST), V2 |
 | `/st3` | `st-v3-meridian-chart.html` | Stomach (ST), V3 — one plate, two views |
+| `/st4` | `st-v4-meridian-chart.html` | Stomach (ST), V4 — leg plate in the LU style (front of knee) |
 | `/bl2` | `bl-v2-meridian-chart.html` | Bladder (BL), V2 |
 | `/bl3` | `bl-v3-meridian-chart.html` | Bladder (BL), V3 — one plate, two views |
+| `/bl4` | `bl-v4-meridian-chart.html` | Bladder (BL), V4 — leg plate in the LU style (back of knee) |
 | `/ki2` | `ki-v2-meridian-chart.html` | Kidney (KI), V2 |
 | `/ki3` | `ki-v3-meridian-chart.html` | Kidney (KI), V3 — one plate, two views |
+| `/ki4` | `ki-v4-meridian-chart.html` | Kidney (KI), V4 — leg plate in the LU style (back of knee) |
 | `/gb2` | `gb-v2-meridian-chart.html` | Gallbladder (GB), V2 |
 | `/gb3` | `gb-v3-meridian-chart.html` | Gallbladder (GB), V3 — one plate, two views |
+| `/gb4` | `gb-v4-meridian-chart.html` | Gallbladder (GB), V4 — leg plate in the LU style (front of knee) |
 | `/lr2` | `lr-v2-meridian-chart.html` | Liver (LR), V2 |
 | `/lr3` | `lr-v3-meridian-chart.html` | Liver (LR), V3 — one plate, two views |
+| `/lr4` | `lr-v4-meridian-chart.html` | Liver (LR), V4 — leg plate in the LU style (front of knee) |
 | `/si` | `si-meridian-chart.html` | Small Intestine (SI) |
 | `/si4` | `si-v4-meridian-chart.html` | Small Intestine (SI), V4 — arm plate in the LU style (back view) |
 | `/pc` | `pc-meridian-chart.html` | Pericardium (PC) |
@@ -56,6 +62,7 @@ Then open <http://127.0.0.1:4174>. The server maps the routes above to files. Pa
 
 - **Lung (LU):** based on [“Points of lung channel” by Dimitrius, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Points_of_lung_channel.svg), CC BY-SA 3.0. Relabelled P → LU and non-Shu points removed. That derivative imagery remains CC BY-SA 3.0.
 - **Arm plates (`/ht4`, `/pc4`, `/si4`, `/tb4`):** reuse the same Dimitrius arm drawing (mirrored for the back view, palm creases removed there), CC BY-SA 3.0. Channel lines and Shu points are drawn for this project.
+- **Leg plates (`/st4`, `/sp4`, `/lr4`, `/gb4`, `/bl4`, `/ki4`):** leg outline traced from “Homo sapiens” by Ivy Livingstone, BIODIDAC (https://omeka.uottawa.ca/biodidac/items/show/5101), CC BY-NC 4.0 — non-commercial use only. Channel lines and Shu points are drawn for this project.
 - **LI arm plate (`/li4`):** side-view line art made from a user-supplied LI illustration, provenance to be confirmed.
 - **All other channel charts:** user-supplied, provenance to be confirmed. Not licensed for redistribution.
 - **Per-point location diagrams:** nalaayan.com, provisional source; licensing review pending.
