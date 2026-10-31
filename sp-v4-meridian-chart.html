@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Spleen Meridian — Five Shu Points</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap"><title>Spleen Meridian — Five Shu Points</title>
 <style>
 :root{
   --bg:#fff;--surface:#fff;--ink:#1b1d21;--ink-2:#565c66;--ink-3:#8b919b;
@@ -12,7 +12,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-.page{max-width:1000px;margin:0 auto;padding:32px 20px 56px}
+.page{max-width:1000px;margin:0 auto;padding:22px 20px 56px}
 .kicker{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
 h1{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:650;margin:0 0 6px}
 .lede{margin:0 0 28px;color:var(--ink-2);font-size:14.5px;max-width:60ch}
@@ -29,7 +29,7 @@ h1{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:650;margin:
 .ring{fill:none;stroke:var(--accent);stroke-width:2.5;opacity:0;pointer-events:none;transform-box:fill-box;transform-origin:center}
 .ring.on{opacity:1;animation:ring 2.4s var(--ease) infinite}
 @keyframes ring{0%{transform:scale(.6);opacity:.9}70%,100%{transform:scale(1.6);opacity:0}}
-.panel{position:sticky;top:20px;background:var(--surface);border:1px solid var(--hair);border-radius:16px;box-shadow:0 1px 2px rgba(20,24,32,.04),0 8px 28px -12px rgba(20,24,32,.12);overflow:hidden}
+.panel{position:sticky;top:72px;background:var(--surface);border:1px solid var(--hair);border-radius:16px;box-shadow:0 1px 2px rgba(20,24,32,.04),0 8px 28px -12px rgba(20,24,32,.12);overflow:hidden}
 #pt-info{padding:22px 22px 18px;min-height:220px}
 #pt-info.enter{animation:enter .28s var(--ease)}
 @keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -71,8 +71,26 @@ figure img{display:block;width:100%;max-width:280px;border-radius:6px}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .ring.on{opacity:.6}
 }
+
+.appbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--hair)}
+.appbar .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.appbar .home{display:flex;align-items:baseline;gap:9px;color:var(--ink);text-decoration:none}
+.appbar .home .han{font:300 18px/1 "Noto Sans SC","PingFang SC",sans-serif}
+.appbar .home .t{font:600 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.appbar ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.appbar a.l{display:block;padding:8px 12px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink-2);text-decoration:none;transition:background .18s,color .18s}
+.appbar a.l:hover{background:rgba(20,24,32,.05);color:var(--ink)}
+.appbar a:focus-visible,.pager a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pager{display:flex;justify-content:space-between;gap:10px;margin:0 0 18px}
+.pager a{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--hair);font-size:13px;color:var(--ink-2);text-decoration:none;transition:border-color .18s,color .18s}
+.pager a:hover{border-color:var(--hair-2);color:var(--ink)}
+.pager i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.pager .up{margin-right:auto}
+@media (max-width:560px){.appbar .home .t{display:none}.appbar a.l{padding:8px 9px;font-size:13px}.pager .nm{display:none}}
 </style></head><body>
+<header class="appbar"><div class="in"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="study.html">Study</a></li></ul></div></header>
 <main class="page">
+<nav class="pager" aria-label="Channels"><a class="up" href="channels.html?el=earth">‹ Earth channels</a><a href="tb-v4-meridian-chart.html" aria-label="Previous channel: Triple Burner"><i style="--c:var(--fire)"></i><span class="nm">Triple Burner</span> ←</a><a href="st-v4-meridian-chart.html" aria-label="Next channel: Stomach">→ <span class="nm">Stomach</span><i style="--c:var(--earth)"></i></a></nav>
 <p class="kicker">Foot Taiyin · Yin Earth</p>
 <h1>Spleen Meridian — Five Shu Points</h1>
 <p class="lede">Select a point on the chart, or step through them from Well to Sea using the buttons under the details panel.</p>
@@ -172,6 +190,18 @@ chips.forEach(function(c){
     select(ORDER[(i+ORDER.length)%ORDER.length], true);
   });
 });
+// deep links: chart.html#GB34 opens with that point selected, and selections update the address
+function fromHash(){
+  var code = decodeURIComponent(location.hash.slice(1)).toUpperCase();
+  for(var k in DATA){ if(DATA[k].code === code){ select(k); return; } }
+}
+var _select = select;
+select = function(id, focusChip){
+  _select(id, focusChip);
+  try { history.replaceState(null, '', '#'+DATA[id].code); } catch(e) {}
+};
+window.addEventListener('hashchange', fromHash);
+if(location.hash) fromHash();
 })();
 </script>
 </body></html>
