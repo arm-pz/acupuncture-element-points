@@ -73,7 +73,7 @@ body{margin:0;background:var(--stage);color:var(--ink);font:400 14px/1.4 var(--b
   text-wrap:balance;text-shadow:0 2px 30px rgba(0,0,0,.55)}
 .vis-title-sub{margin-top:16px;font-size:12px;letter-spacing:.32em;text-indent:.32em;text-transform:uppercase;
   color:var(--ink-soft);min-height:1.2em;text-shadow:0 1px 14px rgba(0,0,0,.7)}
-.vis-meta{display:flex;gap:24px;margin:22px 0 0;padding:0;justify-content:center}
+.vis-meta{display:flex;flex-wrap:wrap;gap:24px;row-gap:14px;margin:22px 0 0;padding:0;justify-content:center}
 .vis-meta div{display:flex;flex-direction:column;align-items:center;gap:5px}
 .vis-meta dt{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);text-shadow:0 1px 12px rgba(0,0,0,.7)}
 .vis-meta dd{margin:0;font-size:13px;color:var(--ink);text-shadow:0 1px 12px rgba(0,0,0,.7)}
@@ -440,11 +440,11 @@ function renderScene(key,seed){
 'use strict';
 const N=5;
 const EL=[
-  {key:'wood', title:'Wood', han:'木',caption:'Spring · the pull upward',        organs:'Liver · Gallbladder',      lu:'LU11',luName:'Shaoshang',point:'LI3', pname:'Sanjian',  rel:'Wood feeds Fire',    acc:[155,207,106],fx:'50%',fy:'56%',ts:1.45},
-  {key:'fire', title:'Fire', han:'火',caption:'Summer · full flame',             organs:'Heart · Small Intestine',  lu:'LU10',luName:'Yuji',point:'LI5', pname:'Yangxi',   rel:'Fire makes Earth',   acc:[238,122,60], fx:'50%',fy:'62%',ts:1.4},
-  {key:'earth',title:'Earth',han:'土',caption:'Late summer · the still centre',  organs:'Spleen · Stomach',         lu:'LU9',luName:'Taiyuan',point:'LI11',pname:'Quchi',    rel:'Earth bears Metal',  acc:[217,164,65], fx:'50%',fy:'52%',ts:1.5},
-  {key:'metal',title:'Metal',han:'金',caption:'Autumn · the clean edge',         organs:'Lung · Large Intestine',   lu:'LU8',luName:'Jingqu',point:'LI1', pname:'Shangyang',rel:'Metal carries Water',acc:[201,211,220],fx:'50%',fy:'44%',ts:1.5},
-  {key:'water',title:'Water',han:'水',caption:'Winter · the deep store',         organs:'Kidney · Bladder',         lu:'LU5',luName:'Chize',point:'LI2', pname:'Erjian',   rel:'Water nourishes Wood',acc:[111,154,214],fx:'50%',fy:'50%',ts:1.4}
+  {key:'wood', title:'Wood', han:'木',caption:'Spring · the pull upward',        organs:'Liver · Gallbladder',      rel:'Wood feeds Fire',    acc:[155,207,106],fx:'50%',fy:'56%',ts:1.45},
+  {key:'fire', title:'Fire', han:'火',caption:'Summer · full flame',             organs:'Heart · Small Intestine',  rel:'Fire makes Earth',   acc:[238,122,60], fx:'50%',fy:'62%',ts:1.4},
+  {key:'earth',title:'Earth',han:'土',caption:'Late summer · the still centre',  organs:'Spleen · Stomach',         rel:'Earth bears Metal',  acc:[217,164,65], fx:'50%',fy:'52%',ts:1.5},
+  {key:'metal',title:'Metal',han:'金',caption:'Autumn · the clean edge',         organs:'Lung · Large Intestine',   rel:'Metal carries Water',acc:[201,211,220],fx:'50%',fy:'44%',ts:1.5},
+  {key:'water',title:'Water',han:'水',caption:'Winter · the deep store',         organs:'Kidney · Bladder',         rel:'Water nourishes Wood',acc:[111,154,214],fx:'50%',fy:'50%',ts:1.4}
 ];
 const K={RING_R:.34,RING_R_PH:.38,RING_CY:.055,CARD:.17,CARD_PH:.21,BASE:.86,TOP:.32,LIFT:7,
   BEZEL:.16,THICK:34,CHROMA:2.2,WOB:.38,STEP_MS:1000,ENTER_MS:2700,BG_MS:2000,SPIN:2.4,
@@ -485,6 +485,8 @@ EL.forEach((e,i)=>{
 const SVGNS='http://www.w3.org/2000/svg';
 const cyc=$('cyc'),gSheng=$('g-sheng'),gKe=$('g-ke'),keFade=$('ke-fade');
 const FILE={"LR": "lr-v4-meridian-chart.html", "GB": "gb-v4-meridian-chart.html", "HT": "ht-v4-meridian-chart.html", "SI": "si-v4-meridian-chart.html", "PC": "pc-v4-meridian-chart.html", "TB": "tb-v4-meridian-chart.html", "SP": "sp-v4-meridian-chart.html", "ST": "st-v4-meridian-chart.html", "LU": "lung-meridian-chart.html", "LI": "li-v4-meridian-chart.html", "KI": "ki-v4-meridian-chart.html", "BL": "bl-v4-meridian-chart.html"},NAME={"LR": "Liver", "GB": "Gallbladder", "HT": "Heart", "SI": "Small Intestine", "PC": "Pericardium", "TB": "Triple Burner", "SP": "Spleen", "ST": "Stomach", "LU": "Lung", "LI": "Large Intestine", "KI": "Kidney", "BL": "Bladder"},ELCH={"Wood": ["LR", "GB"], "Fire": ["HT", "SI", "PC", "TB"], "Earth": ["SP", "ST"], "Metal": ["LU", "LI"], "Water": ["KI", "BL"]};
+/* Horary point: the Five Shu point whose element is the channel's own element */
+const HOR={"LR":["LR1","Dadun"],"GB":["GB41","Zulinqi"],"HT":["HT8","Shaofu"],"SI":["SI5","Yanggu"],"PC":["PC8","Laogong"],"TB":["TB6","Zhigou"],"SP":["SP3","Taibai"],"ST":["ST36","Zusanli"],"LU":["LU8","Jingqu"],"LI":["LI1","Shangyang"],"KI":["KI10","Yingu"],"BL":["BL66","Zutonggu"]};
 const KE=['Wood parts Earth','Fire melts Metal','Earth dams Water','Metal cuts Wood','Water quenches Fire'];
 const shArc=[],shHead=[],keLine=[],keHead=[],angs=new Array(N).fill(0),rads=new Array(N).fill(0);
 const mkPath=(parent,cls)=>{const p=document.createElementNS(SVGNS,'path');p.setAttribute('class',cls);parent.appendChild(p);return p};
@@ -600,8 +602,8 @@ function renderTitle(i,first){
     `<h2 class="vis-title-name">${e.title}</h2>`+
     `<div class="vis-title-sub">${e.caption}</div>`+
     `<dl class="vis-meta"><div><dt>Channels</dt><dd>${ELCH[e.title].map(a=>`<a href="${FILE[a]}">${NAME[a]}</a>`).join('<span class="sep">·</span>')}</dd></div>`+
-    `<div><dt>Lung</dt><dd><a href="${FILE.LU}#${e.lu}">${e.lu} · ${e.luName}</a></dd></div>`+
-    `<div><dt>Large Intestine</dt><dd><a href="${FILE.LI}#${e.point}">${e.point} · ${e.pname}</a></dd></div></dl>`;
+    ELCH[e.title].map(a=>`<div><dt>${NAME[a]} · horary</dt><dd><a href="${FILE[a]}#${HOR[a][0]}">${HOR[a][0]} · ${HOR[a][1]}</a></dd></div>`).join('')+
+    `</dl>`;
   cta.href='channels.html?el='+e.key;
   document.getElementById('cta-label').textContent='Explore the '+e.title+' channels';
   renderRel(i);setHL(i);
