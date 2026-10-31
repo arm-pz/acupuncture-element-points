@@ -11,6 +11,7 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/` | `index.html` | App home — the Five Elements ring, linking into each element's channels |
 | `/channels` | `channels.html` | Twelve-channel launcher, filterable by element |
 | `/points` | `points.html` | Searchable index of all sixty Shu points |
+| `/basics` | `basics.html` | Explainer: the five Shu categories, element mapping, cun and glossary |
 | `/study` | `study.html` | Recall quiz: Shu category, element and finding the point |
 | `/lu` | `lung-meridian-chart.html` | Lung (LU) |
 | `/li` | `li-meridian-chart.html` | Large Intestine (LI) |
@@ -61,6 +62,7 @@ The app's chart pages are the V4 pages plus Lung. On those, a point code after `
 - Yin channels follow Wood → Fire → Earth → Metal → Water; Yang channels follow Metal → Water → Wood → Fire → Earth. Luo-Connecting and Xi-Cleft points are always skipped.
 - Named traps confirmed: TE Sea = TE10, LR River = LR4 and Sea = LR8, GB set = GB44/43/41/38/34.
 - On the V2 and V3 charts, only the five Shu points are interactive; other printed dots mark non-Shu points.
+- The Lung page is the first to carry a **Cun** row in the details panel. `/basics` explains the five Shu categories, element mapping, cun measurement and the glossary used across the atlas.
 - No per-point outbound links, by design.
 
 ## Licensing

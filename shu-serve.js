@@ -4,7 +4,7 @@ const path = require('path');
 const pages = { '/': 'index.html', '/lu': 'lung-meridian-chart.html', '/li': 'li-meridian-chart.html', '/li2': 'li-v2-meridian-chart.html', '/li3': 'li-v3-meridian-chart.html', '/li4': 'li-v4-meridian-chart.html', '/ht4': 'ht-v4-meridian-chart.html', '/pc4': 'pc-v4-meridian-chart.html', '/si4': 'si-v4-meridian-chart.html', '/tb4': 'tb-v4-meridian-chart.html', '/st4': 'st-v4-meridian-chart.html', '/sp4': 'sp-v4-meridian-chart.html', '/lr4': 'lr-v4-meridian-chart.html', '/gb4': 'gb-v4-meridian-chart.html', '/bl4': 'bl-v4-meridian-chart.html', '/ki4': 'ki-v4-meridian-chart.html', '/ht': 'ht-meridian-chart.html', '/ht2': 'ht-v2-meridian-chart.html', '/sp2': 'sp-v2-meridian-chart.html', '/sp3': 'sp-v3-meridian-chart.html', '/st2': 'st-v2-meridian-chart.html', '/st3': 'st-v3-meridian-chart.html', '/bl2': 'bl-v2-meridian-chart.html', '/bl3': 'bl-v3-meridian-chart.html', '/ki2': 'ki-v2-meridian-chart.html', '/ki3': 'ki-v3-meridian-chart.html', '/gb2': 'gb-v2-meridian-chart.html', '/gb3': 'gb-v3-meridian-chart.html', '/lr2': 'lr-v2-meridian-chart.html', '/lr3': 'lr-v3-meridian-chart.html', '/si': 'si-meridian-chart.html', '/pc': 'pc-meridian-chart.html', '/tb': 'tb-meridian-chart.html' };
 // The app links between its pages by filename, so serve every routed file, and the
 // app's own pages, under their file names as well as their short routes.
-Object.assign(pages, { '/channels': 'channels.html', '/points': 'points.html', '/study': 'study.html' });
+Object.assign(pages, { '/channels': 'channels.html', '/points': 'points.html', '/basics': 'basics.html', '/study': 'study.html' });
 const files = new Set(Object.values(pages));
 http.createServer((req, res) => {
   const url = req.url.split('?')[0];

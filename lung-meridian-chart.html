@@ -45,6 +45,9 @@ h1{font-size:26px;line-height:1.15;letter-spacing:-.02em;font-weight:650;margin:
 .pill i{width:7px;height:7px;border-radius:50%;background:var(--c,var(--ink-3))}
 .label{margin:18px 0 4px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .loc{margin:0;font-size:14.5px;color:var(--ink)}
+.cun{margin:0;font-size:14.5px;color:var(--ink)}
+.cun a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-ring);padding-bottom:1px;margin-left:4px;white-space:nowrap}
+.cun a:hover{border-color:var(--accent)}
 figure{margin:16px 0 0}
 figure img{display:block;width:100%;max-width:280px;border-radius:6px}
 .pts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px;margin:0;background:rgba(20,24,32,.03);border-top:1px solid var(--hair)}
@@ -87,8 +90,9 @@ figure img{display:block;width:100%;max-width:280px;border-radius:6px}
 .pager i{width:7px;height:7px;border-radius:50%;background:var(--c)}
 .pager .up{margin-right:auto}
 @media (max-width:560px){.appbar .home .t{display:none}.appbar a.l{padding:8px 9px;font-size:13px}.pager .nm{display:none}}
+@media (max-width:430px){.appbar .in{padding:8px 12px;gap:8px}.appbar ul{gap:0}.appbar a.l{padding:7px 7px;font-size:12px}}
 </style></head><body>
-<header class="appbar"><div class="in"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="study.html">Study</a></li></ul></div></header>
+<header class="appbar"><div class="in"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="basics.html">Basics</a></li><li><a class="l" href="study.html">Study</a></li></ul></div></header>
 <main class="page">
 <nav class="pager" aria-label="Channels"><a class="up" href="channels.html?el=metal">‹ Metal channels</a><a href="st-v4-meridian-chart.html" aria-label="Previous channel: Stomach"><i style="--c:var(--earth)"></i><span class="nm">Stomach</span> ←</a><a href="li-v4-meridian-chart.html" aria-label="Next channel: Large Intestine">→ <span class="nm">Large Intestine</span><i style="--c:var(--metal)"></i></a></nav>
 <p class="kicker">Hand Taiyin · Yin Metal</p>
@@ -141,15 +145,20 @@ figure img{display:block;width:100%;max-width:280px;border-radius:6px}
 (function(){
 var DATA = {
  p11:{code:'LU11',pinyin:'Shaoshang',en:'Lesser Shang',shu:'Jing-Well point',elem:'Wood',
-      loc:'On the thumb, on the radial side, 0.1 cun posterior to the corner of the nail.'},
+      loc:'On the thumb, on the radial side, 0.1 cun posterior to the corner of the nail.',
+      cun:'0.1 cun from the radial corner of the nail.'},
  p10:{code:'LU10',pinyin:'Yuji',en:'Fish Border',shu:'Ying-Spring point',elem:'Fire',
-      loc:'On the palmar aspect, at the midpoint of the first metacarpal bone, at the edge of the thenar eminence.'},
+      loc:'On the palmar aspect, at the midpoint of the first metacarpal bone, at the edge of the thenar eminence.',
+      cun:'Midpoint of the 1st metacarpal; found by the bone rather than a cun distance.'},
  p9:{code:'LU9',pinyin:'Taiyuan',en:'Great Abyss',shu:'Shu-Stream point and Yuan-Source point',elem:'Earth',
-      loc:'On the radial end of the wrist crease, in the depression lateral to the radial artery pulse.'},
+      loc:'On the radial end of the wrist crease, in the depression lateral to the radial artery pulse.',
+      cun:'At the wrist crease, lateral to the radial artery.'},
  p8:{code:'LU8',pinyin:'Jingqu',en:'Channel Ditch',shu:'Jing-River point',elem:'Metal',
-      loc:'On the radial side of the forearm, 1 cun above the wrist crease, at the distal edge of the thenar eminence.'},
+      loc:'On the radial side of the forearm, 1 cun above the wrist crease, at the distal edge of the thenar eminence.',
+      cun:'1 cun proximal to the wrist crease.'},
  p5:{code:'LU5',pinyin:'Chize',en:'Cubit Marsh',shu:'He-Sea point',elem:'Water',
-      loc:'In the elbow crease, in the depression at the radial (lateral) side of the biceps brachii tendon.'}
+      loc:'In the elbow crease, in the depression at the radial (lateral) side of the biceps brachii tendon.',
+      cun:'At the cubital crease, radial to the biceps tendon.'}
 };
 var IMGS = {};
 var ORDER = ['p11','p10','p9','p8','p5'];
@@ -180,6 +189,7 @@ function select(id, focusChip){
     +'<div class="title">'+d.pinyin+'</div><div class="en">'+d.en+'</div>'
     +'<div class="pills"><span class="pill" style="--c:'+ELEM[d.elem]+'"><i></i>'+d.elem+'</span><span class="pill">Yin channel</span></div>'
     +'<p class="label">Location</p><p class="loc">'+d.loc+'</p>'
+    +'<p class="label">Cun</p><p class="cun">'+d.cun+'<a href="basics.html#cun">What is a cun?</a></p>'
     +(im ? '<figure><img alt="Location diagram for '+d.code+'" src="'+(im.indexOf('data:')===0?im:'data:image/jpeg;base64,'+im)+'"></figure>' : '');
   panel.classList.remove('enter'); void panel.offsetWidth; panel.classList.add('enter');
   if(narrow.matches && !focusChip) panel.scrollIntoView({block:'nearest',behavior:'smooth'});
