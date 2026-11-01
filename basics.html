@@ -3,7 +3,7 @@
 <script>
 // Basics now lives inside Learn. Keep old links (including section anchors) working.
 (function(){
-  var map = {'five-shu':'m1', 'elements':'m2', 'cun':'cun', 'glossary':'glossary', 'reading':'m9'};
+  var map = {'five-shu':'m1', 'elements':'m2', 'cun':'cun', 'reading':'m9'};
   var h = location.hash.slice(1);
   location.replace('learn.html' + (map[h] ? '#' + map[h] : ''));
 })();

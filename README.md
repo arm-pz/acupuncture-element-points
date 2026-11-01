@@ -11,7 +11,7 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/` | `index.html` | App home — the Five Elements ring, linking into each element's channels |
 | `/channels` | `channels.html` | Twelve-channel launcher, filterable by element |
 | `/points` | `points.html` | Searchable index of all sixty Shu points |
-| `/learn` | `learn.html` | Ten-module course and reference: the five names (with the Lung hand figure and Nan Jing indications), the element cycle, an element per module, cun, landmarks, a closing read and a glossary |
+| `/learn` | `learn.html` | Ten-module course and reference: the five names (with the Lung hand figure and Nan Jing indications), the element cycle, an element per module, cun, landmarks and a closing read |
 | `/basics` | `basics.html` | Redirect into `/learn` (old section anchors map to the matching module) |
 | `/study` | `study.html` | Recall quiz: Shu category, element and finding the point |
 | `/lu` | `lung-meridian-chart.html` | Lung (LU) |
@@ -63,7 +63,8 @@ The app's chart pages are the V4 pages plus Lung. On those, a point code after `
 - Yin channels follow Wood → Fire → Earth → Metal → Water; Yang channels follow Metal → Water → Wood → Fire → Earth. Luo-Connecting and Xi-Cleft points are always skipped.
 - Named traps confirmed: TE Sea = TE10, LR River = LR4 and Sea = LR8, GB set = GB44/43/41/38/34.
 - On the V2 and V3 charts, only the five Shu points are interactive; other printed dots mark non-Shu points.
-- The Lung page is the first to carry a **Cun** row in the details panel. `/learn` explains the five Shu categories, element mapping, cun measurement and the glossary used across the atlas.
+- The Lung page is the first to carry a **Cun** row in the details panel. `/learn` explains the five Shu categories, element mapping and cun measurement.
+- **Glossary tooltips:** anatomical and Shu terms (cun, proximal, malleolus, Jing-Well, horary point…) get a dotted underline and a hover/tap definition in chart-panel locations, Learn and Study. The terms live in one place, `tools/glossary-snippet.html`; after editing it, run `python3 tools/sync-glossary.py` to copy it into every page (pages stay self-contained).
 - No per-point outbound links, by design.
 
 ## Licensing

@@ -1,0 +1,195 @@
+<!-- gloss:start · generated from tools/glossary-snippet.html by tools/sync-glossary.py; edit there, not here -->
+<style>
+.gl{appearance:none;border:0;background:none;margin:0;padding:0;display:inline;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;text-align:inherit;cursor:help;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,currentColor 42%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:text-decoration-color .15s}
+.gl:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:2px}
+.gl[aria-expanded="true"]{text-decoration-color:currentColor}
+@media (hover:hover) and (pointer:fine){.gl:hover{text-decoration-color:currentColor}}
+.gl-tip{position:fixed;z-index:60;left:0;top:0;width:min(280px,calc(100vw - 24px));padding:12px 14px 13px;border-radius:12px;background:#1d2233;color:#f2f0ea;border:1px solid rgba(242,240,234,.16);box-shadow:0 22px 50px -20px rgba(0,0,0,.75),0 0 0 1px rgba(0,0,0,.25);font:400 13px/1.5 "Jost",system-ui,sans-serif;letter-spacing:.005em;text-align:left;text-transform:none;pointer-events:none;visibility:hidden;opacity:0;transform:translateY(4px);transition:opacity .14s cubic-bezier(.22,1,.36,1),transform .14s cubic-bezier(.22,1,.36,1)}
+.gl-tip.on{visibility:visible;opacity:1;transform:none}
+.gl-tip.below{transform:translateY(-4px)}
+.gl-tip.on.below{transform:none}
+.gl-tip-k{display:block;font:500 9.5px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#6c7590}
+.gl-tip-t{display:flex;align-items:baseline;gap:8px;margin-top:7px;font-size:15px;font-weight:500;line-height:1.25}
+.gl-tip-t span{font:300 15px/1 "Noto Sans SC","PingFang SC",sans-serif;color:#9aa4bb}
+.gl-tip-d{display:block;margin-top:5px;color:#9aa4bb}
+@media (prefers-reduced-motion:reduce){.gl-tip{transition:none}}
+</style>
+<script>
+(function(){
+  'use strict';
+  // [group, term, hanzi, definition, aliases (regex fragments, matched case-insensitively)]
+  var G = [
+    ['Measurement','Cun','寸','A proportional unit for locating points: about the width of the patient’s own thumb, so it scales with the body. Ten fen make one cun.',['cun']],
+    ['Measurement','Fen','分','One tenth of a cun.',['fen']],
+    ['Measurement','B-cun','','Proportional cun: a body region is divided into a fixed number of cun (forearm 12, lower leg 16) and fitted to the person.',['B-cun']],
+    ['Measurement','F-cun','','Finger cun: measured with the patient’s own fingers. One thumb is 1 cun; four fingers together are 3.',['F-cun']],
+    ['Measurement','Finger-breadth','','The width of one of the patient’s fingers, used as a quick measure.',['finger-breadths?']],
+    ['Direction','Proximal','','Toward the trunk along a limb. Opposite of distal.',['proximal']],
+    ['Direction','Distal','','Away from the trunk along a limb, toward the fingers or toes. Opposite of proximal.',['distal']],
+    ['Direction','Medial','','Toward the body’s midline. Opposite of lateral.',['medial']],
+    ['Direction','Lateral','','Away from the body’s midline. Opposite of medial.',['lateral']],
+    ['Direction','Radial','','The thumb side of the forearm and hand.',['radial']],
+    ['Direction','Ulnar','','The little-finger side of the forearm and hand.',['ulnar']],
+    ['Direction','Palmar','','The palm side of the hand and wrist.',['palmar']],
+    ['Direction','Dorsal / dorsum','','The back of the hand, or the top of the foot. “The dorsum of the foot” is its upper surface.',['dorsum','dorsal']],
+    ['Direction','Anterior','','Toward the front of the body. Opposite of posterior.',['anterior']],
+    ['Direction','Posterior','','Toward the back of the body. Opposite of anterior.',['posterior']],
+    ['Direction','Inferior','','Below; toward the feet.',['inferior']],
+    ['Landmark','Crease','','The skin fold at a joint — wrist, elbow, knee — used as a starting line for measuring.',['creases?']],
+    ['Landmark','Cubital crease','','The skin fold on the front of the elbow, where it bends.',['cubital crease','cubital']],
+    ['Landmark','Popliteal','','The hollow at the back of the knee; the popliteal crease is its skin fold.',['popliteal']],
+    ['Landmark','Red and white skin','','The line where the darker skin of the back of the hand or foot meets the paler skin of the palm or sole.',['red and white skin']],
+    ['Landmark','Thenar eminence','','The muscle pad at the base of the thumb, on the palm.',['thenar eminence']],
+    ['Landmark','Anatomical snuffbox','','The hollow on the thumb side of the wrist that appears when the thumb is stretched back.',['anatomical snuffbox']],
+    ['Bone','Phalanx','','One of the small bones of a finger or toe. Plural: phalanges.',['phalanx','phalanges']],
+    ['Bone','Metacarpal','','One of the five long bones of the hand, between wrist and fingers.',['metacarpals?']],
+    ['Bone','Metatarsal','','One of the five long bones of the foot, between ankle and toes.',['metatarsals?']],
+    ['Joint','Metacarpophalangeal joint','','The knuckle joint where a finger meets the hand.',['metacarpophalangeal']],
+    ['Joint','Metatarsophalangeal joint','','The joint where a toe meets the foot — the ball of the foot.',['metatarsophalangeal']],
+    ['Joint','Interphalangeal joint','','A joint between two bones of the same finger or toe.',['interphalangeal']],
+    ['Bone','Malleolus','','The bony bump on either side of the ankle: medial on the inside, lateral on the outside.',['malleolus','malleoli']],
+    ['Bone','Epicondyle','','A bony prominence on the side of the lower end of the upper-arm bone, felt at the elbow.',['epicondyles?']],
+    ['Bone','Olecranon','','The point of the elbow, the tip of the ulna.',['olecranon']],
+    ['Bone','Styloid process','','A small pointed projection of bone; at the wrist, the bump at the lower end of the radius or ulna.',['styloid process']],
+    ['Bone','Humerus','','The upper-arm bone.',['humerus']],
+    ['Bone','Ulna','','The forearm bone on the little-finger side.',['ulna']],
+    ['Bone','Radius','','The forearm bone on the thumb side.',['radius']],
+    ['Bone','Tibia','','The shin bone, on the inner side of the lower leg.',['tibia']],
+    ['Bone','Fibula','','The thin bone on the outer side of the lower leg.',['fibula']],
+    ['Bone','Condyle','','A rounded knob at the end of a bone, forming part of a joint.',['condyles?']],
+    ['Bone','Navicular','','A boat-shaped bone on the inner side of the foot; its tuberosity is the bump in front of the ankle.',['navicular']],
+    ['Bone','Triquetrum','','A small wrist bone on the little-finger side.',['triquetrum']],
+    ['Soft tissue','Tendon','','A cord of tissue joining muscle to bone; many points sit in the hollow beside one.',['tendons?']],
+    ['Soft tissue','Calcaneal tendon','','The Achilles tendon, at the back of the ankle.',['calcaneal tendon']],
+    ['Shu category','Jing-Well','井','First Shu point: qi emerges at the fingertip or toe tip.',['Jing-Well']],
+    ['Shu category','Ying-Spring','滎','Second Shu point: qi glides, between the digits or on the palm.',['Ying-Spring']],
+    ['Shu category','Shu-Stream','輸','Third Shu point: qi pours, at the wrist, ankle or knuckles.',['Shu-Stream']],
+    ['Shu category','Jing-River','經','Fourth Shu point: qi flows, along the forearm or calf.',['Jing-River']],
+    ['Shu category','He-Sea','合','Fifth Shu point: qi enters inward, at the elbow or knee.',['He-Sea']],
+    ['Point type','Yuan-Source','原','Where a channel’s source qi surfaces. On yin channels it is the Shu-Stream point.',['Yuan-Source']],
+    ['Point type','Luo-Connecting','絡','Where a channel connects to its paired channel. Never one of the five Shu points.',['Luo-Connecting']],
+    ['Point type','Xi-Cleft','郄','Where qi and blood gather deeply; used for acute conditions. Never one of the five Shu points.',['Xi-Cleft']],
+    ['Point type','Horary point','本穴','The Shu point whose element matches its channel’s own element, such as LU8 on the Metal Lung.',['horary points?','horary']]
+  ];
+  var byAlias = {}, parts = [];
+  G.forEach(function(g, i){ g[4].forEach(function(a){ parts.push(a); byAlias[a.toLowerCase()] = i; }); });
+  parts.sort(function(a, b){ return b.length - a.length; });
+  var RE = new RegExp('(^|[^A-Za-z-])(' + parts.join('|') + ')(?![A-Za-z-])', 'i');
+  function lookup(word){
+    var w = word.toLowerCase();
+    for(var a in byAlias){ if(new RegExp('^(' + a + ')$', 'i').test(w)) return byAlias[a]; }
+    return -1;
+  }
+  var SKIP = 'a,button,b,strong,h1,h2,h3,code,kbd,script,style,svg,.gl,[data-gloss-skip]';
+
+  // Wrap the first use of each term inside every scope.
+  function wrap(target, seen){
+    var walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT, null), nodes = [], n;
+    while((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(function(node){
+      var p = node.parentElement;
+      if(!p || (p !== target && p.closest(SKIP) && target.contains(p.closest(SKIP)))) return;
+      if(p.closest('.gl')) return;
+      var text = node.nodeValue, m, frag = null, last = 0, rest = text, offset = 0;
+      while((m = RE.exec(rest))){
+        var start = offset + m.index + m[1].length, word = m[2], idx = lookup(word);
+        offset = start + word.length; rest = text.slice(offset);
+        if(idx < 0 || seen[idx]) continue;
+        seen[idx] = true;
+        frag = frag || document.createDocumentFragment();
+        frag.appendChild(document.createTextNode(text.slice(last, start)));
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'gl'; b.dataset.g = idx;
+        b.setAttribute('aria-expanded', 'false');
+        b.setAttribute('aria-label', word + ': ' + G[idx][3]);
+        b.textContent = word;
+        frag.appendChild(b);
+        last = offset;
+      }
+      if(frag){ frag.appendChild(document.createTextNode(text.slice(last))); node.parentNode.replaceChild(frag, node); }
+    });
+  }
+  function seenIn(scope){
+    var s = {};
+    [].forEach.call(scope.querySelectorAll('.gl'), function(b){ s[b.dataset.g] = true; });
+    return s;
+  }
+
+  // ShuGloss.watch(root, targets, scope): scan `targets` inside `root` now and whenever root changes.
+  // `scope` (optional) is the ancestor within which a term is marked only once; default is each target.
+  function watch(rootSel, targetSel, scopeSel){
+    var root = typeof rootSel === 'string' ? document.querySelector(rootSel) : rootSel;
+    if(!root) return;
+    var mo;
+    function run(){
+      if(mo) mo.disconnect();
+      var seen = new Map();
+      [].forEach.call(root.querySelectorAll(targetSel), function(t){
+        var scope = (scopeSel && t.closest(scopeSel)) || t;
+        if(!seen.has(scope)) seen.set(scope, seenIn(scope));
+        wrap(t, seen.get(scope));
+      });
+      if(mo) mo.observe(root, {childList:true, subtree:true});
+    }
+    run();
+    if('MutationObserver' in window){ mo = new MutationObserver(function(){ run(); }); mo.observe(root, {childList:true, subtree:true}); }
+  }
+
+  // ---- tooltip ----
+  var tip = document.createElement('div');
+  tip.className = 'gl-tip'; tip.setAttribute('role', 'tooltip'); tip.id = 'gl-tip';
+  var open = null, timer = 0, lastHide = 0, openedAt = 0;
+  function place(el){
+    var r = el.getBoundingClientRect(), t = tip.getBoundingClientRect(), gap = 10, pad = 8;
+    var x = Math.max(10, Math.min(r.left + r.width/2 - t.width/2, innerWidth - t.width - 10));
+    var above = r.top - gap - t.height >= pad;
+    var y = above ? r.top - gap - t.height : Math.min(r.bottom + gap, innerHeight - t.height - pad);
+    tip.classList.toggle('below', !above);
+    tip.style.left = Math.round(x) + 'px'; tip.style.top = Math.round(y) + 'px';
+  }
+  function show(el){
+    var g = G[+el.dataset.g]; if(!g) return;
+    clearTimeout(timer);
+    if(!tip.parentNode) document.body.appendChild(tip);
+    if(open && open !== el){ open.setAttribute('aria-expanded', 'false'); open.removeAttribute('aria-describedby'); }
+    open = el; openedAt = Date.now(); el.setAttribute('aria-expanded', 'true'); el.setAttribute('aria-describedby', 'gl-tip');
+    tip.innerHTML = '<span class="gl-tip-k"></span><span class="gl-tip-t"></span><span class="gl-tip-d"></span>';
+    tip.children[0].textContent = g[0];
+    tip.children[1].textContent = g[1];
+    if(g[2]){ var hz = document.createElement('span'); hz.lang = 'zh'; hz.textContent = g[2]; tip.children[1].appendChild(hz); }
+    tip.children[2].textContent = g[3];
+    tip.classList.remove('on'); place(el); void tip.offsetWidth; tip.classList.add('on');
+  }
+  function hide(){
+    clearTimeout(timer);
+    if(!open) return;
+    open.setAttribute('aria-expanded', 'false'); open.removeAttribute('aria-describedby');
+    open = null; tip.classList.remove('on'); lastHide = Date.now();
+  }
+  function gl(e){ return e.target.closest && e.target.closest('.gl'); }
+  document.addEventListener('pointerover', function(e){
+    var el = gl(e); if(!el || e.pointerType === 'touch' || open === el) return;
+    clearTimeout(timer); timer = setTimeout(function(){ show(el); }, Date.now() - lastHide < 400 ? 0 : 120);
+  });
+  document.addEventListener('pointerout', function(e){
+    var el = gl(e); if(!el || el.contains(e.relatedTarget)) return;
+    if(open === el) hide(); else clearTimeout(timer);
+  });
+  document.addEventListener('focusin', function(e){ var el = gl(e); if(el && open !== el) show(el); });
+  document.addEventListener('focusout', function(e){ var el = gl(e); if(el && open === el) hide(); });
+  document.addEventListener('click', function(e){
+    var el = gl(e); if(!el) return;
+    e.preventDefault(); e.stopPropagation();
+    if(e.pointerType === 'mouse') return;
+    // a tap focuses the term (which opens it) and then clicks it: only a later tap closes it
+    if(open === el && Date.now() - openedAt > 350) hide(); else if(open !== el) show(el);
+  }, true);
+  document.addEventListener('pointerdown', function(e){ if(open && !gl(e)) hide(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && open) hide(); });
+  addEventListener('scroll', hide, true);
+  addEventListener('resize', hide);
+
+  window.ShuGloss = {watch: watch, terms: G};
+})();
+</script>
+<!-- gloss:end -->
