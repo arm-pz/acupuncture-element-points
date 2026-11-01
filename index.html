@@ -485,9 +485,13 @@ EL.forEach((e,i)=>{
 /* ----- the two cycles: sheng arcs ride the ring, ke chords cross it ----- */
 const SVGNS='http://www.w3.org/2000/svg';
 const cyc=$('cyc'),gSheng=$('g-sheng'),gKe=$('g-ke'),keFade=$('ke-fade');
+/* points:start FILE · generated from data/points.json by tools/sync-points.py; edit there */
 const FILE={"LR": "lr-v4-meridian-chart.html", "GB": "gb-v4-meridian-chart.html", "HT": "ht-v4-meridian-chart.html", "SI": "si-v4-meridian-chart.html", "PC": "pc-v4-meridian-chart.html", "TB": "tb-v4-meridian-chart.html", "SP": "sp-v4-meridian-chart.html", "ST": "st-v4-meridian-chart.html", "LU": "lung-meridian-chart.html", "LI": "li-v4-meridian-chart.html", "KI": "ki-v4-meridian-chart.html", "BL": "bl-v4-meridian-chart.html"},NAME={"LR": "Liver", "GB": "Gallbladder", "HT": "Heart", "SI": "Small Intestine", "PC": "Pericardium", "TB": "Triple Burner", "SP": "Spleen", "ST": "Stomach", "LU": "Lung", "LI": "Large Intestine", "KI": "Kidney", "BL": "Bladder"},ELCH={"Wood": ["LR", "GB"], "Fire": ["HT", "SI", "PC", "TB"], "Earth": ["SP", "ST"], "Metal": ["LU", "LI"], "Water": ["KI", "BL"]};
+/* points:end */
 /* Horary point: the Five Shu point whose element is the channel's own element */
+/* points:start HOR · generated from data/points.json by tools/sync-points.py; edit there */
 const HOR={"LR":["LR1","Dadun"],"GB":["GB41","Zulinqi"],"HT":["HT8","Shaofu"],"SI":["SI5","Yanggu"],"PC":["PC8","Laogong"],"TB":["TB6","Zhigou"],"SP":["SP3","Taibai"],"ST":["ST36","Zusanli"],"LU":["LU8","Jingqu"],"LI":["LI1","Shangyang"],"KI":["KI10","Yingu"],"BL":["BL66","Zutonggu"]};
+/* points:end */
 const KE=['Wood parts Earth','Fire melts Metal','Earth dams Water','Metal cuts Wood','Water quenches Fire'];
 const shArc=[],shHead=[],keLine=[],keHead=[],angs=new Array(N).fill(0),rads=new Array(N).fill(0);
 const mkPath=(parent,cls)=>{const p=document.createElementNS(SVGNS,'path');p.setAttribute('class',cls);parent.appendChild(p);return p};

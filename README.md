@@ -59,6 +59,11 @@ The app's chart pages are the V4 pages plus Lung. On those, a point code after `
 
 ## Data
 
+- **Single source:** all sixty points (code, pinyin, hanzi, English name, category, element, location, Lung cun notes) and the twelve channels live in `data/points.json`. Pages stay self-contained, so the data is copied into them: after editing the JSON, run
+  ```
+  python3 tools/sync-points.py
+  ```
+  It rewrites the marked `/* points:start … */` blocks in the app chart pages (V4 + Lung), Study, Points and the home page, and the `data-pt` / `data-f` tagged names, elements and locations in Learn. It refuses to write if a channel breaks the station or element sequence, or doesn't have exactly one horary point. `python3 tools/sync-points.py --check` reports any page that is out of date without changing it. The older V1–V3 chart pages keep their own data and are not synced.
 - Five Shu assignments verified against classical 五輸穴 tables and WHO-standard point lists.
 - Yin channels follow Wood → Fire → Earth → Metal → Water; Yang channels follow Metal → Water → Wood → Fire → Earth. Luo-Connecting and Xi-Cleft points are always skipped.
 - Named traps confirmed: TE Sea = TE10, LR River = LR4 and Sea = LR8, GB set = GB44/43/41/38/34.
