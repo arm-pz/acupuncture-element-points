@@ -12,6 +12,7 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/channels` | `channels.html` | Twelve-channel launcher, filterable by element |
 | `/points` | `points.html` | Searchable index of all sixty Shu points |
 | `/basics` | `basics.html` | Explainer: the five Shu categories, element mapping, cun and glossary |
+| `/learn` | `learn.html` | Nine-module course: the five names, the element cycle, an element per module, landmarks and a closing read |
 | `/study` | `study.html` | Recall quiz: Shu category, element and finding the point |
 | `/lu` | `lung-meridian-chart.html` | Lung (LU) |
 | `/li` | `li-meridian-chart.html` | Large Intestine (LI) |

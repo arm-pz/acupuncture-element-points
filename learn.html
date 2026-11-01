@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#10131f"><title>Learn · Shu Atlas</title><meta name="description" content="A nine-module course on the five Shu points and the Five Element cycle: why the names, each element's points, and where the points sit from fingertip to elbow."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Noto+Sans+SC:wght@300&display=swap"><style>
+:root{--ground:#10131f;--raise:#171b2a;--raise-2:#1d2233;--ink:#f2f0ea;--ink-2:#9aa4bb;--ink-3:#6c7590;--hair:rgba(242,240,234,.13);
+  --wood:#3e7d5a;--fire:#d23b2e;--earth:#d99a2b;--metal:#dfd9cb;--water:#3c6fbd;
+  --t-wood:#83c7a3;--t-fire:#f2968a;--t-earth:#e8c273;--t-metal:#f2f0ea;--t-water:#93b8f0;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--ease:cubic-bezier(.22,1,.36,1);color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--ground);scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 15px/1.5 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,3vw,40px) 80px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.kicker{margin:34px 0 8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01em;line-height:1.1}
+.lede{margin:10px 0 0;color:var(--ink-2);max-width:66ch}
+.lede b{color:var(--ink);font-weight:500}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.hg{font-family:"Noto Sans SC","PingFang SC",sans-serif;font-weight:300}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+.appnav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid rgba(242,240,234,.13)}
+.appnav .home{display:flex;align-items:baseline;gap:10px;color:#f2f0ea;text-decoration:none;min-width:0}
+.appnav .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
+.appnav .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9aa4bb;white-space:nowrap}
+.appnav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.appnav a.l{display:block;padding:8px 12px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:#9aa4bb;text-decoration:none;transition:color .18s var(--ease),background .18s var(--ease),transform .12s var(--ease)}
+.appnav a.l:active{transform:scale(.97)}
+.appnav a.l[aria-current="page"]{color:#10131f;background:#f2f0ea}
+@media (hover:hover) and (pointer:fine){.appnav a.l:hover{color:#f2f0ea;background:rgba(242,240,234,.06)}}
+.appnav a:focus-visible{outline:2px solid #f2f0ea;outline-offset:2px}
+@media (max-width:700px){.appnav{flex-wrap:wrap;justify-content:center;row-gap:6px}.appnav .home{width:100%;justify-content:center}.appnav .home .t{display:none}.appnav ul{flex-wrap:wrap;justify-content:center}.appnav a.l{padding:8px 9px;font-size:12.5px}}
+@media (max-width:400px){.appnav a.l{padding:7px 7px;font-size:12px}}
+
+.start{display:inline-flex;align-items:center;gap:8px;margin-top:18px;height:38px;padding:0 16px;border-radius:999px;border:1px solid rgba(242,240,234,.26);color:var(--ink);font:500 13px/1 "Jost",system-ui,sans-serif;text-decoration:none;transition:border-color .18s var(--ease),background .18s var(--ease),transform .12s var(--ease)}
+.start:active{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){.start:hover{border-color:rgba(242,240,234,.55);background:rgba(242,240,234,.05)}}
+
+.coursebar{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;justify-content:space-between;margin:24px 0 0;padding:15px 0 17px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px}
+.facts span{font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.prog{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.track{width:clamp(120px,20vw,190px);height:4px;border-radius:99px;background:var(--raise-2);overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--ink);transition:width .45s var(--ease)}
+.pt{font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.reset{appearance:none;border:0;background:none;padding:4px 2px;color:var(--ink-3);font:500 11px/1 "Jost",system-ui,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+@media (hover:hover) and (pointer:fine){.reset:hover{color:var(--ink)}}
+
+.course{display:grid;grid-template-columns:minmax(0,222px) minmax(0,1fr);gap:clamp(26px,4vw,52px);align-items:start;margin-top:34px}
+.rail{position:sticky;top:18px;padding-top:2px}
+.rail .rt{display:flex;justify-content:space-between;gap:10px;margin:0 0 12px;font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.rail .part{margin:17px 0 5px;font:500 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.rail a{display:flex;align-items:baseline;gap:9px;padding:7px 8px;border-radius:8px;color:var(--ink-2);text-decoration:none;font-size:13px;line-height:1.3;transition:background .16s var(--ease),color .16s var(--ease)}
+.rail a .n{flex:none;font:500 10px/1.5 var(--mono);letter-spacing:.04em;color:var(--ink-3)}
+.rail a.active{background:rgba(242,240,234,.055);color:var(--ink)}
+.rail a.done{color:var(--ink-3)}
+.rail a.done .n{color:var(--t-wood)}
+.rail a.done .n::after{content:" ✓";font-size:9px}
+@media (hover:hover) and (pointer:fine){.rail a:hover{background:rgba(242,240,234,.045);color:var(--ink)}}
+
+.lessons{min-width:0}
+.mod{padding-top:30px;margin-top:38px;border-top:1px solid var(--hair);scroll-margin-top:18px}
+.mod:first-child{margin-top:0;padding-top:0;border-top:0}
+.mk{margin:0;font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.mod h2{margin:7px 0 0;font-size:clamp(24px,2.7vw,31px);font-weight:500;letter-spacing:-.015em;line-height:1.15}
+.mod h2 .hg{font-size:.9em;color:var(--ink-2);margin-right:10px}
+.goal{margin:10px 0 0;color:var(--ink-2);font-size:14px;max-width:70ch}
+.goal b{color:var(--ink);font-weight:500}
+.mod p{margin:12px 0 0;color:var(--ink-2);max-width:72ch}
+.mod p b,.mod li b{color:var(--ink);font-weight:500}
+.mod h3{margin:26px 0 0;font-size:17px;font-weight:500;letter-spacing:-.005em;line-height:1.25}
+.mod ul,.mod ol{margin:10px 0 0;padding-left:20px;color:var(--ink-2);max-width:70ch}
+.mod li{margin:6px 0 0}
+.mod a{color:var(--ink);text-underline-offset:3px}
+
+.take{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:15px 16px;margin:20px 0 0}
+.lab{display:block;font:500 9.5px/1.5 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.take p{margin:0;font-size:13.5px;line-height:1.5}
+.practice{margin:20px 0 0;padding:16px 17px 15px;background:var(--raise);border:1px solid var(--hair);border-radius:14px}
+.practice p{margin:8px 0 0;font-size:13.5px;line-height:1.55}
+.practice details{margin-top:11px;padding-top:10px;border-top:1px solid var(--hair)}
+.practice summary{cursor:pointer;color:var(--ink);font:500 12.5px/1.4 "Jost",system-ui,sans-serif;width:max-content;max-width:100%}
+.practice summary:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.practice details p{margin:9px 0 0}
+.gate{display:flex;gap:9px;align-items:flex-start;margin:20px 0 0;padding-top:13px;border-top:1px solid var(--hair);font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.gate::before{content:"✓";color:var(--t-wood);font-weight:500;line-height:1.35}
+.gate p{margin:0;max-width:70ch;font-size:inherit}
+.modfoot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-top:20px}
+.done-btn{display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 15px;border-radius:999px;border:1px solid var(--hair);background:transparent;color:var(--ink);font:500 12.5px/1 "Jost",system-ui,sans-serif;cursor:pointer;transition:background .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease),transform .12s var(--ease)}
+.done-btn:active{transform:scale(.98)}
+.done-btn .tick{display:grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px solid rgba(242,240,234,.35);font:500 9px/1 var(--mono);color:transparent}
+.done-btn[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.done-btn[aria-pressed="true"] .tick{background:var(--ground);border-color:var(--ground);color:var(--ink)}
+.done-btn[aria-pressed="true"] .tick::before{content:"✓"}
+.next{font-size:12.5px;font-weight:500;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--hair);padding-bottom:2px}
+@media (hover:hover) and (pointer:fine){.next:hover{color:var(--ink);border-color:var(--ink)}}
+
+.five{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:20px 0 0}
+.five article{background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:14px 13px 13px;display:flex;flex-direction:column}
+.five .no{font:500 9.5px/1 var(--mono);letter-spacing:.12em;color:var(--ink-3)}
+.five .g{font:300 31px/1.2 "Noto Sans SC","PingFang SC",sans-serif;margin:10px 0 5px;color:var(--ink)}
+.five .nm{font-size:15px;font-weight:500;line-height:1.2}
+.five .py{font:500 10px/1 var(--mono);color:var(--ink-3);letter-spacing:.04em;margin-top:4px}
+.five .mv{margin:9px 0 0;font-size:12.5px;line-height:1.4;color:var(--ink-2)}
+.five .lm{margin:auto 0 0;padding-top:12px;font-size:11px;line-height:1.45;color:var(--ink-3)}
+@media (max-width:860px){.five{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.five{grid-template-columns:1fr}.five article{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:13px;align-items:start}.five .no{grid-column:1/-1}.five .g{grid-row:2/5;margin:0}.five .lm{grid-column:2;margin-top:10px}}
+
+.words{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0 0}
+.wordgroup{background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:15px 16px}
+.wordgroup h3{margin:0;font:500 9.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.wordgroup dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;margin:11px 0 0}
+.wordgroup dt{font-size:13.5px;font-weight:500;color:var(--ink);white-space:nowrap}
+.wordgroup dt .hz{font:300 13px/1 "Noto Sans SC","PingFang SC",sans-serif;margin-left:5px;color:var(--ink-3)}
+.wordgroup dd{margin:0;font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+@media (max-width:700px){.words{grid-template-columns:1fr}}
+
+.names{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0 0}
+.names article{background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:15px;display:flex;flex-direction:column}
+.names .pt{font:500 13px/1 var(--mono);color:var(--ink);white-space:nowrap}
+.names .py{display:block;margin-top:5px;font-size:12.5px;color:var(--ink-3)}
+.names p{margin:9px 0 0;font-size:12.5px;line-height:1.5}
+.names a{display:block;width:max-content;max-width:100%;margin-top:auto;padding-top:10px;padding-bottom:2px;font-size:12.5px;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
+@media (hover:hover) and (pointer:fine){.names a:hover{border-color:var(--ink)}}
+@media (max-width:760px){.names{grid-template-columns:1fr}}
+
+.cycle{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:14px 0 0;padding:0;list-style:none;max-width:none}
+.cycle li{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--hair);font-size:12px;color:var(--ink-2)}
+.cycle li b{font-weight:500;color:var(--ink)}
+.cycle li .ar{color:var(--ink-3);font-size:10px;margin-left:2px}
+.cycle.ke li{border-style:dashed}
+
+.tablewrap{overflow-x:auto;margin:16px 0 0;border:1px solid var(--hair);border-radius:14px;background:var(--raise);-webkit-overflow-scrolling:touch}
+.tablewrap:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+caption{caption-side:top;text-align:left;padding:13px 15px 0;font:500 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--hair);vertical-align:top}
+thead th{font:500 9.5px/1.35 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);background:var(--raise-2)}
+thead th .hg{font-size:12px;color:var(--ink-2);margin-left:4px}
+tbody th{font-weight:500;color:var(--ink-2);white-space:nowrap}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+.chb{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:20px;padding:0 5px;margin-right:7px;border-radius:4px;background:var(--tint);color:var(--ground);font:500 10px/1 var(--mono);vertical-align:1px}
+tbody th small{display:block;margin-top:4px;font:400 10px/1.2 var(--mono);letter-spacing:.05em;color:var(--ink-3);text-transform:uppercase}
+.cd{display:block;font:500 11.5px/1 var(--mono);color:var(--ink);white-space:nowrap}
+.pn{display:block;margin-top:4px;font-size:11.5px;line-height:1.2;color:var(--ink-3)}
+.el{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:10.5px;line-height:1.2;color:var(--ink-2)}
+.el .dot{width:6px;height:6px}
+td.own{background:rgba(242,240,234,.045);box-shadow:inset 0 2px 0 var(--tint)}
+.tscroll{display:none;margin:8px 0 0;font:500 9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+@media (max-width:760px){.tscroll{display:block}}
+
+.sig{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 0}
+.sig article{background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:8px}
+.sig .ch{display:flex;justify-content:space-between;gap:10px;font:500 9.5px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.sig .ch em{font-style:normal;color:var(--ink-2)}
+.sig .pt{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.sig .pt .cd{font-size:14px;display:inline}
+.sig .pt .pn{display:inline;margin:0;font-size:14px;color:var(--ink-2)}
+.sig .cat{margin:0;font-size:12px;line-height:1.3;color:var(--ink-2)}
+.sig .cat b{color:var(--ink);font-weight:500}
+.sig .loc{margin:0;font-size:12px;line-height:1.5;color:var(--ink-3)}
+.sig .go{margin-top:auto;font-size:11.5px;font-weight:500;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--hair);padding-bottom:2px;width:max-content;max-width:100%}
+@media (max-width:620px){.sig{grid-template-columns:1fr}}
+
+.lm{margin:18px 0 0;padding-top:18px;border-top:1px solid var(--hair)}
+.lm:first-of-type{border-top:0;padding-top:0;margin-top:22px}
+.lm h3{margin:0;display:flex;align-items:baseline;gap:9px;font-size:17.5px;font-weight:500}
+.lm h3 .hg{font-size:22px;color:var(--ink-3)}
+.lm .where{margin:7px 0 0;font-size:13px;line-height:1.5;color:var(--ink-2);max-width:70ch}
+.ptrow{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:9px 0 0}
+.ptrow .rl{width:30px;flex:none;font:500 9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.pts{display:flex;flex-wrap:wrap;gap:4px}
+.pts span{display:inline-flex;align-items:center;height:23px;padding:0 7px;border-radius:4px;background:var(--tint);color:var(--ground);font:500 10px/1 var(--mono);letter-spacing:.02em}
+.lm .note{margin:9px 0 0;font-size:12.5px;line-height:1.5;color:var(--ink-3);max-width:70ch}
+
+.route{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:18px 0 0}
+.route article{background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:13px}
+.route .st{margin:0;font:500 9.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.route .nm{margin:7px 0 0;font-size:14.5px;font-weight:500}
+.route .at{margin:5px 0 0;font-size:12px;line-height:1.45;color:var(--ink-2)}
+@media (max-width:820px){.route{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.route{grid-template-columns:1fr}}
+
+.check{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.check li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.check li::before{content:"";flex:none;width:14px;height:14px;margin-top:3px;border-radius:3px;border:1px solid rgba(242,240,234,.3)}
+.ledger{min-width:760px}
+.derived{background:var(--raise);border:1px solid var(--hair);border-radius:14px;padding:15px 16px;margin:16px 0 0}
+.derived .k{font:500 9.5px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.derived .row{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:9px}
+.derived .row span{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:5px;border:1px solid var(--hair);font:500 10.5px/1 var(--mono);color:var(--ink-2)}
+.derived .row span b{color:var(--ink);font-weight:500}
+.derived .row i{font-style:normal;color:var(--ink-3);font-size:10px}
+.derived p{margin:9px 0 0;font-size:12.5px;line-height:1.5;color:var(--ink-3)}
+
+footer.foot{margin:56px 0 0;padding-top:18px;border-top:1px solid var(--hair);font-size:12px;line-height:1.6;color:var(--ink-3);max-width:82ch}
+footer.foot a{color:var(--ink-2)}
+
+@media (max-width:960px){
+  .course{grid-template-columns:1fr;gap:22px}
+  .rail{position:static;padding:0 0 18px;border-bottom:1px solid var(--hair)}
+  .rail .rt{margin-bottom:10px}
+  .rail .part{display:none}
+  .rail ol{grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+  .rail a{padding:8px 9px;background:rgba(242,240,234,.025)}
+}
+@media (max-width:340px){.rail ol{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap"><nav class="appnav" aria-label="Shu Atlas"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="basics.html">Basics</a></li><li><a class="l" href="learn.html" aria-current="page">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></nav>
+
+<header class="top">
+  <p class="kicker">Learn · a nine-module course</p>
+  <h1>Learn the Shu points</h1>
+  <p class="lede">A short course in the two ideas behind the atlas: the <b>river</b> that runs through every channel, and the <b>Five Elements</b> that colour its points. Work through the modules in order, or jump straight to an element or a landmark.</p>
+  <a class="start" href="#m1">Start with module 1 <span aria-hidden="true">→</span></a>
+  <div class="coursebar">
+    <div class="facts"><span>9 modules</span><span>Beginner</span><span>About 40 minutes</span><span>No TCM assumed</span></div>
+    <div class="prog">
+      <div class="track" id="progtrack" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="progbar"></i></div>
+      <span class="pt" id="progtext" aria-live="polite">0 / 9 complete</span>
+      <button class="reset" id="reset" type="button">Reset</button>
+    </div>
+  </div>
+</header>
+
+<div class="course">
+  <aside class="rail" aria-label="Course map">
+    <p class="rt"><span>Course map</span><span id="mapcount">0 / 9</span></p>
+    <p class="part">I · Foundations</p>
+    <ol>
+      <li><a href="#m1"><span class="n">01</span>Why the names</a></li>
+      <li><a href="#m2"><span class="n">02</span>The element cycle</a></li>
+    </ol>
+    <p class="part">II · The five elements</p>
+    <ol>
+      <li><a href="#m3"><span class="n">03</span>Wood</a></li>
+      <li><a href="#m4"><span class="n">04</span>Fire</a></li>
+      <li><a href="#m5"><span class="n">05</span>Earth</a></li>
+      <li><a href="#m6"><span class="n">06</span>Metal</a></li>
+      <li><a href="#m7"><span class="n">07</span>Water</a></li>
+    </ol>
+    <p class="part">III · The body map</p>
+    <ol>
+      <li><a href="#m8"><span class="n">08</span>Fingertip to elbow</a></li>
+      <li><a href="#m9"><span class="n">09</span>The 30-second read</a></li>
+    </ol>
+  </aside>
+
+  <main class="lessons">
+
+    <section class="mod" id="m1">
+      <div class="modhead">
+        <p class="mk">Part I · Foundations · Module 01</p>
+        <h2>Why the names</h2>
+        <p class="goal"><b>By the end you can</b> put Well, Spring, Stream, River and Sea in order, and take a point name like Shaoshang or Quchi apart without guessing.</p>
+      </div>
+      <p>Start with the image the classical texts use: a channel is a river. At the fingers and toes it is narrow, close to the surface, and easy to feel. As it travels toward the elbow or knee it gathers, widens, runs deeper, and finally sinks into the joint. The five Shu categories are five stages on that journey. Every channel has one of each, always in the same order from the extremity inward.</p>
+
+      <div class="five">
+        <article>
+          <span class="no">01 · JING</span>
+          <div class="g" lang="zh" aria-hidden="true">井</div>
+          <div class="nm">Jing-Well</div>
+          <div class="py">jǐng xué</div>
+          <p class="mv">Qi <b>emerges</b>. Water first rises in a well.</p>
+          <p class="lm">Fingertip or toe tip, about 0.1 cun from the nail.</p>
+        </article>
+        <article>
+          <span class="no">02 · YING</span>
+          <div class="g" lang="zh" aria-hidden="true">滎</div>
+          <div class="nm">Ying-Spring</div>
+          <div class="py">yíng xué</div>
+          <p class="mv">Qi <b>glides</b>. A shallow spring slips over the ground.</p>
+          <p class="lm">Web of the fingers or toes; on the palmar side for the yin hand channels.</p>
+        </article>
+        <article>
+          <span class="no">03 · SHU</span>
+          <div class="g" lang="zh" aria-hidden="true">輸</div>
+          <div class="nm">Shu-Stream</div>
+          <div class="py">shū xué</div>
+          <p class="mv">Qi <b>pours</b>. The current gathers and spreads.</p>
+          <p class="lm">Wrist or ankle crease.</p>
+        </article>
+        <article>
+          <span class="no">04 · JING</span>
+          <div class="g" lang="zh" aria-hidden="true">經</div>
+          <div class="nm">Jing-River</div>
+          <div class="py">jīng xué</div>
+          <p class="mv">Qi <b>flows</b>. A strong, steady current.</p>
+          <p class="lm">Forearm or calf, usually 1 to 4 cun above the wrist or ankle.</p>
+        </article>
+        <article>
+          <span class="no">05 · HE</span>
+          <div class="g" lang="zh" aria-hidden="true">合</div>
+          <div class="nm">He-Sea</div>
+          <div class="py">hé xué</div>
+          <p class="mv">Qi <b>enters</b>. The river reaches the sea and sinks inward.</p>
+          <p class="lm">Elbow or knee: the crease or the hollows just around it.</p>
+        </article>
+      </div>
+
+      <div class="take"><span class="lab">In one line</span><p>The station is fixed; the element is not. Every channel runs Well → Spring → Stream → River → Sea. Polarity decides which element each station carries.</p></div>
+
+      <p>Two categories share the pinyin <b>jing</b>: the Well 井 and the River 經. The atlas keeps the English attached, <b>Jing-Well</b> and <b>Jing-River</b>, so a spoken instruction cannot send you to the wrong end of the channel.</p>
+
+      <h3>The name toolkit</h3>
+      <p>The category names come from the river. Individual point names are more varied, but most are built from two or three pieces: a <b>landscape word</b>, a <b>size or position word</b>, and occasionally an <b>element cue</b>. Read the pieces and the picture usually appears.</p>
+
+      <div class="words">
+        <div class="wordgroup">
+          <h3>Water &amp; landscape</h3>
+          <dl>
+            <dt>井<span class="hz" lang="zh">jǐng</span></dt><dd>well. <i>Tianjing</i> 天井, heavenly well.</dd>
+            <dt>泉<span class="hz" lang="zh">quán</span></dt><dd>spring. <i>Yongquan</i> 涌泉, gushing spring.</dd>
+            <dt>溪<span class="hz" lang="zh">xī</span></dt><dd>stream. <i>Houxi</i> 后溪, back ravine.</dd>
+            <dt>淵<span class="hz" lang="zh">yuān</span></dt><dd>abyss. <i>Taiyuan</i> 太渊, great abyss.</dd>
+            <dt>海<span class="hz" lang="zh">hǎi</span></dt><dd>sea. <i>Xiaohai</i> 小海, small sea.</dd>
+            <dt>池 / 澤<span class="hz" lang="zh">chí / zé</span></dt><dd>pool / marsh. <i>Quchi</i> 曲池, bend pool; <i>Chize</i> 尺泽, cubit marsh.</dd>
+            <dt>谷 / 溝<span class="hz" lang="zh">gǔ / gōu</span></dt><dd>valley / ditch. <i>Yingu</i> 阴谷, yin valley; <i>Zhigou</i> 支沟, branch ditch.</dd>
+            <dt>渚 / 冲<span class="hz" lang="zh">zhǔ / chōng</span></dt><dd>islet / surge. <i>Zhongzhu</i> 中渚, central islet; <i>Taichong</i> 太冲, great surge.</dd>
+          </dl>
+        </div>
+        <div class="wordgroup">
+          <h3>Size &amp; position</h3>
+          <dl>
+            <dt>少 / 小<span class="hz" lang="zh">shào / xiǎo</span></dt><dd>lesser / small. <i>Shaoshang</i> 少商; <i>Xiaohai</i> 小海.</dd>
+            <dt>太 / 大<span class="hz" lang="zh">tài / dà</span></dt><dd>great / big. <i>Taiyuan</i> 太渊; <i>Dadun</i> 大敦.</dd>
+            <dt>中<span class="hz" lang="zh">zhōng</span></dt><dd>central. <i>Zhongzhu</i> 中渚, central islet.</dd>
+            <dt>前 / 後<span class="hz" lang="zh">qián / hòu</span></dt><dd>front / back. <i>Qiangu</i> 前谷; <i>Houxi</i> 后溪.</dd>
+            <dt>內 / 外<span class="hz" lang="zh">nèi / wài</span></dt><dd>inner / outer. <i>Neiting</i> 内庭, inner court.</dd>
+            <dt>曲<span class="hz" lang="zh">qū</span></dt><dd>bend. <i>Quchi</i> 曲池, bend pool; <i>Ququan</i> 曲泉, spring at the bend. Both sit where the channel turns at a joint.</dd>
+            <dt>足<span class="hz" lang="zh">zú</span></dt><dd>foot. <i>Zusanli</i> 足三里, leg three li.</dd>
+          </dl>
+        </div>
+        <div class="wordgroup">
+          <h3>Thresholds</h3>
+          <dl>
+            <dt>門 / 關<span class="hz" lang="zh">mén / guān</span></dt><dd>gate / pass. <i>Shenmen</i> 神门, spirit gate; <i>Guanchong</i> 关冲.</dd>
+            <dt>道<span class="hz" lang="zh">dào</span></dt><dd>path. <i>Lingdao</i> 灵道, spirit path.</dd>
+            <dt>庭<span class="hz" lang="zh">tíng</span></dt><dd>court. <i>Neiting</i> 内庭, inner court.</dd>
+            <dt>府 / 宮<span class="hz" lang="zh">fǔ / gōng</span></dt><dd>mansion / palace. <i>Shaofu</i> 少府; <i>Laogong</i> 劳宫, palace of toil.</dd>
+            <dt>里<span class="hz" lang="zh">lǐ</span></dt><dd>a measure of distance. <i>Zusanli</i> 足三里, three li down the leg.</dd>
+          </dl>
+        </div>
+        <div class="wordgroup">
+          <h3>Element cues</h3>
+          <dl>
+            <dt>商<span class="hz" lang="zh">shāng</span></dt><dd>the Metal note of the five classical notes. <i>Shaoshang</i> 少商 and <i>Shangyang</i> 商阳 both sit on Metal channels.</dd>
+            <dt>陽 / 陰<span class="hz" lang="zh">yáng / yīn</span></dt><dd>yang / yin. <i>Yanglingquan</i> 阳陵泉 on the yang Gallbladder; <i>Yinlingquan</i> 阴陵泉 on the yin Spleen.</dd>
+            <dt>白<span class="hz" lang="zh">bái</span></dt><dd>white. A colour word, but not a reliable element cue: <i>Yinbai</i> 隐白 and <i>Taibai</i> 太白 both sit on the Spleen, an Earth channel.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <h3>Three names to read</h3>
+      <div class="names">
+        <article>
+          <span class="pt">LU11</span><span class="py">Shaoshang 少商</span>
+          <p><b>少</b> lesser + <b>商</b> the Metal note. A small Metal point at the thumb tip, on the Metal Lung channel. The name points at both size and element.</p>
+        </article>
+        <article>
+          <span class="pt">LI11</span><span class="py">Quchi 曲池</span>
+          <p><b>曲</b> bend + <b>池</b> pool. It sits at the lateral end of the elbow crease, where the channel bends around the joint. A pool in the bend.</p>
+        </article>
+        <article>
+          <span class="pt">TB10</span><span class="py">Tianjing 天井</span>
+          <p><b>天</b> heaven + <b>井</b> well. A well set high on the arm, in the hollow just above the olecranon. The name is a location joke: a well in the sky.</p>
+        </article>
+      </div>
+
+      <p>These readings are memory aids, not a dictionary. Names shifted across centuries and references gloss them differently. The textbook location is the authority: use the name to recall the picture, then confirm the landmark.</p>
+
+      <div class="practice"><span class="lab">Practice · 60 seconds</span>
+        <p>Cover the five cards above. Say the five stations in order from fingertip to elbow, and give the movement verb for each.</p>
+        <details><summary>Show the answer</summary>
+          <p><b>Well</b> emerges, <b>Spring</b> glides, <b>Stream</b> pours, <b>River</b> flows, <b>Sea</b> enters. The order never changes from the extremity inward.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can put the five stations in order and decode a name into its two parts, even if you cannot yet say which element sits on each station.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m2">Next · The element cycle <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m2">
+      <div class="modhead">
+        <p class="mk">Part I · Foundations · Module 02</p>
+        <h2>The element cycle</h2>
+        <p class="goal"><b>By the end you can</b> walk both cycles in either direction, and rebuild every Shu point's element from the channel's polarity and element.</p>
+      </div>
+      <p>Two element facts sit side by side in this atlas. A <b>channel</b> belongs to one element: the Lung channel is Metal. A <b>Shu point</b> carries an element of its own: LU11 is Wood even though the Lung is Metal. Keep the two facts separate. They meet at one point per channel, the <b>horary point</b>, where the point's element matches the channel's element.</p>
+
+      <p>The five phases are processes, not five substances in jars. Each names a kind of movement:</p>
+      <ul>
+        <li><b>Wood</b> rises and expands: spring, germination, the push upward.</li>
+        <li><b>Fire</b> flares and warms: summer, full expression.</li>
+        <li><b>Earth</b> settles and transforms: late summer, the still centre between seasons.</li>
+        <li><b>Metal</b> contracts and refines: autumn, the clean edge, taking in and letting go.</li>
+        <li><b>Water</b> stores and descends: winter, depth, the reserve that feeds the next spring.</li>
+      </ul>
+
+      <h3>The generating cycle · 生</h3>
+      <ul class="cycle">
+        <li><b>Wood</b> feeds <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Fire</b> makes <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Earth</b> bears <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Metal</b> carries <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Water</b> nourishes <span class="ar" aria-hidden="true">→</span></li>
+      </ul>
+      <p>In full: Wood feeds Fire, Fire makes Earth, Earth bears Metal, Metal carries Water, Water nourishes Wood. This is the cycle the Shu points follow across the limb. It is also the cycle a practitioner means by “generating” or <b>sheng</b> 生.</p>
+
+      <h3>The controlling cycle · 克</h3>
+      <ul class="cycle ke">
+        <li><b>Wood</b> parts <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Earth</b> dams <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Water</b> quenches <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Fire</b> melts <span class="ar" aria-hidden="true">→</span></li>
+        <li><b>Metal</b> cuts <span class="ar" aria-hidden="true">→</span></li>
+      </ul>
+      <p>In full: Wood parts Earth, Earth dams Water, Water quenches Fire, Fire melts Metal, Metal cuts Wood. Read it as a star across the generating ring: each phase controls the phase <b>two steps ahead</b>. Wood is two steps before Earth; Fire two before Metal; Earth two before Water; Metal two before Wood; Water two before Fire.</p>
+
+      <h3>The phase ledger</h3>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="The Five Elements: season, organs, channels, horary points and cycle relations">
+        <table class="ledger">
+          <caption>Five phases at a glance</caption>
+          <thead><tr><th scope="col">Phase</th><th scope="col">Season</th><th scope="col">Organs</th><th scope="col">Channels</th><th scope="col">Horary points</th><th scope="col">Feeds</th><th scope="col">Controls</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></th><td>Spring</td><td>Liver · Gallbladder</td><td>LR · GB</td><td>LR1 · GB41</td><td>Fire</td><td>Earth</td></tr>
+            <tr><th scope="row"><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></th><td>Summer</td><td>Heart · Small Intestine; Pericardium · Triple Burner</td><td>HT · SI · PC · TB</td><td>HT8 · SI5 · PC8 · TB6</td><td>Earth</td><td>Metal</td></tr>
+            <tr><th scope="row"><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></th><td>Late summer</td><td>Spleen · Stomach</td><td>SP · ST</td><td>SP3 · ST36</td><td>Metal</td><td>Water</td></tr>
+            <tr><th scope="row"><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></th><td>Autumn</td><td>Lung · Large Intestine</td><td>LU · LI</td><td>LU8 · LI1</td><td>Water</td><td>Wood</td></tr>
+            <tr><th scope="row"><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></th><td>Winter</td><td>Kidney · Bladder</td><td>KI · BL</td><td>KI10 · BL66</td><td>Wood</td><td>Fire</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see all columns →</p>
+
+      <h3>One flip, two sequences</h3>
+      <p>The element on a station depends on the channel's <b>polarity</b>. Yin channels start at Wood on the Well. Yang channels start at Metal on the Well. Both then walk the generating cycle across the five stations.</p>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Element by Shu station and channel polarity">
+        <table>
+          <caption>Element by station</caption>
+          <thead><tr><th scope="col">Station</th><th scope="col">Yin channel</th><th scope="col">Yang channel</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Jing-Well</th><td><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td><td><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td></tr>
+            <tr><th scope="row">Ying-Spring</th><td><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td><td><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row">Shu-Stream</th><td><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td><td><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td></tr>
+            <tr><th scope="row">Jing-River</th><td><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td><td><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td></tr>
+            <tr><th scope="row">He-Sea</th><td><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td><td><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see both columns →</p>
+
+      <h3>Derive a whole channel</h3>
+      <p>Take the <b>Lung</b>: yin, and its own element is Metal. Yin starts at Wood, so walk the generating cycle across the stations. The horary point is where the point element matches the channel element.</p>
+      <div class="derived">
+        <div class="k">Lung · Yin · Metal</div>
+        <div class="row"><span><b>LU11</b> Well · Wood</span><i>→</i><span><b>LU10</b> Spring · Fire</span><i>→</i><span><b>LU9</b> Stream · Earth</span><i>→</i><span><b>LU8</b> River · Metal</span><i>→</i><span><b>LU5</b> Sea · Water</span></div>
+        <p>Metal lands on the River, so <b>LU8 Jingqu is the horary point</b>. The channel is Metal; the River station is Metal; they meet.</p>
+      </div>
+      <p>Now the <b>Gallbladder</b>: yang, and its own element is Wood. Yang starts at Metal at the Well.</p>
+      <div class="derived">
+        <div class="k">Gallbladder · Yang · Wood</div>
+        <div class="row"><span><b>GB44</b> Well · Metal</span><i>→</i><span><b>GB43</b> Spring · Water</span><i>→</i><span><b>GB41</b> Stream · Wood</span><i>→</i><span><b>GB38</b> River · Fire</span><i>→</i><span><b>GB34</b> Sea · Earth</span></div>
+        <p>Wood lands on the Stream, so <b>GB41 Zulinqi is the horary point</b>. The Lung's target was Metal; the Gallbladder's is Wood. The method is identical — only the element you are looking for changes.</p>
+      </div>
+
+      <div class="take"><span class="lab">Why the flip</span><p>Yin and yang channels are paired. Because one sequence starts at Wood and the other at Metal, a paired channel never carries the same element at the same station. LU11 is Wood; LI1 is Metal. LU8 is Metal; LI5 is Fire. The pair is complementary, not duplicated.</p></div>
+
+      <div class="practice"><span class="lab">Practice · derive it</span>
+        <p>The Stomach is a yang channel whose own element is Earth. Starting at the Well, list its five point elements. Which is the horary point?</p>
+        <details><summary>Show the answer</summary>
+          <p>Yang starts at Metal: <b>ST45</b> Metal, <b>ST44</b> Water, <b>ST43</b> Wood, <b>ST41</b> Fire, <b>ST36</b> Earth. The channel's own element, Earth, lands on the Sea, so <b>ST36 Zusanli</b> is the horary point.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can take any channel's polarity and element, list the five point elements, and name the horary point without opening a table.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m3">Next · Wood <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m3">
+      <div class="modhead">
+        <p class="mk">Part II · The five elements · Module 03</p>
+        <h2><span class="hg" lang="zh" aria-hidden="true">木</span>Wood</h2>
+        <p class="goal"><b>By the end you can</b> say where Wood lands on the Liver and the Gallbladder, and why the two stations differ.</p>
+      </div>
+      <p>Wood is the rising phase: spring, germination, the push upward and outward. Its channels are the <b>Liver</b> (yin) and <b>Gallbladder</b> (yang). Both channels belong to Wood, but their points do not carry the same elements at the same stations.</p>
+      <p>On the yin Liver the sequence starts at Wood, so Wood is the <b>Well</b>: LR1 Dadun, at the big-toe nail. On the yang Gallbladder the sequence starts at Metal, so Wood arrives two stations later at the <b>Stream</b>: GB41 Zulinqi, on the foot. Those are the two Wood horary points.</p>
+
+      <div class="sig">
+        <article>
+          <div class="ch"><span>LR · Liver</span><em>Yin · Wood</em></div>
+          <div class="pt"><span class="cd">LR1</span><span class="pn">Dadun</span></div>
+          <p class="cat"><b>Jing-Well</b> · Wood · horary</p>
+          <p class="loc">On the big toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.</p>
+          <a class="go" href="lr-v4-meridian-chart.html#LR1">Open the Liver chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>GB · Gallbladder</span><em>Yang · Wood</em></div>
+          <div class="pt"><span class="cd">GB41</span><span class="pn">Zulinqi</span></div>
+          <p class="cat"><b>Shu-Stream</b> · Wood · horary</p>
+          <p class="loc">On the dorsum of the foot, distal to the junction of the fourth and fifth metatarsal bases, in the depression lateral to the extensor digiti minimi tendon.</p>
+          <a class="go" href="gb-v4-meridian-chart.html#GB41">Open the Gallbladder chart <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+
+      <div class="take"><span class="lab">Remember</span><p>Wood: yin at the Well, yang at the Stream. LR1 and GB41 carry the channel's own element, which is what makes them the horary points.</p></div>
+
+      <h3>All five stations</h3>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Liver and Gallbladder Shu points">
+        <table>
+          <caption>Liver and Gallbladder · five stations each</caption>
+          <thead><tr><th scope="col">Channel</th><th scope="col">Well <span class="hg">井</span></th><th scope="col">Spring <span class="hg">滎</span></th><th scope="col">Stream <span class="hg">輸</span></th><th scope="col">River <span class="hg">經</span></th><th scope="col">Sea <span class="hg">合</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-wood)">LR</span>Liver<small>Yin · Wood</small></th>
+              <td class="own" style="--tint:var(--t-wood)"><span class="cd">LR1</span><span class="pn">Dadun</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">LR2</span><span class="pn">Xingjian</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">LR3</span><span class="pn">Taichong</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td>
+              <td><span class="cd">LR4</span><span class="pn">Zhongfeng</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">LR8</span><span class="pn">Ququan</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-wood)">GB</span>Gallbladder<small>Yang · Wood</small></th>
+              <td><span class="cd">GB44</span><span class="pn">Zuqiaoyin</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">GB43</span><span class="pn">Xiaxi</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td>
+              <td class="own" style="--tint:var(--t-wood)"><span class="cd">GB41</span><span class="pn">Zulinqi</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">GB38</span><span class="pn">Yangfu</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">GB34</span><span class="pn">Yanglingquan</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see all five stations →</p>
+      <p>Notice the geography, not just the arithmetic. LR1 sits at the tip of the big toe; GB41 is out on the dorsum of the foot. The same element reaches its own station at different distances from the extremity because the two sequences start in different places.</p>
+
+      <div class="practice"><span class="lab">Practice · one station</span>
+        <p>On the Gallbladder, which station carries Fire? On the Liver, which station carries Metal?</p>
+        <details><summary>Show the answer</summary>
+          <p>Fire on the Gallbladder is the <b>River</b>: GB38 Yangfu. Metal on the Liver is also the <b>River</b>: LR4 Zhongfeng. Both channels reach those elements one station in from the Sea.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can name both Wood channels, both horary points, and the station each one occupies.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m4">Next · Fire <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m4">
+      <div class="modhead">
+        <p class="mk">Part II · The five elements · Module 04</p>
+        <h2><span class="hg" lang="zh" aria-hidden="true">火</span>Fire</h2>
+        <p class="goal"><b>By the end you can</b> name all four Fire channels and predict where Fire lands on each of them.</p>
+      </div>
+      <p>Fire is the flaring phase: summer, warmth, full expression. It is the only phase with <b>four</b> channels, two yin-yang pairs. The <b>Heart</b> and <b>Small Intestine</b> are the classical pair; the <b>Pericardium</b> and <b>Triple Burner</b> mirror them on the arm.</p>
+      <p>On both yin channels Fire lands at the <b>Spring</b>: HT8 Shaofu and PC8 Laogong, both on the palm. On both yang channels it lands at the <b>River</b>: SI5 Yanggu at the wrist and TB6 Zhigou on the forearm. That symmetry is a useful check. If you know one Fire channel, you can predict the station on the other three.</p>
+
+      <div class="sig">
+        <article>
+          <div class="ch"><span>HT · Heart</span><em>Yin · Fire</em></div>
+          <div class="pt"><span class="cd">HT8</span><span class="pn">Shaofu</span></div>
+          <p class="cat"><b>Ying-Spring</b> · Fire · horary</p>
+          <p class="loc">On the palm, between the fourth and fifth metacarpal bones, in the depression proximal to the fifth metacarpophalangeal joint, where the little finger tip rests in a loose fist.</p>
+          <a class="go" href="ht-v4-meridian-chart.html#HT8">Open the Heart chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>SI · Small Intestine</span><em>Yang · Fire</em></div>
+          <div class="pt"><span class="cd">SI5</span><span class="pn">Yanggu</span></div>
+          <p class="cat"><b>Jing-River</b> · Fire · horary</p>
+          <p class="loc">On the ulnar side of the wrist, in the depression between the styloid process of the ulna and the triquetrum.</p>
+          <a class="go" href="si-v4-meridian-chart.html#SI5">Open the Small Intestine chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>PC · Pericardium</span><em>Yin · Fire</em></div>
+          <div class="pt"><span class="cd">PC8</span><span class="pn">Laogong</span></div>
+          <p class="cat"><b>Ying-Spring</b> · Fire · horary</p>
+          <p class="loc">On the palm, between the second and third metacarpal bones, proximal to the metacarpophalangeal joints, where the middle finger tip rests in a loose fist.</p>
+          <a class="go" href="pc-v4-meridian-chart.html#PC8">Open the Pericardium chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>TB · Triple Burner</span><em>Yang · Fire</em></div>
+          <div class="pt"><span class="cd">TB6</span><span class="pn">Zhigou</span></div>
+          <p class="cat"><b>Jing-River</b> · Fire · horary</p>
+          <p class="loc">On the dorsal forearm, 3 cun proximal to the dorsal wrist crease, midway between the radius and the ulna.</p>
+          <a class="go" href="tb-v4-meridian-chart.html#TB6">Open the Triple Burner chart <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+
+      <div class="take"><span class="lab">Remember</span><p>Fire: yin at the Spring, yang at the River, in both pairs. HT8 and PC8 share the palm; SI5 and TB6 both sit on the yang side of the wrist and forearm.</p></div>
+
+      <h3>All five stations</h3>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Heart, Small Intestine, Pericardium and Triple Burner Shu points">
+        <table>
+          <caption>The four Fire channels · five stations each</caption>
+          <thead><tr><th scope="col">Channel</th><th scope="col">Well <span class="hg">井</span></th><th scope="col">Spring <span class="hg">滎</span></th><th scope="col">Stream <span class="hg">輸</span></th><th scope="col">River <span class="hg">經</span></th><th scope="col">Sea <span class="hg">合</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-fire)">HT</span>Heart<small>Yin · Fire</small></th>
+              <td><span class="cd">HT9</span><span class="pn">Shaochong</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td class="own" style="--tint:var(--t-fire)"><span class="cd">HT8</span><span class="pn">Shaofu</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">HT7</span><span class="pn">Shenmen</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td>
+              <td><span class="cd">HT4</span><span class="pn">Lingdao</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">HT3</span><span class="pn">Shaohai</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-fire)">SI</span>Small Intestine<small>Yang · Fire</small></th>
+              <td><span class="cd">SI1</span><span class="pn">Shaoze</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">SI2</span><span class="pn">Qiangu</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td>
+              <td><span class="cd">SI3</span><span class="pn">Houxi</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td class="own" style="--tint:var(--t-fire)"><span class="cd">SI5</span><span class="pn">Yanggu</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">SI8</span><span class="pn">Xiaohai</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-fire)">PC</span>Pericardium<small>Yin · Fire</small></th>
+              <td><span class="cd">PC9</span><span class="pn">Zhongchong</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td class="own" style="--tint:var(--t-fire)"><span class="cd">PC8</span><span class="pn">Laogong</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">PC7</span><span class="pn">Daling</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td>
+              <td><span class="cd">PC5</span><span class="pn">Jianshi</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">PC3</span><span class="pn">Quze</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-fire)">TB</span>Triple Burner<small>Yang · Fire</small></th>
+              <td><span class="cd">TB1</span><span class="pn">Guanchong</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">TB2</span><span class="pn">Yemen</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td>
+              <td><span class="cd">TB3</span><span class="pn">Zhongzhu</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td class="own" style="--tint:var(--t-fire)"><span class="cd">TB6</span><span class="pn">Zhigou</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">TB10</span><span class="pn">Tianjing</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see all five stations →</p>
+
+      <div class="practice"><span class="lab">Practice · the symmetry</span>
+        <p>Which station carries Fire on the Heart? Which carries it on the Triple Burner? What do the answers have in common with the Pericardium and Small Intestine?</p>
+        <details><summary>Show the answer</summary>
+          <p>Heart: <b>Spring</b>, HT8. Triple Burner: <b>River</b>, TB6. The Pericardium repeats the Heart (Spring, PC8) and the Small Intestine repeats the Triple Burner (River, SI5). Yin Fire is always Spring; yang Fire is always River.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can list all four Fire channels and their horary points without mixing up the yin and yang stations.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m5">Next · Earth <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m5">
+      <div class="modhead">
+        <p class="mk">Part II · The five elements · Module 05</p>
+        <h2><span class="hg" lang="zh" aria-hidden="true">土</span>Earth</h2>
+        <p class="goal"><b>By the end you can</b> place Earth on the Spleen and Stomach, and explain why the two horary points sit at opposite ends of the leg route.</p>
+      </div>
+      <p>Earth is the settling phase: late summer, the centre, the moment of transformation between seasons. Its channels are the <b>Spleen</b> (yin) and <b>Stomach</b> (yang). On the yin Spleen, Earth lands at the <b>Stream</b>: SP3 Taibai, on the medial foot. On the yang Stomach, it lands at the <b>Sea</b>: ST36 Zusanli, below the knee.</p>
+      <p>The two Earth horary points sit at opposite ends of the leg route. SP3 is down on the foot, where the Stream gathers; ST36 is below the knee, where the Sea sinks inward. Same element, different geography.</p>
+
+      <div class="sig">
+        <article>
+          <div class="ch"><span>SP · Spleen</span><em>Yin · Earth</em></div>
+          <div class="pt"><span class="cd">SP3</span><span class="pn">Taibai</span></div>
+          <p class="cat"><b>Shu-Stream</b> · Earth · horary</p>
+          <p class="loc">On the medial foot, in the depression proximal to the first metatarsophalangeal joint, at the border of the red and white skin.</p>
+          <a class="go" href="sp-v4-meridian-chart.html#SP3">Open the Spleen chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>ST · Stomach</span><em>Yang · Earth</em></div>
+          <div class="pt"><span class="cd">ST36</span><span class="pn">Zusanli</span></div>
+          <p class="cat"><b>He-Sea</b> · Earth · horary</p>
+          <p class="loc">3 cun below ST35, one finger-breadth lateral to the anterior crest of the tibia.</p>
+          <a class="go" href="st-v4-meridian-chart.html#ST36">Open the Stomach chart <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+
+      <div class="take"><span class="lab">Remember</span><p>Earth: yin at the Stream, yang at the Sea. SP3 is the point on the foot; ST36 is the point below the knee.</p></div>
+
+      <h3>All five stations</h3>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Spleen and Stomach Shu points">
+        <table>
+          <caption>Spleen and Stomach · five stations each</caption>
+          <thead><tr><th scope="col">Channel</th><th scope="col">Well <span class="hg">井</span></th><th scope="col">Spring <span class="hg">滎</span></th><th scope="col">Stream <span class="hg">輸</span></th><th scope="col">River <span class="hg">經</span></th><th scope="col">Sea <span class="hg">合</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-earth)">SP</span>Spleen<small>Yin · Earth</small></th>
+              <td><span class="cd">SP1</span><span class="pn">Yinbai</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">SP2</span><span class="pn">Dadu</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td class="own" style="--tint:var(--t-earth)"><span class="cd">SP3</span><span class="pn">Taibai</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td>
+              <td><span class="cd">SP5</span><span class="pn">Shangqiu</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">SP9</span><span class="pn">Yinlingquan</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-earth)">ST</span>Stomach<small>Yang · Earth</small></th>
+              <td><span class="cd">ST45</span><span class="pn">Lidui</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">ST44</span><span class="pn">Neiting</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td>
+              <td><span class="cd">ST43</span><span class="pn">Xiangu</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">ST41</span><span class="pn">Jiexi</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td class="own" style="--tint:var(--t-earth)"><span class="cd">ST36</span><span class="pn">Zusanli</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see all five stations →</p>
+
+      <div class="practice"><span class="lab">Practice · find the element</span>
+        <p>Which station carries Wood on the Spleen? Which carries it on the Stomach?</p>
+        <details><summary>Show the answer</summary>
+          <p>Spleen: <b>Well</b>, SP1 Yinbai. Stomach: <b>Stream</b>, ST43 Xiangu. The yin Spleen starts at Wood at the Well; the yang Stomach reaches Wood at the Stream.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can name both Earth channels, both horary points, and point to where each one sits on the leg.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m6">Next · Metal <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m6">
+      <div class="modhead">
+        <p class="mk">Part II · The five elements · Module 06</p>
+        <h2><span class="hg" lang="zh" aria-hidden="true">金</span>Metal</h2>
+        <p class="goal"><b>By the end you can</b> place Metal on the Lung and Large Intestine, and explain why this phase breaks the “own point sits farther in” pattern.</p>
+      </div>
+      <p>Metal is the contracting phase: autumn, the clean edge, taking in and refining. Its channels are the <b>Lung</b> (yin) and <b>Large Intestine</b> (yang). On the yin Lung, Metal lands at the <b>River</b>: LU8 Jingqu, 1 cun above the wrist. On the yang Large Intestine, Metal is the first station, the <b>Well</b>: LI1 Shangyang, at the index fingertip.</p>
+      <p>Metal is the phase where the yang channel's own point sits closest to the tip. The Lung's horary point is up the forearm; the Large Intestine's is right at the nail. Do not assume that the yang point is always farther in: check the phase.</p>
+
+      <div class="sig">
+        <article>
+          <div class="ch"><span>LU · Lung</span><em>Yin · Metal</em></div>
+          <div class="pt"><span class="cd">LU8</span><span class="pn">Jingqu</span></div>
+          <p class="cat"><b>Jing-River</b> · Metal · horary</p>
+          <p class="loc">On the radial side of the forearm, 1 cun above the wrist crease, at the distal edge of the thenar eminence.</p>
+          <a class="go" href="lung-meridian-chart.html#LU8">Open the Lung chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>LI · Large Intestine</span><em>Yang · Metal</em></div>
+          <div class="pt"><span class="cd">LI1</span><span class="pn">Shangyang</span></div>
+          <p class="cat"><b>Jing-Well</b> · Metal · horary</p>
+          <p class="loc">On the index finger, radial to the distal phalanx, 0.1 cun from the radial corner of the nail.</p>
+          <a class="go" href="li-v4-meridian-chart.html#LI1">Open the Large Intestine chart <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+
+      <div class="take"><span class="lab">Remember</span><p>Metal: yin at the River, yang at the Well. LU8 and LI1 both carry Metal, but one is up the forearm and the other is at the fingertip.</p></div>
+
+      <h3>All five stations</h3>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Lung and Large Intestine Shu points">
+        <table>
+          <caption>Lung and Large Intestine · five stations each</caption>
+          <thead><tr><th scope="col">Channel</th><th scope="col">Well <span class="hg">井</span></th><th scope="col">Spring <span class="hg">滎</span></th><th scope="col">Stream <span class="hg">輸</span></th><th scope="col">River <span class="hg">經</span></th><th scope="col">Sea <span class="hg">合</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-metal)">LU</span>Lung<small>Yin · Metal</small></th>
+              <td><span class="cd">LU11</span><span class="pn">Shaoshang</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">LU10</span><span class="pn">Yuji</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">LU9</span><span class="pn">Taiyuan</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td>
+              <td class="own" style="--tint:var(--t-metal)"><span class="cd">LU8</span><span class="pn">Jingqu</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">LU5</span><span class="pn">Chize</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-metal)">LI</span>Large Intestine<small>Yang · Metal</small></th>
+              <td class="own" style="--tint:var(--t-metal)"><span class="cd">LI1</span><span class="pn">Shangyang</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td><span class="cd">LI2</span><span class="pn">Erjian</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td>
+              <td><span class="cd">LI3</span><span class="pn">Sanjian</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">LI5</span><span class="pn">Yangxi</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">LI11</span><span class="pn">Quchi</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see all five stations →</p>
+
+      <div class="practice"><span class="lab">Practice · the other end</span>
+        <p>Which station carries Water on the Lung? Which carries it on the Large Intestine?</p>
+        <details><summary>Show the answer</summary>
+          <p>Lung: <b>Sea</b>, LU5 Chize at the elbow. Large Intestine: <b>Spring</b>, LI2 Erjian at the index finger. Water is last on the yin sequence and second on the yang sequence.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can name both Metal channels and both horary points, and say which one sits nearer the fingertip.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m7">Next · Water <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m7">
+      <div class="modhead">
+        <p class="mk">Part II · The five elements · Module 07</p>
+        <h2><span class="hg" lang="zh" aria-hidden="true">水</span>Water</h2>
+        <p class="goal"><b>By the end you can</b> place Water on the Kidney and Bladder, and complete the full five-element route.</p>
+      </div>
+      <p>Water is the storing phase: winter, depth, descent, the reserve that feeds the next spring. Its channels are the <b>Kidney</b> (yin) and <b>Bladder</b> (yang). On the yin Kidney, Water lands at the <b>Sea</b>: KI10 Yingu, at the medial knee crease. On the yang Bladder, it lands at the <b>Spring</b>: BL66 Zutonggu, on the lateral foot.</p>
+      <p>The two Water horary points sit at the two ends of the route: the Spring near the toes, the Sea at the knee. Water closes the element set. Every phase has now been walked once.</p>
+
+      <div class="sig">
+        <article>
+          <div class="ch"><span>KI · Kidney</span><em>Yin · Water</em></div>
+          <div class="pt"><span class="cd">KI10</span><span class="pn">Yingu</span></div>
+          <p class="cat"><b>He-Sea</b> · Water · horary</p>
+          <p class="loc">At the medial end of the popliteal crease, lateral to the semitendinosus tendon.</p>
+          <a class="go" href="ki-v4-meridian-chart.html#KI10">Open the Kidney chart <span aria-hidden="true">→</span></a>
+        </article>
+        <article>
+          <div class="ch"><span>BL · Bladder</span><em>Yang · Water</em></div>
+          <div class="pt"><span class="cd">BL66</span><span class="pn">Zutonggu</span></div>
+          <p class="cat"><b>Ying-Spring</b> · Water · horary</p>
+          <p class="loc">On the lateral border of the foot, in the depression distal to the fifth metatarsophalangeal joint, at the border of the red and white skin.</p>
+          <a class="go" href="bl-v4-meridian-chart.html#BL66">Open the Bladder chart <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+
+      <div class="take"><span class="lab">Remember</span><p>Water: yin at the Sea, yang at the Spring. KI10 is at the knee; BL66 is on the foot. Water and Fire are mirror images at the ends of the route.</p></div>
+
+      <h3>All five stations</h3>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Kidney and Bladder Shu points">
+        <table>
+          <caption>Kidney and Bladder · five stations each</caption>
+          <thead><tr><th scope="col">Channel</th><th scope="col">Well <span class="hg">井</span></th><th scope="col">Spring <span class="hg">滎</span></th><th scope="col">Stream <span class="hg">輸</span></th><th scope="col">River <span class="hg">經</span></th><th scope="col">Sea <span class="hg">合</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-water)">KI</span>Kidney<small>Yin · Water</small></th>
+              <td><span class="cd">KI1</span><span class="pn">Yongquan</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">KI2</span><span class="pn">Rangu</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">KI3</span><span class="pn">Taixi</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td>
+              <td><span class="cd">KI7</span><span class="pn">Fuliu</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td class="own" style="--tint:var(--t-water)"><span class="cd">KI10</span><span class="pn">Yingu</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td></tr>
+            <tr><th scope="row"><span class="chb" style="--tint:var(--t-water)">BL</span>Bladder<small>Yang · Water</small></th>
+              <td><span class="cd">BL67</span><span class="pn">Zhiyin</span><span class="el"><i class="dot" style="--c:var(--t-metal)"></i>Metal</span></td>
+              <td class="own" style="--tint:var(--t-water)"><span class="cd">BL66</span><span class="pn">Zutonggu</span><span class="el"><i class="dot" style="--c:var(--t-water)"></i>Water</span></td>
+              <td><span class="cd">BL65</span><span class="pn">Shugu</span><span class="el"><i class="dot" style="--c:var(--t-wood)"></i>Wood</span></td>
+              <td><span class="cd">BL60</span><span class="pn">Kunlun</span><span class="el"><i class="dot" style="--c:var(--t-fire)"></i>Fire</span></td>
+              <td><span class="cd">BL40</span><span class="pn">Weizhong</span><span class="el"><i class="dot" style="--c:var(--t-earth)"></i>Earth</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tscroll">Scroll the table to see all five stations →</p>
+
+      <div class="practice"><span class="lab">Practice · complete the set</span>
+        <p>Which station carries Metal on the Kidney? Which carries it on the Bladder? Why does the answer differ by two stations?</p>
+        <details><summary>Show the answer</summary>
+          <p>Kidney: <b>River</b>, KI7 Fuliu. Bladder: <b>Well</b>, BL67 Zhiyin. The yin sequence starts at Wood, so Metal is fourth; the yang sequence starts at Metal, so Metal is first. That offset is the whole polarity flip in one example.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can run the five element chapters from memory: channel pair, horary point, and station for each phase.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m8">Next · Fingertip to elbow <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m8">
+      <div class="modhead">
+        <p class="mk">Part III · The body map · Module 08</p>
+        <h2>Fingertip to elbow</h2>
+        <p class="goal"><b>By the end you can</b> find any of the sixty points on your own body from its station alone, without reading a code.</p>
+      </div>
+      <p>The element chapters told you <b>which</b> point. This chapter tells you <b>where</b>. Because the five stations repeat on every channel, there are only five landmarks to learn, and each one has a hand version and a foot version. Learn the landmark and you can find a point you have never memorised.</p>
+
+      <div class="route">
+        <article><p class="st">Station 01</p><p class="nm">Well</p><p class="at">A fingertip or toe tip, about 0.1 cun from the corner of the nail.</p></article>
+        <article><p class="st">Station 02</p><p class="nm">Spring</p><p class="at">Between two digits, or on the palmar side of the hand.</p></article>
+        <article><p class="st">Station 03</p><p class="nm">Stream</p><p class="at">The wrist or ankle joint line — and the knuckles, on three yang hand channels.</p></article>
+        <article><p class="st">Station 04</p><p class="nm">River</p><p class="at">The forearm or calf, 1 to 4 cun in from the crease.</p></article>
+        <article><p class="st">Station 05</p><p class="nm">Sea</p><p class="at">The elbow or knee: on the crease, or in the hollow just below it.</p></article>
+      </div>
+
+      <div class="lm">
+        <h3><span class="hg" lang="zh" aria-hidden="true">井</span>Jing-Well · the extremity</h3>
+        <p class="where">At the tip of a finger or toe, about 0.1 cun from a nail corner. Two wells break that rule: <b>PC9</b> sits at the centre of the middle fingertip, and <b>KI1</b> sits on the sole of the foot, in the hollow that appears when the toes curl.</p>
+        <div class="ptrow"><span class="rl">Hand</span><span class="pts"><span style="--tint:var(--t-metal)">LU11</span><span style="--tint:var(--t-metal)">LI1</span><span style="--tint:var(--t-fire)">HT9</span><span style="--tint:var(--t-fire)">SI1</span><span style="--tint:var(--t-fire)">PC9</span><span style="--tint:var(--t-fire)">TB1</span></span></div>
+        <div class="ptrow"><span class="rl">Foot</span><span class="pts"><span style="--tint:var(--t-earth)">SP1</span><span style="--tint:var(--t-earth)">ST45</span><span style="--tint:var(--t-water)">KI1</span><span style="--tint:var(--t-water)">BL67</span><span style="--tint:var(--t-wood)">LR1</span><span style="--tint:var(--t-wood)">GB44</span></span></div>
+        <p class="note">The colour on each code is the <b>channel's</b> element, not the point's. Every yin well is Wood and every yang well is Metal, whichever channel it sits on — so on the yin rows the colour and the point's own element deliberately disagree.</p>
+      </div>
+
+      <div class="lm">
+        <h3><span class="hg" lang="zh" aria-hidden="true">滎</span>Ying-Spring · the web</h3>
+        <p class="where">Where two digits meet: between the fingers, or between the toes. On the hand the yin channels — <b>LU10</b>, <b>HT8</b> and <b>PC8</b> — sit on the palmar side, in the hollow a fingertip finds in a loose fist.</p>
+        <div class="ptrow"><span class="rl">Hand</span><span class="pts"><span style="--tint:var(--t-metal)">LU10</span><span style="--tint:var(--t-metal)">LI2</span><span style="--tint:var(--t-fire)">HT8</span><span style="--tint:var(--t-fire)">SI2</span><span style="--tint:var(--t-fire)">PC8</span><span style="--tint:var(--t-fire)">TB2</span></span></div>
+        <div class="ptrow"><span class="rl">Foot</span><span class="pts"><span style="--tint:var(--t-earth)">SP2</span><span style="--tint:var(--t-earth)">ST44</span><span style="--tint:var(--t-water)">KI2</span><span style="--tint:var(--t-water)">BL66</span><span style="--tint:var(--t-wood)">LR2</span><span style="--tint:var(--t-wood)">GB43</span></span></div>
+        <p class="note">The spring is the first station in from the tip, and the easiest to miss: the web is a crease, and the point sits just <i>proximal</i> to it, at the border of red and white skin.</p>
+      </div>
+
+      <div class="lm">
+        <h3><span class="hg" lang="zh" aria-hidden="true">輸</span>Shu-Stream · the joint line</h3>
+        <p class="where">The wrist or ankle. On the three yin hand channels the Stream sits on the wrist crease; on the three yang hand channels it sits one step earlier, at the knuckles — <b>LI3</b>, <b>SI3</b> and <b>TB3</b>.</p>
+        <div class="ptrow"><span class="rl">Hand</span><span class="pts"><span style="--tint:var(--t-metal)">LU9</span><span style="--tint:var(--t-metal)">LI3</span><span style="--tint:var(--t-fire)">HT7</span><span style="--tint:var(--t-fire)">SI3</span><span style="--tint:var(--t-fire)">PC7</span><span style="--tint:var(--t-fire)">TB3</span></span></div>
+        <div class="ptrow"><span class="rl">Foot</span><span class="pts"><span style="--tint:var(--t-earth)">SP3</span><span style="--tint:var(--t-earth)">ST43</span><span style="--tint:var(--t-water)">KI3</span><span style="--tint:var(--t-water)">BL65</span><span style="--tint:var(--t-wood)">LR3</span><span style="--tint:var(--t-wood)">GB41</span></span></div>
+        <p class="note">On a yin channel the Stream is also the <b>Yuan-Source</b> point, the one most references list first — LU9, HT7, PC7, SP3, KI3, LR3. That double duty is why these six appear on almost every formula sheet.</p>
+      </div>
+
+      <div class="lm">
+        <h3><span class="hg" lang="zh" aria-hidden="true">經</span>Jing-River · the long bone</h3>
+        <p class="where">On the forearm or calf, one to four cun in from the crease, in the gap between bone and tendon. On the leg several cluster right at a malleolus, where the channel rounds the ankle: <b>SP5</b>, <b>ST41</b>, <b>BL60</b> and <b>LR4</b>.</p>
+        <div class="ptrow"><span class="rl">Hand</span><span class="pts"><span style="--tint:var(--t-metal)">LU8</span><span style="--tint:var(--t-metal)">LI5</span><span style="--tint:var(--t-fire)">HT4</span><span style="--tint:var(--t-fire)">SI5</span><span style="--tint:var(--t-fire)">PC5</span><span style="--tint:var(--t-fire)">TB6</span></span></div>
+        <div class="ptrow"><span class="rl">Foot</span><span class="pts"><span style="--tint:var(--t-earth)">SP5</span><span style="--tint:var(--t-earth)">ST41</span><span style="--tint:var(--t-water)">KI7</span><span style="--tint:var(--t-water)">BL60</span><span style="--tint:var(--t-wood)">LR4</span><span style="--tint:var(--t-wood)">GB38</span></span></div>
+        <p class="note">Rivers are where the channel runs over a long straight stretch, so the point is a dip between two structures rather than a crease. <b>LI5</b> sits in the anatomical snuffbox; <b>KI7</b> sits two cun above KI3, in front of the heel tendon.</p>
+      </div>
+
+      <div class="lm">
+        <h3><span class="hg" lang="zh" aria-hidden="true">合</span>He-Sea · the joint</h3>
+        <p class="where">The elbow or knee, on the crease or in the hollow beside it. Two sit slightly lower: <b>ST36</b> is 3 cun below the kneecap, and <b>GB34</b> just below the head of the fibula.</p>
+        <div class="ptrow"><span class="rl">Hand</span><span class="pts"><span style="--tint:var(--t-metal)">LU5</span><span style="--tint:var(--t-metal)">LI11</span><span style="--tint:var(--t-fire)">HT3</span><span style="--tint:var(--t-fire)">SI8</span><span style="--tint:var(--t-fire)">PC3</span><span style="--tint:var(--t-fire)">TB10</span></span></div>
+        <div class="ptrow"><span class="rl">Foot</span><span class="pts"><span style="--tint:var(--t-earth)">SP9</span><span style="--tint:var(--t-earth)">ST36</span><span style="--tint:var(--t-water)">KI10</span><span style="--tint:var(--t-water)">BL40</span><span style="--tint:var(--t-wood)">LR8</span><span style="--tint:var(--t-wood)">GB34</span></span></div>
+        <p class="note">The Sea is the biggest station — the point where the channel turns inward. That is why the elbows and knees carry the points most often used for the whole channel rather than for a local problem.</p>
+      </div>
+
+      <div class="take"><span class="lab">Palpation rule</span><p>Every point sits in a hollow. Run a fingertip along the bone or tendon until it drops into a soft depression; that dip is the point. If the skin feels tight or the finger skates over a hard ridge, you are on the bone, not in the hollow.</p></div>
+
+      <div class="practice"><span class="lab">Practice · find four</span>
+        <p>On your own body, with no chart open: <b>LU11</b>, <b>LI11</b>, <b>PC7</b> and <b>ST36</b>. Say the station out loud before you touch it, then check your answer.</p>
+        <details><summary>Show the answer</summary>
+          <p><b>LU11</b>, Well: the thumb's radial corner, the side away from the index finger, 0.1 cun back from the nail. <b>LI11</b>, Sea: bend the elbow; the lateral end of the crease. <b>PC7</b>, Stream: the middle of the palmar wrist crease, between the two central tendons. <b>ST36</b>, Sea: 3 cun below the kneecap, one finger-breadth outside the shin crest, in the muscle.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Ready to move on when</b> you can put a finger on one point at each of the five stations on your own arm, using only the landmark rule.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="#m9">Next · The 30-second read <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="mod" id="m9">
+      <div class="modhead">
+        <p class="mk">Part III · The body map · Module 09</p>
+        <h2>The 30-second read</h2>
+        <p class="goal"><b>By the end you can</b> open any channel chart and name its five points, their elements and its horary point in under a minute.</p>
+      </div>
+      <p>Everything in the course now folds into one routine. Run these five steps in order and you never need to memorise sixty points. You need the method, plus the landmark map from module 8.</p>
+      <ol>
+        <li><b>Read the channel.</b> Yin or yang, and which element does the channel itself belong to?</li>
+        <li><b>Set the start.</b> Yin begins at Wood on the Well; yang begins at Metal on the Well.</li>
+        <li><b>Walk the cycle.</b> Step once per station along the generating cycle: Wood, Fire, Earth, Metal, Water.</li>
+        <li><b>Mark the horary.</b> The station whose element matches the channel's element is the horary point.</li>
+        <li><b>Place it.</b> Take the station from module 8, find the hollow, then open the chart to confirm.</li>
+      </ol>
+
+      <h3>Two worked reads</h3>
+      <p><b>Lung.</b> Yin, and the channel is Metal. Yin starts at Wood, so the cycle runs straight across the stations.</p>
+      <div class="derived">
+        <div class="k">Lung · Yin · Metal</div>
+        <div class="row"><span><b>LU11</b> Well · Wood</span><i>→</i><span><b>LU10</b> Spring · Fire</span><i>→</i><span><b>LU9</b> Stream · Earth</span><i>→</i><span><b>LU8</b> River · Metal</span><i>→</i><span><b>LU5</b> Sea · Water</span></div>
+        <p>Metal lands on the River, so <b>LU8 Jingqu</b> is the horary point. Place it one cun above the wrist, on the radial side of the forearm.</p>
+      </div>
+      <p><b>Stomach.</b> Yang, and the channel is Earth. Yang starts at Metal.</p>
+      <div class="derived">
+        <div class="k">Stomach · Yang · Earth</div>
+        <div class="row"><span><b>ST45</b> Well · Metal</span><i>→</i><span><b>ST44</b> Spring · Water</span><i>→</i><span><b>ST43</b> Stream · Wood</span><i>→</i><span><b>ST41</b> River · Fire</span><i>→</i><span><b>ST36</b> Sea · Earth</span></div>
+        <p>Earth lands on the Sea, so <b>ST36 Zusanli</b> is the horary point, below the kneecap. Two different channels, two different targets, one method.</p>
+      </div>
+      <p>Run the same five steps on the other ten channels and the whole atlas opens. The hard part is not the arithmetic; it is trusting that the method works when you meet an unfamiliar channel.</p>
+
+      <h3>The course checklist</h3>
+      <ul class="check">
+        <li>I can say the five stations in order and give the movement verb for each.</li>
+        <li>I can rebuild any channel's five point elements from its polarity and element.</li>
+        <li>I can name the horary point of all twelve channels.</li>
+        <li>I can find one point at each station on my own arm or leg from the landmark alone.</li>
+      </ul>
+
+      <h3>Where to go next</h3>
+      <div class="names">
+        <article><span class="pt">Basics</span><p>The reference version of this course: the five categories, cun measurement and the glossary.</p><a href="basics.html">Open Basics <span aria-hidden="true">→</span></a></article>
+        <article><span class="pt">Points</span><p>All sixty points in one searchable list, filtered by category, element or polarity.</p><a href="points.html">Open Points <span aria-hidden="true">→</span></a></article>
+        <article><span class="pt">Study</span><p>Recall practice on categories, elements and finding the point on the chart.</p><a href="study.html">Open Study <span aria-hidden="true">→</span></a></article>
+      </div>
+
+      <div class="practice"><span class="lab">Practice · the final read</span>
+        <p>Pick one hand channel and one foot channel you have not studied closely. Run the five steps out loud for each: polarity, starting element, the five elements in order, the horary point, and the landmark for every station.</p>
+        <details><summary>Show a model answer</summary>
+          <p>Take the <b>Kidney</b> — yin, Water. Yin starts at Wood: KI1 Wood, KI2 Fire, KI3 Earth, KI7 Metal, KI10 Water. Water lands on the Sea, so <b>KI10 Yingu</b> at the medial knee crease is horary. Now the <b>Bladder</b> — yang, Water. Yang starts at Metal: BL67 Metal, BL66 Water, BL65 Wood, BL60 Fire, BL40 Earth. Water lands on the Spring, so <b>BL66 Zutonggu</b>, on the lateral foot, is horary.</p>
+        </details>
+      </div>
+      <div class="gate"><p><b>Course complete when</b> all four lines of the checklist are true. Mark this module complete to finish — then keep the routine, not the list.</p></div>
+
+      <div class="modfoot">
+        <button class="done-btn" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span class="lbl">Mark module complete</span></button>
+        <a class="next" href="study.html">Test yourself in Study <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="foot">Shu Atlas is a study reference for the classical five Shu points. It is not a clinical manual: locations are simplified textbook summaries, and needling depth, technique and safety are outside its scope. The Five Element correspondences are classical categories used for learning, not a substitute for clinical training.</footer>
+</div>
+<script>
+(function(){
+  'use strict';
+  var KEY='shu-learn-v1';
+  var mods=[].slice.call(document.querySelectorAll('.mod'));
+  var bar=document.getElementById('progbar');
+  var track=document.getElementById('progtrack');
+  var text=document.getElementById('progtext');
+  var mapcount=document.getElementById('mapcount');
+  var links={};
+  [].forEach.call(document.querySelectorAll('.rail a[href^="#"]'),function(a){ links[a.getAttribute('href').slice(1)]=a; });
+  var done={};
+  try{ done=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ done={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(done)); }catch(e){} }
+  function paint(){
+    var n=0;
+    mods.forEach(function(m){
+      var on=!!done[m.id]; if(on)n++;
+      m.classList.toggle('is-done',on);
+      var b=m.querySelector('.done-btn');
+      if(b){
+        b.setAttribute('aria-pressed',on?'true':'false');
+        var l=b.querySelector('.lbl'); if(l) l.textContent=on?'Completed':'Mark module complete';
+      }
+      if(links[m.id]) links[m.id].classList.toggle('done',on);
+    });
+    var pct=mods.length?Math.round(n/mods.length*100):0;
+    if(bar) bar.style.width=pct+'%';
+    if(track) track.setAttribute('aria-valuenow',pct);
+    if(text) text.textContent=n+' / '+mods.length+' complete';
+    if(mapcount) mapcount.textContent=n+' / '+mods.length;
+    save();
+  }
+  mods.forEach(function(m){
+    var b=m.querySelector('.done-btn'); if(!b) return;
+    b.addEventListener('click',function(){
+      done[m.id]=!done[m.id];
+      if(!done[m.id]) delete done[m.id];
+      paint();
+    });
+  });
+  var reset=document.getElementById('reset');
+  if(reset) reset.addEventListener('click',function(){ done={}; paint(); });
+  paint();
+
+  if('IntersectionObserver' in window){
+    var active=null;
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var id=e.target.id;
+        if(!links[id]) return;
+        if(active) active.classList.remove('active');
+        active=links[id]; active.classList.add('active');
+      });
+    },{rootMargin:'-12% 0px -72% 0px',threshold:0});
+    mods.forEach(function(m){ io.observe(m); });
+  }
+})();
+</script>
+</body></html>
