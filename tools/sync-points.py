@@ -43,7 +43,7 @@ def validate():
                 errors.append(f"{p['code']}: station {p['rank']} must be {SHU[p['rank']]}, not {p['shu']}")
             if p['elem'] != SEQ[c['yy']][p['rank']]:
                 errors.append(f"{p['code']}: a {c['yy']} {p['shu']} carries {SEQ[c['yy']][p['rank']]}, not {p['elem']}")
-            for k in ('py', 'hz', 'en', 'note', 'loc'):
+            for k in ('py', 'hz', 'en', 'note', 'loc', 'cun'):
                 if not p.get(k):
                     errors.append(f"{p['code']}: missing {k}")
         if sum(p['elem'] == c['elem'] for p in pts) != 1:

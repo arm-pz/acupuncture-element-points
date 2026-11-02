@@ -47,7 +47,7 @@ The twelve chart pages are the V4 pages plus Lung; the older V1–V3 charts were
 - Five Shu assignments verified against classical 五輸穴 tables and WHO-standard point lists.
 - Yin channels follow Wood → Fire → Earth → Metal → Water; Yang channels follow Metal → Water → Wood → Fire → Earth. Luo-Connecting and Xi-Cleft points are always skipped.
 - Named traps confirmed: TE Sea = TE10, LR River = LR4 and Sea = LR8, GB set = GB44/43/41/38/34.
-- The Lung page is the first to carry a **Cun** row in the details panel. `/learn` explains the five Shu categories, element mapping and cun measurement.
+- Every chart's details panel has a **Cun** row (`cun` in `data/points.json`): the cun distance from a named landmark, or, for points found by a joint, bone or crease, that landmark. The distances (GB38, HT4, PC5, TB6, TB10, KI7, ST36, the 0.1-cun Wells and KI1's proportion) were checked against meandqi, acufinder and americandragon. `/learn` explains the five Shu categories, element mapping and cun measurement.
 - **Glossary tooltips:** anatomical and Shu terms (cun, proximal, malleolus, Jing-Well, horary point…) get a dotted underline and a hover/tap definition in chart-panel locations, Learn and Study. The terms live in one place, `tools/glossary-snippet.html`; after editing it, run `python3 tools/sync-glossary.py` to copy it into every page (pages stay self-contained).
 - No per-point outbound links, by design.
 

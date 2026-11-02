@@ -24,7 +24,7 @@ Developed as a local prototype: static HTML pages with embedded base64 images, s
 
 ## Capabilities and Constraints
 
-- All twelve channels have one chart page each in the same template: eleven V4 pages plus the Lung page (its own public page, which adds a Cun row). The V1–V3 prototypes were removed and remain in git history. Point data comes from `data/points.json` via `tools/sync-points.py`.
+- All twelve channels have one chart page each in the same template: eleven V4 pages plus the Lung page (its own public page); every chart shows a Cun row. The V1–V3 prototypes were removed and remain in git history. Point data comes from `data/points.json` via `tools/sync-points.py`.
 - Verified Shu lists and element cycles are domain-critical: Yang Metal→Water→Wood→Fire→Earth, Yin Wood→Fire→Earth→Metal→Water, always skipping Luo/Xi-Cleft points. Any change must be re-verified against a fetched live source before shipping.
 - Most chart and point images are provisional (nalaayan.com diagrams; user-supplied charts of unconfirmed provenance). Publishing non-LU pages is blocked until licensing is resolved; provisional images must keep their "provisional source" credit line.
 - No per-point outbound links on any page (deliberately removed at the owner's request).
