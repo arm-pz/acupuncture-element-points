@@ -20,11 +20,11 @@ Interactive authentic charts, not static tables: every point is shown on a real 
 
 ## Operating Context
 
-Developed as a local prototype: static HTML pages with embedded base64 images, served by `shu-serve.js` at http://127.0.0.1:4174 (routes `/`, `/lu`, `/li`, `/li2`, `/ht`, `/ht2`, `/sp2`, `/st2`, `/bl2`, `/ki2`, `/gb2`, `/lr2`, `/si`, `/pc`, `/tb`). Lung is already published at github.com/arm-pz/shu-points; the rest stay local until licensing is settled. Homepage role confirmed by the owner: channel launcher first, minimal prose.
+Developed as a local prototype: static HTML pages with embedded base64 images, served by `shu-serve.js` at http://127.0.0.1:4174 (routes `/` plus one per channel: `/lu`, `/li`, `/st`, `/sp`, `/ht`, `/si`, `/bl`, `/ki`, `/pc`, `/tb`, `/gb`, `/lr`, and the app pages `/channels`, `/points`, `/learn`, `/study`). Lung is already published at github.com/arm-pz/shu-points; the rest stay local until licensing is settled. Homepage role confirmed by the owner: channel launcher first, minimal prose.
 
 ## Capabilities and Constraints
 
-- All twelve channels have pages; eight carry the V2 interactive-chart pattern (LI/HT/SP/ST/BL/KI/GB/LR); SI/PC/TB are still V1; LU is its own public page.
+- All twelve channels have one chart page each in the same template: eleven V4 pages plus the Lung page (its own public page, which adds a Cun row). The V1–V3 prototypes were removed and remain in git history. Point data comes from `data/points.json` via `tools/sync-points.py`.
 - Verified Shu lists and element cycles are domain-critical: Yang Metal→Water→Wood→Fire→Earth, Yin Wood→Fire→Earth→Metal→Water, always skipping Luo/Xi-Cleft points. Any change must be re-verified against a fetched live source before shipping.
 - Most chart and point images are provisional (nalaayan.com diagrams; user-supplied charts of unconfirmed provenance). Publishing non-LU pages is blocked until licensing is resolved; provisional images must keep their "provisional source" credit line.
 - No per-point outbound links on any page (deliberately removed at the owner's request).

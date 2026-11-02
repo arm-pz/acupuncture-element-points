@@ -14,38 +14,18 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/learn` | `learn.html` | Ten-module course and reference: the five names (with the Lung hand figure and Nan Jing indications), the element cycle, an element per module, cun, landmarks and a closing read |
 | `/basics` | `basics.html` | Redirect into `/learn` (old section anchors map to the matching module) |
 | `/study` | `study.html` | Recall quiz: Shu category, element and finding the point |
-| `/lu` | `lung-meridian-chart.html` | Lung (LU) |
-| `/li` | `li-meridian-chart.html` | Large Intestine (LI) |
-| `/li2` | `li-v2-meridian-chart.html` | Large Intestine (LI), V2 |
-| `/li3` | `li-v3-meridian-chart.html` | Large Intestine (LI), V3 — one plate, two views |
-| `/li4` | `li-v4-meridian-chart.html` | Large Intestine (LI), V4 — arm plate in the LU style (side view, thumb forward) |
-| `/ht` | `ht-meridian-chart.html` | Heart (HT) |
-| `/ht2` | `ht-v2-meridian-chart.html` | Heart (HT), V2 |
-| `/ht4` | `ht-v4-meridian-chart.html` | Heart (HT), V4 — arm plate in the LU style (palm view) |
-| `/sp2` | `sp-v2-meridian-chart.html` | Spleen (SP), V2 |
-| `/sp3` | `sp-v3-meridian-chart.html` | Spleen (SP), V3 — one plate, two views |
-| `/sp4` | `sp-v4-meridian-chart.html` | Spleen (SP), V4 — leg plate in the LU style (inner side) |
-| `/st2` | `st-v2-meridian-chart.html` | Stomach (ST), V2 |
-| `/st3` | `st-v3-meridian-chart.html` | Stomach (ST), V3 — one plate, two views |
-| `/st4` | `st-v4-meridian-chart.html` | Stomach (ST), V4 — leg plate in the LU style (front view) |
-| `/bl2` | `bl-v2-meridian-chart.html` | Bladder (BL), V2 |
-| `/bl3` | `bl-v3-meridian-chart.html` | Bladder (BL), V3 — one plate, two views |
-| `/bl4` | `bl-v4-meridian-chart.html` | Bladder (BL), V4 — leg plate in the LU style (outer side) |
-| `/ki2` | `ki-v2-meridian-chart.html` | Kidney (KI), V2 |
-| `/ki3` | `ki-v3-meridian-chart.html` | Kidney (KI), V3 — one plate, two views |
-| `/ki4` | `ki-v4-meridian-chart.html` | Kidney (KI), V4 — leg plate in the LU style (inner side) |
-| `/gb2` | `gb-v2-meridian-chart.html` | Gallbladder (GB), V2 |
-| `/gb3` | `gb-v3-meridian-chart.html` | Gallbladder (GB), V3 — one plate, two views |
-| `/gb4` | `gb-v4-meridian-chart.html` | Gallbladder (GB), V4 — leg plate in the LU style (outer side) |
-| `/lr2` | `lr-v2-meridian-chart.html` | Liver (LR), V2 |
-| `/lr3` | `lr-v3-meridian-chart.html` | Liver (LR), V3 — one plate, two views |
-| `/lr4` | `lr-v4-meridian-chart.html` | Liver (LR), V4 — leg plate in the LU style (front view) |
-| `/si` | `si-meridian-chart.html` | Small Intestine (SI) |
-| `/si4` | `si-v4-meridian-chart.html` | Small Intestine (SI), V4 — arm plate in the LU style (back view) |
-| `/pc` | `pc-meridian-chart.html` | Pericardium (PC) |
-| `/pc4` | `pc-v4-meridian-chart.html` | Pericardium (PC), V4 — arm plate in the LU style (palm view) |
-| `/tb` | `tb-meridian-chart.html` | Triple Burner (TB) |
-| `/tb4` | `tb-v4-meridian-chart.html` | Triple Burner (TB), V4 — arm plate in the LU style (back view) |
+| `/lu` | `lung-meridian-chart.html` | Lung (LU) — arm, palm view |
+| `/li` | `li-v4-meridian-chart.html` | Large Intestine (LI) — arm, side view with the thumb forward |
+| `/st` | `st-v4-meridian-chart.html` | Stomach (ST) — leg, front view |
+| `/sp` | `sp-v4-meridian-chart.html` | Spleen (SP) — leg, inner side |
+| `/ht` | `ht-v4-meridian-chart.html` | Heart (HT) — arm, palm view |
+| `/si` | `si-v4-meridian-chart.html` | Small Intestine (SI) — arm, back view |
+| `/bl` | `bl-v4-meridian-chart.html` | Bladder (BL) — leg, outer side |
+| `/ki` | `ki-v4-meridian-chart.html` | Kidney (KI) — leg, inner side |
+| `/pc` | `pc-v4-meridian-chart.html` | Pericardium (PC) — arm, palm view |
+| `/tb` | `tb-v4-meridian-chart.html` | Triple Burner (TB) — arm, back view |
+| `/gb` | `gb-v4-meridian-chart.html` | Gallbladder (GB) — leg, outer side |
+| `/lr` | `lr-v4-meridian-chart.html` | Liver (LR) — leg, front view |
 
 ## Run
 
@@ -55,7 +35,7 @@ node shu-serve.js
 
 Then open <http://127.0.0.1:4174>. The server maps the routes above to files and also serves each page under its file name, which is how the app pages link to one another. Pages are self-contained (styles and images embedded; the app pages load their fonts from Google Fonts), so they also open directly from disk.
 
-The app's chart pages are the V4 pages plus Lung. On those, a point code after `#` opens the chart with that point selected, e.g. `gb-v4-meridian-chart.html#GB34`.
+The twelve chart pages are the V4 pages plus Lung; the older V1–V3 charts were removed (they remain in git history). The `/lr4`-style routes still work as aliases. A point code after `#` opens the chart with that point selected, e.g. `gb-v4-meridian-chart.html#GB34`.
 
 ## Data
 
@@ -63,11 +43,10 @@ The app's chart pages are the V4 pages plus Lung. On those, a point code after `
   ```
   python3 tools/sync-points.py
   ```
-  It rewrites the marked `/* points:start … */` blocks in the app chart pages (V4 + Lung), Study, Points and the home page, and the `data-pt` / `data-f` tagged names, elements and locations in Learn. It refuses to write if a channel breaks the station or element sequence, or doesn't have exactly one horary point. `python3 tools/sync-points.py --check` reports any page that is out of date without changing it. The older V1–V3 chart pages keep their own data and are not synced.
+  It rewrites the marked `/* points:start … */` blocks in the app chart pages (V4 + Lung), Study, Points and the home page, and the `data-pt` / `data-f` tagged names, elements and locations in Learn. It refuses to write if a channel breaks the station or element sequence, or doesn't have exactly one horary point. `python3 tools/sync-points.py --check` reports any page that is out of date without changing it.
 - Five Shu assignments verified against classical 五輸穴 tables and WHO-standard point lists.
 - Yin channels follow Wood → Fire → Earth → Metal → Water; Yang channels follow Metal → Water → Wood → Fire → Earth. Luo-Connecting and Xi-Cleft points are always skipped.
 - Named traps confirmed: TE Sea = TE10, LR River = LR4 and Sea = LR8, GB set = GB44/43/41/38/34.
-- On the V2 and V3 charts, only the five Shu points are interactive; other printed dots mark non-Shu points.
 - The Lung page is the first to carry a **Cun** row in the details panel. `/learn` explains the five Shu categories, element mapping and cun measurement.
 - **Glossary tooltips:** anatomical and Shu terms (cun, proximal, malleolus, Jing-Well, horary point…) get a dotted underline and a hover/tap definition in chart-panel locations, Learn and Study. The terms live in one place, `tools/glossary-snippet.html`; after editing it, run `python3 tools/sync-glossary.py` to copy it into every page (pages stay self-contained).
 - No per-point outbound links, by design.

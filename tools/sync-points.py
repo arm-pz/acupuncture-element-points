@@ -7,7 +7,8 @@ self-contained, so this script writes the data into them:
   * script blocks between  /* points:start NAME ... */  and  /* points:end */
       P     study.html, points.html   flat list of all sixty points
       CH    study.html                the twelve channels
-      DATA  chart pages (*-v4 + Lung) that channel's five points
+      DATA, ORDER, CHIPS  chart pages (*-v4 + Lung): that channel's five points,
+                          their Well-to-Sea order and the station buttons
       FILE  index.html                channel -> chart file and name; element -> channels
       HOR   index.html                channel -> horary point
   * HTML elements in learn.html tagged  data-pt="CODE" data-f="FIELD"
@@ -74,16 +75,35 @@ def gen_CH(page):
     return 'var CH = ' + js([{k: c[k] for k in ('key', 'file', 'name', 'abbr', 'elem', 'yy')} for c in CHANNELS]) + ';'
 
 
-def gen_DATA(page):
+def channel_of(page):
     chans = [c for c in CHANNELS if c['file'] == page]
     if len(chans) != 1:
         sys.exit(f'{page}: no single channel in data/points.json has this file')
+    return chans[0]
+
+
+def pid(p):
+    return 'p' + re.sub(r'\D', '', p['code'])
+
+
+def gen_ORDER(page):
+    return 'var ORDER = [' + ','.join("'" + pid(p) + "'" for p in by_channel(channel_of(page)['abbr'])) + '];'
+
+
+def gen_CHIPS(page):
+    return '\n'.join(
+        f'<button type="button" class="chip" data-id="{pid(p)}" style="--c:var(--{p["elem"].lower()})">'
+        f'<span class="s">{p["shu"].split("-")[1]}</span><span class="c">{p["code"]}</span><i></i></button>'
+        for p in by_channel(channel_of(page)['abbr']))
+
+
+def gen_DATA(page):
     rows = []
-    for p in by_channel(chans[0]['abbr']):
+    for p in by_channel(channel_of(page)['abbr']):
         d = {'code': p['code'], 'pinyin': p['py'], 'en': p['en'], 'shu': p['note'], 'elem': p['elem'], 'loc': p['loc']}
         if p.get('cun'):
             d['cun'] = p['cun']
-        rows.append(' ' + js('p' + re.sub(r'\D', '', p['code'])) + ': ' + js(d))
+        rows.append(' ' + js(pid(p)) + ': ' + js(d))
     return 'var DATA = {\n' + ',\n'.join(rows) + '\n};'
 
 
@@ -104,15 +124,18 @@ def gen_HOR(page):
     return 'const HOR=' + json.dumps(hor, ensure_ascii=False, separators=(',', ':')) + ';'
 
 
-GEN = {'P': gen_P, 'CH': gen_CH, 'DATA': gen_DATA, 'FILE': gen_FILE, 'HOR': gen_HOR}
-BLOCK = re.compile(r'(/\* points:start (\w+)[^*]*\*/\n)(.*?)(\n/\* points:end \*/)', re.S)
+GEN = {'P': gen_P, 'CH': gen_CH, 'DATA': gen_DATA, 'ORDER': gen_ORDER, 'CHIPS': gen_CHIPS,
+       'FILE': gen_FILE, 'HOR': gen_HOR}
+# script blocks use /* */ markers, HTML blocks use <!-- --> markers
+BLOCK = re.compile(r'((?:/\* points:start (\w+)[^*]*\*/|<!-- points:start (\w+)[^>]*-->)\n)(.*?)(\n(?:/\* points:end \*/|<!-- points:end -->))', re.S)
 
 
 def fill_blocks(page, s):
     def one(m):
-        if m.group(2) not in GEN:
-            sys.exit(f'{page}: unknown block {m.group(2)}')
-        return m.group(1) + GEN[m.group(2)](page) + m.group(4)
+        name = m.group(2) or m.group(3)
+        if name not in GEN:
+            sys.exit(f'{page}: unknown block {name}')
+        return m.group(1) + GEN[name](page) + m.group(5)
     return BLOCK.sub(one, s)
 
 

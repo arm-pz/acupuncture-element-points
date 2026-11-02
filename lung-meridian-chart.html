@@ -97,7 +97,7 @@ figure img{display:block;width:100%;max-width:280px;border-radius:6px}
 <nav class="pager" aria-label="Channels"><a class="up" href="channels.html?el=metal">‹ Metal channels</a><a href="st-v4-meridian-chart.html" aria-label="Previous channel: Stomach"><i style="--c:var(--earth)"></i><span class="nm">Stomach</span> ←</a><a href="li-v4-meridian-chart.html" aria-label="Next channel: Large Intestine">→ <span class="nm">Large Intestine</span><i style="--c:var(--metal)"></i></a></nav>
 <p class="kicker">Hand Taiyin · Yin Metal</p>
 <h1>Lung Meridian — Five Shu Points</h1>
-<p class="lede">Select a point on the chart, or step through them from Well to Sea using the buttons under the details panel.</p>
+<p class="lede">Select a point on the arm, or step through them from the hand (Well) to the elbow (Sea) using the buttons under the details panel.</p>
 <div class="layout">
 <div class="leg">
 <svg viewBox="0 0 576 1024" role="group" aria-label="Lung channel chart with its five Shu points" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -129,13 +129,15 @@ figure img{display:block;width:100%;max-width:280px;border-radius:6px}
 </svg>
 </div>
 <aside class="panel" aria-label="Point details">
-<div id="pt-info" aria-live="polite"><div class="empty"><b>Select a point</b>The details show its Shu category, element, location.</div></div>
+<div id="pt-info" aria-live="polite"><div class="empty"><b>Select a point</b>The details show its Shu category, element, location and cun distance.</div></div>
 <div class="pts" role="group" aria-label="Shu points, Well to Sea">
+<!-- points:start CHIPS · generated from data/points.json by tools/sync-points.py; edit there -->
 <button type="button" class="chip" data-id="p11" style="--c:var(--wood)"><span class="s">Well</span><span class="c">LU11</span><i></i></button>
 <button type="button" class="chip" data-id="p10" style="--c:var(--fire)"><span class="s">Spring</span><span class="c">LU10</span><i></i></button>
 <button type="button" class="chip" data-id="p9" style="--c:var(--earth)"><span class="s">Stream</span><span class="c">LU9</span><i></i></button>
 <button type="button" class="chip" data-id="p8" style="--c:var(--metal)"><span class="s">River</span><span class="c">LU8</span><i></i></button>
 <button type="button" class="chip" data-id="p5" style="--c:var(--water)"><span class="s">Sea</span><span class="c">LU5</span><i></i></button>
+<!-- points:end -->
 </div>
 </aside>
 </div>
@@ -153,7 +155,9 @@ var DATA = {
 };
 /* points:end */
 var IMGS = {};
+/* points:start ORDER · generated from data/points.json by tools/sync-points.py; edit there */
 var ORDER = ['p11','p10','p9','p8','p5'];
+/* points:end */
 var ELEM = {Metal:'var(--metal)',Water:'var(--water)',Wood:'var(--wood)',Fire:'var(--fire)',Earth:'var(--earth)'};
 var NS = 'http://www.w3.org/2000/svg';
 var panel = document.getElementById('pt-info');
