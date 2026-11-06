@@ -27,6 +27,10 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/gb` | `gb-v4-meridian-chart.html` | Gallbladder (GB) — leg, outer side |
 | `/lr` | `lr-v4-meridian-chart.html` | Liver (LR) — leg, front view |
 
+## Shared styling
+
+The twelve chart pages share one stylesheet, `tools/chart.css`, in the same midnight shell as Channels, Points, Learn and Study (Jost and IBM Plex Mono, element inks, the anatomy plate on a cream card). After editing it, run `python3 tools/sync-chart-style.py` to copy it into each chart.
+
 ## Run
 
 ```

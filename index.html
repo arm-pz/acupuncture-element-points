@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Geist:wght@400;500&family=Noto+Sans+SC:wght@300&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Noto+Sans+SC:wght@300&display=swap">
 <style>
 :root{
   /* Layout: one full-viewport stage. Five glass discs ride a circle in generating-cycle order
@@ -16,8 +16,8 @@
   --ke:rgba(178,202,236,.7);
   --accent-rgb:155,207,106;
   --glow-rgb:192,210,145;
-  --display:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --body:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
   --han:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
   color-scheme:dark;
 }
@@ -107,9 +107,10 @@ body{margin:0;background:var(--stage);color:var(--ink);font:400 14px/1.4 var(--b
   padding-block:clamp(16px,2.6vh,28px);
   padding-left:max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px));
   padding-right:max(clamp(16px,3vw,40px),env(safe-area-inset-right,0px));pointer-events:none}
-.vis-brand{display:flex;align-items:baseline;gap:12px;min-width:0}
-.vis-brand .han{font:300 22px/1 var(--han)}
-.vis-brand .latin,.vis-rel{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.vis-brand{display:flex;align-items:baseline;gap:10px;min-width:0;color:var(--ink);text-decoration:none;pointer-events:auto}
+.vis-brand .han{font:300 19px/1 var(--han)}
+.vis-brand .latin{font:500 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;color:rgba(243,236,224,.7);white-space:nowrap}
+.vis-rel{font-size:11px;color:var(--ink-soft);text-transform:uppercase;white-space:nowrap;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
 .vis-rel{display:flex;flex-direction:column;align-items:flex-end;gap:6px;letter-spacing:.2em;text-align:right}
 .vis-rel i{font:300 13px/1 var(--han);font-style:normal;letter-spacing:0;margin-right:9px;color:var(--ink-faint)}
 
@@ -179,19 +180,19 @@ body{margin:0;background:var(--stage);color:var(--ink);font:400 14px/1.4 var(--b
 .phone .vis-legend{left:50%;transform:translateX(-50%);bottom:calc(clamp(12px,3vh,32px) + 54px);max-width:calc(100% - 32px)}
 
 /* app links */
-.vis-appnav{display:flex;gap:6px;pointer-events:auto}
-.vis-appnav a{display:inline-flex;align-items:center;height:36px;padding:0 15px;border-radius:999px;border:1px solid rgba(243,236,224,.2);
-  background:rgba(10,8,6,.36);color:var(--ink);font:500 12px/1 var(--body);letter-spacing:.04em;text-decoration:none;
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:border-color .3s,background .3s}
-.vis-appnav a:hover{border-color:rgba(var(--accent-rgb),.7);background:rgba(10,8,6,.5)}
+.vis-appnav{display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:auto}
+.vis-appnav a{display:block;padding:8px 12px;border-radius:999px;color:rgba(243,236,224,.7);font:500 13px/1 var(--body);letter-spacing:.02em;text-decoration:none;transition:color .18s,background .18s}
+.vis-appnav a:hover{color:var(--ink);background:rgba(243,236,224,.1)}
+.vis-appnav a[aria-current="page"]{color:#10131f;background:#f2f0ea}
 .vis-appnav a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .vis-rel{position:absolute;z-index:310;pointer-events:none;top:calc(clamp(16px,2.6vh,28px) + 52px);right:max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px))}
 .vis-meta a{pointer-events:auto;color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(243,236,224,.28);transition:border-color .25s,color .25s}
 .vis-meta a:hover{border-bottom-color:rgb(var(--accent-rgb));color:#fff}
 .vis-meta a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
 .vis-meta .sep{color:var(--ink-faint);margin:0 6px}
-.phone .vis-appnav a{height:32px;padding:0 11px;font-size:11px}
-.phone .vis-appnav{flex-wrap:wrap;justify-content:flex-end;max-width:70vw}
+.phone .vis-appnav a{padding:8px 7px;font-size:12px}
+.phone .vis-appnav{flex-wrap:nowrap;max-width:none}
+.phone .vis-top{gap:6px}
 .phone .vis-brand .latin{display:none}
 
 /* phones */
@@ -258,8 +259,8 @@ body{margin:0;background:var(--stage);color:var(--ink);font:400 14px/1.4 var(--b
   <div class="vis-orbit" id="orbit"></div>
 
   <header class="vis-top">
-    <div class="vis-brand"><span class="han" lang="zh" aria-hidden="true">五行</span><span class="latin">Wu Xing</span></div>
-    <nav class="vis-appnav" aria-label="Shu Atlas"><a href="channels.html">Channels</a><a href="points.html">Points</a><a href="learn.html">Learn</a><a href="study.html">Study</a></nav>
+    <a class="vis-brand" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="latin">Shu Atlas</span></a>
+    <nav class="vis-appnav" aria-label="Shu Atlas"><a href="index.html" aria-current="page">Elements</a><a href="channels.html">Channels</a><a href="points.html">Points</a><a href="learn.html">Learn</a><a href="study.html">Study</a></nav>
   </header>
   <div class="vis-rel" id="rel" aria-hidden="true"></div>
 
