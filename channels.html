@@ -463,11 +463,15 @@ a{color:inherit}
       r.hidden = !on; r.classList.toggle('first-shown', on && first); if(on) first = false;
     });
     btns.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-el') === el ? 'true' : 'false'); });
-    try { history.replaceState(null, '', el ? '?el='+el : location.pathname.split('/').pop()); } catch(e) {}
+    try { history.replaceState(null, '', el ? '#'+el : location.pathname.split('/').pop()); } catch(e) {}
   }
   btns.forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('data-el')); }); });
-  var m = /[?&]el=(wood|fire|earth|metal|water)/.exec(location.search);
-  show(m ? m[1] : '');
+  function fromUrl(){
+    var m = /^#(wood|fire|earth|metal|water)$/.exec(location.hash) || /[?&]el=(wood|fire|earth|metal|water)/.exec(location.search);
+    show(m ? m[1] : '');
+  }
+  window.addEventListener('hashchange', fromUrl);
+  fromUrl();
 })();
 </script>
 </body>

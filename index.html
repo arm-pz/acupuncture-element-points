@@ -610,7 +610,7 @@ function renderTitle(i,first){
     `<dl class="vis-meta"><div><dt>Channels</dt><dd>${ELCH[e.title].map(a=>`<a href="${FILE[a]}">${NAME[a]}</a>`).join('<span class="sep">·</span>')}</dd></div>`+
     ELCH[e.title].map(a=>`<div><dt>${NAME[a]} · horary</dt><dd><a href="${FILE[a]}#${HOR[a][0]}">${HOR[a][0]} · ${HOR[a][1]}</a></dd></div>`).join('')+
     `</dl>`;
-  cta.href='channels.html?el='+e.key;
+  cta.href='channels.html#'+e.key;
   document.getElementById('cta-label').textContent='Explore the '+e.title+' channels';
   renderRel(i);setHL(i);
   navBtns.forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));
