@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "command": "node .claude/hooks/proof-check.js",
+        "onFailure": "block"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "command": "node .claude/hooks/pre-tool-check.js",
+        "tools": ["Bash", "Write", "Edit"],
+        "onFailure": "block"
+      }
+    ]
+  }
+}
