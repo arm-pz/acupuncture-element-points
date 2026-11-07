@@ -33,7 +33,11 @@ Every scrolling page ends in the Caffeinity wordmark only. Edit `tools/footer-sn
 
 ## Deploy
 
-Deploys are run from a trusted machine, not from GitHub: `tools/deploy.sh` syncs the generated blocks, builds the site worker (`tools/build-site.py`: pages, short routes, 404 and favicon embedded in `.build/worker.js`) and runs `wrangler deploy` for the Cloudflare Worker `shu-atlas`, which serves <https://acu.caffeinity.com>. Credentials (`CLOUDFLARE_API_TOKEN` with Workers Scripts → Edit, and `CLOUDFLARE_ACCOUNT_ID`) live in `~/.config/shu-atlas/cf.env`, never in the repo or in GitHub secrets.
+Production is the Cloudflare Worker `shu-atlas`, which serves <https://acu.caffeinity.com>. The build is `python3 tools/build-site.py` (pages, short routes, 404 and favicon embedded in `.build/worker.js`; `wrangler.jsonc` points at it) and the deploy is `npx wrangler deploy`.
+
+**Auto-deploy on merge** uses Cloudflare's Git integration, so no credentials live in GitHub: in the Cloudflare dashboard open Workers & Pages → `shu-atlas` → Settings → Builds → Connect, choose `arm-pz/acupuncture-element-points`, production branch `main`, build command `python3 tools/build-site.py`, deploy command `npx wrangler deploy`. Every merge to `main` then deploys.
+
+**Manual deploy** from a trusted machine: `tools/deploy.sh`, with `CLOUDFLARE_API_TOKEN` (Workers Scripts → Edit) and `CLOUDFLARE_ACCOUNT_ID` in `~/.config/shu-atlas/cf.env`, never in the repo.
 
 ## Shared styling
 
