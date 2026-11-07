@@ -1,7 +1,7 @@
 name: Deploy to acu.caffeinity.com
 
-# Every merge to main publishes the site to Cloudflare Pages (custom domain acu.caffeinity.com).
-# Needs repository secrets CLOUDFLARE_API_TOKEN (Account > Cloudflare Pages > Edit) and CLOUDFLARE_ACCOUNT_ID.
+# Every merge to main publishes the site to the Cloudflare Worker shu-atlas (custom domain acu.caffeinity.com).
+# Needs repository secrets CLOUDFLARE_API_TOKEN (Account > Workers Scripts > Edit) and CLOUDFLARE_ACCOUNT_ID.
 on:
   push:
     branches: [main]
@@ -35,9 +35,9 @@ jobs:
       - name: Build site
         run: python3 tools/build-site.py
 
-      - name: Publish to Cloudflare Pages
+      - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=shu-atlas --branch=main --commit-dirty=true
+          command: deploy

@@ -33,7 +33,7 @@ Every scrolling page ends in the Caffeinity wordmark only. Edit `tools/footer-sn
 
 ## Deploy
 
-Merging to `main` runs `.github/workflows/deploy.yml`, which checks the generated blocks, builds `dist/` with `python3 tools/build-site.py` (pages, favicon and the short-route rewrites) and publishes it to Cloudflare Pages (project `shu-atlas`) at <https://acu.caffeinity.com>. The repository needs two secrets: `CLOUDFLARE_API_TOKEN` (Account → Cloudflare Pages → Edit) and `CLOUDFLARE_ACCOUNT_ID`.
+Merging to `main` runs `.github/workflows/deploy.yml`, which checks the generated blocks, builds the site worker with `python3 tools/build-site.py` (pages, short routes, 404 and favicon embedded in `.build/worker.js`) and deploys it with `wrangler deploy` as the Cloudflare Worker `shu-atlas`, which serves <https://acu.caffeinity.com>. The repository needs two secrets: `CLOUDFLARE_API_TOKEN` (Workers Scripts → Edit) and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Shared styling
 

@@ -1,0 +1,6 @@
+{
+  // Worker behind the custom domain acu.caffeinity.com. Built by tools/build-site.py.
+  "name": "shu-atlas",
+  "main": ".build/worker.js",
+  "compatibility_date": "2026-06-01"
+}
