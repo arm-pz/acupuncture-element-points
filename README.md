@@ -27,6 +27,14 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/gb` | `gb-v4-meridian-chart.html` | Gallbladder (GB) — leg, outer side |
 | `/lr` | `lr-v4-meridian-chart.html` | Liver (LR) — leg, front view |
 
+## Footer and favicon
+
+Every scrolling page ends in the Caffeinity wordmark only. Edit `tools/footer-snippet.html` and run `python3 tools/sync-footer.py`. The yin-yang tab icon lives in `favicon.svg`; run `python3 tools/sync-favicon.py` to inline it into every page.
+
+## Deploy
+
+Merging to `main` runs `.github/workflows/deploy.yml`, which checks the generated blocks, builds `dist/` with `python3 tools/build-site.py` (pages, favicon and the short-route rewrites) and publishes it to Cloudflare Pages (project `shu-atlas`) at <https://acu.caffeinity.com>. The repository needs two secrets: `CLOUDFLARE_API_TOKEN` (Account → Cloudflare Pages → Edit) and `CLOUDFLARE_ACCOUNT_ID`.
+
 ## Shared styling
 
 The twelve chart pages share one stylesheet, `tools/chart.css`, in the same midnight shell as Channels, Points, Learn and Study (Jost and IBM Plex Mono, element inks, the anatomy plate on a cream card). After editing it, run `python3 tools/sync-chart-style.py` to copy it into each chart.
