@@ -119,15 +119,18 @@ a{color:inherit}
 .controls-panel{margin:20px 0 16px;padding:16px 18px;background:var(--raise);border:1px solid var(--hair);border-radius:16px;box-shadow:0 4px 20px -4px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:14px}
 .search-wrap{position:relative;display:flex;align-items:center}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--ink-3);pointer-events:none;transition:color .16s var(--ease)}
-.search-wrap input{width:100%;height:46px;padding:0 140px 0 44px;border-radius:12px;border:1px solid var(--hair);background:var(--raise-2);color:var(--ink);font:400 15px/1 "Jost",system-ui,sans-serif;box-shadow:inset 0 1px 2px rgba(0,0,0,.25);transition:border-color .16s var(--ease),background .16s var(--ease),box-shadow .16s var(--ease)}
+.search-wrap input{width:100%;height:46px;padding:0 160px 0 44px;border-radius:12px;border:1px solid var(--hair);background:var(--raise-2);color:var(--ink);font:400 15px/1 "Jost",system-ui,sans-serif;box-shadow:inset 0 1px 2px rgba(0,0,0,.25);transition:border-color .16s var(--ease),background .16s var(--ease),box-shadow .16s var(--ease)}
 .search-wrap input::placeholder{color:var(--ink-3)}
 .search-wrap input:focus{outline:none;border-color:rgba(245,243,237,.45);background:#1a2033;box-shadow:0 0 0 3px rgba(245,243,237,.08),inset 0 1px 2px rgba(0,0,0,.2)}
 .search-wrap:focus-within .search-icon{color:var(--ink)}
 .count-badge{position:absolute;right:14px;top:50%;transform:translateY(-50%);font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);pointer-events:none;background:var(--raise);padding:4px 8px;border-radius:6px;border:1px solid var(--hair);white-space:nowrap}
-.clear-search-btn{position:absolute;right:150px;top:50%;transform:translateY(-50%);appearance:none;border:0;background:transparent;color:var(--ink-3);cursor:pointer;font:500 11.5px/1 var(--mono);padding:4px 6px;border-radius:4px;display:none}
-.clear-search-btn:hover{color:var(--ink)}
+.clear-search-btn{position:absolute;right:142px;top:50%;transform:translateY(-50%);appearance:none;border:0;background:rgba(245,243,237,.08);color:var(--ink-2);cursor:pointer;font:500 11px/1 var(--mono);padding:4px 8px;border-radius:6px;display:none;transition:all .15s ease}
+.clear-search-btn:hover{color:var(--ink);background:rgba(245,243,237,.16)}
 
+.lbl-short{display:none}
+.lbl-full{display:inline}
 .filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.filter-subgrid{display:contents}
 .filter-group{display:flex;align-items:center;gap:8px}
 .filter-lbl{font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);flex:none}
 .seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border-radius:999px;background:var(--raise-2);border:1px solid var(--hair)}
@@ -274,8 +277,76 @@ a{color:inherit}
   .key{align-items:flex-start;padding-top:0}
   .phases{justify-content:flex-start;gap:4px 9px}
   .polarity{gap:12px}
-  .colhead{position:sticky;top:0;grid-template-columns:1fr;padding:10px 0 8px}
+  
+  /* Responsive Controls Panel */
+  .controls-panel{margin:14px 0 12px;padding:14px 14px;gap:12px;border-radius:14px}
+  
+  /* Search Input: full width with clean right-aligned clear button and status line */
+  .search-wrap{flex-direction:column;align-items:stretch;gap:8px}
+  .search-icon{top:22px;left:13px}
+  .search-wrap input{height:44px;padding:0 42px 0 38px;font-size:14px}
+  .clear-search-btn{position:absolute;right:10px;top:22px;transform:translateY(-50%);padding:5px 9px;background:rgba(245,243,237,.12);color:var(--ink);font-size:11px}
+  .count-badge{position:static;transform:none;font-size:10px;letter-spacing:.08em;background:transparent;border:none;padding:0 2px;color:var(--ink-3);display:flex;align-self:flex-start}
+  
+  /* Filters: stacked element track + 2-col polarity/limb subgrid */
+  .lbl-full{display:none}
+  .lbl-short{display:inline}
+  .filter-row{flex-direction:column;align-items:stretch;gap:10px}
+  .filter-group{flex-direction:column;align-items:flex-start;gap:5px;width:100%}
+  .filter-lbl{font-size:9.5px;letter-spacing:.14em;color:var(--ink-3)}
+  
+  /* Element scroll track */
+  .group-el .seg{
+    width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    padding:3px 4px;
+    gap:4px;
+  }
+  .group-el .seg::-webkit-scrollbar{display:none}
+  .group-el .seg button{
+    flex:0 0 auto;
+    white-space:nowrap;
+    padding:6px 11px;
+    font-size:12px;
+  }
+  
+  /* Polarity and Limb subgrid */
+  .filter-subgrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    width:100%;
+  }
+  .group-yy .seg,
+  .group-limb .seg{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    width:100%;
+    padding:3px;
+    gap:2px;
+  }
+  .group-yy .seg button,
+  .group-limb .seg button{
+    padding:6px 2px;
+    font-size:11.5px;
+    justify-content:center;
+    text-align:center;
+    white-space:nowrap;
+  }
+
+  /* Colhead: sticky below appnav with stacked English/Hanzi headers */
+  .colhead{position:sticky;top:52px;z-index:75;grid-template-columns:1fr;padding:8px 0 6px}
   .term-head{display:none}
+  .colgrid{gap:3px}
+  .shu-col-btn{flex-direction:column;align-items:center;gap:2px;padding:5px 2px}
+  .shu-en{font-size:9.5px;letter-spacing:.08em}
+  .shu-han{font-size:12px}
+
+  /* Route & Station tap targets */
   .route{grid-template-columns:1fr;padding:10px 0 8px}
   .terminus{padding-right:0}
   .field{height:54px;margin-top:8px}
@@ -288,6 +359,9 @@ a{color:inherit}
   .phase{top:37px}
   .node{top:21.5px}
   .route.is-yin .node{top:21px}
+  
+  .station{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .station::after{content:"";position:absolute;inset:-10px -8px;z-index:1}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -341,12 +415,12 @@ a{color:inherit}
 <div class="controls-panel">
   <div class="search-wrap">
     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-    <input type="search" id="q" placeholder="Filter by code, name, category, or symptom (e.g. ST36, knee, source, Zusanli)..." autocomplete="off" spellcheck="false" aria-label="Search channels and points">
+    <input type="search" id="q" placeholder="Filter points, channels, symptoms (e.g. ST36, knee)..." autocomplete="off" spellcheck="false" aria-label="Search channels and points">
     <button type="button" class="clear-search-btn" id="clear-search" aria-label="Clear all filters">✕ Clear</button>
     <span class="count-badge" id="match-counter">All 12 channels</span>
   </div>
   <div class="filter-row">
-    <div class="filter-group">
+    <div class="filter-group group-el">
       <span class="filter-lbl">Element</span>
       <div class="seg" id="f-el" role="group" aria-label="Filter by element">
         <button type="button" data-el="" aria-pressed="true">All</button>
@@ -357,20 +431,22 @@ a{color:inherit}
         <button type="button" class="ph-water" data-el="water"><span class="dot"></span>Water</button>
       </div>
     </div>
-    <div class="filter-group">
-      <span class="filter-lbl">Polarity</span>
-      <div class="seg" id="f-yy" role="group" aria-label="Filter by polarity">
-        <button type="button" data-yy="" aria-pressed="true">All</button>
-        <button type="button" data-yy="yin">Yin (Zang 脏)</button>
-        <button type="button" data-yy="yang">Yang (Fu 腑)</button>
+    <div class="filter-subgrid">
+      <div class="filter-group group-yy">
+        <span class="filter-lbl">Polarity</span>
+        <div class="seg" id="f-yy" role="group" aria-label="Filter by polarity">
+          <button type="button" data-yy="" aria-pressed="true">All</button>
+          <button type="button" data-yy="yin"><span class="lbl-full">Yin (Zang 脏)</span><span class="lbl-short">Yin</span></button>
+          <button type="button" data-yy="yang"><span class="lbl-full">Yang (Fu 腑)</span><span class="lbl-short">Yang</span></button>
+        </div>
       </div>
-    </div>
-    <div class="filter-group">
-      <span class="filter-lbl">Limb</span>
-      <div class="seg" id="f-limb" role="group" aria-label="Filter by limb">
-        <button type="button" data-limb="" aria-pressed="true">All</button>
-        <button type="button" data-limb="hand">Hand (Arm 手)</button>
-        <button type="button" data-limb="foot">Foot (Leg 足)</button>
+      <div class="filter-group group-limb">
+        <span class="filter-lbl">Limb</span>
+        <div class="seg" id="f-limb" role="group" aria-label="Filter by limb">
+          <button type="button" data-limb="" aria-pressed="true">All</button>
+          <button type="button" data-limb="hand"><span class="lbl-full">Hand (Arm 手)</span><span class="lbl-short">Hand</span></button>
+          <button type="button" data-limb="foot"><span class="lbl-full">Foot (Leg 足)</span><span class="lbl-short">Foot</span></button>
+        </div>
       </div>
     </div>
   </div>
@@ -902,6 +978,18 @@ a{color:inherit}
     activeStation = null;
   }
   
+  // Mobile tap: 1st tap reveals popover inspector, 2nd tap/CTA navigates to chart
+  document.addEventListener('click', function(e){
+    var st = e.target.closest('.station');
+    if(!st) return;
+    var isTouch = window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+    if(isTouch){
+      e.preventDefault();
+      clearTimeout(popoverTimer);
+      showPopover(st);
+    }
+  });
+
   document.addEventListener('pointerover', function(e){
     var st = e.target.closest('.station');
     if(st){
