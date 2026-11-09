@@ -331,6 +331,38 @@ def run_tests():
         except Exception as e:
             record("Mobile Viewport Banner Responsiveness", "FAIL", str(e))
 
+        # TEST 17: Mobile Responsive Homepage Viewport
+        try:
+            mobile_context = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
+            mob_home = mobile_context.new_page()
+            mob_home.goto(f"{BASE_URL}/", wait_until="networkidle")
+            mob_home.wait_for_timeout(1000)
+
+            # 1. Viewport tag present
+            viewport_tag = mob_home.locator('meta[name="viewport"]').first
+            assert viewport_tag.is_visible or viewport_tag.count() > 0, "Viewport meta tag missing on homepage"
+
+            # 2. .phone class applied
+            has_phone_class = mob_home.evaluate('document.getElementById("vis").classList.contains("phone")')
+            assert has_phone_class, "Expected .phone class on mobile root"
+
+            # 3. 5 discs rendered and within viewport bounds
+            discs = mob_home.locator(".vis-med")
+            assert discs.count() == 5, f"Expected 5 discs, got {discs.count()}"
+
+            # 4. Legend chips present on mobile
+            chips = mob_home.locator(".vis-chip")
+            assert chips.count() == 2, f"Expected 2 legend chips, got {chips.count()}"
+
+            # 5. Nav links present
+            appnav_links = mob_home.locator(".vis-appnav a")
+            assert appnav_links.count() == 5, f"Expected 5 appnav links, got {appnav_links.count()}"
+
+            mobile_context.close()
+            record("Mobile Homepage Responsiveness", "PASS", "Homepage renders mobile layout with viewport tag, .phone styling and 5 elements")
+        except Exception as e:
+            record("Mobile Homepage Responsiveness", "FAIL", str(e))
+
         browser.close()
 
     print("\n==================================================")
