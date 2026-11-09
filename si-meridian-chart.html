@@ -107,182 +107,494 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
   .pager .nm{display:none}
 }
 
-/* Meridian Pathway & Total Points Banner */
+/* ==========================================================================
+   HIGH-EFFORT MERIDIAN TRAJECTORY & GATEWAY ATLAS
+   ========================================================================== */
 .meridian-path-banner {
-  margin: 18px 0 26px;
-  background: rgba(245, 243, 237, 0.025);
-  border: 1px solid var(--hair);
-  border-radius: 14px;
+  margin: 22px 0 32px;
+  background: linear-gradient(180deg, rgba(20, 24, 35, 0.85) 0%, rgba(14, 17, 26, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.45);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color .25s ease, box-shadow .25s ease;
 }
 .meridian-path-banner:hover {
-  border-color: var(--hair-2);
-  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
 }
-.mpb-grid {
+
+/* 1. Top Identity Bar */
+.mpb-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 22px;
+  background: rgba(255, 255, 255, 0.025);
+  border-bottom: 1px solid var(--hair);
+  flex-wrap: wrap;
+}
+.mpb-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.mpb-elem-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+}
+.mpb-elem-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c, #c89e52);
+  box-shadow: 0 0 8px var(--c, #c89e52);
+}
+.mpb-title {
+  font: 600 15px/1.2 "Jost", system-ui, sans-serif;
+  letter-spacing: .01em;
+  color: var(--ink);
+}
+.mpb-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mpb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 500 11.5px/1 var(--mono);
+  letter-spacing: .04em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--hair);
+  color: var(--ink-2);
+}
+.mpb-tag strong.num {
+  font-weight: 700;
+  color: var(--accent-t, #e6c587);
+}
+.mpb-tag-course {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* 2. Dual Gateway Cards (Origin & Terminus) with Transit Conduit */
+.mpb-gateways {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 18px;
+  padding: 22px;
+  background: rgba(0, 0, 0, 0.18);
+  border-bottom: 1px solid var(--hair);
+}
+.gateway-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.gateway-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+.gateway-card.origin {
+  border-left: 3px solid var(--wood, #5fb386);
+}
+.gateway-card.terminus {
+  border-right: 3px solid var(--accent-t, #e6c587);
+}
+.gw-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.gw-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.gw-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.gw-dot.origin {
+  background: var(--wood, #5fb386);
+  box-shadow: 0 0 10px var(--wood, #5fb386);
+}
+.gw-dot.terminus {
+  background: var(--accent-t, #e6c587);
+  box-shadow: 0 0 10px var(--accent-t, #e6c587);
+  border: 1.5px solid var(--ground);
+}
+.gw-landmark {
+  font: 500 11px/1.3 var(--mono);
+  letter-spacing: .02em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--hair);
+  color: var(--accent-t, #e6c587);
+}
+.gw-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 2px;
+}
+.gw-code {
+  font: 700 24px/1 var(--mono);
+  letter-spacing: .02em;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(245, 243, 237, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--ink);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+.gw-naming {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gw-names-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.gw-pinyin {
+  font: 600 18px/1.2 "Jost", system-ui, sans-serif;
+  color: var(--ink);
+  letter-spacing: .01em;
+}
+.gw-hanzi {
+  font-family: "Classic", "Songti SC", "Noto Sans SC", serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.gw-trans {
+  font: italic 400 13px/1.3 "Jost", system-ui, sans-serif;
+  color: var(--accent-t, #e6c587);
+  opacity: .92;
+}
+.gw-loc {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.gw-loc-icon {
+  font-size: 13px;
+  line-height: 1.4;
+  flex-shrink: 0;
+  opacity: .85;
+}
+.gw-loc p {
+  margin: 0;
+  font: 400 12.5px/1.55 "Jost", system-ui, sans-serif;
+  color: var(--ink-2);
+}
+.gw-handoff {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: rgba(230, 197, 135, 0.08);
+  border: 1px dashed rgba(230, 197, 135, 0.3);
+  font: 500 11.5px/1.3 var(--mono);
+  color: var(--accent-t, #e6c587);
+}
+.gw-handoff-icon {
+  font-size: 12px;
+}
+
+/* Center Transit Conduit */
+.gw-conduit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 4px;
+}
+.conduit-line {
+  position: relative;
+  width: 54px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--wood, #5fb386), var(--accent-t, #e6c587));
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.conduit-pulse {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-t, #e6c587);
+  animation: conduitPulse 2.4s infinite linear;
+}
+@keyframes conduitPulse {
+  0% { transform: translateX(-24px); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(24px); opacity: 0; }
+}
+.conduit-arrow {
+  position: absolute;
+  right: -5px;
+  font-size: 11px;
+  color: var(--accent-t, #e6c587);
+  line-height: 1;
+}
+.conduit-label {
+  font: 600 10px/1.2 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* 3. Journey Waypoints: How It Travels */
+.mpb-journey {
+  padding: 22px;
+  background: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--hair);
+}
+.mpb-journey-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.mjh-title-group {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.mjh-icon {
+  color: var(--accent-t, #e6c587);
+  display: flex;
+  align-items: center;
+}
+.mjh-title {
+  font: 600 14.5px/1.2 "Jost", system-ui, sans-serif;
+  letter-spacing: .02em;
+  color: var(--ink);
+  text-transform: uppercase;
+  font-size: 13.5px;
+}
+.mjh-hint {
+  font: 400 12px/1 var(--mono);
+  color: var(--ink-2);
+  letter-spacing: .04em;
+}
+
+/* Multi-Stage Milestone Route Grid */
+.mpb-timeline {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.stage-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.stage-card:hover {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.stage-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stage-badge {
+  font: 700 11px/1 var(--mono);
+  letter-spacing: .06em;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(245, 243, 237, 0.08);
+  border: 1px solid var(--hair);
+  color: var(--accent-t, #e6c587);
+  flex-shrink: 0;
+}
+.stage-name {
+  font: 600 14px/1.3 "Jost", system-ui, sans-serif;
+  color: var(--ink);
+  letter-spacing: .01em;
+}
+.stage-desc {
+  margin: 0;
+  font: 400 13px/1.65 "Jost", system-ui, sans-serif;
+  color: var(--ink-2);
+}
+.stage-desc strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* 4. Organ Affinities & Circadian Tide Ribbon */
+.mpb-affinities {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   background: var(--hair);
-  border-bottom: 1px solid var(--hair);
 }
-.mpb-stat {
-  background: var(--surface);
-  padding: 12px 16px;
+.aff-item {
+  background: rgba(14, 17, 26, 0.95);
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-.mpb-label {
-  font: 500 10.5px/1 var(--mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-.mpb-val {
-  font: 500 14px/1.3 "Jost", system-ui, sans-serif;
-  color: var(--ink);
-  display: flex;
-  align-items: baseline;
   gap: 5px;
-  flex-wrap: wrap;
 }
-.mpb-val .mpb-sub {
-  font-size: 11.5px;
-  color: var(--ink-2);
-  font-weight: 400;
-}
-.mpb-details {
-  border: none;
-}
-.mpb-details summary {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 18px;
-  background: rgba(245, 243, 237, 0.02);
-  user-select: none;
-  list-style: none;
-  font: 500 13px/1 "Jost", system-ui, sans-serif;
-  color: var(--ink);
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-.mpb-details summary::-webkit-details-marker {
-  display: none;
-}
-.mpb-details summary:hover {
-  background: rgba(245, 243, 237, 0.05);
-  color: var(--accent-t);
-}
-.mpb-sum-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink-2);
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-.mpb-details[open] .mpb-sum-icon {
-  transform: rotate(180deg);
-  color: var(--accent-t);
-}
-.mpb-sum-title {
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.mpb-sum-tag {
-  margin-left: auto;
-  font: 500 11px/1 var(--mono);
-  letter-spacing: 0.08em;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(245, 243, 237, 0.06);
-  border: 1px solid var(--hair);
-  color: var(--accent-t);
-}
-.mpb-body {
-  padding: 14px 18px 18px;
-  border-top: 1px solid var(--hair);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font: 400 13.5px/1.6 "Jost", system-ui, sans-serif;
-  color: var(--ink-2);
-  background: rgba(0, 0, 0, 0.12);
-}
-.mpb-route-row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 13px;
-}
-.mpb-route-badge {
-  font: 600 10.5px/1 var(--mono);
-  letter-spacing: 0.12em;
+.aff-lbl {
+  font: 600 10px/1 var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--hair);
+  color: var(--ink-2);
+}
+.aff-val {
+  font: 500 13px/1.35 "Jost", system-ui, sans-serif;
   color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.aff-val-mono {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .03em;
+  color: var(--accent-t, #e6c587);
+}
+.aff-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
   flex-shrink: 0;
 }
-.mpb-route-point {
-  font-weight: 600;
-  color: var(--ink);
+.aff-dot.primary {
+  background: var(--accent-t, #e6c587);
+  box-shadow: 0 0 6px var(--accent-t, #e6c587);
 }
-.mpb-route-loc {
-  color: var(--ink-2);
-  font-size: 12.5px;
-}
-.mpb-desc {
-  border-top: 1px solid var(--hair);
-  padding-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.mpb-desc strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-.mpb-desc-lead {
-  margin: 0;
-  color: var(--ink-2);
-}
-.mpb-organs {
-  margin: 0;
-  font-size: 12.5px;
-  color: var(--ink-2);
-}
-.kicker .badge-pts {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(245, 243, 237, 0.06);
-  border: 1px solid var(--hair);
-  font: 500 11px/1.2 var(--mono);
-  letter-spacing: 0.06em;
-  color: var(--accent-t);
-  vertical-align: middle;
-  margin-left: 6px;
+.aff-dot.paired {
+  background: var(--wood, #5fb386);
 }
 
-@media (max-width: 768px) {
-  .mpb-grid {
+/* Responsive Breakpoints */
+@media (max-width: 980px) {
+  .mpb-gateways {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .gw-conduit {
+    flex-direction: row;
+    padding: 6px 0;
+  }
+  .conduit-line {
+    width: 2px;
+    height: 24px;
+  }
+  .conduit-arrow {
+    bottom: -6px;
+    right: auto;
+    transform: rotate(90deg);
+  }
+  @keyframes conduitPulse {
+    0% { transform: translateY(-12px); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(12px); opacity: 0; }
+  }
+  .mpb-timeline {
+    grid-template-columns: 1fr;
+  }
+  .mpb-affinities {
     grid-template-columns: repeat(2, 1fr);
   }
-  .mpb-stat {
+}
+
+@media (max-width: 600px) {
+  .mpb-topbar {
+    padding: 12px 14px;
+  }
+  .mpb-gateways {
+    padding: 14px;
+  }
+  .gateway-card {
+    padding: 14px;
+  }
+  .gw-identity {
+    gap: 10px;
+  }
+  .gw-code {
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+  .gw-pinyin {
+    font-size: 16px;
+  }
+  .gw-hanzi {
+    font-size: 16px;
+  }
+  .mpb-journey {
+    padding: 14px;
+  }
+  .stage-card {
+    padding: 12px 14px;
+  }
+  .aff-item {
     padding: 10px 12px;
-  }
-  .mpb-val {
-    font-size: 13px;
-  }
-  .mpb-body {
-    padding: 12px 14px 14px;
   }
 }
 </style><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end --></head><body>
@@ -293,38 +605,143 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
 <h1>Small Intestine Meridian — Five Shu Points</h1>
 <p class="lede">Select a point on the arm, or step through them from the hand (Well) to the elbow (Sea) using the buttons under the details panel.</p>
 <!-- meridian-pathway:start -->
-<section class="meridian-path-banner" aria-label="Meridian Trajectory and Points">
-  <div class="mpb-grid">
-    <div class="mpb-stat"><span class="mpb-label">Total Points</span><span class="mpb-val">19 <span class="mpb-sub">(5 Shu)</span></span></div>
-    <div class="mpb-stat"><span class="mpb-label">Course</span><span class="mpb-val">Hand → Face (Centripetal Yang)</span></div>
-    <div class="mpb-stat"><span class="mpb-label">Origin (Start)</span><span class="mpb-val">SI1 Shaoze</span></div>
-    <div class="mpb-stat"><span class="mpb-label">Terminus (End)</span><span class="mpb-val">SI19 Tinggong</span></div>
+<section class="meridian-path-banner" aria-label="Meridian Trajectory, Gateway Termini and Waypoint Journey" style="--c:var(--fire)">
+  <!-- 1. Top Identity Bar -->
+  <div class="mpb-topbar">
+    <div class="mpb-topbar-left">
+      <span class="mpb-elem-badge"><i class="mpb-elem-dot" style="--c:var(--fire)"></i>Fire · Yang</span>
+      <span class="mpb-title">Small Intestine Meridian — Anatomical Trajectory</span>
+    </div>
+    <div class="mpb-topbar-right">
+      <span class="mpb-tag"><strong class="num">19</strong> Primary Points</span>
+      <span class="mpb-tag">5 Five-Shu Points</span>
+      <span class="mpb-tag mpb-tag-course">Hand → Face (Centripetal Yang)</span>
+    </div>
   </div>
-  <details class="mpb-details" open>
-    <summary>
-      <span class="mpb-sum-icon" aria-hidden="true">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </span>
-      <span class="mpb-sum-title">Meridian Pathway &amp; Travel</span>
-      <span class="mpb-sum-tag">19 Points Total</span>
-    </summary>
-    <div class="mpb-body">
-      <div class="mpb-route-row">
-        <span class="mpb-route-badge">Start</span>
-        <span class="mpb-route-point">SI1 Shaoze</span>
-        <span class="mpb-route-loc">Ulnar side of the little finger, 0.1 cun posterior to the corner of the nail</span>
+
+  <!-- 2. Dual Gateway Cards (Origin & Terminus) with Visual Transit Conduit -->
+  <div class="mpb-gateways">
+    <!-- Origin Station Card -->
+    <div class="gateway-card origin" style="border-left-color:var(--fire)">
+      <div class="gw-header">
+        <span class="gw-role"><span class="gw-dot origin" style="background:var(--fire);box-shadow:0 0 10px var(--fire)"></span>CHANNEL ORIGIN · 起穴</span>
+        <span class="gw-landmark">Ulnar Nail Angle · Little Finger</span>
       </div>
-      <div class="mpb-route-row">
-        <span class="mpb-route-badge">End</span>
-        <span class="mpb-route-point">SI19 Tinggong</span>
-        <span class="mpb-route-loc">In the depression anterior to the tragus and posterior to the mandibular joint condyle</span>
+      <div class="gw-identity">
+        <span class="gw-code" style="color:var(--fire)">SI1</span>
+        <div class="gw-naming">
+          <div class="gw-names-row">
+            <span class="gw-pinyin">Shaoze</span>
+            <span class="gw-hanzi">少澤</span>
+          </div>
+          <span class="gw-trans">“Lesser Marsh”</span>
+        </div>
       </div>
-      <div class="mpb-desc">
-        <p class="mpb-desc-lead"><strong>How it travels:</strong> Begins at the ulnar corner of the little fingernail (SI1), travels along the ulnar border of the hand (SI3 Houxi) and wrist (SI5), ascends the posterior-ulnar border of the forearm, and passes between the olecranon process and medial epicondyle of the humerus at the elbow (SI8 Xiaohai). It ascends the posterior upper arm to the shoulder joint, zig-zags across the infraspinous and supraspinous fossae of the scapula (SI9-SI13), meets the midline at the lower cervical spine (GV14 Dazhui), and curves forward over the shoulder into the supraclavicular fossa (ST12). An internal branch plunges downward to connect with the Heart, descends through the diaphragm to the Stomach, and enters the Small Intestine. The ascending superficial branch rises along the lateral neck (SI16, SI17), crosses the cheek to the outer canthus of the eye (linking to BL1), and enters the auditory canal, terminating in front of the tragus at SI19 Tinggong.</p>
-        <p class="mpb-organs"><strong>Internal organ connections:</strong> Small Intestine, Heart, Stomach</p>
+      <div class="gw-loc">
+        <span class="gw-loc-icon" aria-hidden="true">📍</span>
+        <p>On the ulnar side of the little finger, 0.1 cun posterior to the corner of the nail.</p>
       </div>
     </div>
-  </details>
+
+    <!-- Center Transit Vector -->
+    <div class="gw-conduit" aria-hidden="true">
+      <div class="conduit-line" style="background:linear-gradient(90deg, var(--fire), var(--accent-t))">
+        <span class="conduit-pulse" style="background:var(--accent-t)"></span>
+        <span class="conduit-arrow" style="color:var(--accent-t)">→</span>
+      </div>
+      <span class="conduit-label">19 Points Total</span>
+    </div>
+
+    <!-- Terminus Station Card -->
+    <div class="gateway-card terminus" style="border-right-color:var(--accent-t)">
+      <div class="gw-header">
+        <span class="gw-role"><span class="gw-dot terminus"></span>CHANNEL TERMINUS · 止穴</span>
+        <span class="gw-landmark">Preauricular Depression · Tragus</span>
+      </div>
+      <div class="gw-identity">
+        <span class="gw-code" style="color:var(--accent-t)">SI19</span>
+        <div class="gw-naming">
+          <div class="gw-names-row">
+            <span class="gw-pinyin">Tinggong</span>
+            <span class="gw-hanzi">聽宮</span>
+          </div>
+          <span class="gw-trans">“Palace of Hearing”</span>
+        </div>
+      </div>
+      <div class="gw-loc">
+        <span class="gw-loc-icon" aria-hidden="true">📍</span>
+        <p>In the depression anterior to the tragus and posterior to the mandibular condyle.</p>
+      </div>
+      <div class="gw-handoff">
+        <span class="gw-handoff-icon" aria-hidden="true">⮑</span>
+        <span>Facial branch links with BL1 Jingming at inner canthus</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Journey Waypoints: How It Travels (Stage-by-Stage Milestone Route) -->
+  <div class="mpb-journey">
+    <div class="mpb-journey-header">
+      <div class="mjh-title-group">
+        <span class="mjh-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </span>
+        <span class="mjh-title">How It Travels · Anatomical Route Waypoints</span>
+      </div>
+      <span class="mjh-hint">Sequential course from Origin to Terminus</span>
+    </div>
+
+    <div class="mpb-timeline">
+      <div class="stage-card">
+        <div class="stage-top">
+          <span class="stage-badge">Stage 01</span>
+          <span class="stage-name">Digital Ulnar Ascent & Metacarpal Border</span>
+        </div>
+        <p class="stage-desc">Begins at the ulnar nail angle of the little finger at SI1 Shaoze, courses along the ulnar margin of the hand past the 5th metacarpal head at SI3 Houxi, crosses the ulnar wrist crease at SI5 Yanggu, and climbs the posterior ulnar crest of the forearm.</p>
+      </div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <span class="stage-badge">Stage 02</span>
+          <span class="stage-name">Olecranon Groove to Scapular Traversal</span>
+        </div>
+        <p class="stage-desc">Passes between the olecranon tip and medial epicondyle of the humerus at SI8 Xiaohai, ascends the posterior triceps to the shoulder joint, and zig-zags across the infraspinous and supraspinous fossae of the scapula (SI9–SI13).</p>
+      </div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <span class="stage-badge">Stage 03</span>
+          <span class="stage-name">Spinal Union & Visceral Penetration</span>
+        </div>
+        <p class="stage-desc">Reaches the midline at the 7th cervical vertebra (GV14 Dazhui), arches forward into the supraclavicular fossa (ST12), and sends deep vessels down through the Heart, diaphragm, and Stomach to enter the Small Intestine.</p>
+      </div>
+      <div class="stage-card">
+        <div class="stage-top">
+          <span class="stage-badge">Stage 04</span>
+          <span class="stage-name">Cervical Ascent, Zygoma & Preauricular Tragus</span>
+        </div>
+        <p class="stage-desc">The external ascending branch climbs the lateral neck, crosses the cheekbone, divides to send an internal link to the inner eye canthus (BL1), and enters the auditory canal, terminating directly in front of the tragus at SI19 Tinggong.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Organ Affinities & Circadian Tide Ribbon -->
+  <div class="mpb-affinities">
+    <div class="aff-item">
+      <span class="aff-lbl">Primary Organ</span>
+      <span class="aff-val"><i class="aff-dot primary"></i>Small Intestine (小腸 · Fu)</span>
+    </div>
+    <div class="aff-item">
+      <span class="aff-lbl">Paired Organ</span>
+      <span class="aff-val"><i class="aff-dot paired" style="background:var(--fire)"></i>Heart (心 · Zang)</span>
+    </div>
+    <div class="aff-item">
+      <span class="aff-lbl">Associated Tissues</span>
+      <span class="aff-val">Ears · Scapular Region · Upper Back · Lower Abdomen</span>
+    </div>
+    <div class="aff-item">
+      <span class="aff-lbl">Circadian Peak Tide</span>
+      <span class="aff-val aff-val-mono">13:00 – 15:00 · Wei Hour (未時)</span>
+    </div>
+  </div>
 </section>
 <!-- meridian-pathway:end -->
 <div class="layout">

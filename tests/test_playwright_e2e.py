@@ -223,62 +223,74 @@ def run_tests():
         except Exception as e:
             record("Meridian Anatomy Chart (/lu)", "FAIL", str(e))
 
-        # TEST 11: Meridian Trajectory Banner & Total Points on /lu
+        # TEST 11: Premium Gateway Cards & Waypoint Journey on /lu
         try:
             banner = page.locator(".meridian-path-banner")
             assert banner.is_visible(), "Meridian pathway banner (.meridian-path-banner) not visible"
 
-            points_stat = page.locator(".mpb-stat", has_text="Total Points")
-            assert "11" in points_stat.inner_text(), f"Expected 11 points for Lung, got {points_stat.inner_text()}"
+            # Check topbar points count
+            topbar = page.locator(".mpb-topbar")
+            assert "11" in topbar.inner_text(), f"Expected 11 points for Lung, got {topbar.inner_text()}"
 
-            origin_stat = page.locator(".mpb-stat", has_text="Origin")
-            assert "LU1" in origin_stat.inner_text(), f"Expected LU1 origin, got {origin_stat.inner_text()}"
+            # Check origin gateway card
+            origin_card = page.locator(".gateway-card.origin")
+            assert origin_card.is_visible(), "Origin gateway card not visible"
+            assert "LU1" in origin_card.inner_text(), f"Expected LU1 in origin card, got {origin_card.inner_text()}"
+            assert "Zhongfu" in origin_card.inner_text(), "Expected Zhongfu in origin card"
 
-            terminus_stat = page.locator(".mpb-stat", has_text="Terminus")
-            assert "LU11" in terminus_stat.inner_text(), f"Expected LU11 terminus, got {terminus_stat.inner_text()}"
+            # Check terminus gateway card
+            terminus_card = page.locator(".gateway-card.terminus")
+            assert terminus_card.is_visible(), "Terminus gateway card not visible"
+            assert "LU11" in terminus_card.inner_text(), f"Expected LU11 in terminus card, got {terminus_card.inner_text()}"
+            assert "Shaoshang" in terminus_card.inner_text(), "Expected Shaoshang in terminus card"
 
+            # Check 4 milestone stages in timeline
+            stage_cards = page.locator(".stage-card")
+            assert stage_cards.count() == 4, f"Expected 4 milestone stage cards, found {stage_cards.count()}"
+
+            # Check kicker badge
             kicker = page.locator(".kicker")
             assert "11 points" in kicker.inner_text().lower(), f"Expected '11 Points' in kicker, got {kicker.inner_text()}"
 
-            record("Lung Trajectory Banner & 11 Points", "PASS", "Verified banner with 11 points, LU1 start, LU11 end, and kicker badge")
+            record("Lung Gateway Cards & 4-Stage Waypoints", "PASS", "Verified premium Origin (LU1 Zhongfu), Terminus (LU11 Shaoshang), 4-stage waypoints")
         except Exception as e:
-            record("Lung Trajectory Banner & 11 Points", "FAIL", str(e))
+            record("Lung Gateway Cards & 4-Stage Waypoints", "FAIL", str(e))
 
-        # TEST 12: Renamed Large Intestine Chart (/li) - 20 Points
+        # TEST 12: Renamed Large Intestine Chart (/li) - 20 Points & Gateway Cards
         try:
             resp = page.goto(f"{BASE_URL}/li", wait_until="networkidle")
             assert resp.status == 200, f"Expected 200 OK, got {resp.status}"
 
-            points_stat = page.locator(".mpb-stat", has_text="Total Points")
-            assert "20" in points_stat.inner_text(), f"Expected 20 points for LI, got {points_stat.inner_text()}"
+            topbar = page.locator(".mpb-topbar")
+            assert "20" in topbar.inner_text(), f"Expected 20 points for LI, got {topbar.inner_text()}"
 
-            origin_stat = page.locator(".mpb-stat", has_text="Origin")
-            assert "LI1" in origin_stat.inner_text(), f"Expected LI1 origin, got {origin_stat.inner_text()}"
+            origin_card = page.locator(".gateway-card.origin")
+            assert "LI1" in origin_card.inner_text(), f"Expected LI1 origin, got {origin_card.inner_text()}"
 
-            terminus_stat = page.locator(".mpb-stat", has_text="Terminus")
-            assert "LI20" in terminus_stat.inner_text(), f"Expected LI20 terminus, got {terminus_stat.inner_text()}"
+            terminus_card = page.locator(".gateway-card.terminus")
+            assert "LI20" in terminus_card.inner_text(), f"Expected LI20 terminus, got {terminus_card.inner_text()}"
 
-            record("Renamed LI Meridian Chart (20 Points)", "PASS", "li-meridian-chart.html loads with 20 points, LI1 start, LI20 end")
+            record("Renamed LI Meridian Chart (20 Points & Gateway Cards)", "PASS", "li-meridian-chart.html loads with 20 points, LI1 start, LI20 end")
         except Exception as e:
-            record("Renamed LI Meridian Chart (20 Points)", "FAIL", str(e))
+            record("Renamed LI Meridian Chart (20 Points & Gateway Cards)", "FAIL", str(e))
 
-        # TEST 13: Renamed Bladder Chart (/bl) - 67 Points
+        # TEST 13: Renamed Bladder Chart (/bl) - 67 Points & Gateway Cards
         try:
             resp = page.goto(f"{BASE_URL}/bl", wait_until="networkidle")
             assert resp.status == 200, f"Expected 200 OK, got {resp.status}"
 
-            points_stat = page.locator(".mpb-stat", has_text="Total Points")
-            assert "67" in points_stat.inner_text(), f"Expected 67 points for Bladder, got {points_stat.inner_text()}"
+            topbar = page.locator(".mpb-topbar")
+            assert "67" in topbar.inner_text(), f"Expected 67 points for Bladder, got {topbar.inner_text()}"
 
-            origin_stat = page.locator(".mpb-stat", has_text="Origin")
-            assert "BL1" in origin_stat.inner_text(), f"Expected BL1 origin, got {origin_stat.inner_text()}"
+            origin_card = page.locator(".gateway-card.origin")
+            assert "BL1" in origin_card.inner_text(), f"Expected BL1 origin, got {origin_card.inner_text()}"
 
-            terminus_stat = page.locator(".mpb-stat", has_text="Terminus")
-            assert "BL67" in terminus_stat.inner_text(), f"Expected BL67 terminus, got {terminus_stat.inner_text()}"
+            terminus_card = page.locator(".gateway-card.terminus")
+            assert "BL67" in terminus_card.inner_text(), f"Expected BL67 terminus, got {terminus_card.inner_text()}"
 
-            record("Renamed Bladder Meridian Chart (67 Points)", "PASS", "bl-meridian-chart.html loads with 67 points, BL1 start, BL67 end")
+            record("Renamed Bladder Meridian Chart (67 Points & Gateway Cards)", "PASS", "bl-meridian-chart.html loads with 67 points, BL1 start, BL67 end")
         except Exception as e:
-            record("Renamed Bladder Meridian Chart (67 Points)", "FAIL", str(e))
+            record("Renamed Bladder Meridian Chart (67 Points & Gateway Cards)", "FAIL", str(e))
 
         # TEST 14: Legacy Backwards-Compatible Aliases (*-v4-*)
         try:
