@@ -15,17 +15,17 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/basics` | `basics.html` | Redirect into `/learn` (old section anchors map to the matching module) |
 | `/study` | `study.html` | Recall quiz: Shu category, element and finding the point |
 | `/lu` | `lung-meridian-chart.html` | Lung (LU) — arm, palm view |
-| `/li` | `li-v4-meridian-chart.html` | Large Intestine (LI) — arm, side view with the thumb forward |
-| `/st` | `st-v4-meridian-chart.html` | Stomach (ST) — leg, front view |
-| `/sp` | `sp-v4-meridian-chart.html` | Spleen (SP) — leg, inner side |
-| `/ht` | `ht-v4-meridian-chart.html` | Heart (HT) — arm, palm view |
-| `/si` | `si-v4-meridian-chart.html` | Small Intestine (SI) — arm, back view |
-| `/bl` | `bl-v4-meridian-chart.html` | Bladder (BL) — leg, outer side |
-| `/ki` | `ki-v4-meridian-chart.html` | Kidney (KI) — leg, inner side |
-| `/pc` | `pc-v4-meridian-chart.html` | Pericardium (PC) — arm, palm view |
-| `/tb` | `tb-v4-meridian-chart.html` | Triple Burner (TB) — arm, back view |
-| `/gb` | `gb-v4-meridian-chart.html` | Gallbladder (GB) — leg, outer side |
-| `/lr` | `lr-v4-meridian-chart.html` | Liver (LR) — leg, front view |
+| `/li` | `li-meridian-chart.html` | Large Intestine (LI) — arm, side view with the thumb forward |
+| `/st` | `st-meridian-chart.html` | Stomach (ST) — leg, front view |
+| `/sp` | `sp-meridian-chart.html` | Spleen (SP) — leg, inner side |
+| `/ht` | `ht-meridian-chart.html` | Heart (HT) — arm, palm view |
+| `/si` | `si-meridian-chart.html` | Small Intestine (SI) — arm, back view |
+| `/bl` | `bl-meridian-chart.html` | Bladder (BL) — leg, outer side |
+| `/ki` | `ki-meridian-chart.html` | Kidney (KI) — leg, inner side |
+| `/pc` | `pc-meridian-chart.html` | Pericardium (PC) — arm, palm view |
+| `/tb` | `tb-meridian-chart.html` | Triple Burner (TB) — arm, back view |
+| `/gb` | `gb-meridian-chart.html` | Gallbladder (GB) — leg, outer side |
+| `/lr` | `lr-meridian-chart.html` | Liver (LR) — leg, front view |
 
 ## Footer and favicon
 
@@ -51,7 +51,7 @@ node shu-serve.js
 
 Then open <http://127.0.0.1:4174>. The server maps the routes above to files and also serves each page under its file name, which is how the app pages link to one another. Pages are self-contained (styles and images embedded; the app pages load their fonts from Google Fonts), so they also open directly from disk.
 
-The twelve chart pages are the V4 pages plus Lung; the older V1–V3 charts were removed (they remain in git history). The `/lr4`-style routes still work as aliases. A point code after `#` opens the chart with that point selected, e.g. `gb-v4-meridian-chart.html#GB34`.
+The twelve chart pages are the official meridian charts (they remain in git history). The `/lr4`-style routes still work as aliases. A point code after `#` opens the chart with that point selected, e.g. `gb-meridian-chart.html#GB34`.
 
 ## Data
 

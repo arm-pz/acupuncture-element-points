@@ -9,7 +9,7 @@ import pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SNIP = (ROOT / 'tools' / 'glossary-snippet.html').read_text(encoding='utf-8').strip()
-PAGES = ['learn.html', 'study.html', 'lung-meridian-chart.html'] + sorted(p.name for p in ROOT.glob('*-v4-meridian-chart.html'))
+PAGES = ['learn.html', 'study.html'] + sorted(p.name for p in ROOT.glob('*meridian-chart.html'))
 BLOCK = re.compile(r'<!-- gloss:start.*?<!-- gloss:end -->', re.S)
 
 changed = 0

@@ -10,7 +10,7 @@ import pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CSS = (ROOT / 'tools' / 'chart.css').read_text(encoding='utf-8').strip()
 FONTS = 'https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Noto+Sans+SC:wght@300&display=swap'
-PAGES = ['lung-meridian-chart.html'] + sorted(p.name for p in ROOT.glob('*-v4-meridian-chart.html'))
+PAGES = sorted(p.name for p in ROOT.glob('*meridian-chart.html'))
 changed = 0
 for name in PAGES:
     p = ROOT / name

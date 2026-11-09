@@ -106,13 +106,227 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
   .appbar a.l{padding:7px 10px;font-size:12.5px}
   .pager .nm{display:none}
 }
+
+/* Meridian Pathway & Total Points Banner */
+.meridian-path-banner {
+  margin: 18px 0 26px;
+  background: rgba(245, 243, 237, 0.025);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.meridian-path-banner:hover {
+  border-color: var(--hair-2);
+  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, 0.6);
+}
+.mpb-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.mpb-stat {
+  background: var(--surface);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mpb-label {
+  font: 500 10.5px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.mpb-val {
+  font: 500 14px/1.3 "Jost", system-ui, sans-serif;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.mpb-val .mpb-sub {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  font-weight: 400;
+}
+.mpb-details {
+  border: none;
+}
+.mpb-details summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  background: rgba(245, 243, 237, 0.02);
+  user-select: none;
+  list-style: none;
+  font: 500 13px/1 "Jost", system-ui, sans-serif;
+  color: var(--ink);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.mpb-details summary::-webkit-details-marker {
+  display: none;
+}
+.mpb-details summary:hover {
+  background: rgba(245, 243, 237, 0.05);
+  color: var(--accent-t);
+}
+.mpb-sum-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-2);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.mpb-details[open] .mpb-sum-icon {
+  transform: rotate(180deg);
+  color: var(--accent-t);
+}
+.mpb-sum-title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.mpb-sum-tag {
+  margin-left: auto;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(245, 243, 237, 0.06);
+  border: 1px solid var(--hair);
+  color: var(--accent-t);
+}
+.mpb-body {
+  padding: 14px 18px 18px;
+  border-top: 1px solid var(--hair);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font: 400 13.5px/1.6 "Jost", system-ui, sans-serif;
+  color: var(--ink-2);
+  background: rgba(0, 0, 0, 0.12);
+}
+.mpb-route-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.mpb-route-badge {
+  font: 600 10.5px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.mpb-route-point {
+  font-weight: 600;
+  color: var(--ink);
+}
+.mpb-route-loc {
+  color: var(--ink-2);
+  font-size: 12.5px;
+}
+.mpb-desc {
+  border-top: 1px solid var(--hair);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mpb-desc strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.mpb-desc-lead {
+  margin: 0;
+  color: var(--ink-2);
+}
+.mpb-organs {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+.kicker .badge-pts {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(245, 243, 237, 0.06);
+  border: 1px solid var(--hair);
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--accent-t);
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+@media (max-width: 768px) {
+  .mpb-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mpb-stat {
+    padding: 10px 12px;
+  }
+  .mpb-val {
+    font-size: 13px;
+  }
+  .mpb-body {
+    padding: 12px 14px 14px;
+  }
+}
 </style><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end --></head><body>
 <header class="appbar"><div class="in"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l here" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></div></header>
 <main class="page">
-<nav class="pager" aria-label="Channels"><a class="up" href="channels.html#fire">‹ Fire channels</a><a href="ht-v4-meridian-chart.html" aria-label="Previous channel: Heart"><i style="--c:var(--fire)"></i><span class="nm">Heart</span> ←</a><a href="pc-v4-meridian-chart.html" aria-label="Next channel: Pericardium">→ <span class="nm">Pericardium</span><i style="--c:var(--fire)"></i></a></nav>
-<p class="kicker">Hand Taiyang · Yang Fire</p>
+<nav class="pager" aria-label="Channels"><a class="up" href="channels.html#fire">‹ Fire channels</a><a href="ht-meridian-chart.html" aria-label="Previous channel: Heart"><i style="--c:var(--fire)"></i><span class="nm">Heart</span> ←</a><a href="pc-meridian-chart.html" aria-label="Next channel: Pericardium">→ <span class="nm">Pericardium</span><i style="--c:var(--fire)"></i></a></nav>
+<p class="kicker">Hand Taiyang · Yang Fire · <span class="badge-pts">19 Points</span></p>
 <h1>Small Intestine Meridian — Five Shu Points</h1>
 <p class="lede">Select a point on the arm, or step through them from the hand (Well) to the elbow (Sea) using the buttons under the details panel.</p>
+<!-- meridian-pathway:start -->
+<section class="meridian-path-banner" aria-label="Meridian Trajectory and Points">
+  <div class="mpb-grid">
+    <div class="mpb-stat"><span class="mpb-label">Total Points</span><span class="mpb-val">19 <span class="mpb-sub">(5 Shu)</span></span></div>
+    <div class="mpb-stat"><span class="mpb-label">Course</span><span class="mpb-val">Hand → Face (Centripetal Yang)</span></div>
+    <div class="mpb-stat"><span class="mpb-label">Origin (Start)</span><span class="mpb-val">SI1 Shaoze</span></div>
+    <div class="mpb-stat"><span class="mpb-label">Terminus (End)</span><span class="mpb-val">SI19 Tinggong</span></div>
+  </div>
+  <details class="mpb-details" open>
+    <summary>
+      <span class="mpb-sum-icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </span>
+      <span class="mpb-sum-title">Meridian Pathway &amp; Travel</span>
+      <span class="mpb-sum-tag">19 Points Total</span>
+    </summary>
+    <div class="mpb-body">
+      <div class="mpb-route-row">
+        <span class="mpb-route-badge">Start</span>
+        <span class="mpb-route-point">SI1 Shaoze</span>
+        <span class="mpb-route-loc">Ulnar side of the little finger, 0.1 cun posterior to the corner of the nail</span>
+      </div>
+      <div class="mpb-route-row">
+        <span class="mpb-route-badge">End</span>
+        <span class="mpb-route-point">SI19 Tinggong</span>
+        <span class="mpb-route-loc">In the depression anterior to the tragus and posterior to the mandibular joint condyle</span>
+      </div>
+      <div class="mpb-desc">
+        <p class="mpb-desc-lead"><strong>How it travels:</strong> Begins at the ulnar corner of the little fingernail (SI1), travels along the ulnar border of the hand (SI3 Houxi) and wrist (SI5), ascends the posterior-ulnar border of the forearm, and passes between the olecranon process and medial epicondyle of the humerus at the elbow (SI8 Xiaohai). It ascends the posterior upper arm to the shoulder joint, zig-zags across the infraspinous and supraspinous fossae of the scapula (SI9-SI13), meets the midline at the lower cervical spine (GV14 Dazhui), and curves forward over the shoulder into the supraclavicular fossa (ST12). An internal branch plunges downward to connect with the Heart, descends through the diaphragm to the Stomach, and enters the Small Intestine. The ascending superficial branch rises along the lateral neck (SI16, SI17), crosses the cheek to the outer canthus of the eye (linking to BL1), and enters the auditory canal, terminating in front of the tragus at SI19 Tinggong.</p>
+        <p class="mpb-organs"><strong>Internal organ connections:</strong> Small Intestine, Heart, Stomach</p>
+      </div>
+    </div>
+  </details>
+</section>
+<!-- meridian-pathway:end -->
 <div class="layout">
 <div class="leg">
 <svg viewBox="0 0 576 1024" role="group" aria-label="Small Intestine channel chart with its five Shu points" version="1.1" xmlns="http://www.w3.org/2000/svg">

@@ -12,18 +12,18 @@ with open(ROOT / 'data' / 'points.json', encoding='utf-8') as f:
 
 points_dict = {p['code']: p for p in points_data['points']}
 channel_meta = {
-    'LR': {'limb': 'foot', 'yy': 'yin', 'el': 'wood', 'name': 'Liver', 'hz': '足厥陰肝經', 'file': 'lr-v4-meridian-chart.html'},
-    'GB': {'limb': 'foot', 'yy': 'yang', 'el': 'wood', 'name': 'Gallbladder', 'hz': '足少陽膽經', 'file': 'gb-v4-meridian-chart.html'},
-    'HT': {'limb': 'hand', 'yy': 'yin', 'el': 'fire', 'name': 'Heart', 'hz': '手少陰心經', 'file': 'ht-v4-meridian-chart.html'},
-    'SI': {'limb': 'hand', 'yy': 'yang', 'el': 'fire', 'name': 'Small Intestine', 'hz': '手太陽小腸經', 'file': 'si-v4-meridian-chart.html'},
-    'PC': {'limb': 'hand', 'yy': 'yin', 'el': 'fire', 'name': 'Pericardium', 'hz': '手厥陰心包經', 'file': 'pc-v4-meridian-chart.html'},
-    'TB': {'limb': 'hand', 'yy': 'yang', 'el': 'fire', 'name': 'Triple Burner', 'hz': '手少陽三焦經', 'file': 'tb-v4-meridian-chart.html'},
-    'SP': {'limb': 'foot', 'yy': 'yin', 'el': 'earth', 'name': 'Spleen', 'hz': '足太陰脾經', 'file': 'sp-v4-meridian-chart.html'},
-    'ST': {'limb': 'foot', 'yy': 'yang', 'el': 'earth', 'name': 'Stomach', 'hz': '足陽明胃經', 'file': 'st-v4-meridian-chart.html'},
+    'LR': {'limb': 'foot', 'yy': 'yin', 'el': 'wood', 'name': 'Liver', 'hz': '足厥陰肝經', 'file': 'lr-meridian-chart.html'},
+    'GB': {'limb': 'foot', 'yy': 'yang', 'el': 'wood', 'name': 'Gallbladder', 'hz': '足少陽膽經', 'file': 'gb-meridian-chart.html'},
+    'HT': {'limb': 'hand', 'yy': 'yin', 'el': 'fire', 'name': 'Heart', 'hz': '手少陰心經', 'file': 'ht-meridian-chart.html'},
+    'SI': {'limb': 'hand', 'yy': 'yang', 'el': 'fire', 'name': 'Small Intestine', 'hz': '手太陽小腸經', 'file': 'si-meridian-chart.html'},
+    'PC': {'limb': 'hand', 'yy': 'yin', 'el': 'fire', 'name': 'Pericardium', 'hz': '手厥陰心包經', 'file': 'pc-meridian-chart.html'},
+    'TB': {'limb': 'hand', 'yy': 'yang', 'el': 'fire', 'name': 'Triple Burner', 'hz': '手少陽三焦經', 'file': 'tb-meridian-chart.html'},
+    'SP': {'limb': 'foot', 'yy': 'yin', 'el': 'earth', 'name': 'Spleen', 'hz': '足太陰脾經', 'file': 'sp-meridian-chart.html'},
+    'ST': {'limb': 'foot', 'yy': 'yang', 'el': 'earth', 'name': 'Stomach', 'hz': '足陽明胃經', 'file': 'st-meridian-chart.html'},
     'LU': {'limb': 'hand', 'yy': 'yin', 'el': 'metal', 'name': 'Lung', 'hz': '手太陰肺經', 'file': 'lung-meridian-chart.html'},
-    'LI': {'limb': 'hand', 'yy': 'yang', 'el': 'metal', 'name': 'Large Intestine', 'hz': '手陽明大腸經', 'file': 'li-v4-meridian-chart.html'},
-    'KI': {'limb': 'foot', 'yy': 'yin', 'el': 'water', 'name': 'Kidney', 'hz': '足少陰腎經', 'file': 'ki-v4-meridian-chart.html'},
-    'BL': {'limb': 'foot', 'yy': 'yang', 'el': 'water', 'name': 'Bladder', 'hz': '足太陽膀胱經', 'file': 'bl-v4-meridian-chart.html'}
+    'LI': {'limb': 'hand', 'yy': 'yang', 'el': 'metal', 'name': 'Large Intestine', 'hz': '手陽明大腸經', 'file': 'li-meridian-chart.html'},
+    'KI': {'limb': 'foot', 'yy': 'yin', 'el': 'water', 'name': 'Kidney', 'hz': '足少陰腎經', 'file': 'ki-meridian-chart.html'},
+    'BL': {'limb': 'foot', 'yy': 'yang', 'el': 'water', 'name': 'Bladder', 'hz': '足太陽膀胱經', 'file': 'bl-meridian-chart.html'}
 }
 
 # Read original channels.html to extract fonts

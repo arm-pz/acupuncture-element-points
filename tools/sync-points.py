@@ -72,7 +72,7 @@ def gen_P(page):
 
 
 def gen_CH(page):
-    return 'var CH = ' + js([{k: c[k] for k in ('key', 'file', 'name', 'abbr', 'elem', 'yy')} for c in CHANNELS]) + ';'
+    return 'var CH = ' + js([{k: c[k] for k in ('key', 'file', 'name', 'abbr', 'elem', 'yy', 'pointsCount', 'startPoint', 'endPoint', 'course', 'pathway') if k in c} for c in CHANNELS]) + ';'
 
 
 def channel_of(page):

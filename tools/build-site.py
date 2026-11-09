@@ -16,7 +16,7 @@ favicon = (ROOT / 'favicon.svg').read_text(encoding='utf-8')
 
 # Short routes come from shu-serve.js so the dev server and the live site never drift apart.
 js = (ROOT / 'shu-serve.js').read_text(encoding='utf-8')
-routes = dict(re.findall(r'"(/[a-z0-9]+)": "([a-z0-9-]+\.html)"', js))
+routes = dict(re.findall(r'"(/[a-z0-9._-]+)": "([a-z0-9-]+\.html)"', js))
 routes['/'] = 'index.html'
 routes.update({'/channels': 'channels.html', '/points': 'points.html', '/learn': 'learn.html',
                '/basics': 'basics.html', '/study': 'study.html'})

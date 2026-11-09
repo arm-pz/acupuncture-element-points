@@ -103,3 +103,183 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
   .appbar a.l{padding:7px 10px;font-size:12.5px}
   .pager .nm{display:none}
 }
+
+/* Meridian Pathway & Total Points Banner */
+.meridian-path-banner {
+  margin: 18px 0 26px;
+  background: rgba(245, 243, 237, 0.025);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.meridian-path-banner:hover {
+  border-color: var(--hair-2);
+  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, 0.6);
+}
+.mpb-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.mpb-stat {
+  background: var(--surface);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mpb-label {
+  font: 500 10.5px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.mpb-val {
+  font: 500 14px/1.3 "Jost", system-ui, sans-serif;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.mpb-val .mpb-sub {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  font-weight: 400;
+}
+.mpb-details {
+  border: none;
+}
+.mpb-details summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  background: rgba(245, 243, 237, 0.02);
+  user-select: none;
+  list-style: none;
+  font: 500 13px/1 "Jost", system-ui, sans-serif;
+  color: var(--ink);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.mpb-details summary::-webkit-details-marker {
+  display: none;
+}
+.mpb-details summary:hover {
+  background: rgba(245, 243, 237, 0.05);
+  color: var(--accent-t);
+}
+.mpb-sum-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-2);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.mpb-details[open] .mpb-sum-icon {
+  transform: rotate(180deg);
+  color: var(--accent-t);
+}
+.mpb-sum-title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.mpb-sum-tag {
+  margin-left: auto;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(245, 243, 237, 0.06);
+  border: 1px solid var(--hair);
+  color: var(--accent-t);
+}
+.mpb-body {
+  padding: 14px 18px 18px;
+  border-top: 1px solid var(--hair);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font: 400 13.5px/1.6 "Jost", system-ui, sans-serif;
+  color: var(--ink-2);
+  background: rgba(0, 0, 0, 0.12);
+}
+.mpb-route-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.mpb-route-badge {
+  font: 600 10.5px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--hair);
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.mpb-route-point {
+  font-weight: 600;
+  color: var(--ink);
+}
+.mpb-route-loc {
+  color: var(--ink-2);
+  font-size: 12.5px;
+}
+.mpb-desc {
+  border-top: 1px solid var(--hair);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mpb-desc strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.mpb-desc-lead {
+  margin: 0;
+  color: var(--ink-2);
+}
+.mpb-organs {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+.kicker .badge-pts {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(245, 243, 237, 0.06);
+  border: 1px solid var(--hair);
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--accent-t);
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+@media (max-width: 768px) {
+  .mpb-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mpb-stat {
+    padding: 10px 12px;
+  }
+  .mpb-val {
+    font-size: 13px;
+  }
+  .mpb-body {
+    padding: 12px 14px 14px;
+  }
+}
+
