@@ -363,7 +363,7 @@ def run_tests():
         except Exception as e:
             record("Mobile Homepage Responsiveness", "FAIL", str(e))
 
-        # 18. Conception Vessel Chart (/cv)
+        # 18. Conception Vessel Chart (/cv) & Nalaayan Anatomical Diagrams
         try:
             cv_page = context.new_page()
             resp = cv_page.goto(f"{BASE_URL}/cv", wait_until="networkidle")
@@ -376,21 +376,24 @@ def run_tests():
             cv_page.wait_for_timeout(200)
             info = cv_page.locator("#pt-info").inner_text()
             assert "CV6" in info and "Qihai" in info and "Water" in info
-            record("Conception Vessel Chart (/cv)", "PASS", "CV chart rendered with 5 element points, interactive chips and anatomy")
+            # Verify Nalaayan anatomical location diagram image is rendered
+            img = cv_page.locator("#pt-info figure img")
+            assert img.is_visible(), "Expected Nalaayan location diagram image to be visible in #pt-info"
+            record("Conception Vessel Chart (/cv)", "PASS", "CV chart rendered with 5 element points, anatomy, and Nalaayan diagram images")
         except Exception as e:
             record("Conception Vessel Chart (/cv)", "FAIL", str(e))
 
-        # 19. Conception Vessel in Channels Directory & Search
+        # 19. Conception Vessel Hidden from Channels Directory
         try:
             ch_page = context.new_page()
             ch_page.goto(f"{BASE_URL}/channels", wait_until="networkidle")
             cv_route = ch_page.locator('.route[data-ch="CV"]')
-            assert cv_route.count() == 1, "Expected CV route in channels.html"
-            cv_stations = cv_route.locator(".station")
-            assert cv_stations.count() == 5, f"Expected 5 stations in CV route, got {cv_stations.count()}"
-            record("Conception Vessel in Channels Directory", "PASS", "CV listed in Channels with 5 element stations")
+            assert cv_route.count() == 0, "Expected CV route to be hidden from channels.html"
+            counter = ch_page.locator("#match-counter").inner_text()
+            assert "12" in counter, f"Expected 12 primary channels in counter, got {counter}"
+            record("CV Hidden from Channels Directory", "PASS", "CV channel successfully hidden from Channels directory while primary 12 channels remain clean")
         except Exception as e:
-            record("Conception Vessel in Channels Directory", "FAIL", str(e))
+            record("CV Hidden from Channels Directory", "FAIL", str(e))
 
         browser.close()
 
