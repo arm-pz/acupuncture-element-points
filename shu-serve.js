@@ -16,7 +16,8 @@ const pages = {
   "/lu": "lung-meridian-chart.html", "/lu-meridian-chart.html": "lung-meridian-chart.html",
   "/li": "li-meridian-chart.html", "/li4": "li-meridian-chart.html", "/li-v4-meridian-chart.html": "li-meridian-chart.html",
   "/ki": "ki-meridian-chart.html", "/ki4": "ki-meridian-chart.html", "/ki-v4-meridian-chart.html": "ki-meridian-chart.html",
-  "/bl": "bl-meridian-chart.html", "/bl4": "bl-meridian-chart.html", "/bl-v4-meridian-chart.html": "bl-meridian-chart.html"
+  "/bl": "bl-meridian-chart.html", "/bl4": "bl-meridian-chart.html", "/bl-v4-meridian-chart.html": "bl-meridian-chart.html",
+  "/cv": "cv-meridian-chart.html", "/rn": "cv-meridian-chart.html", "/cv-meridian-chart.html": "cv-meridian-chart.html"
 };
 
 // The app links between its pages by filename, so serve every routed file, and the

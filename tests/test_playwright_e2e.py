@@ -363,6 +363,35 @@ def run_tests():
         except Exception as e:
             record("Mobile Homepage Responsiveness", "FAIL", str(e))
 
+        # 18. Conception Vessel Chart (/cv)
+        try:
+            cv_page = context.new_page()
+            resp = cv_page.goto(f"{BASE_URL}/cv", wait_until="networkidle")
+            assert resp.status == 200, f"Expected status 200, got {resp.status}"
+            assert "Conception Vessel" in cv_page.title()
+            chips = cv_page.locator(".pts .chip")
+            assert chips.count() == 5, f"Expected 5 chips, got {chips.count()}"
+            # Select Water (CV6)
+            cv_page.locator('.chip[data-id="p6"]').click()
+            cv_page.wait_for_timeout(200)
+            info = cv_page.locator("#pt-info").inner_text()
+            assert "CV6" in info and "Qihai" in info and "Water" in info
+            record("Conception Vessel Chart (/cv)", "PASS", "CV chart rendered with 5 element points, interactive chips and anatomy")
+        except Exception as e:
+            record("Conception Vessel Chart (/cv)", "FAIL", str(e))
+
+        # 19. Conception Vessel in Channels Directory & Search
+        try:
+            ch_page = context.new_page()
+            ch_page.goto(f"{BASE_URL}/channels", wait_until="networkidle")
+            cv_route = ch_page.locator('.route[data-ch="CV"]')
+            assert cv_route.count() == 1, "Expected CV route in channels.html"
+            cv_stations = cv_route.locator(".station")
+            assert cv_stations.count() == 5, f"Expected 5 stations in CV route, got {cv_stations.count()}"
+            record("Conception Vessel in Channels Directory", "PASS", "CV listed in Channels with 5 element stations")
+        except Exception as e:
+            record("Conception Vessel in Channels Directory", "FAIL", str(e))
+
         browser.close()
 
     print("\n==================================================")
