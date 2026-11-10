@@ -1,78 +1,390 @@
-import sys, pathlib
+# -*- coding: utf-8 -*-
+"""
+Generates the comprehensive Conception Vessel (CV / Ren Mai) Meridian Chart page
+featuring the complete 5 Element Points, dual Gateway cards, 4-stage waypoint course,
+and converted anatomical vector torso artwork from textbook diagram.
+"""
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+import os
 
-html_content = '''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap"><title>Conception Vessel — Five Element Points</title>
+SVG_TORSO_ARTWORK = """<svg viewBox="0 0 576 1024" role="group" aria-label="Conception Vessel chart showing its 5 Element Points" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Warm anatomical parchment shading -->
+    <linearGradient id="bodyShade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3d2d1d" stop-opacity="0.14"/>
+      <stop offset="18%" stop-color="#3d2d1d" stop-opacity="0.04"/>
+      <stop offset="50%" stop-color="#3d2d1d" stop-opacity="0.0"/>
+      <stop offset="82%" stop-color="#3d2d1d" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#3d2d1d" stop-opacity="0.14"/>
+    </linearGradient>
+    <radialGradient id="navelPit" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2a1a0e" stop-opacity="0.85"/>
+      <stop offset="65%" stop-color="#543820" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#543820" stop-opacity="0.0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ANATOMICAL VECTOR TORSO (Converted from Textbook Diagram) -->
+  <g id="torso" style="stroke-linecap:round;stroke-linejoin:round;">
+    <!-- Anatomical Muscle Silhouette Fill -->
+    <path id="torso-fill" d="
+      M 288,120
+      C 324,120 342,142 342,176
+      C 342,204 336,234 322,252
+      C 314,262 302,266 288,266
+      C 274,266 262,262 254,252
+      C 240,234 234,204 234,176
+      C 234,142 252,120 288,120 Z
+      M 264,264
+      C 258,274 252,284 246,294
+      C 216,298 174,308 148,326
+      C 124,345 110,380 108,426
+      C 106,472 110,535 114,605
+      C 118,675 124,745 134,805
+      C 138,828 144,855 152,880
+      C 156,892 162,896 168,888
+      C 174,880 176,860 178,835
+      C 180,810 176,760 170,700
+      C 166,640 166,580 170,520
+      C 174,465 182,420 194,385
+      C 192,420 190,470 192,530
+      C 194,590 200,642 208,695
+      C 216,742 226,782 236,818
+      L 242,845
+      L 334,845
+      L 340,818
+      C 350,782 360,742 368,695
+      C 376,642 382,590 384,530
+      C 386,470 384,420 382,385
+      C 394,420 402,465 406,520
+      C 410,580 410,640 406,700
+      C 400,760 396,810 398,835
+      C 400,860 402,880 408,888
+      C 414,896 420,892 424,880
+      C 432,855 438,828 442,805
+      C 452,745 458,675 462,605
+      C 466,535 470,472 468,426
+      C 466,380 452,345 428,326
+      C 402,308 360,298 330,294
+      C 324,284 318,274 312,264 Z
+    " fill="url(#bodyShade)" stroke="none"/>
+
+    <!-- 1. HEAD & HAIR -->
+    <!-- Hair cap -->
+    <path d="M 248,162 C 244,134 260,120 288,120 C 316,120 332,134 328,162 C 322,150 308,146 288,146 C 268,146 254,150 248,162 Z" fill="#2c2219" stroke="#1d150e" stroke-width="1.8"/>
+    <!-- Head silhouette & jawline -->
+    <path d="M 246,164 C 242,196 245,228 256,250 C 265,264 276,266 288,266 C 300,266 311,264 320,250 C 331,228 334,196 330,164" fill="none" stroke="#281e14" stroke-width="1.8"/>
+    <!-- Ears -->
+    <path d="M 244,196 C 238,204 238,222 245,228" fill="none" stroke="#3d2c1c" stroke-width="1.3"/>
+    <path d="M 332,196 C 338,204 338,222 331,228" fill="none" stroke="#3d2c1c" stroke-width="1.3"/>
+    <!-- Eyebrows -->
+    <path d="M 256,198 Q 266,194 276,197" fill="none" stroke="#22180f" stroke-width="1.8"/>
+    <path d="M 300,197 Q 310,194 320,198" fill="none" stroke="#22180f" stroke-width="1.8"/>
+    <!-- Eyes -->
+    <path d="M 258,206 Q 266,202 274,206 Q 266,209 258,206 Z" fill="#281e14" stroke="none"/>
+    <path d="M 302,206 Q 310,202 318,206 Q 310,209 302,206 Z" fill="#281e14" stroke="none"/>
+    <!-- Nose bridge & tip -->
+    <path d="M 288,200 L 287,227 Q 288,232 293,229" fill="none" stroke="#4a3726" stroke-width="1.3"/>
+    <path d="M 283,229 Q 288,232 293,229" fill="none" stroke="#3b2b1d" stroke-width="1.3"/>
+    <!-- Lips -->
+    <path d="M 278,244 Q 288,240 298,244" fill="none" stroke="#4a3322" stroke-width="1.4"/>
+    <path d="M 281,250 Q 288,253 295,250" fill="none" stroke="#4a3322" stroke-width="1.4"/>
+    <!-- Mentolabial Sulcus (CV24 Chengjiang landmark at 262y) -->
+    <path d="M 283,260 Q 288,263 293,260" fill="none" stroke="#8c2d19" stroke-width="2.0" opacity="0.9"/>
+
+    <!-- 2. NATURAL MASCULINE NECK & CLAVICLES -->
+    <path d="M 264,264 C 260,274 256,284 250,294" fill="none" stroke="#3a2a1a" stroke-width="1.6"/>
+    <path d="M 312,264 C 316,274 320,284 326,294" fill="none" stroke="#3a2a1a" stroke-width="1.6"/>
+    <!-- Trapezius muscles sweeping to shoulders -->
+    <path d="M 250,294 Q 195,302 152,326" fill="none" stroke="#281e14" stroke-width="1.8"/>
+    <path d="M 326,294 Q 381,302 424,326" fill="none" stroke="#281e14" stroke-width="1.8"/>
+    <!-- Suprasternal Notch (CV22 Tiantu landmark at 292y) -->
+    <path d="M 281,292 Q 288,296 295,292" fill="none" stroke="#1d140b" stroke-width="2.2"/>
+    <!-- Clavicle bones sweeping laterally -->
+    <path d="M 281,293 Q 230,294 158,328" fill="none" stroke="#2c1e13" stroke-width="1.6"/>
+    <path d="M 295,293 Q 346,294 418,328" fill="none" stroke="#2c1e13" stroke-width="1.6"/>
+
+    <!-- 3. SHOULDERS, ARMS & HANDS (Anatomical position from scan) -->
+    <!-- Left outer arm contour -->
+    <path d="
+      M 152,326
+      C 130,342 114,372 110,412
+      C 106,452 108,505 112,560
+      C 114,595 116,635 120,685
+      C 124,735 130,785 138,825
+      C 142,845 146,865 152,880
+      C 155,890 160,894 165,888
+      C 170,880 172,860 174,835
+      C 176,810 174,760 168,700
+      C 164,640 164,580 168,520
+      C 172,465 180,420 192,385
+    " fill="none" stroke="#22180e" stroke-width="1.8"/>
+    <!-- Left cubital fossa (elbow crease) -->
+    <path d="M 132,540 Q 150,545 166,535" fill="none" stroke="#4a3726" stroke-width="1.2" opacity="0.6"/>
+    <!-- Left wrist crease -->
+    <path d="M 136,795 Q 152,798 168,790" fill="none" stroke="#4a3726" stroke-width="1.2" opacity="0.6"/>
+    <!-- Left fingers & thumb -->
+    <path d="M 148,835 Q 142,845 142,860" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 154,858 L 152,880" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 159,862 L 159,887" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 164,862 L 165,889" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 170,858 L 172,881" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+
+    <!-- Right outer arm contour -->
+    <path d="
+      M 424,326
+      C 446,342 462,372 466,412
+      C 470,452 468,505 464,560
+      C 462,595 460,635 456,685
+      C 452,735 446,785 438,825
+      C 434,845 430,865 424,880
+      C 421,890 416,894 411,888
+      C 406,880 404,860 402,835
+      C 400,810 402,760 408,700
+      C 412,640 412,580 408,520
+      C 404,465 396,420 384,385
+    " fill="none" stroke="#22180e" stroke-width="1.8"/>
+    <!-- Right cubital fossa (elbow crease) -->
+    <path d="M 444,540 Q 426,545 410,535" fill="none" stroke="#4a3726" stroke-width="1.2" opacity="0.6"/>
+    <!-- Right wrist crease -->
+    <path d="M 440,795 Q 424,798 408,790" fill="none" stroke="#4a3726" stroke-width="1.2" opacity="0.6"/>
+    <!-- Right fingers & thumb -->
+    <path d="M 428,835 Q 434,845 434,860" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 422,858 L 424,880" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 417,862 L 417,887" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 412,862 L 411,889" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+    <path d="M 406,858 L 404,881" fill="none" stroke="#2c1e13" stroke-width="1.3"/>
+
+    <!-- 4. TORSO TRUNK & MUSCULATURE -->
+    <!-- Flanks & waist contour -->
+    <path d="M 192,385 C 190,420 188,470 190,530 C 192,590 198,642 206,695 C 214,742 224,782 236,818" fill="none" stroke="#22180e" stroke-width="1.8"/>
+    <path d="M 384,385 C 386,420 388,470 386,530 C 384,590 378,642 370,695 C 362,742 352,782 340,818" fill="none" stroke="#22180e" stroke-width="1.8"/>
+
+    <!-- Pectoralis Major muscle curves (Chest, 419y level) -->
+    <path d="M 288,382 C 262,382 234,394 212,414 C 200,425 195,438 194,446" fill="none" stroke="#3b2b1d" stroke-width="1.5"/>
+    <path d="M 288,382 C 314,382 342,394 364,414 C 376,425 381,438 382,446" fill="none" stroke="#3b2b1d" stroke-width="1.5"/>
+    <!-- Nipples (at 419y level) -->
+    <circle cx="218" cy="419" r="3.2" fill="#362215"/>
+    <circle cx="358" cy="419" r="3.2" fill="#362215"/>
+
+    <!-- Danzhong (CV17 Front-Mu of PC, level with 4th intercostal space at 419y) -->
+    <path d="M 284,419 Q 288,421 292,419" fill="none" stroke="#5c442e" stroke-width="1.3"/>
+
+    <!-- Xiphisternum & Costal Margins (Subcostal Angle at 464y, 8 cun landmark above navel) -->
+    <path d="M 284,464 Q 288,467 292,464" fill="none" stroke="#1d140b" stroke-width="1.8"/>
+    <!-- Inverted V Costal Arch -->
+    <path d="M 288,464 Q 250,488 214,535" fill="none" stroke="#3a2919" stroke-width="1.6"/>
+    <path d="M 288,464 Q 326,488 362,535" fill="none" stroke="#3a2919" stroke-width="1.6"/>
+
+    <!-- Rectus Abdominis Tendinous Inscriptions (Six-Pack Tender Lines) -->
+    <!-- Near CV13 Earth (527y, 5 cun above navel) -->
+    <path d="M 248,527 Q 268,530 283,527" fill="none" stroke="#5c442e" stroke-width="1.1" opacity="0.6"/>
+    <path d="M 293,527 Q 308,530 328,527" fill="none" stroke="#5c442e" stroke-width="1.1" opacity="0.6"/>
+    <!-- Near CV10 (2 cun above navel at 590y) -->
+    <path d="M 246,590 Q 266,593 283,590" fill="none" stroke="#5c442e" stroke-width="1.1" opacity="0.5"/>
+    <path d="M 293,590 Q 310,593 330,590" fill="none" stroke="#5c442e" stroke-width="1.1" opacity="0.5"/>
+
+    <!-- NAVEL (CV8 Shenque - Vital 0 cun reference landmark at 632y) -->
+    <ellipse cx="288" cy="632" rx="6.0" ry="4.8" fill="url(#navelPit)" stroke="#221307" stroke-width="1.5"/>
+    <path d="M 284,632 Q 288,635 292,632" fill="none" stroke="#170c04" stroke-width="1.6"/>
+
+    <!-- Lower Abdominal Semilunar Lines (flanking CV7 Wood, CV6 Water, CV5 Fire) -->
+    <path d="M 266,650 Q 264,705 262,748" fill="none" stroke="#5c442e" stroke-width="1.1" opacity="0.5"/>
+    <path d="M 310,650 Q 312,705 314,748" fill="none" stroke="#5c442e" stroke-width="1.1" opacity="0.5"/>
+
+    <!-- Inguinal Fold & Iliac Crest to Pubic Bone -->
+    <path d="M 216,732 Q 248,746 283,753" fill="none" stroke="#3a2919" stroke-width="1.5"/>
+    <path d="M 360,732 Q 328,746 293,753" fill="none" stroke="#3a2919" stroke-width="1.5"/>
+    <!-- Pubic Crest (CV2 Qugu, 5 cun landmark below navel at 753y) -->
+    <path d="M 281,753 Q 288,756 295,753" fill="none" stroke="#1d140b" stroke-width="2.0"/>
+
+    <!-- Pelvis base / shorts seam -->
+    <path d="M 236,818 L 288,834 L 340,818" fill="none" stroke="#22180e" stroke-width="1.6"/>
+  </g>
+
+  <!-- CUN MEASUREMENT RULERS (Exact Textbook Landmarks from Pages 244-246) -->
+  <g id="cun-landmarks" opacity="0.92">
+    <!-- Upper Abdominal Ruler (Navel 0 cun at 632y to Xiphoid 8 cun at 464y) -->
+    <g transform="translate(336, 0)">
+      <line x1="0" y1="632.0" x2="0" y2="464.0" stroke="#8c6d48" stroke-width="1.2" stroke-dasharray="2.5 2"/>
+      <!-- Navel 0 cun tick -->
+      <line x1="-5" y1="632.0" x2="5" y2="632.0" stroke="#8c6d48" stroke-width="1.6"/>
+      <text x="10" y="635.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#7a5c3a" font-weight="600">0 (Navel)</text>
+      <!-- CV9 1 cun tick at 611y -->
+      <line x1="-4" y1="611.0" x2="4" y2="611.0" stroke="#8c6d48" stroke-width="1.2"/>
+      <text x="10" y="614.5" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9c7a52">1 cun (CV9)</text>
+      <!-- CV13 5 cun tick at 527y -->
+      <line x1="-5" y1="527.0" x2="5" y2="527.0" stroke="#8c6d48" stroke-width="1.5"/>
+      <text x="10" y="530.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#7a5c3a" font-weight="600">5 cun (CV13)</text>
+      <!-- CV16 Xiphoid 8 cun tick at 464y -->
+      <line x1="-5" y1="464.0" x2="5" y2="464.0" stroke="#8c6d48" stroke-width="1.6"/>
+      <text x="10" y="467.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#7a5c3a" font-weight="600">8 cun (Xiphoid)</text>
+    </g>
+
+    <!-- Lower Abdominal Ruler (Navel 0 cun at 632y to Pubis 5 cun at 753y) -->
+    <g transform="translate(336, 0)">
+      <line x1="0" y1="632.0" x2="0" y2="753.0" stroke="#8c6d48" stroke-width="1.2" stroke-dasharray="2.5 2"/>
+      <!-- CV7 1.0 cun tick at 656y -->
+      <line x1="-4" y1="656.0" x2="4" y2="656.0" stroke="#8c6d48" stroke-width="1.2"/>
+      <!-- CV6 1.5 cun tick at 668y -->
+      <line x1="-4" y1="668.0" x2="4" y2="668.0" stroke="#8c6d48" stroke-width="1.2"/>
+      <!-- CV5 2.5 cun tick at 692y -->
+      <line x1="-5" y1="692.0" x2="5" y2="692.0" stroke="#8c6d48" stroke-width="1.5"/>
+      <text x="10" y="695.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#7a5c3a" font-weight="600">2.5 cun (CV5)</text>
+      <!-- CV2 Pubis 5 cun tick at 753y -->
+      <line x1="-5" y1="753.0" x2="5" y2="753.0" stroke="#8c6d48" stroke-width="1.6"/>
+      <text x="10" y="756.5" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#7a5c3a" font-weight="600">5 cun (Pubis)</text>
+    </g>
+  </g>
+
+  <!-- CONCEPTION VESSEL ENERGETIC MIDLINE (Channel line #channel) -->
+  <path id="channel" d="
+    M 288,804
+    L 288,753.0
+    L 288,692.0
+    L 288,668.0
+    L 288,656.0
+    L 288,632.0
+    L 288,611.0
+    L 288,527.0
+    L 288,464.0
+    L 288,419.0
+    L 288,292.0
+    L 288,262.0
+  " style="fill:none;stroke:#ff8956;stroke-width:3.5px;stroke-linecap:round;stroke-linejoin:round;"/>
+
+  <!-- THE 5 ELEMENT POINTS (#points) -->
+  <g id="points">
+    <!-- CV13 Shangwan (Earth Point) - 5 cun above navel -->
+    <circle id="p13" cx="288.0" cy="527.0" r="6.75"/>
+    <!-- CV9 Shuifen (Metal/Air Point) - 1 cun above navel -->
+    <circle id="p9" cx="288.0" cy="611.0" r="6.75"/>
+    <!-- CV7 Yinjiao (Wood Point) - 1.0 cun below navel -->
+    <circle id="p7" cx="288.0" cy="656.0" r="6.75"/>
+    <!-- CV6 Qihai (Water Point) - 1.5 cun below navel -->
+    <circle id="p6" cx="288.0" cy="668.0" r="6.75"/>
+    <!-- CV5 Shimen (Fire Point) - 2.5 cun below navel -->
+    <circle id="p5" cx="288.0" cy="692.0" r="6.75"/>
+  </g>
+
+  <!-- INTERACTIVE HIT TARGETS & SELECTION PULSE RINGS -->
+  <circle id="hit-p13" class="hit" cx="288.0" cy="527.0" r="18" tabindex="0" role="button" aria-label="CV13 Earth Point"/>
+  <circle id="ring-p13" class="ring" cx="288.0" cy="527.0" r="12"/>
+
+  <circle id="hit-p9" class="hit" cx="288.0" cy="611.0" r="18" tabindex="0" role="button" aria-label="CV9 Metal Air Point"/>
+  <circle id="ring-p9" class="ring" cx="288.0" cy="611.0" r="12"/>
+
+  <circle id="hit-p7" class="hit" cx="288.0" cy="656.0" r="18" tabindex="0" role="button" aria-label="CV7 Wood Point"/>
+  <circle id="ring-p7" class="ring" cx="288.0" cy="656.0" r="12"/>
+
+  <circle id="hit-p6" class="hit" cx="288.0" cy="668.0" r="18" tabindex="0" role="button" aria-label="CV6 Water Point"/>
+  <circle id="ring-p6" class="ring" cx="288.0" cy="668.0" r="12"/>
+
+  <circle id="hit-p5" class="hit" cx="288.0" cy="692.0" r="18" tabindex="0" role="button" aria-label="CV5 Fire Point"/>
+  <circle id="ring-p5" class="ring" cx="288.0" cy="692.0" r="12"/>
+
+  <!-- CALLOUT LEADER LINES (Cleanly staggered so labels never collide) -->
+  <g id="callout-lines" style="fill:none;stroke:#555;stroke-width:1px;">
+    <!-- CV13 Earth (to Left) -->
+    <path d="M 148,527.0 L 280,527.0"/>
+    <!-- CV9 Metal/Air (to Left) -->
+    <path d="M 148,611.0 L 280,611.0"/>
+    <!-- CV7 Wood (to Left) -->
+    <path d="M 148,656.0 L 280,656.0"/>
+    <!-- CV6 Water (to Right, angled slightly upward) -->
+    <path d="M 436,655.0 L 310,655.0 L 296,668.0"/>
+    <!-- CV5 Fire (to Right, angled downward) -->
+    <path d="M 436,705.0 L 310,705.0 L 296,692.0"/>
+  </g>
+
+  <!-- TEXT LABELS (Matching Atlas Architecture: font-size:28px, fill:#555) -->
+  <g id="text-labels" style="font-family:ArialMT,Arial,sans-serif;font-size:28px;fill:#555;">
+    <!-- Left Callouts -->
+    <text text-anchor="end" x="138" y="536.0" data-id="p13">CV13</text>
+    <text text-anchor="end" x="138" y="620.0" data-id="p9">CV9</text>
+    <text text-anchor="end" x="138" y="665.0" data-id="p7">CV7</text>
+    <!-- Right Callouts (Non-overlapping) -->
+    <text text-anchor="start" x="446" y="664.0" data-id="p6">CV6</text>
+    <text text-anchor="start" x="446" y="714.0" data-id="p5">CV5</text>
+  </g>
+</svg>"""
+
+PAGE_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<title>Conception Vessel (Ren Mai) — Five Element Points</title>
 <style>
 :root{
   --ground:#0d101d;--raise:#151928;--raise-2:#1e2338;
-  --ink:#f5f3ed;--ink-2:#9ea8bd;--ink-3:#657088;
-  --hair:rgba(245,243,237,.09);--hair-2:rgba(245,243,237,.20);
-  --wood:#3e885b;--fire:#d94236;--earth:#dca334;--metal:#e2dcce;--water:#3d78cc;
-  --accent:#38bdf8;--accent-t:#7dd3fc;--accent-ring:rgba(56,189,248,.36);
-  --ease:cubic-bezier(.16,1,.3,1);
-  --spring:cubic-bezier(.19,1,.22,1);
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
-  color-scheme:dark;
+  --hair:rgba(245,243,237,.09);--ink:#f5f3ed;--mute:#9ca3af;
+  --faint:rgba(245,243,237,.45);
+  --wood:#22c55e;--fire:#f97316;--earth:#eab308;--metal:#e2e8f0;--water:#3b82f6;
+  --accent:#38bdf8;--accent-ring:rgba(56,189,248,.35);--accent-t:#38bdf8;
+  --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--ground);color:var(--ink);font:400 15px/1.5 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.page{max-width:1100px;margin:0 auto;padding:0 clamp(16px,3vw,40px) 64px}
-.kicker{margin:34px 0 8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
-.badge-pts{display:inline-flex;padding:2px 7px;border-radius:999px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:var(--accent-t);font-size:10.5px;letter-spacing:.08em}
-h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01em;line-height:1.1}
-.lede{margin:10px 0 28px;color:var(--ink-2);max-width:64ch}
-.layout{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:clamp(24px,4vw,44px);align-items:start}
-.leg{position:relative;padding:14px;border-radius:16px;background:radial-gradient(115% 95% at 50% 12%,#1b233a 0%,#13182b 55%,#0d1120 100%);box-shadow:0 0 0 1px rgba(255,255,255,.07),0 0 0 5px rgba(245,243,237,.02),inset 0 -44px 64px -48px rgba(0,0,0,.8),0 28px 56px -24px rgba(0,0,0,.92);transition:box-shadow .24s var(--ease)}
+body{margin:0;font-family:Jost,sans-serif;color:var(--ink);background:var(--ground);min-height:100vh}
+.page{max-width:1120px;margin:0 auto;padding:24px 20px 80px}
+.nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.back{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:var(--raise);border:1px solid var(--hair);color:var(--mute);text-decoration:none;font-size:13px;font-weight:500;transition:all .18s var(--ease)}
+.back:hover{color:var(--ink);border-color:rgba(245,243,237,.2);transform:translateX(-2px)}
+.pair-nav{display:flex;gap:8px}
+.pair-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:var(--raise);border:1px solid var(--hair);color:var(--mute);text-decoration:none;font-size:13px;font-weight:500;transition:all .18s var(--ease)}
+.pair-btn:hover{color:var(--ink);border-color:rgba(245,243,237,.2)}
+.header{margin-bottom:24px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-t);display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.eyebrow .badge{display:inline-block;padding:2px 8px;border-radius:4px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:var(--accent-t);font-size:11px}
+h1{margin:0 0 8px;font-size:clamp(26px,4vw,34px);font-weight:600;letter-spacing:-.02em}
+.lead{margin:0;color:var(--mute);font-size:15px;max-width:720px;line-height:1.55}
+.layout{display:grid;grid-template-columns:minmax(300px,520px) minmax(320px,1fr);gap:32px;align-items:start}
+@media (max-width:880px){.layout{grid-template-columns:1fr}}
+.leg{position:relative;padding:14px;border-radius:16px;background:radial-gradient(115% 95% at 34% 6%,#faf6ee 0%,#f3ebda 52%,#dfd2b8 100%);box-shadow:0 0 0 1px rgba(0,0,0,.35),0 0 0 5px rgba(245,243,237,.03),inset 0 -44px 64px -48px rgba(92,68,32,.5),0 28px 56px -24px rgba(0,0,0,.92);transition:box-shadow .24s var(--ease)}
 .leg svg{display:block;width:100%;height:auto;overflow:visible}
-#text-labels text{transition:fill .18s var(--ease),transform .18s var(--ease);font-weight:600;cursor:pointer}
-#text-labels text.on{fill:var(--accent-t);font-weight:700;filter:drop-shadow(0 0 6px rgba(56,189,248,.7))}
-#points circle{fill:#f43f5e;pointer-events:none;transform-box:fill-box;transform-origin:center;transition:transform .22s var(--ease),fill .22s var(--ease),filter .22s var(--ease)}
-#points circle.hover{transform:scale(1.35);filter:drop-shadow(0 0 6px rgba(56,189,248,.8))}
-#points circle.on{fill:var(--accent-t);transform:scale(1.5);filter:drop-shadow(0 0 8px var(--accent-ring))}
+#text-labels text{transition:fill .18s var(--ease);font-family:ArialMT,Arial,sans-serif;font-size:28px;fill:#555;cursor:pointer}
+#text-labels text.on{fill:var(--accent);font-weight:700}
+#points circle{fill:#9c1f12;stroke:#faf6ee;stroke-width:1.5px;pointer-events:none;transform-box:fill-box;transform-origin:center;transition:transform .22s var(--ease),fill .22s var(--ease),filter .22s var(--ease)}
+#points circle.hover{transform:scale(1.35);filter:drop-shadow(0 0 6px rgba(226,75,56,.75))}
+#points circle.on{fill:var(--accent);stroke:#fff;transform:scale(1.5);filter:drop-shadow(0 0 8px var(--accent-ring))}
 .hit{fill:transparent;cursor:pointer;outline:none}
-.hit:focus-visible{stroke:#38bdf8;stroke-width:2}
-.ring{fill:none;stroke:var(--accent-t);stroke-width:2.5;opacity:0;pointer-events:none;transform-box:fill-box;transform-origin:center}
+.hit:focus-visible{stroke:#10131f;stroke-width:2}
+.ring{fill:none;stroke:var(--accent);stroke-width:2.5;opacity:0;pointer-events:none;transform-box:fill-box;transform-origin:center}
 .ring.on{opacity:1;animation:ring 2.4s var(--ease) infinite}
 @keyframes ring{0%{transform:scale(.6);opacity:.95}70%,100%{transform:scale(1.65);opacity:0}}
-.panel{position:sticky;top:20px;background:var(--raise);border:1px solid var(--hair);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -12px rgba(0,0,0,.68),0 0 0 1px rgba(255,255,255,.03)}
-#pt-info{padding:22px 22px 18px;min-height:220px}
-#pt-info.enter{animation:enter .22s var(--ease)}
-@keyframes enter{from{opacity:0;transform:translateY(6px) scale(.99)}to{opacity:1;transform:none}}
-.empty{display:flex;flex-direction:column;justify-content:center;min-height:178px;color:var(--ink-2);font-size:14.5px}
-.empty b{display:block;color:var(--ink);font-size:18px;font-weight:500;margin-bottom:4px}
-.eyebrow{display:flex;align-items:center;gap:8px;font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent-t)}
-.eyebrow .sep{width:3px;height:3px;border-radius:50%;background:var(--hair-2)}
-.eyebrow .shu{color:var(--ink-2)}
-.title{font-size:28px;line-height:1.15;letter-spacing:-.005em;font-weight:500;margin:12px 0 2px}
-.en{color:var(--ink-2);font-size:15px}
-.tamil-tag{display:inline-block;margin-left:6px;font-weight:500;color:var(--accent-t);font-size:14px}
-.pills{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
-.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px;border-radius:999px;background:rgba(245,243,237,.07);font-size:12.5px;font-weight:500;letter-spacing:.02em;color:var(--ink);transition:background-color .15s ease}
-.pill i{width:7px;height:7px;border-radius:50%;background:var(--c,var(--ink-3))}
-.label{margin:20px 0 5px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
-.loc,.cun,.ind{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink)}
-.cun a{color:var(--accent-t);text-decoration:none;border-bottom:1px solid var(--accent-ring);padding-bottom:1px;margin-left:4px;white-space:nowrap;transition:border-color .15s ease,color .15s ease}
-.cun a:hover{border-color:var(--accent-t)}
-.pts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px;margin:0;background:var(--raise-2);border-top:1px solid var(--hair)}
-.chip{appearance:none;border:0;background:transparent;border-radius:10px;padding:9px 4px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-2);font-family:inherit;transition:background-color .16s ease,color .16s ease,transform .12s var(--ease)}
-.chip:hover{background:rgba(245,243,237,.07);color:var(--ink);transform:translateY(-1px)}
-.chip .s{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
-.chip .c{font:600 12.5px/1 var(--mono);font-variant-numeric:tabular-nums}
-.chip i{width:6px;height:6px;border-radius:50%;background:var(--c)}
-.chip.on{background:var(--ink);color:var(--ground);box-shadow:0 2px 8px rgba(0,0,0,.35)}
-.chip.on .s{color:#3a4156}
-.chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.chip:active{transform:scale(.95)}
-.note a{color:var(--accent-t);text-decoration:none;border-bottom:1px solid var(--accent-ring);transition:border-color .15s ease}
-.note a:hover{border-color:var(--accent-t)}
-.note{margin:36px 0 0;padding-top:16px;border-top:1px solid var(--hair);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
-@media (max-width:760px){
-  h1{font-size:28px}
-  .lede{margin-bottom:18px}
-  .layout{grid-template-columns:1fr;gap:16px}
+.panel{position:sticky;top:20px;background:var(--raise);border:1px solid var(--hair);border-radius:16px;padding:24px}
+#pt-info{min-height:280px}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;text-align:center;color:var(--mute);padding:24px;line-height:1.6}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}
+.p-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px;border-bottom:1px solid var(--hair);padding-bottom:12px}
+.p-code{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--c,var(--accent))}
+.p-hz{font-family:'Noto Sans SC',sans-serif;font-weight:300;font-size:22px;color:var(--ink)}
+.p-name{margin:0 0 2px;font-size:24px;font-weight:600;letter-spacing:-.01em}
+.p-py{font-size:14px;color:var(--mute);margin:0 0 16px}
+.p-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.p-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:var(--raise-2);border:1px solid var(--hair);font-size:12px;color:var(--ink)}
+.p-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--c,var(--accent))}
+.p-sec{margin-bottom:14px}
+.p-sec h4{margin:0 0 4px;font-size:11px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
+.p-sec p{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
+.pts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--hair)}
+.chip{appearance:none;border:1px solid var(--hair);background:var(--raise-2);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:13px;display:inline-flex;align-items:center;gap:8px;transition:all .18s var(--ease)}
+.chip .s{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mute)}
+.chip .c{font-weight:600}
+.chip i{width:6px;height:6px;border-radius:50%;background:var(--c,var(--accent))}
+.chip:hover{border-color:rgba(245,243,237,.3);transform:translateY(-1px)}
+.chip.on{background:var(--c,var(--accent));color:#0d101d;border-color:var(--c,var(--accent));font-weight:600}
+.chip.on .s{color:rgba(13,16,29,.75)}
+.chip.on i{background:#0d101d}
+.note{margin-top:28px;font-size:12.5px;color:var(--mute);line-height:1.6;border-left:2px solid var(--accent);padding-left:12px}
+.note a{color:var(--accent-t);text-decoration:none}
+.note a:hover{text-decoration:underline}
+@media (max-width:640px){
+  .page{padding:16px 14px 60px}
   .leg{max-width:420px;margin:0 auto;width:100%}
   .panel{position:static}
   #pt-info{min-height:0}
@@ -84,255 +396,162 @@ h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01
 }
 
 /* Appbar */
-.appbar{border-bottom:1px solid var(--hair);background:rgba(13,16,29,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);position:sticky;top:0;z-index:100}
-.appbar .in{max-width:1100px;margin:0 auto;padding:12px clamp(16px,3vw,40px);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.appbar .home{display:flex;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none;min-width:0;transition:opacity .15s ease}
-.appbar .home:hover{opacity:.85}
-.appbar .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
-.appbar .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
-.appbar ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
-.appbar a.l{display:block;padding:7px 13px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:var(--ink-2);text-decoration:none;transition:color .15s ease,background-color .15s ease,transform .12s var(--ease)}
-.appbar a.l:hover{color:var(--ink);background:rgba(245,243,237,.07);transform:translateY(-1px)}
-.appbar a.l:active{transform:scale(.96)}
-.appbar a.l.here{color:var(--ground);background:var(--ink);font-weight:600}
-.appbar a:focus-visible,.pager a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.pager{display:flex;justify-content:space-between;gap:10px;margin:28px 0 0}
-.pager a{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 15px;border-radius:999px;border:1px solid var(--hair);background:rgba(245,243,237,.03);font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:var(--ink-2);text-decoration:none;transition:border-color .15s ease,color .15s ease,background-color .15s ease,transform .12s var(--ease)}
-.pager a:hover{border-color:var(--hair-2);color:var(--ink);background:rgba(245,243,237,.07);transform:translateY(-1px)}
-.pager a:active{transform:scale(.96)}
-.pager i{width:7px;height:7px;border-radius:50%;background:var(--c)}
-.pager .up{margin-right:auto}
-@media (max-width:700px){
-  .appbar .in{flex-wrap:wrap;justify-content:center;row-gap:6px}
-  .appbar .home{width:100%;justify-content:center}
-  .appbar .home .t{display:none}
-  .appbar ul{flex-wrap:wrap;justify-content:center}
-  .appbar a.l{padding:7px 10px;font-size:12.5px}
-  .pager .nm{display:none}
-}
+.appbar{border-bottom:1px solid var(--hair);background:rgba(13,16,29,.85);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20}
+.appbar .in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.appbar .home{display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;font-weight:600}
+.appbar .home .han{color:var(--fire);font-family:'Noto Sans SC',sans-serif;font-weight:400}
+.appbar ul{margin:0;padding:0;list-style:none;display:flex;gap:4px}
+.appbar .l{display:inline-block;padding:6px 12px;border-radius:20px;color:var(--mute);text-decoration:none;font-size:13px;font-weight:500;transition:all .18s var(--ease)}
+.appbar .l:hover{color:var(--ink)}
+.appbar .l.here{background:var(--raise);color:var(--ink);border:1px solid var(--hair)}
 
-/* Meridian Trajectory & Banner */
-.meridian-path-banner{
-  margin:22px 0 32px;
-  background:linear-gradient(180deg,rgba(20,24,35,0.88) 0%,rgba(14,17,26,0.96) 100%);
-  border:1px solid rgba(255,255,255,0.09);
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 16px 40px -12px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.03) inset;
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  transition:border-color .25s ease,box-shadow .25s ease;
-}
-.meridian-path-banner:hover{
-  border-color:rgba(255,255,255,0.16);
-  box-shadow:0 20px 48px -12px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.06) inset;
-}
-.mpb-topbar{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;background:rgba(255,255,255,0.025);border-bottom:1px solid var(--hair);flex-wrap:wrap;
-}
-.mpb-topbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.mpb-elem-badge{
-  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.25);color:var(--ink);
-}
-.mpb-elem-dot{width:7px;height:7px;border-radius:50%;background:var(--accent-t);box-shadow:0 0 8px var(--accent-t)}
-.mpb-title{font:600 15px/1.2 "Jost",system-ui,sans-serif;letter-spacing:.01em;color:var(--ink)}
-.mpb-topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.mpb-tag{display:inline-flex;align-items:center;gap:4px;font:500 11.5px/1 var(--mono);letter-spacing:.04em;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid var(--hair);color:var(--ink-2)}
-.mpb-tag strong.num{font-weight:700;color:var(--accent-t)}
-.mpb-tag-course{color:var(--ink);background:rgba(255,255,255,0.07)}
+/* Meridian Pathway Section */
+.meridian-pathway{margin-bottom:28px;border-radius:16px;background:var(--raise);border:1px solid var(--hair);padding:24px;overflow:hidden}
+.mpb-gateway-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+@media (max-width:760px){.mpb-gateway-grid{grid-template-columns:1fr}}
+.gateway-card{background:var(--raise-2);border:1px solid var(--hair);border-radius:12px;padding:18px;position:relative;display:flex;flex-direction:column;gap:10px}
+.gateway-card.origin{border-left:3px solid var(--accent)}
+.gateway-card.terminus{border-left:3px solid #f43f5e}
+.gc-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);display:flex;align-items:center;gap:6px}
+.gc-badge .dot{width:6px;height:6px;border-radius:50%}
+.gateway-card.origin .gc-badge .dot{background:var(--accent)}
+.gateway-card.terminus .gc-badge .dot{background:#f43f5e}
+.gc-main{display:flex;align-items:baseline;gap:10px}
+.gc-code{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:700;color:var(--ink)}
+.gc-name{font-size:16px;font-weight:600;color:var(--ink)}
+.gc-hz{font-family:'Noto Sans SC',sans-serif;font-weight:300;color:var(--mute);font-size:14px}
+.gc-loc{font-size:13px;line-height:1.5;color:var(--mute);margin:0}
+.gc-collat{font-size:12px;color:var(--faint);border-top:1px dashed var(--hair);padding-top:8px;margin-top:auto}
 
-.mpb-gateways{
-  display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:18px;padding:22px;background:rgba(0,0,0,0.18);border-bottom:1px solid var(--hair);
-}
-.gateway-card{
-  position:relative;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;transition:transform .2s ease,border-color .2s ease,background-color .2s ease;
-}
-.gateway-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.04)}
-.gateway-card.origin{border-left:3px solid var(--accent-t)}
-.gateway-card.terminus{border-right:3px solid #f43f5e}
-.gw-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.gw-role{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
-.gw-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-.gw-dot.origin{background:var(--accent-t);box-shadow:0 0 10px var(--accent-t)}
-.gw-dot.terminus{background:#f43f5e;box-shadow:0 0 10px #f43f5e}
-.gw-landmark{font:500 11px/1.3 var(--mono);letter-spacing:.02em;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid var(--hair);color:var(--accent-t)}
-.gw-identity{display:flex;align-items:center;gap:14px;margin-top:2px}
-.gw-code{font:700 24px/1 var(--mono);letter-spacing:.02em;padding:7px 14px;border-radius:10px;background:rgba(245,243,237,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,0.35);flex-shrink:0}
-.gw-naming{display:flex;flex-direction:column;gap:2px}
-.gw-names-row{display:flex;align-items:baseline;gap:8px}
-.gw-pinyin{font:600 18px/1.2 "Jost",system-ui,sans-serif;color:var(--ink);letter-spacing:.01em}
-.gw-hanzi{font:400 17px/1 "Noto Sans SC","PingFang SC",sans-serif;color:var(--ink-2)}
-.gw-trans{font-size:13px;font-style:italic;color:var(--ink-3)}
-.gw-loc{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.5;color:var(--ink-2);margin-top:auto}
-.gw-loc p{margin:0}
-.gw-handoff{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--accent-t);background:rgba(56,189,248,0.08);padding:6px 10px;border-radius:6px;border:1px solid rgba(56,189,248,0.2)}
+.mpb-journey-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid var(--hair);padding-bottom:10px}
+.mjh-left{display:flex;align-items:center;gap:8px}
+.mjh-icon{color:var(--accent);display:inline-flex}
+.mjh-title{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ink)}
+.mjh-hint{font-size:12px;color:var(--mute)}
 
-.gw-conduit{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 6px;min-width:110px}
-.conduit-line{position:relative;width:100%;height:3px;background:linear-gradient(90deg,var(--accent-t),#f43f5e);border-radius:2px;overflow:visible}
-.conduit-arrow{position:absolute;right:-6px;top:50%;transform:translateY(-50%);font:700 14px/1 var(--mono);color:#f43f5e}
-.conduit-label{font:600 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-align:center}
+.mpb-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media (max-width:880px){.mpb-timeline{grid-template-columns:1fr 1fr}}
+@media (max-width:540px){.mpb-timeline{grid-template-columns:1fr}}
+.stage-card{background:var(--raise-2);border:1px solid var(--hair);border-radius:10px;padding:14px;position:relative}
+.stage-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:6px}
+.stage-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;color:var(--accent);background:rgba(56,189,248,.1);padding:2px 6px;border-radius:4px;font-weight:600}
+.stage-name{font-size:13px;font-weight:600;color:var(--ink);margin:0}
+.stage-desc{font-size:12px;line-height:1.55;color:var(--mute);margin:0}
 
-.mpb-journey{padding:22px;border-bottom:1px solid var(--hair)}
-.mpb-journey-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.mjh-title-group{display:flex;align-items:center;gap:10px}
-.mjh-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.25);color:var(--accent-t)}
-.mjh-title{font:600 14px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
-.mjh-hint{font:400 12.5px/1.2 "Jost",system-ui,sans-serif;color:var(--ink-3)}
-.mpb-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.stage-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-.stage-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.stage-badge{font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-t);background:rgba(56,189,248,0.1);padding:3px 6px;border-radius:4px}
-.stage-name{font:600 13px/1.2 "Jost",system-ui,sans-serif;color:var(--ink)}
-.stage-desc{margin:0;font-size:12.5px;line-height:1.55;color:var(--ink-2)}
-
-.mpb-affinities{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair)}
-.aff-item{background:rgba(14,17,26,0.96);padding:14px 18px;display:flex;flex-direction:column;gap:4px}
-.aff-lbl{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.aff-val{font:500 13px/1.3 "Jost",system-ui,sans-serif;color:var(--ink);display:flex;align-items:center;gap:6px}
-.aff-dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:var(--accent-t)}
-
-@media (max-width:960px){
-  .mpb-gateways{grid-template-columns:1fr;gap:14px}
-  .gw-conduit{flex-direction:row;padding:8px 0}
-  .conduit-line{width:60px}
-  .mpb-timeline{grid-template-columns:1fr 1fr}
-  .mpb-affinities{grid-template-columns:1fr 1fr}
-}
-@media (max-width:600px){
-  .mpb-timeline{grid-template-columns:1fr}
-  .mpb-affinities{grid-template-columns:1fr}
-  .mpb-topbar{padding:12px 14px}
-  .mpb-gateways{padding:14px}
-}
+.mpb-affinities{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-top:16px;border-top:1px solid var(--hair)}
+@media (max-width:880px){.mpb-affinities{grid-template-columns:1fr 1fr}}
+@media (max-width:540px){.mpb-affinities{grid-template-columns:1fr}}
+.aff-item{display:flex;flex-direction:column;gap:4px}
+.aff-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.aff-val{font-size:13px;font-weight:500;color:var(--ink);display:flex;align-items:center;gap:6px}
+.aff-val .aff-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
 </style>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-</head><body>
-<header class="appbar"><div class="in"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l here" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></div></header>
+<!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end -->
+</head>
+<body>
+<header class="appbar">
+  <div class="in">
+    <a class="home" href="index.html" aria-label="Shu Atlas home">
+      <span class="han" lang="zh" aria-hidden="true">&#20116;&#36664;</span>
+      <span class="t">Shu Atlas</span>
+    </a>
+    <ul>
+      <li><a class="l" href="index.html">Elements</a></li>
+      <li><a class="l here" href="channels.html">Channels</a></li>
+      <li><a class="l" href="points.html">Points</a></li>
+      <li><a class="l" href="learn.html">Learn</a></li>
+      <li><a class="l" href="study.html">Study</a></li>
+    </ul>
+  </div>
+</header>
+
 <main class="page">
-<nav class="pager" aria-label="Channels"><a class="up" href="channels.html">‹ Channels Directory</a><a href="bl-meridian-chart.html" aria-label="Channel 12: Bladder"><i style="--c:var(--water)"></i><span class="nm">Bladder</span> ←</a><a href="lung-meridian-chart.html" aria-label="Channel 1: Lung">→ <span class="nm">Lung</span><i style="--c:var(--metal)"></i></a></nav>
-<p class="kicker">Extraordinary Vessel · Ren Mai (任脈) · <span class="badge-pts">24 Points</span></p>
-<h1>Conception Vessel — Five Element Points</h1>
-<p class="lede">Select an element point on the anterior midline, or choose an element below to inspect its anatomical location, cun measurement from the navel pit, and classical therapeutic actions.</p>
-
-<!-- meridian-pathway:start -->
-<section class="meridian-path-banner" aria-label="Meridian Trajectory and Waypoint Journey">
-  <!-- 1. Top Identity Bar -->
-  <div class="mpb-topbar">
-    <div class="mpb-topbar-left">
-      <span class="mpb-elem-badge"><i class="mpb-elem-dot"></i>Extraordinary Vessel · Ren Mai (任脈)</span>
-      <span class="mpb-title">Conception Vessel — Anterior Midline Trajectory</span>
-    </div>
-    <div class="mpb-topbar-right">
-      <span class="mpb-tag"><strong class="num">24</strong> Channel Points</span>
-      <span class="mpb-tag"><strong class="num">5</strong> Five Element Points</span>
-      <span class="mpb-tag mpb-tag-course">Perineum → Lower Lip (Centripetal Yin)</span>
-    </div>
+<nav class="nav-row" aria-label="Breadcrumb and vessel pairings">
+  <a class="back" href="channels.html">&#8249; All Channels</a>
+  <div class="pair-nav">
+    <a class="pair-btn" href="cv-meridian-chart.html" style="color:var(--accent);border-color:var(--accent)">&#9679; Ren Mai (CV)</a>
+    <a class="pair-btn" href="channels.html#extraordinary-vessels">Du Mai (GV) &#8594;</a>
   </div>
+</nav>
 
-  <!-- 2. Dual Gateway Cards -->
-  <div class="mpb-gateways">
-    <!-- Origin -->
+<header class="header">
+  <div class="eyebrow">
+    <span>Extraordinary Vessel &#183; Sea of Yin</span>
+    <span class="badge">24 Points Total &#183; 5 Element Points</span>
+  </div>
+  <h1>Conception Vessel (Ren Mai) &#8212; Five Element Points</h1>
+  <p class="lead">The Conception Vessel courses along the anterior midline of the body, governing all Yin channels. Plotted along its vertical midline over the anatomical vector torso are its five vital Element Points: Wood (CV7), Fire (CV5), Earth (CV13), Air/Metal (CV9), and Water (CV6).</p>
+</header>
+
+<!-- MERIDIAN PATHWAY: Waypoints, Dual Gateways & Vessel Affinities -->
+<section class="meridian-pathway" aria-label="Conception Vessel Pathway and Waypoints">
+  <!-- 1. Dual Gateway Cards -->
+  <div class="mpb-gateway-grid">
     <div class="gateway-card origin">
-      <div class="gw-header">
-        <span class="gw-role"><span class="gw-dot origin"></span>VESSEL ORIGIN · 起穴</span>
-        <span class="gw-landmark">Perineal Center · Pelvic Floor</span>
+      <div class="gc-badge"><span class="dot"></span> Vessel Origin &#183; &#36215;&#31348;</div>
+      <div class="gc-main">
+        <span class="gc-code">CV1</span>
+        <span class="gc-name">Huiyin</span>
+        <span class="gc-hz">&#26371;&#38512;</span>
       </div>
-      <div class="gw-identity">
-        <span class="gw-code" style="color:var(--accent-t)">CV1</span>
-        <div class="gw-naming">
-          <div class="gw-names-row">
-            <span class="gw-pinyin">Huiyin</span>
-            <span class="gw-hanzi">會陰</span>
-          </div>
-          <span class="gw-trans">“Meeting of Yin”</span>
-        </div>
-      </div>
-      <div class="gw-loc">
-        <span class="gw-loc-icon" aria-hidden="true">📍</span>
-        <p>In the center of the perineum, midway between the anus and the posterior scrotal root (men) or posterior labial commissure (women).</p>
-      </div>
+      <p class="gc-loc">At the perineum, midway between the anus and posterior scrotal commissure / frenulum of labia majora.</p>
+      <div class="gc-collat">&#8627; Internal pelvic origin from the Uterus (Bao) / Lower Dantian</div>
     </div>
-
-    <!-- Center Transit Vector -->
-    <div class="gw-conduit" aria-hidden="true">
-      <div class="conduit-line">
-        <span class="conduit-arrow">→</span>
-      </div>
-      <span class="conduit-label">24 Points Total</span>
-    </div>
-
-    <!-- Terminus -->
     <div class="gateway-card terminus">
-      <div class="gw-header">
-        <span class="gw-role"><span class="gw-dot terminus"></span>VESSEL TERMINUS · 止穴</span>
-        <span class="gw-landmark">Mentolabial Groove · Chin</span>
+      <div class="gc-badge"><span class="dot"></span> Vessel Terminus &#183; &#27490;&#31348;</div>
+      <div class="gc-main">
+        <span class="gc-code">CV24</span>
+        <span class="gc-name">Chengjiang</span>
+        <span class="gc-hz">&#25215;&#28455;</span>
       </div>
-      <div class="gw-identity">
-        <span class="gw-code" style="color:#f43f5e">CV24</span>
-        <div class="gw-naming">
-          <div class="gw-names-row">
-            <span class="gw-pinyin">Chengjiang</span>
-            <span class="gw-hanzi">承漿</span>
-          </div>
-          <span class="gw-trans">“Receiving Fluids”</span>
-        </div>
-      </div>
-      <div class="gw-loc">
-        <span class="gw-loc-icon" aria-hidden="true">📍</span>
-        <p>In the depression in the center of the mentolabial groove, directly below the midpoint of the lower lip.</p>
-      </div>
-      <div class="gw-handoff">
-        <span class="gw-handoff-icon" aria-hidden="true">⮑</span>
-        <span>Internal branches encircle lips, meeting GV28 and ST1 infraorbital region</span>
-      </div>
+      <p class="gc-loc">In the mentolabial groove, in the depression below the midpoint of the lower lip.</p>
+      <div class="gc-collat">&#8627; Internal ascending branches encircle lips, enter gingiva and connect with ST4 / ST1</div>
     </div>
   </div>
 
-  <!-- 3. Journey Waypoints -->
-  <div class="mpb-journey">
-    <div class="mpb-journey-header">
-      <div class="mjh-title-group">
-        <span class="mjh-icon" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </span>
-        <span class="mjh-title">How It Travels · Anatomical Route Waypoints</span>
-      </div>
-      <span class="mjh-hint">Sequential course along the anterior median line (Lineae Alba)</span>
+  <!-- 2. Anatomical Route Waypoints -->
+  <div class="mpb-journey-header">
+    <div class="mjh-left">
+      <span class="mjh-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </span>
+      <span class="mjh-title">How It Travels &#183; Anatomical Route Waypoints</span>
     </div>
+    <span class="mjh-hint">Sequential course along the anterior median line (Lineae Alba)</span>
+  </div>
 
-    <div class="mpb-timeline">
-      <div class="stage-card">
-        <div class="stage-top">
-          <span class="stage-badge">Stage 01</span>
-          <span class="stage-name">Pelvic Genesis & Pubic Ascent</span>
-        </div>
-        <p class="stage-desc">Originates in the lower pelvic cavity (uterus/Bao), emerges superficially at CV1 Huiyin in the perineum, ascends anteriorly through the pubic hair to CV2 Qugu at the superior margin of the pubic symphysis, passing through CV3 Zhongji and CV4 Guanyuan.</p>
+  <div class="mpb-timeline">
+    <div class="stage-card">
+      <div class="stage-top">
+        <span class="stage-badge">Stage 01</span>
+        <span class="stage-name">Pelvic Genesis &amp; Pubic Ascent</span>
       </div>
-      <div class="stage-card">
-        <div class="stage-top">
-          <span class="stage-badge">Stage 02</span>
-          <span class="stage-name">Lower Abdominal Element Gates</span>
-        </div>
-        <p class="stage-desc">Ascends along the lower abdominal midline through vital element points: CV5 Shimen (Fire, 2.5 cun below navel), CV6 Qihai (Water, 1.5 cun below navel), and CV7 Yinjiao (Wood, 1.0 cun below navel), reaching CV8 Shenque in the center of the umbilicus.</p>
+      <p class="stage-desc">Originates in the lower pelvic cavity (uterus/Bao), emerges superficially at CV1 Huiyin in the perineum, ascends anteriorly through the pubic hair to CV2 Qugu at the superior margin of the pubic symphysis, passing through CV3 Zhongji and CV4 Guanyuan.</p>
+    </div>
+    <div class="stage-card">
+      <div class="stage-top">
+        <span class="stage-badge">Stage 02</span>
+        <span class="stage-name">Lower Abdominal Element Gates</span>
       </div>
-      <div class="stage-card">
-        <div class="stage-top">
-          <span class="stage-badge">Stage 03</span>
-          <span class="stage-name">Epigastric Cavities & Sternal Course</span>
-        </div>
-        <p class="stage-desc">Continues upward from the navel pit through CV9 Shuifen (Metal/Air, 1.0 cun above), traverses CV12 Zhongwan, reaches CV13 Shangwan (Earth, 5.0 cun above navel), and ascends the sternal midline across CV17 Danzhong (Pericardium Front-Mu) to the throat.</p>
+      <p class="stage-desc">Ascends along the lower abdominal midline through vital element points: CV5 Shimen (Fire, 2.5 cun below navel), CV6 Qihai (Water, 1.5 cun below navel), and CV7 Yinjiao (Wood, 1.0 cun below navel), reaching CV8 Shenque in the center of the umbilicus.</p>
+    </div>
+    <div class="stage-card">
+      <div class="stage-top">
+        <span class="stage-badge">Stage 03</span>
+        <span class="stage-name">Epigastric Cavities &amp; Sternal Course</span>
       </div>
-      <div class="stage-card">
-        <div class="stage-top">
-          <span class="stage-badge">Stage 04</span>
-          <span class="stage-name">Laryngeal Ascent & Mentolabial Lip</span>
-        </div>
-        <p class="stage-desc">Traverses the suprasternal fossa at CV22 Tiantu, climbs through the larynx and hyoid bone at CV23 Lianquan, reaches the chin, and terminates in the mentolabial groove depression at CV24 Chengjiang below the lower lip.</p>
+      <p class="stage-desc">Continues upward from the navel pit through CV9 Shuifen (Metal/Air, 1.0 cun above), traverses CV12 Zhongwan, reaches CV13 Shangwan (Earth, 5.0 cun above navel), and ascends the sternal midline across CV17 Danzhong (Pericardium Front-Mu) to the throat.</p>
+    </div>
+    <div class="stage-card">
+      <div class="stage-top">
+        <span class="stage-badge">Stage 04</span>
+        <span class="stage-name">Laryngeal Ascent &amp; Mentolabial Lip</span>
       </div>
+      <p class="stage-desc">Traverses the suprasternal fossa at CV22 Tiantu, climbs through the larynx and hyoid bone at CV23 Lianquan, reaches the chin, and terminates in the mentolabial groove depression at CV24 Chengjiang below the lower lip.</p>
     </div>
   </div>
 
-  <!-- 4. Vessel Affinities -->
+  <!-- 3. Vessel Affinities -->
   <div class="mpb-affinities">
     <div class="aff-item">
       <span class="aff-lbl">Master Confluent Point</span>
@@ -340,11 +559,11 @@ h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01
     </div>
     <div class="aff-item">
       <span class="aff-lbl">Vessel Nature</span>
-      <span class="aff-val"><i class="aff-dot"></i>Sea of All Yin Channels (陰脈之海)</span>
+      <span class="aff-val"><i class="aff-dot"></i>Sea of All Yin Channels (&#38512;&#33032;&#20043;&#28023;)</span>
     </div>
     <div class="aff-item">
       <span class="aff-lbl">Governing Sphere</span>
-      <span class="aff-val">Conception, Uterus, Jing & Dantian</span>
+      <span class="aff-val">Conception, Uterus, Jing &amp; Dantian</span>
     </div>
     <div class="aff-item">
       <span class="aff-lbl">Alarm (Mu) Hub</span>
@@ -352,219 +571,26 @@ h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01
     </div>
   </div>
 </section>
-<!-- meridian-pathway:end -->
 
 <div class="layout">
 <div class="leg">
-<svg viewBox="0 0 576 1024" role="group" aria-label="Conception Vessel chart showing its 5 Element Points" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Torso shading gradients -->
-    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#141a2e" stop-opacity="0.8"/>
-      <stop offset="30%" stop-color="#1e2642" stop-opacity="0.5"/>
-      <stop offset="50%" stop-color="#263154" stop-opacity="0.3"/>
-      <stop offset="70%" stop-color="#1e2642" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#141a2e" stop-opacity="0.8"/>
-    </linearGradient>
-    <linearGradient id="ribGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#475569" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#334155" stop-opacity="0.1"/>
-    </linearGradient>
-    <linearGradient id="channelGlow" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#0284c7"/>
-      <stop offset="50%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#f43f5e"/>
-    </linearGradient>
-  </defs>
-
-  <!-- ANATOMICAL TORSO SILHOUETTE & LANDMARKS -->
-  <g id="torso-anatomy">
-    <!-- Head outline (chin & jaw) -->
-    <path d="M 235 90 C 235 60, 341 60, 341 90 C 341 125, 335 155, 305 175 C 295 180, 281 180, 271 175 C 241 155, 235 125, 235 90 Z" fill="#1b233a" stroke="#334155" stroke-width="1.5" opacity="0.6"/>
-    <!-- Lips -->
-    <path d="M 276 155 Q 288 152 300 155" fill="none" stroke="#64748b" stroke-width="1.8"/>
-    <path d="M 279 162 Q 288 165 297 162" fill="none" stroke="#64748b" stroke-width="1.8"/>
-    <!-- Mentolabial groove depression -->
-    <path d="M 282 170 Q 288 172 294 170" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.8"/>
-
-    <!-- Neck & Trapezius slope -->
-    <path d="M 248 168 L 246 220 C 215 230, 160 250, 110 270 L 105 320" fill="none" stroke="#334155" stroke-width="1.8"/>
-    <path d="M 328 168 L 330 220 C 361 230, 416 250, 466 270 L 471 320" fill="none" stroke="#334155" stroke-width="1.8"/>
-
-    <!-- Clavicles (Collar bones) -->
-    <path d="M 276 258 Q 230 252 135 272" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
-    <path d="M 300 258 Q 346 252 441 272" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
-    <!-- Suprasternal notch (CV22 fossa) -->
-    <path d="M 276 256 Q 288 266 300 256" fill="none" stroke="#38bdf8" stroke-width="2"/>
-
-    <!-- Torso lateral body contour -->
-    <path d="M 125 320 C 130 380, 140 460, 150 540 C 158 600, 155 650, 145 710 C 138 750, 145 800, 165 850 C 185 895, 210 930, 230 960 L 255 960 C 265 910, 280 890, 288 880 C 296 890, 311 910, 321 960 L 346 960 C 366 930, 391 895, 411 850 C 431 800, 438 750, 431 710 C 421 650, 418 600, 426 540 C 436 460, 446 380, 451 320" fill="url(#bodyGrad)" stroke="#334155" stroke-width="2"/>
-
-    <!-- Sternum bone plate -->
-    <path d="M 280 262 L 296 262 L 293 480 L 288 490 L 283 480 Z" fill="#1e293b" stroke="#475569" stroke-width="1.5" opacity="0.6"/>
-    <!-- Infrasternal angle (Costal arch / Subcostal margins) -->
-    <path d="M 288 490 Q 240 520 185 580" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
-    <path d="M 288 490 Q 336 520 391 580" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
-    
-    <!-- Schematic ribs (matching the user's book pages 245-246) -->
-    <g opacity="0.35" stroke="#64748b" stroke-width="1.5" fill="none">
-      <path d="M 292 340 Q 350 345 425 375"/>
-      <path d="M 292 375 Q 350 380 415 415"/>
-      <path d="M 292 410 Q 350 418 405 455"/>
-      <path d="M 290 445 Q 345 455 395 495"/>
-      <path d="M 288 475 Q 340 488 385 535"/>
-      <!-- Left ribs -->
-      <path d="M 284 340 Q 226 345 151 375"/>
-      <path d="M 284 375 Q 226 380 161 415"/>
-      <path d="M 284 410 Q 226 418 171 455"/>
-      <path d="M 286 445 Q 231 455 181 495"/>
-      <path d="M 288 475 Q 236 488 191 535"/>
-    </g>
-
-    <!-- Iliac crest & Pelvis outlines (from user book page 244) -->
-    <path d="M 152 740 C 180 740, 205 770, 215 810 C 225 850, 245 880, 288 880" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4,3" opacity="0.5"/>
-    <path d="M 424 740 C 396 740, 371 770, 361 810 C 351 850, 331 880, 288 880" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="4,3" opacity="0.5"/>
-    <!-- Pubic symphysis upper border -->
-    <rect x="272" y="876" width="32" height="12" rx="4" fill="#334155" stroke="#64748b" stroke-width="1.5" opacity="0.7"/>
-
-    <!-- Navel Pit / Umbilicus (CV8 Shenque landmark: 0 cun center) -->
-    <ellipse cx="288" cy="730" rx="9" ry="11" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-    <ellipse cx="288" cy="730" rx="4" ry="5" fill="#38bdf8" opacity="0.8"/>
-  </g>
-
-  <!-- CUN MEASUREMENT RULERS (matching book pages 244-246) -->
-  <g id="cun-rulers" style="font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#94a3b8;">
-    <!-- Upper Cun Ruler: 0 to 8 cun (Navel y=730 to Infrasternal angle y=490) -->
-    <line x1="225" y1="730" x2="225" y2="490" stroke="#475569" stroke-width="1.8"/>
-    <!-- Ticks -->
-    <line x1="220" y1="730" x2="230" y2="730" stroke="#38bdf8" stroke-width="2"/>
-    <text x="212" y="734" text-anchor="end" font-weight="600" fill="#38bdf8">0</text>
-
-    <line x1="221" y1="700" x2="229" y2="700" stroke="#e2dcce" stroke-width="1.8"/>
-    <text x="212" y="704" text-anchor="end" font-weight="600" fill="#e2dcce">1</text>
-
-    <line x1="223" y1="670" x2="227" y2="670" stroke="#64748b" stroke-width="1.2"/>
-    <line x1="223" y1="640" x2="227" y2="640" stroke="#64748b" stroke-width="1.2"/>
-    <line x1="221" y1="610" x2="229" y2="610" stroke="#64748b" stroke-width="1.4"/>
-    <text x="212" y="614" text-anchor="end">4</text>
-
-    <line x1="221" y1="580" x2="229" y2="580" stroke="#dca334" stroke-width="1.8"/>
-    <text x="212" y="584" text-anchor="end" font-weight="600" fill="#dca334">5</text>
-
-    <line x1="223" y1="550" x2="227" y2="550" stroke="#64748b" stroke-width="1.2"/>
-    <line x1="223" y1="520" x2="227" y2="520" stroke="#64748b" stroke-width="1.2"/>
-
-    <line x1="220" y1="490" x2="230" y2="490" stroke="#94a3b8" stroke-width="2"/>
-    <text x="212" y="494" text-anchor="end" font-weight="600">8</text>
-    <text x="200" y="475" text-anchor="end" font-size="9.5" fill="#64748b">8 cun (Sternum)</text>
-
-    <!-- Lower Cun Ruler: 0 to 5 cun (Navel y=730 to Pubic Symphysis y=880) -->
-    <line x1="225" y1="730" x2="225" y2="880" stroke="#475569" stroke-width="1.8"/>
-    <!-- 1.0 cun below (CV7 Wood) -->
-    <line x1="221" y1="760" x2="229" y2="760" stroke="#3e885b" stroke-width="1.8"/>
-    <text x="212" y="764" text-anchor="end" font-weight="600" fill="#3e885b">1.0</text>
-
-    <!-- 1.5 cun below (CV6 Water) -->
-    <line x1="221" y1="775" x2="229" y2="775" stroke="#3d78cc" stroke-width="1.8"/>
-    <text x="212" y="779" text-anchor="end" font-weight="600" fill="#3d78cc">1.5</text>
-
-    <!-- 2.5 cun below (CV5 Fire) -->
-    <line x1="221" y1="805" x2="229" y2="805" stroke="#d94236" stroke-width="1.8"/>
-    <text x="212" y="809" text-anchor="end" font-weight="600" fill="#d94236">2.5</text>
-
-    <!-- 3.0 & 4.0 cun below -->
-    <line x1="223" y1="820" x2="227" y2="820" stroke="#64748b" stroke-width="1.2"/>
-    <line x1="223" y1="850" x2="227" y2="850" stroke="#64748b" stroke-width="1.2"/>
-
-    <!-- 5.0 cun below (Pubic bone) -->
-    <line x1="220" y1="880" x2="230" y2="880" stroke="#94a3b8" stroke-width="2"/>
-    <text x="212" y="884" text-anchor="end" font-weight="600">5.0</text>
-    <text x="200" y="898" text-anchor="end" font-size="9.5" fill="#64748b">5 cun (Pubis)</text>
-  </g>
-
-  <!-- CONCEPTION VESSEL CHANNEL PATHWAY -->
-  <g id="meridian-channel">
-    <!-- Glowing background conduit -->
-    <line x1="288" y1="910" x2="288" y2="165" stroke="rgba(56,189,248,0.2)" stroke-width="10" stroke-linecap="round"/>
-    <!-- Main energetic channel line -->
-    <line id="channel" x1="288" y1="910" x2="288" y2="165" stroke="url(#channelGlow)" stroke-width="3.5" stroke-linecap="round"/>
-  </g>
-
-  <!-- LANDMARK REFERENCE POINTS (faint dots) -->
-  <g id="ref-points" fill="#64748b" opacity="0.65">
-    <circle cx="288" cy="910" r="3.5"/><!-- CV1 Huiyin -->
-    <text x="275" y="913" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="9.5" fill="#64748b">CV1 Huiyin</text>
-    <circle cx="288" cy="880" r="3.5"/><!-- CV2 Qugu -->
-    <circle cx="288" cy="850" r="3.5"/><!-- CV3 Zhongji -->
-    <circle cx="288" cy="820" r="3.5"/><!-- CV4 Guanyuan -->
-    <circle cx="288" cy="610" r="3.5"/><!-- CV12 Zhongwan -->
-    <text x="300" y="613" text-anchor="start" font-family="'IBM Plex Mono',monospace" font-size="9.5" fill="#64748b">CV12 Zhongwan</text>
-    <circle cx="288" cy="410" r="4"/><!-- CV17 Danzhong -->
-    <text x="300" y="413" text-anchor="start" font-family="'IBM Plex Mono',monospace" font-size="9.5" fill="#64748b">CV17 Danzhong</text>
-    <circle cx="288" cy="260" r="4"/><!-- CV22 Tiantu -->
-    <text x="300" y="263" text-anchor="start" font-family="'IBM Plex Mono',monospace" font-size="9.5" fill="#64748b">CV22 Tiantu</text>
-    <circle cx="288" cy="170" r="4.5" fill="#f43f5e" opacity="1"/><!-- CV24 Chengjiang -->
-    <text x="302" y="174" text-anchor="start" font-family="'IBM Plex Mono',monospace" font-size="10.5" font-weight="600" fill="#f43f5e">CV24 Terminus</text>
-  </g>
-
-  <!-- 5 ELEMENT POINTS (CIRCLES) -->
-  <g id="points">
-    <!-- Earth: CV13 Shangwan (5 cun above navel) -->
-    <circle id="p13" cx="288" cy="580" r="8" style="fill:var(--earth);stroke:#0d101d;stroke-width:2;"/>
-    <!-- Metal / Air: CV9 Shuifen (1 cun above navel) -->
-    <circle id="p9" cx="288" cy="700" r="8" style="fill:var(--metal);stroke:#0d101d;stroke-width:2;"/>
-    <!-- Wood: CV7 Yinjiao (1 cun below navel) -->
-    <circle id="p7" cx="288" cy="760" r="8" style="fill:var(--wood);stroke:#0d101d;stroke-width:2;"/>
-    <!-- Water: CV6 Qihai (1.5 cun below navel) -->
-    <circle id="p6" cx="288" cy="775" r="8" style="fill:var(--water);stroke:#0d101d;stroke-width:2;"/>
-    <!-- Fire: CV5 Shimen (2.5 cun below navel) -->
-    <circle id="p5" cx="288" cy="805" r="8" style="fill:var(--fire);stroke:#0d101d;stroke-width:2;"/>
-  </g>
-
-  <!-- CALLOUT LEADER LINES -->
-  <g id="callout-lines" style="fill:none;stroke:#64748b;stroke-width:1.2;stroke-dasharray:3,2;">
-    <!-- CV13 (Earth) -> Right -->
-    <path d="M 296 580 L 375 580"/>
-    <!-- CV9 (Air/Metal) -> Right -->
-    <path d="M 296 700 L 375 700"/>
-    <!-- CV7 (Wood) -> Left (to prevent crowding with CV6) -->
-    <path d="M 280 760 L 195 760"/>
-    <!-- CV6 (Water) -> Right -->
-    <path d="M 296 775 L 375 775"/>
-    <!-- CV5 (Fire) -> Left -->
-    <path d="M 280 805 L 195 805"/>
-  </g>
-
-  <!-- TEXT LABELS -->
-  <g id="text-labels" style="font-family:'IBM Plex Mono',monospace;font-size:15px;fill:#cbd5e1;">
-    <!-- CV13: Earth / Nilam -->
-    <text text-anchor="start" x="382" y="584" data-id="p13">CV13 <tspan font-size="12" fill="var(--earth)">· Earth (நிலம்)</tspan></text>
-    <!-- CV9: Air/Metal / Kaatru -->
-    <text text-anchor="start" x="382" y="704" data-id="p9">CV9 <tspan font-size="12" fill="var(--metal)">· Metal/Air (காற்று)</tspan></text>
-    <!-- CV7: Wood / Maram (Left side) -->
-    <text text-anchor="end" x="187" y="764" data-id="p7"><tspan font-size="12" fill="var(--wood)">(மரம்) Wood · </tspan>CV7</text>
-    <!-- CV6: Water / Neer -->
-    <text text-anchor="start" x="382" y="780" data-id="p6">CV6 <tspan font-size="12" fill="var(--water)">· Water (நீர்)</tspan></text>
-    <!-- CV5: Fire / Neruppu (Left side) -->
-    <text text-anchor="end" x="187" y="809" data-id="p5"><tspan font-size="12" fill="var(--fire)">(நெருப்பு) Fire · </tspan>CV5</text>
-  </g>
-</svg>
+""" + SVG_TORSO_ARTWORK + """
 </div>
 
 <!-- DETAILS PANEL -->
 <aside class="panel" aria-label="Point details">
 <div id="pt-info" aria-live="polite"><div class="empty"><b>Select an Element Point</b>Choose a point on the midline diagram or use the five element chips below to inspect its cun distance, anatomical location, and clinical indications.</div></div>
 <div class="pts" role="group" aria-label="Five Element Points of the Conception Vessel">
-  <button type="button" class="chip" data-id="p7" style="--c:var(--wood)"><span class="s">Wood · மரம்</span><span class="c">CV7</span><i></i></button>
-  <button type="button" class="chip" data-id="p5" style="--c:var(--fire)"><span class="s">Fire · நெருப்பு</span><span class="c">CV5</span><i></i></button>
-  <button type="button" class="chip" data-id="p13" style="--c:var(--earth)"><span class="s">Earth · நிலம்</span><span class="c">CV13</span><i></i></button>
-  <button type="button" class="chip" data-id="p9" style="--c:var(--metal)"><span class="s">Air · காற்று</span><span class="c">CV9</span><i></i></button>
-  <button type="button" class="chip" data-id="p6" style="--c:var(--water)"><span class="s">Water · நீர்</span><span class="c">CV6</span><i></i></button>
+  <button type="button" class="chip" data-id="p7" style="--c:var(--wood)"><span class="s">Wood &#183; &#2990;&#2992;&#2990;&#3021;</span><span class="c">CV7</span><i></i></button>
+  <button type="button" class="chip" data-id="p5" style="--c:var(--fire)"><span class="s">Fire &#183; &#2984;&#3014;&#2992;&#3009;&#2986;&#3021;&#2986;&#3009;</span><span class="c">CV5</span><i></i></button>
+  <button type="button" class="chip" data-id="p13" style="--c:var(--earth)"><span class="s">Earth &#183; &#2984;&#3007;&#2994;&#2990;&#3021;</span><span class="c">CV13</span><i></i></button>
+  <button type="button" class="chip" data-id="p9" style="--c:var(--metal)"><span class="s">Air &#183; &#2965;&#3006;&#2993;&#3021;&#2993;&#3009;</span><span class="c">CV9</span><i></i></button>
+  <button type="button" class="chip" data-id="p6" style="--c:var(--water)"><span class="s">Water &#183; &#2984;&#3008;&#2992;&#3021;</span><span class="c">CV6</span><i></i></button>
 </div>
 </aside>
 </div>
 
-<p class="note"><b>Note on Element Points:</b> The Five Element points of the Conception Vessel (CV / Ren Mai) are derived from classical Tamil / Indian acupuncture lineages and clinical manuals (e.g., Dr. Anton Jayasuriya & traditional meridian teachings). Governing Vessel (Du / GV) has no element points. Cun measurements are standardized proportional anatomical measurements taken from the center of the navel pit (CV8 Shenque). <a href="learn.html#cun">Learn about proportional cun distances &#8594;</a></p>
+<p class="note"><b>Note on Element Points:</b> The Five Element points of the Conception Vessel (CV / Ren Mai) are derived from classical Tamil / Indian acupuncture lineages and clinical manuals (e.g., Dr. Anton Jayasuriya &amp; traditional meridian teachings). Governing Vessel (Du / GV) has no element points. Cun measurements are standardized proportional anatomical measurements taken from the center of the navel pit (CV8 Shenque). <a href="learn.html#cun">Learn about proportional cun distances &#8594;</a></p>
 </main>
 
 <script>
@@ -573,11 +599,11 @@ var DATA = {
   "p7": {
     "code": "CV7",
     "pinyin": "Yinjiao",
-    "hz": "陰交",
+    "hz": "\\u9670\\u4ea4",
     "en": "Yin Junction",
-    "tamil": "மரம் (Maram)",
+    "tamil": "\\u0bae\\u0bb0\\u0bae\\u0bcd (Maram)",
     "elem": "Wood",
-    "shu": "Wood Element Point · மரம்",
+    "shu": "Wood Element Point \\u00b7 \\u0bae\\u0bb0\\u0bae\\u0bcd",
     "loc": "On the anterior midline of the lower abdomen, 1.0 cun directly below the center of the navel pit (umbilicus).",
     "cun": "1.0 cun inferior to the center of the umbilicus, 4.0 cun superior to the pubic symphysis.",
     "ind": "Nourishes kidney Yin and regulates menstruation; opens lower burner water passages; treats abdominal distension, irregular menstruation, uterine bleeding, postpartum abdominal colic, and running piglet qi."
@@ -585,313 +611,170 @@ var DATA = {
   "p5": {
     "code": "CV5",
     "pinyin": "Shimen",
-    "hz": "石門",
+    "hz": "\\u77f3\\u9580",
     "en": "Stone Gate",
-    "tamil": "நெருப்பு (Neruppu)",
+    "tamil": "\\u0ba8\\u0bc6\\u0bb0\\u0bc1\\u0baa\\u0bcd\\u0baa\\u0bc1 (Neruppu)",
     "elem": "Fire",
-    "shu": "Fire Element Point · நெருப்பு (Front-Mu of Sanjiao)",
+    "shu": "Fire Element Point \\u00b7 \\u0ba8\\u0bc6\\u0bb0\\u0bc1\\u0baa\\u0bcd\\u0baa\\u0bc1 (Front-Mu of Sanjiao)",
     "loc": "On the anterior midline of the lower abdomen, 2.5 cun directly below the center of the navel pit (umbilicus).",
     "cun": "2.5 cun inferior to the center of the umbilicus (midway on the 5-cun line between umbilicus and pubic symphysis).",
-    "ind": "Warms and regulates the Fire of the Sanjiao (Triple Burner); regulates the uterus and dispels cold from the lower abdomen; treats amenorrhea, leukorrhea, retention of urine, diarrhea, and edema."
+    "ind": "Warms and tonifies Kidney Yang; transforms Qi in the Lower Burner; Front-Mu alarm point of the Sanjiao; treats amenorrhea, leukorrhea, nocturnal emission, enuresis, edema, and sudden abdominal fullness."
   },
   "p13": {
     "code": "CV13",
     "pinyin": "Shangwan",
-    "hz": "上脘",
-    "en": "Upper Venter / Upper Cavity",
-    "tamil": "நிலம் (Nilam)",
+    "hz": "\\u4e0a\\u8118",
+    "en": "Upper Cavity",
+    "tamil": "\\u0ba8\\u0bbf\\u0bb4\\u0bae\\u0bcd (Nilam)",
     "elem": "Earth",
-    "shu": "Earth Element Point · நிலம்",
+    "shu": "Earth Element Point \\u00b7 \\u0ba8\\u0bbf\\u0bb4\\u0bae\\u0bcd",
     "loc": "On the anterior midline of the epigastrium, 5.0 cun directly above the center of the navel pit (umbilicus).",
-    "cun": "5.0 cun superior to the center of the umbilicus (on the 8-cun line between umbilicus and sternocostal angle).",
-    "ind": "Harmonizes Stomach and Spleen Earth qi; descends rebellious Stomach qi; treats gastric fullness, nausea, vomiting, acid regurgitation, stomachache, abdominal distension, and indigestion."
+    "cun": "5.0 cun superior to the center of the umbilicus, 3.0 cun inferior to the sternocostal angle (xiphisternum).",
+    "ind": "Harmonizes Stomach Qi, subdues rebellion, and stops vomiting; treats gastric pain, epigastric distension, acid reflux, nausea, acute stomach spasm, epilepsy, and cardiac oppression."
   },
   "p9": {
     "code": "CV9",
     "pinyin": "Shuifen",
-    "hz": "水分",
+    "hz": "\\u6c34\\u5206",
     "en": "Water Divide",
-    "tamil": "காற்று (Kaatru)",
+    "tamil": "\\u0b95\\u0bbe\\u0bb1\\u0bcd\\u0bb1\\u0bc1 (Kaatru)",
     "elem": "Metal",
-    "shu": "Metal / Air Element Point · காற்று",
-    "loc": "On the anterior midline of the upper abdomen, 1.0 cun directly above the center of the navel pit (umbilicus).",
-    "cun": "1.0 cun superior to the center of the umbilicus.",
-    "ind": "Regulates water metabolism and lung-descending dispersion; harmonizes the intestines and resolves dampness; premier point for edema, abdominal swelling, ascites, borborygmus, and diarrheic disorders."
+    "shu": "Air / Metal Element Point \\u00b7 \\u0b95\\u0bbe\\u0bb1\\u0bcd\\u0bb1\\u0bc1",
+    "loc": "On the anterior midline of the abdomen, 1.0 cun directly above the center of the navel pit (umbilicus).",
+    "cun": "1.0 cun superior to the center of the umbilicus, 7.0 cun inferior to the sternocostal angle.",
+    "ind": "Directs and regulates water passages; disperses swelling and stagnation; primary point for ascites, generalized edema, abdominal tympanites, borborygmus, and acute diarrhea."
   },
   "p6": {
     "code": "CV6",
     "pinyin": "Qihai",
-    "hz": "氣海",
+    "hz": "\\u6c23\\u6d77",
     "en": "Sea of Qi",
-    "tamil": "நீர் (Neer)",
+    "tamil": "\\u0ba8\\u0bc8\\u0bb0\\u0bcd (Neer)",
     "elem": "Water",
-    "shu": "Water Element Point · நீர் (Lower Dantian Hub)",
+    "shu": "Water Element Point \\u00b7 \\u0ba8\\u0bc8\\u0bb0\\u0bcd",
     "loc": "On the anterior midline of the lower abdomen, 1.5 cun directly below the center of the navel pit (umbilicus).",
-    "cun": "1.5 cun inferior to the center of the umbilicus.",
-    "ind": "Fosters and tonifies Original Qi (Yuan Qi); fortifies Kidney essence and Water reservoirs; rescues collapse; treats extreme fatigue, asthma/dyspnea from kidney deficiency, nocturnal emissions, enuresis, and chronic abdominal weakness."
+    "cun": "1.5 cun inferior to the center of the umbilicus, 3.5 cun superior to the pubic symphysis.",
+    "ind": "Foremost tonification point for Original Qi (Yuan Qi); raises sunken Qi, rescues collapsed Yang, tonifies Kidneys; treats constitutional exhaustion, asthma due to kidney deficiency, chronic diarrhea, prolapse, and enuresis."
   }
 };
 
-var ORDER = ['p7', 'p5', 'p13', 'p9', 'p6'];
-var ELEM = {Wood:'var(--wood)', Fire:'var(--fire)', Earth:'var(--earth)', Metal:'var(--metal)', Water:'var(--water)'};
-var NS = 'http://www.w3.org/2000/svg';
+var currentId = null;
 var panel = document.getElementById('pt-info');
 var chips = document.querySelectorAll('.chip');
-var labels = document.querySelectorAll('#text-labels text');
-var narrow = window.matchMedia('(max-width:760px)');
+var textLabels = document.querySelectorAll('#text-labels text');
 
-var ring = document.createElementNS(NS,'circle');
-ring.setAttribute('class','ring'); ring.setAttribute('r','16');
-document.getElementById('points').parentNode.appendChild(ring);
-
-var hitLayer = document.createElementNS(NS,'g');
-document.getElementById('points').parentNode.appendChild(hitLayer);
-
-var current = null;
-
-function select(id, focusChip){
-  var d = DATA[id], el = document.getElementById(id);
-  if(!d || !el) return;
-  current = id;
-  document.querySelectorAll('#points circle').forEach(function(c){ c.classList.toggle('on', c === el); });
-  hitLayer.querySelectorAll('.hit').forEach(function(h){ h.setAttribute('aria-pressed', h.getAttribute('data-id') === id ? 'true' : 'false'); });
-  labels.forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-id') === id); });
-  ring.setAttribute('cx', el.getAttribute('cx')); ring.setAttribute('cy', el.getAttribute('cy'));
-  ring.classList.remove('on'); void ring.getBBox(); ring.classList.add('on');
-  chips.forEach(function(c){ var on = c.getAttribute('data-id') === id; c.classList.toggle('on', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); if(on && focusChip) c.focus(); });
-
-  panel.innerHTML = '<div class="eyebrow"><span>'+d.code+'</span><span class="sep"></span><span class="shu">'+d.shu+'</span></div>'
-    +'<div class="title">'+d.pinyin+' <span style="font-family:Noto Sans SC,sans-serif;font-weight:400;color:var(--ink-2);font-size:24px;">'+d.hz+'</span></div>'
-    +'<div class="en">“'+d.en+'” <span class="tamil-tag">'+d.tamil+'</span></div>'
-    +'<div class="pills">'
-      +'<span class="pill" style="--c:'+ELEM[d.elem]+'"><i></i>'+d.elem+' Element</span>'
-      +'<span class="pill">Ren Mai · Yin</span>'
-      +'<span class="pill">'+(d.code === 'CV9' || d.code === 'CV13' ? d.cun.split(',')[0].trim() : d.cun.split(',')[0].trim())+'</span>'
-    +'</div>'
-    +'<p class="label">Location</p><p class="loc">'+d.loc+'</p>'
-    +'<p class="label">Cun Measurement</p><p class="cun">'+d.cun+' <a href="learn.html#cun">What is a cun?</a></p>'
-    +'<p class="label">Actions & Classical Indications</p><p class="ind">'+d.ind+'</p>';
-
-  panel.classList.remove('enter'); void panel.offsetWidth; panel.classList.add('enter');
-  if(narrow.matches && !focusChip) panel.scrollIntoView({block:'nearest',behavior:'smooth'});
+function render(id){
+  var d = DATA[id];
+  if(!d) return;
+  var col = 'var(--' + d.elem.toLowerCase() + ')';
+  panel.innerHTML = '<div class="p-hdr">' +
+    '<div><span class="p-code" style="--c:' + col + '">' + d.code + '</span> · <span class="p-hz">' + d.hz + '</span></div>' +
+    '<div class="p-badge" style="--c:' + col + '"><span class="dot"></span>' + d.shu + '</div>' +
+  '</div>' +
+  '<h3 class="p-name">' + d.pinyin + ' <span style="font-size:16px;font-weight:400;color:var(--mute)">"' + d.en + '"</span></h3>' +
+  '<p class="p-py"><b>' + d.tamil + '</b> · Conception Vessel (Ren Mai)</p>' +
+  '<div class="p-sec"><h4>Location</h4><p>' + d.loc + '</p></div>' +
+  '<div class="p-sec"><h4>Proportional Cun Distance</h4><p>' + d.cun + '</p></div>' +
+  '<div class="p-sec"><h4>Clinical Indications</h4><p>' + d.ind + '</p></div>';
 }
 
-function xy(id){ var c = document.getElementById(id); return [+c.getAttribute('cx'), +c.getAttribute('cy')]; }
+function selectPoint(id, pushHash){
+  if(!DATA[id]) return;
+  currentId = id;
+  render(id);
 
-ORDER.forEach(function(id){
-  var el = document.getElementById(id), d = DATA[id], p = xy(id), r = 18;
-  ORDER.forEach(function(o){ if(o!==id){ var q = xy(o); r = Math.min(r, Math.hypot(p[0]-q[0], p[1]-q[1]) / 2); } });
-  var h = document.createElementNS(NS,'circle');
-  h.setAttribute('class','hit'); h.setAttribute('cx',p[0]); h.setAttribute('cy',p[1]); h.setAttribute('r',Math.max(r, 12));
-  h.setAttribute('data-id',id); h.setAttribute('tabindex','0'); h.setAttribute('role','button');
-  h.setAttribute('aria-label', d.code+' '+d.pinyin+', '+d.shu+', '+d.elem);
-  h.addEventListener('click', function(){ select(id); });
-  h.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(id); } });
-  h.addEventListener('mouseenter', function(){ el.classList.add('hover'); });
-  h.addEventListener('mouseleave', function(){ el.classList.remove('hover'); });
-  hitLayer.appendChild(h);
-});
-
-// Also make the text labels clickable
-labels.forEach(function(txt){
-  txt.addEventListener('click', function(){
-    var id = txt.getAttribute('data-id');
-    if(id) select(id);
+  // Update chips
+  chips.forEach(function(c){
+    c.classList.toggle('on', c.getAttribute('data-id') === id);
   });
-});
 
-chips.forEach(function(c){
-  c.setAttribute('aria-pressed','false');
-  c.addEventListener('click', function(){ select(c.getAttribute('data-id')); });
-  c.addEventListener('keydown', function(e){
-    if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return;
-    e.preventDefault();
-    var i = ORDER.indexOf(current || c.getAttribute('data-id')) + (e.key==='ArrowRight'?1:-1);
-    select(ORDER[(i+ORDER.length)%ORDER.length], true);
+  // Update SVG circles and pulse rings
+  var d = DATA[id];
+  var col = 'var(--' + d.elem.toLowerCase() + ')';
+  document.querySelectorAll('#points circle').forEach(function(c){
+    var on = c.id === id;
+    c.classList.toggle('on', on);
+    if(on){
+      c.style.fill = col;
+    } else {
+      c.style.fill = '#9c1f12';
+    }
   });
-});
 
-function fromHash(){
-  var code = decodeURIComponent(location.hash.slice(1)).toUpperCase();
-  for(var k in DATA){ if(DATA[k].code === code){ select(k); return; } }
-  // default select Wood point CV7
-  select('p7');
-}
+  // Update animated pulse ring
+  document.querySelectorAll('.ring').forEach(function(r){
+    var on = r.id === ('ring-' + id);
+    r.classList.toggle('on', on);
+    if(on) r.style.stroke = col;
+  });
 
-var _select = select;
-select = function(id, focusChip){
-  _select(id, focusChip);
-  try { history.replaceState(null, '', '#'+DATA[id].code); } catch(e) {}
-};
+  // Update text label highlight
+  textLabels.forEach(function(t){
+    var on = t.getAttribute('data-id') === id;
+    t.classList.toggle('on', on);
+    if(on){
+      t.style.fill = col;
+    } else {
+      t.style.fill = '#555';
+    }
+  });
 
-window.addEventListener('hashchange', fromHash);
-fromHash();
-})();
-</script>
-
-<!-- gloss:start -->
-<style>
-.gl{appearance:none;border:0;background:none;margin:0;padding:0;display:inline;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;text-align:inherit;cursor:help;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,currentColor 42%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:text-decoration-color .15s}
-.gl:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:2px}
-.gl[aria-expanded="true"]{text-decoration-color:currentColor}
-@media (hover:hover) and (pointer:fine){.gl:hover{text-decoration-color:currentColor}}
-.gl-tip{position:fixed;z-index:100;left:0;top:0;width:min(280px,calc(100vw - 24px));padding:12px 14px 13px;border-radius:12px;background:rgba(21,25,40,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#f5f3ed;border:1px solid rgba(245,243,237,.14);box-shadow:0 20px 50px -15px rgba(0,0,0,.85),0 0 0 1px rgba(245,243,237,.06);font:400 13px/1.5 "Jost",system-ui,sans-serif;letter-spacing:.005em;text-align:left;text-transform:none;pointer-events:none;visibility:hidden;opacity:0;transform:translateY(4px);transition:opacity .15s cubic-bezier(.16,1,.3,1),transform .15s cubic-bezier(.16,1,.3,1)}
-.gl-tip.on{visibility:visible;opacity:1;transform:none}
-.gl-tip.below{transform:translateY(-4px)}
-.gl-tip.on.below{transform:none}
-.gl-tip-k{display:block;font:500 9.5px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#8590ab}
-.gl-tip-t{display:flex;align-items:baseline;gap:8px;margin-top:7px;font-size:15px;font-weight:600;line-height:1.25}
-.gl-tip-t span{font:300 15px/1 "Noto Sans SC","PingFang SC",sans-serif;color:#9ea8bd}
-.gl-tip-d{display:block;margin-top:5px;color:#9ea8bd;line-height:1.45}
-@media (prefers-reduced-motion:reduce){.gl-tip{transition:none}}
-</style>
-<script>
-(function(){
-  'use strict';
-  var G = [
-    ['Measurement','Cun','寸','A proportional unit for locating points: about the width of the patient’s own thumb, so it scales with the body. Ten fen make one cun.',['cun']],
-    ['Measurement','Fen','分','One tenth of a cun.',['fen']],
-    ['Measurement','B-cun','','Proportional cun: a body region is divided into a fixed number of cun (e.g. 8 cun between umbilicus and sternum, 5 cun between umbilicus and pubic symphysis).',['B-cun']],
-    ['Measurement','F-cun','','Finger cun: measured with the patient’s own fingers. One thumb is 1 cun; four fingers together are 3.',['F-cun']],
-    ['Direction','Anterior','','Toward the front of the body. Opposite of posterior.',['anterior']],
-    ['Direction','Posterior','','Toward the back of the body. Opposite of anterior.',['posterior']],
-    ['Direction','Inferior','','Below; toward the feet.',['inferior']],
-    ['Direction','Superior','','Above; toward the head.',['superior']],
-    ['Landmark','Umbilicus','神闕','The navel pit (CV8 Shenque), reference 0 landmark for abdominal measurements.',['umbilicus','navel']],
-    ['Landmark','Pubic symphysis','曲骨','The cartilaginous joint between the pubic bones; CV2 Qugu sits at its upper border, 5 cun below the navel.',['pubic symphysis']],
-    ['Point type','Front-Mu','募穴','Alarm points located on the chest and abdomen where qi of the Zang-Fu organs gathers.',['Front-Mu']],
-    ['Extraordinary Vessel','Ren Mai','任脈','Conception Vessel: runs along the anterior midline and governs all Yin meridians.',['Ren Mai','Conception Vessel']]
-  ];
-  var byAlias = {}, parts = [];
-  G.forEach(function(g, i){ g[4].forEach(function(a){ parts.push(a); byAlias[a.toLowerCase()] = i; }); });
-  parts.sort(function(a, b){ return b.length - a.length; });
-  var RE = new RegExp('(^|[^A-Za-z-])(' + parts.join('|') + ')(?![A-Za-z-])', 'i');
-  function lookup(word){
-    var w = word.toLowerCase();
-    for(var a in byAlias){ if(new RegExp('^(' + a + ')$', 'i').test(w)) return byAlias[a]; }
-    return -1;
+  if(pushHash && history.replaceState){
+    history.replaceState(null, '', '#' + id);
   }
-  var SKIP = 'a,button,b,strong,h1,h2,h3,code,kbd,script,style,svg,.gl,[data-gloss-skip]';
-  function wrap(target, seen){
-    var walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT, null), nodes = [], n;
-    while((n = walker.nextNode())) nodes.push(n);
-    nodes.forEach(function(node){
-      var p = node.parentElement;
-      if(!p || (p !== target && p.closest(SKIP) && target.contains(p.closest(SKIP)))) return;
-      if(p.closest('.gl')) return;
-      var text = node.nodeValue, m, frag = null, last = 0, rest = text, offset = 0;
-      while((m = RE.exec(rest))){
-        var start = offset + m.index + m[1].length, word = m[2], idx = lookup(word);
-        offset = start + word.length; rest = text.slice(offset);
-        if(idx < 0 || seen[idx]) continue;
-        seen[idx] = true;
-        frag = frag || document.createDocumentFragment();
-        frag.appendChild(document.createTextNode(text.slice(last, start)));
-        var b = document.createElement('button');
-        b.type = 'button'; b.className = 'gl'; b.dataset.g = idx;
-        b.setAttribute('aria-expanded', 'false');
-        b.setAttribute('aria-label', word + ': ' + G[idx][3]);
-        b.textContent = word;
-        frag.appendChild(b);
-        last = offset;
+}
+
+// Attach click listeners to chips
+chips.forEach(function(btn){
+  btn.addEventListener('click', function(){
+    selectPoint(this.getAttribute('data-id'), true);
+  });
+});
+
+// Attach click/hover listeners to hit circles
+['p13', 'p9', 'p7', 'p6', 'p5'].forEach(function(id){
+  var hit = document.getElementById('hit-' + id);
+  var pt = document.getElementById(id);
+  if(hit){
+    hit.addEventListener('click', function(){ selectPoint(id, true); });
+    hit.addEventListener('mouseenter', function(){ if(pt) pt.classList.add('hover'); });
+    hit.addEventListener('mouseleave', function(){ if(pt) pt.classList.remove('hover'); });
+    hit.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        selectPoint(id, true);
       }
-      if(frag){ frag.appendChild(document.createTextNode(text.slice(last))); node.parentNode.replaceChild(frag, node); }
     });
   }
-  function seenIn(scope){
-    var s = {};
-    [].forEach.call(scope.querySelectorAll('.gl'), function(b){ s[b.dataset.g] = true; });
-    return s;
-  }
-  function watch(rootSel, targetSel, scopeSel){
-    var root = typeof rootSel === 'string' ? document.querySelector(rootSel) : rootSel;
-    if(!root) return;
-    var mo;
-    function run(){
-      if(mo) mo.disconnect();
-      var seen = new Map();
-      [].forEach.call(root.querySelectorAll(targetSel), function(t){
-        var scope = (scopeSel && t.closest(scopeSel)) || t;
-        if(!seen.has(scope)) seen.set(scope, seenIn(scope));
-        wrap(t, seen.get(scope));
-      });
-      if(mo) mo.observe(root, {childList:true, subtree:true});
-    }
-    run();
-    if('MutationObserver' in window){ mo = new MutationObserver(function(){ run(); }); mo.observe(root, {childList:true, subtree:true}); }
-  }
-  var tip = document.createElement('div');
-  tip.className = 'gl-tip'; tip.setAttribute('role', 'tooltip'); tip.id = 'gl-tip';
-  var open = null, timer = 0, lastHide = 0, openedAt = 0;
-  function place(el){
-    var r = el.getBoundingClientRect(), t = tip.getBoundingClientRect(), gap = 10, pad = 8;
-    var x = Math.max(10, Math.min(r.left + r.width/2 - t.width/2, innerWidth - t.width - 10));
-    var above = r.top - gap - t.height >= pad;
-    var y = above ? r.top - gap - t.height : Math.min(r.bottom + gap, innerHeight - t.height - pad);
-    tip.classList.toggle('below', !above);
-    tip.style.left = Math.round(x) + 'px'; tip.style.top = Math.round(y) + 'px';
-  }
-  function show(el){
-    var g = G[+el.dataset.g]; if(!g) return;
-    clearTimeout(timer);
-    if(!tip.parentNode) document.body.appendChild(tip);
-    if(open && open !== el){ open.setAttribute('aria-expanded', 'false'); open.removeAttribute('aria-describedby'); }
-    open = el; openedAt = Date.now(); el.setAttribute('aria-expanded', 'true'); el.setAttribute('aria-describedby', 'gl-tip');
-    tip.innerHTML = '<span class="gl-tip-k"></span><span class="gl-tip-t"></span><span class="gl-tip-d"></span>';
-    tip.children[0].textContent = g[0];
-    tip.children[1].textContent = g[1];
-    if(g[2]){ var hz = document.createElement('span'); hz.lang = 'zh'; hz.textContent = g[2]; tip.children[1].appendChild(hz); }
-    tip.children[2].textContent = g[3];
-    tip.classList.remove('on'); place(el); void tip.offsetWidth; tip.classList.add('on');
-  }
-  function hide(){
-    clearTimeout(timer);
-    if(!open) return;
-    open.setAttribute('aria-expanded', 'false'); open.removeAttribute('aria-describedby');
-    open = null; tip.classList.remove('on'); lastHide = Date.now();
-  }
-  function gl(e){ return e.target.closest && e.target.closest('.gl'); }
-  document.addEventListener('pointerover', function(e){
-    var el = gl(e); if(!el || e.pointerType === 'touch' || open === el) return;
-    clearTimeout(timer); timer = setTimeout(function(){ show(el); }, Date.now() - lastHide < 400 ? 0 : 120);
+});
+
+// Attach click listeners to text labels
+textLabels.forEach(function(t){
+  t.addEventListener('click', function(){
+    var id = this.getAttribute('data-id');
+    if(id) selectPoint(id, true);
   });
-  document.addEventListener('pointerout', function(e){
-    var el = gl(e); if(!el || el.contains(e.relatedTarget)) return;
-    if(open === el) hide(); else clearTimeout(timer);
-  });
-  document.addEventListener('focusin', function(e){ var el = gl(e); if(el && open !== el) show(el); });
-  document.addEventListener('focusout', function(e){ var el = gl(e); if(el && open === el) hide(); });
-  document.addEventListener('click', function(e){
-    var el = gl(e); if(!el) return;
-    e.preventDefault(); e.stopPropagation();
-    if(e.pointerType === 'mouse') return;
-    if(open === el && Date.now() - openedAt > 350) hide(); else if(open !== el) show(el);
-  }, true);
-  document.addEventListener('pointerdown', function(e){ if(open && !gl(e)) hide(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && open) hide(); });
-  addEventListener('scroll', hide, true);
-  addEventListener('resize', hide);
-  window.ShuGloss = {watch: watch, terms: G};
+});
+
+// Handle initial hash or default selection (CV7 Wood)
+var hash = (location.hash || '').replace('#', '');
+if(DATA[hash]){
+  selectPoint(hash, false);
+} else {
+  selectPoint('p7', false);
+}
+
 })();
 </script>
-<!-- gloss:end -->
-<script>ShuGloss.watch('#pt-info', '.eyebrow .shu, .loc, .cun', '#pt-info');</script>
+</body>
+</html>
+"""
 
-<!-- footer:start -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400&display=swap">
-<style>
-.cf{margin-top:72px;border-top:1px solid var(--hair, rgba(245,243,237,.09));background:var(--ground, #0d101d);color:var(--ink, #f5f3ed);overflow:hidden}
-.cf-in{max-width:1100px;margin:0 auto;padding-top:28px;padding-bottom:20px;padding-left:max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,3vw,40px),env(safe-area-inset-right,0px))}
-.cf-mark{margin:0;font:400 clamp(44px,9vw,128px)/.82 "Newsreader",Georgia,"Times New Roman",serif;letter-spacing:-.045em;padding-bottom:.18em;text-align:left;white-space:nowrap;color:var(--ink, #f5f3ed)}
-.cf-mark b{font-weight:400;color:#ff6a3d}
-@media (max-width:700px){.cf{margin-top:48px}}
-</style>
-<footer class="cf">
-  <div class="cf-in"><p class="cf-mark" aria-label="Caffeinity">caffeinity<b>.</b></p></div>
-</footer>
-<!-- footer:end -->
-</body></html>
-'''
+def main():
+    out_path = "cv-meridian-chart.html"
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(PAGE_HTML)
+    print(f"Successfully wrote {out_path} ({len(PAGE_HTML)} bytes)")
 
-(ROOT / 'cv-meridian-chart.html').write_text(html_content, encoding='utf-8')
-print("Successfully written cv-meridian-chart.html")
+if __name__ == "__main__":
+    main()
