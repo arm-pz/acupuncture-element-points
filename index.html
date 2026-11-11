@@ -1,3 +1,4 @@
+<!doctype html>
 <title>Shu Atlas</title><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
@@ -107,14 +108,6 @@ html,body{height:100%;height:100dvh}
 .vis-cta:hover svg{transform:translateX(3px)}
 
 /* chrome */
-.vis-top{position:absolute;inset:0 0 auto 0;z-index:310;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding-top:max(clamp(12px,2.2vh,24px),env(safe-area-inset-top,0px));
-  padding-bottom:clamp(8px,1.5vh,16px);
-  padding-left:max(clamp(12px,3vw,36px),env(safe-area-inset-left,0px));
-  padding-right:max(clamp(12px,3vw,36px),env(safe-area-inset-right,0px));pointer-events:none}
-.vis-brand{display:flex;align-items:baseline;gap:10px;min-width:0;color:var(--ink);text-decoration:none;pointer-events:auto}
-.vis-brand .han{font:300 19px/1 var(--han)}
-.vis-brand .latin{font:500 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;color:rgba(243,236,224,.7);white-space:nowrap}
 .vis-rel{font-size:11px;color:var(--ink-soft);text-transform:uppercase;white-space:nowrap;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
 .vis-rel{display:flex;flex-direction:column;align-items:flex-end;gap:6px;letter-spacing:.2em;text-align:right}
 .vis-rel i{font:300 13px/1 var(--han);font-style:normal;letter-spacing:0;margin-right:9px;color:var(--ink-faint)}
@@ -187,22 +180,11 @@ html,body{height:100%;height:100dvh}
 .phone .vis-legend{left:50%;transform:translateX(-50%);bottom:calc(clamp(8px,2vh,24px) + 48px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 24px);flex-wrap:nowrap;gap:8px}
 
 /* app links */
-.vis-appnav{display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);pointer-events:auto}
-.vis-appnav a{display:block;padding:8px 12px;border-radius:999px;color:rgba(243,236,224,.7);font:500 13px/1 var(--body);letter-spacing:.02em;text-decoration:none;transition:color .18s,background .18s}
-.vis-appnav a:hover{color:var(--ink);background:rgba(243,236,224,.1)}
-.vis-appnav a[aria-current="page"]{color:#10131f;background:#f2f0ea}
-.vis-appnav a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .vis-rel{position:absolute;z-index:310;pointer-events:none;top:calc(clamp(16px,2.6vh,28px) + 52px);right:max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px))}
 .vis-meta a{pointer-events:auto;color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(243,236,224,.28);transition:border-color .25s,color .25s}
 .vis-meta a:hover{border-bottom-color:rgb(var(--accent-rgb));color:#fff}
 .vis-meta a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
 .vis-meta .sep{color:var(--ink-faint);margin:0 6px}
-.phone .vis-appnav{flex-wrap:nowrap;gap:2px;padding:2px;max-width:calc(100vw - 72px);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.phone .vis-appnav::-webkit-scrollbar{display:none}
-.phone .vis-appnav a{padding:5px 6.5px;font-size:11px;white-space:nowrap;letter-spacing:0}
-.phone .vis-top{gap:8px}
-.phone .vis-brand .latin{display:none}
-@media (min-width:400px){.phone .vis-brand .latin{display:inline-block;font-size:10px;letter-spacing:.18em;opacity:.8}}
 
 /* phones */
 .phone .vis-meta{display:flex;margin:5px 0 0;gap:8px;justify-content:center}
@@ -228,88 +210,50 @@ html,body{height:100%;height:100dvh}
 }
 </style>
 
-<section class="vis-root" id="vis" aria-label="The five elements of Chinese medicine">
-  <div class="vis-bgwrap" id="bgwrap" aria-hidden="true"></div>
-  <div class="vis-vignette" aria-hidden="true"></div>
-  <div class="vis-glow" id="glow" aria-hidden="true"></div>
-
-  <svg class="vis-defs" width="0" height="0" aria-hidden="true" focusable="false">
-    <defs>
-      <filter id="vis-glass" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage id="vg-map" x="0" y="0" width="150" height="150" preserveAspectRatio="none" result="map"/>
-        <feDisplacementMap id="vg-r" in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" result="dR"/>
-        <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="cR"/>
-        <feDisplacementMap id="vg-g" in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" result="dG"/>
-        <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="cG"/>
-        <feDisplacementMap id="vg-b" in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" result="dB"/>
-        <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="cB"/>
-        <feBlend in="cR" in2="cG" mode="screen" result="rg"/>
-        <feBlend in="rg" in2="cB" mode="screen"/>
-      </filter>
-    </defs>
-  </svg>
-
-  <svg class="vis-cycles" aria-hidden="true" focusable="false">
-    <defs>
-      <radialGradient id="ke-fade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="100">
-        <stop offset="0" stop-color="#000"/><stop offset=".42" stop-color="#000"/><stop offset=".8" stop-color="#fff"/>
-      </radialGradient>
-      <mask id="ke-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
-        <rect x="0" y="0" width="100%" height="100%" fill="url(#ke-fade)"/>
-      </mask>
-    </defs>
-    <g id="cyc" style="opacity:0">
-      <g id="yy" transform="translate(0 0)">
-        <g id="yy-spin">
-          <path class="yy-yin"  d="M0 -100A100 100 0 0 0 0 100A50 50 0 0 0 0 0A50 50 0 0 1 0 -100Z"/>
-          <path class="yy-yang" d="M0 -100A100 100 0 0 1 0 100A50 50 0 0 0 0 0A50 50 0 0 1 0 -100Z"/>
-          <circle class="yy-dot-yang" cx="0" cy="50"  r="12"/>
-          <circle class="yy-dot-yin"  cx="0" cy="-50" r="12"/>
-          <circle class="yy-ring" cx="0" cy="0" r="100"/>
-        </g>
-      </g>
-      <g id="g-sheng"></g><g id="g-ke" mask="url(#ke-mask)"></g>
-    </g>
-  </svg>
-
-  <div class="vis-orbit" id="orbit"></div>
-
-  <header class="vis-top">
-    <a class="vis-brand" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="latin">Shu Atlas</span></a>
-    <nav class="vis-appnav" aria-label="Shu Atlas"><a href="index.html" aria-current="page">Elements</a><a href="channels.html">Channels</a><a href="points.html">Points</a><a href="learn.html">Learn</a><a href="study.html">Study</a></nav>
-  </header>
-  <div class="vis-rel" id="rel" aria-hidden="true"></div>
-
-  <div class="vis-title">
-    <div class="vis-title-inner first" id="tin" aria-live="polite"></div>
-    <a class="vis-cta" id="cta" href="channels.html">
-      <span id="cta-label">Explore the Shu points</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </div>
-
-  <button class="vis-chev vis-chev-left" id="prev" type="button" aria-label="Rotate left">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg>
-  </button>
-  <button class="vis-chev vis-chev-right" id="next" type="button" aria-label="Rotate right">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg>
-  </button>
-
-  <nav class="vis-nav" id="nav" aria-label="Choose an element"></nav>
-
-  <div class="vis-legend" role="group" aria-label="Show cycles">
-    <button type="button" class="vis-chip s" id="chip-sheng" aria-pressed="true">
-      <svg viewBox="0 0 26 12" aria-hidden="true"><path d="M2 10Q12 0 21.5 5"/><path d="M17.6 1.6L21.5 5l-3.6 3"/></svg>
-      <span><b lang="zh">生</b> Sheng · generates</span>
-    </button>
-    <button type="button" class="vis-chip k" id="chip-ke" aria-pressed="true">
-      <svg viewBox="0 0 26 12" aria-hidden="true"><path d="M2 6H20" stroke-dasharray=".1 4.2"/><path d="M17 2.4L21.5 6 17 9.6"/></svg>
-      <span><b lang="zh">克</b> Ke · controls</span>
-    </button>
-  </div>
-</section>
-
-<script>
+<!-- shell:start · generated from tools/shell-snippet.html by tools/sync-shell.py; edit there, not here -->
+<style data-shell>
+/* App shell: one header and one scene behind Elements, Channels and Points, which swap in place without a page load. */
+:root{--shu-nav-h:calc(51px + env(safe-area-inset-top,0px));--shu-w:1240px;--shu-pad:clamp(16px,3vw,40px)}
+html body{background:transparent}
+.shu-nav{position:fixed;inset:0 0 auto 0;z-index:400;height:var(--shu-nav-h);box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-left:max(var(--shu-pad),env(safe-area-inset-left,0px),calc((100% - var(--shu-w))/2 + var(--shu-pad)));
+  padding-right:max(var(--shu-pad),env(safe-area-inset-right,0px),calc((100% - var(--shu-w))/2 + var(--shu-pad)));
+  border-bottom:1px solid rgba(245,243,237,.09);background:rgba(13,16,29,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  font-family:"Jost",system-ui,sans-serif;view-transition-name:shu-nav;transition:background-color .3s ease,border-color .3s ease}
+.shu-nav[data-view="index"]{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.shu-nav .home{display:flex;align-items:baseline;gap:10px;color:#f5f3ed;text-decoration:none;min-width:0;flex:none}
+.shu-nav .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
+.shu-nav .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9ea8bd;white-space:nowrap}
+.shu-nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:3px;border-radius:999px;min-width:0;overflow-x:auto;scrollbar-width:none}
+.shu-nav ul::-webkit-scrollbar{display:none}
+.shu-nav[data-view="index"] ul{background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.shu-nav a.l{display:block;padding:8px 12px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:#9ea8bd;text-decoration:none;white-space:nowrap;transition:color .16s ease,background-color .16s ease}
+.shu-nav[data-view="index"] a.l{color:rgba(243,236,224,.74)}
+.shu-nav a.l:hover{color:#f5f3ed;background:rgba(245,243,237,.08)}
+.shu-nav a.l[aria-current="page"]{color:#0d101d;background:#f5f3ed;font-weight:600}
+.shu-nav a:focus-visible{outline:2px solid #f5f3ed;outline-offset:2px}
+@media (max-width:700px){.shu-nav{gap:8px}.shu-nav .home .t{display:none}.shu-nav a.l{padding:7px 8px;font-size:12.5px}}
+@media (max-width:380px){.shu-nav a.l{padding:7px 6px;font-size:12px;letter-spacing:0}}
+@media (max-width:340px){.shu-nav{gap:4px}.shu-nav a.l{padding:7px 4px;font-size:11.5px}}
+/* The scene on stage at the ring stays behind the other views as a glow under the header and title. */
+.shu-scene{position:fixed;inset:0;z-index:-1;background:#0d101d;overflow:hidden;pointer-events:none}
+.shu-scene i{position:absolute;inset:-40px -40px auto -40px;height:440px;background-size:cover;background-position:50% 64%;opacity:0;filter:blur(18px);transition:opacity .9s ease}
+.shu-scene i.on{opacity:1}
+.shu-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,16,29,.5) 0,rgba(13,16,29,.74) 110px,rgba(13,16,29,.94) 210px,#0d101d 310px)}
+.shu-nav[data-view="index"] + .shu-scene{visibility:hidden}
+/* Channels and Points sit under the fixed header on one shared measure. */
+.shu-scene ~ .wrap{max-width:var(--shu-w);padding-top:var(--shu-nav-h);padding-left:max(var(--shu-pad),env(safe-area-inset-left,0px));padding-right:max(var(--shu-pad),env(safe-area-inset-right,0px))}
+.shu-scene ~ .wrap .controls{top:var(--shu-nav-h)}
+.shu-scene ~ .wrap .colhead{top:calc(var(--shu-nav-h) - 1px)}
+.shu-scene ~ .cf .cf-in{max-width:var(--shu-w)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-group(shu-nav){z-index:10}
+@media (prefers-reduced-motion:reduce){.shu-scene i,.shu-nav{transition:none}}
+</style>
+<nav class="shu-nav" id="shu-nav" data-shell data-view="index" aria-label="Shu Atlas"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html" aria-current="page">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></nav>
+<div class="shu-scene" id="shu-scene" data-shell aria-hidden="true"><i></i><i></i></div>
+<script data-shell data-page="index">
 /* ---------- procedural scenes: one painted world per element ---------- */
 const SW = 1600, SH = 900;
 function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -453,6 +397,213 @@ function renderScene(key,seed){
   return cv.toDataURL('image/jpeg',.86);
 }
 
+/* ---------- app shell: Elements, Channels and Points as views of one document ---------- */
+window.ShuAtlas=window.ShuAtlas||(function(){
+'use strict';
+var KEYS=['wood','fire','earth','metal','water'],APP={index:1,channels:1,points:1};
+var nav=document.getElementById('shu-nav'),layers=document.querySelectorAll('#shu-scene i');
+var current=document.currentScript.getAttribute('data-page'),views={},pending={},urls={},element='',top=0;
+var live=/^https?:$/.test(location.protocol)&&!!(window.fetch&&window.DOMParser&&history.pushState);
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* scenes are painted once per element and shared by the ring and the backdrop */
+function scene(key){return urls[key]||(urls[key]=renderScene(key,101+KEYS.indexOf(key)*37))}
+function showScene(){
+  if(!element||current==='index')return;
+  var next=layers[top^1],url='url('+scene(element)+')';
+  if(layers[top].style.backgroundImage===url){layers[top].classList.add('on');return}
+  next.style.backgroundImage=url;next.classList.add('on');layers[top].classList.remove('on');top^=1;
+}
+function setElement(key){
+  if(KEYS.indexOf(key)<0||key===element)return;
+  element=key;try{sessionStorage.setItem('shu-el',key)}catch(e){}
+  showScene();
+}
+
+function keyOf(href){
+  var u;try{u=new URL(href,location.href)}catch(e){return null}
+  var dir=function(p){return p.slice(0,p.lastIndexOf('/')+1)};
+  if(u.origin!==location.origin||dir(u.pathname)!==dir(location.pathname))return null;
+  var f=u.pathname.slice(u.pathname.lastIndexOf('/')+1).replace(/\.html$/,'')||'index';
+  return APP[f]?f:null;
+}
+function isShell(n){return n.nodeType===1&&n.hasAttribute('data-shell')}
+function stylesIn(root){return [].slice.call(root.querySelectorAll('style:not([data-shell])'))}
+function themeOf(doc){var m=doc.querySelector('meta[name="theme-color"]');return m?m.getAttribute('content'):''}
+
+/* the page the visitor landed on becomes the first view */
+function adopt(){
+  views[current]={key:current,title:document.title,theme:themeOf(document),sheets:stylesIn(document),started:true,scroll:0,scripts:[],
+    nodes:[].filter.call(document.body.childNodes,function(n){return !isShell(n)&&n.nodeName!=='SCRIPT'&&n.nodeName!=='STYLE'&&n.nodeName!=='LINK'})};
+}
+/* every other view is fetched once, then kept alive: its filters, search and scroll survive a round trip */
+function load(key){
+  if(views[key])return Promise.resolve(views[key]);
+  return pending[key]||(pending[key]=fetch(key+'.html',{credentials:'same-origin'}).then(function(r){
+    if(!r.ok)throw new Error(r.status);return r.text();
+  }).then(function(html){
+    var doc=new DOMParser().parseFromString(html,'text/html');
+    [].forEach.call(doc.querySelectorAll('[data-shell]'),function(n){n.remove()});
+    /* font links are shared by every view and stay on; a view's own styles are switched with it */
+    var have={};[].forEach.call(document.querySelectorAll('link[rel="stylesheet"]'),function(l){have[l.href]=1});
+    [].forEach.call(doc.querySelectorAll('link[rel="stylesheet"]'),function(l){
+      l.remove();if(!have[l.href]){have[l.href]=1;document.head.appendChild(document.importNode(l,true))}
+    });
+    var sheets=stylesIn(doc).map(function(s){s.remove();return document.importNode(s,true)});
+    var scripts=[].map.call(doc.querySelectorAll('script'),function(s){s.remove();return s.textContent});
+    var nodes=[].map.call(doc.body.childNodes,function(n){return document.importNode(n,true)});
+    return views[key]={key:key,title:doc.title,theme:themeOf(doc),sheets:sheets,scripts:scripts,nodes:nodes,started:false,scroll:0};
+  }).catch(function(e){delete pending[key];throw e}));
+}
+function swap(view){
+  var old=views[current],bin=document.createDocumentFragment();
+  old.scroll=window.scrollY;
+  old.nodes.forEach(function(n){bin.appendChild(n)});
+  old.sheets.forEach(function(s){s.media='not all'});
+  view.sheets.forEach(function(s){s.media='all';if(!s.isConnected)document.head.appendChild(s)});
+  view.nodes.forEach(function(n){document.body.appendChild(n)});
+  current=view.key;mark();
+  document.title=view.title;
+  var m=document.querySelector('meta[name="theme-color"]');if(m&&view.theme)m.setAttribute('content',view.theme);
+  if(!view.started){
+    view.started=true;
+    view.scripts.forEach(function(code){var s=document.createElement('script');s.textContent=code;document.body.appendChild(s)});
+  }
+  window.scrollTo(0,view.scroll);
+  showScene();
+}
+function mark(){
+  nav.setAttribute('data-view',current);
+  [].forEach.call(nav.querySelectorAll('a.l'),function(a){
+    if(keyOf(a.href)===current)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  });
+}
+function show(key,href,push){
+  return load(key).then(function(view){
+    var go=function(){
+      if(push)history.pushState({shu:key},'',href);
+      if(key!==current)swap(view);
+      /* a kept-alive view reads its filter from the address the same way a fresh load does */
+      window.dispatchEvent(new Event('hashchange'));
+    };
+    if(key!==current&&document.startViewTransition&&!reduced)document.startViewTransition(go);else go();
+  });
+}
+function onClick(e){
+  if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  var a=e.target.closest&&e.target.closest('a[href]');
+  if(!a||a.target||a.hasAttribute('download'))return;
+  var key=keyOf(a.href);if(!key)return;
+  if(key===current){
+    if(a.href===location.href){e.preventDefault();window.scrollTo({top:0,behavior:reduced?'auto':'smooth'})}
+    else if(new URL(a.href).hash)return;      /* an in-page filter link: the browser handles it */
+    else{e.preventDefault();history.pushState({shu:key},'',a.href);window.dispatchEvent(new Event('hashchange'))}
+    return;
+  }
+  e.preventDefault();
+  var href=a.href;
+  show(key,href,true).catch(function(){location.href=href});
+}
+function start(){
+  adopt();mark();
+  try{var saved=sessionStorage.getItem('shu-el')}catch(e){}
+  var hash=location.hash.slice(1);
+  setElement(KEYS.indexOf(hash)>=0?hash:saved||'wood');
+  if(!live)return;
+  document.addEventListener('click',onClick);
+  window.addEventListener('popstate',function(){
+    var key=keyOf(location.href);
+    if(key&&key!==current)show(key,location.href,false).catch(function(){location.reload()});
+  });
+  /* warm the other two views once the first one has settled */
+  var idle=window.requestIdleCallback||function(f){return setTimeout(f,900)};
+  window.addEventListener('load',function(){idle(function(){
+    Object.keys(APP).forEach(function(k){if(k!==current)load(k).catch(function(){})});
+  })});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+return {scene:scene,setElement:setElement,view:function(){return current},element:function(){return element}};
+})();
+</script>
+<!-- shell:end -->
+<section class="vis-root" id="vis" aria-label="The five elements of Chinese medicine">
+  <div class="vis-bgwrap" id="bgwrap" aria-hidden="true"></div>
+  <div class="vis-vignette" aria-hidden="true"></div>
+  <div class="vis-glow" id="glow" aria-hidden="true"></div>
+
+  <svg class="vis-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="vis-glass" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feImage id="vg-map" x="0" y="0" width="150" height="150" preserveAspectRatio="none" result="map"/>
+        <feDisplacementMap id="vg-r" in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" result="dR"/>
+        <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="cR"/>
+        <feDisplacementMap id="vg-g" in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" result="dG"/>
+        <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="cG"/>
+        <feDisplacementMap id="vg-b" in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" result="dB"/>
+        <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="cB"/>
+        <feBlend in="cR" in2="cG" mode="screen" result="rg"/>
+        <feBlend in="rg" in2="cB" mode="screen"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <svg class="vis-cycles" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="ke-fade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="100">
+        <stop offset="0" stop-color="#000"/><stop offset=".42" stop-color="#000"/><stop offset=".8" stop-color="#fff"/>
+      </radialGradient>
+      <mask id="ke-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#ke-fade)"/>
+      </mask>
+    </defs>
+    <g id="cyc" style="opacity:0">
+      <g id="yy" transform="translate(0 0)">
+        <g id="yy-spin">
+          <path class="yy-yin"  d="M0 -100A100 100 0 0 0 0 100A50 50 0 0 0 0 0A50 50 0 0 1 0 -100Z"/>
+          <path class="yy-yang" d="M0 -100A100 100 0 0 1 0 100A50 50 0 0 0 0 0A50 50 0 0 1 0 -100Z"/>
+          <circle class="yy-dot-yang" cx="0" cy="50"  r="12"/>
+          <circle class="yy-dot-yin"  cx="0" cy="-50" r="12"/>
+          <circle class="yy-ring" cx="0" cy="0" r="100"/>
+        </g>
+      </g>
+      <g id="g-sheng"></g><g id="g-ke" mask="url(#ke-mask)"></g>
+    </g>
+  </svg>
+
+  <div class="vis-orbit" id="orbit"></div>
+
+  <div class="vis-rel" id="rel" aria-hidden="true"></div>
+
+  <div class="vis-title">
+    <div class="vis-title-inner first" id="tin" aria-live="polite"></div>
+    <a class="vis-cta" id="cta" href="channels.html">
+      <span id="cta-label">Explore the Shu points</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <button class="vis-chev vis-chev-left" id="prev" type="button" aria-label="Rotate left">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg>
+  </button>
+  <button class="vis-chev vis-chev-right" id="next" type="button" aria-label="Rotate right">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg>
+  </button>
+
+  <nav class="vis-nav" id="nav" aria-label="Choose an element"></nav>
+
+  <div class="vis-legend" role="group" aria-label="Show cycles">
+    <button type="button" class="vis-chip s" id="chip-sheng" aria-pressed="true">
+      <svg viewBox="0 0 26 12" aria-hidden="true"><path d="M2 10Q12 0 21.5 5"/><path d="M17.6 1.6L21.5 5l-3.6 3"/></svg>
+      <span><b lang="zh">生</b> Sheng · generates</span>
+    </button>
+    <button type="button" class="vis-chip k" id="chip-ke" aria-pressed="true">
+      <svg viewBox="0 0 26 12" aria-hidden="true"><path d="M2 6H20" stroke-dasharray=".1 4.2"/><path d="M17 2.4L21.5 6 17 9.6"/></svg>
+      <span><b lang="zh">克</b> Ke · controls</span>
+    </button>
+  </div>
+</section>
+
+<script>
 /* ---------- the ring ---------- */
 (()=>{
 'use strict';
@@ -484,7 +635,7 @@ if(native)root.classList.add('native');
 /* ----- build scenes, discs, nav ----- */
 const bgs=[],meds=[],thumbs=[],rims=[],navBtns=[];
 EL.forEach((e,i)=>{
-  const url=renderScene(e.key,101+i*37);
+  const url=ShuAtlas.scene(e.key);
   const bg=document.createElement('div');bg.className='vis-bg';bg.style.backgroundImage=`url(${url})`;bg.style.visibility='hidden';
   bgwrap.appendChild(bg);bgs.push(bg);
 
@@ -633,7 +784,7 @@ function renderTitle(i,first){
     `<dl class="vis-meta"><div><dt>Channels</dt><dd>${ELCH[e.title].map(a=>`<a href="${FILE[a]}">${NAME[a]}</a>`).join('<span class="sep">·</span>')}</dd></div>`+
     ELCH[e.title].map(a=>`<div><dt>${NAME[a]} · horary</dt><dd><a href="${FILE[a]}#${HOR[a][0]}">${HOR[a][0]} · ${HOR[a][1]}</a></dd></div>`).join('')+
     `</dl>`;
-  cta.href='channels.html#'+e.key;
+  cta.href='channels.html#'+e.key;ShuAtlas.setElement(e.key);
   document.getElementById('cta-label').textContent='Explore the '+e.title+' channels';
   renderRel(i);setHL(i);
   navBtns.forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));
@@ -642,6 +793,8 @@ function renderTitle(i,first){
 /* ----- one clock for everything ----- */
 let lastAcc='',lastFilt=[];
 function frame(t){
+  /* parked while another view is on screen */
+  if(!root.isConnected){hover=false;tween=null;lastAdvance=performance.now();setTimeout(()=>requestAnimationFrame(frame),200);return}
   if(!t00)t00=t;
   if(tween){
     const dur=reduced?1:K.STEP_MS,k=(t-tween.t0)/dur;
@@ -781,7 +934,7 @@ chipK.addEventListener('click',()=>{markInput();toggleCycle('ke')});
 /* patient auto-rotate: ~3.6s per element, quiet for ~4.4s after you touch it */
 new IntersectionObserver(es=>{inView=es[0].isIntersecting}).observe(root);
 setInterval(()=>{
-  if(reduced||!entered||!inView||document.hidden||dragging||tween)return;
+  if(reduced||!entered||!inView||!root.isConnected||document.hidden||dragging||tween)return;
   const now=performance.now();
   if(now-lastInput<K.IDLE||now-lastAdvance<K.AUTO)return;
   step(1);

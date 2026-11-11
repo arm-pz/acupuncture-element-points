@@ -1,4 +1,6 @@
+import os
 import sys
+import tempfile
 import time
 import pathlib
 from playwright.sync_api import sync_playwright
@@ -10,7 +12,8 @@ if sys.stdout.encoding.lower() != 'utf-8':
         pass
 
 BASE_URL = sys.argv[1] if len(sys.argv) > 1 else "https://acu.caffeinity.com"
-SCREENSHOTS_DIR = pathlib.Path(r"C:\Users\abdul\.gemini\antigravity\brain\8aabb083-e170-4acf-84b2-0047221a9782\playwright-artifacts")
+# Screenshots go to $SHU_SHOTS when set, otherwise to a temp folder, so the suite runs on any machine.
+SCREENSHOTS_DIR = pathlib.Path(os.environ.get("SHU_SHOTS") or pathlib.Path(tempfile.gettempdir()) / "shu-atlas-playwright")
 SCREENSHOTS_DIR.mkdir(parents=True, exist_ok=True)
 
 test_results = []
@@ -355,7 +358,7 @@ def run_tests():
             assert chips.count() == 2, f"Expected 2 legend chips, got {chips.count()}"
 
             # 5. Nav links present
-            appnav_links = mob_home.locator(".vis-appnav a")
+            appnav_links = mob_home.locator("#shu-nav a.l")
             assert appnav_links.count() == 5, f"Expected 5 appnav links, got {appnav_links.count()}"
 
             mobile_context.close()
@@ -394,6 +397,88 @@ def run_tests():
             record("CV Hidden from Channels Directory", "PASS", "CV channel successfully hidden from Channels directory while primary 12 channels remain clean")
         except Exception as e:
             record("CV Hidden from Channels Directory", "FAIL", str(e))
+
+        # TEST 20: App shell - Elements, Channels and Points swap in place, with no page load
+        try:
+            app = context.new_page()
+            app.goto(f"{BASE_URL}/", wait_until="networkidle")
+            app.wait_for_timeout(3200)
+            app.evaluate("window.__boot = 1")
+            app.locator('#nav button[aria-label="Fire"]').click()
+            app.wait_for_timeout(1500)
+            app.locator("#cta").click()
+            app.wait_for_timeout(1200)
+            assert app.url.endswith("channels.html#fire"), f"Expected channels.html#fire, got {app.url}"
+            assert app.evaluate("window.__boot") == 1, "Explore reloaded the page"
+            assert app.title().startswith("Channels"), f"Title not updated: {app.title()}"
+            fire = app.locator(".map .route:not([hidden])")
+            assert fire.count() == 4, f"Expected the 4 Fire channels, got {fire.count()}"
+            assert app.locator('#shu-nav a.l[aria-current="page"]').inner_text() == "Channels"
+            assert app.evaluate("ShuAtlas.element()") == "fire", "Scene did not follow the element"
+
+            app.locator('#shu-nav a.l[href="points.html"]').click()
+            app.wait_for_timeout(1000)
+            assert app.locator("#list li").count() == 65, "Points list not rendered in place"
+            app.locator("#q").fill("wrist")
+            app.wait_for_timeout(250)
+            kept = app.locator("#list li").count()
+            app.locator('#shu-nav a.l[href="channels.html"]').click()
+            app.wait_for_timeout(800)
+            assert app.locator(".map .route:not([hidden])").count() == 4, "Channels lost its Fire filter on return"
+            app.locator('#shu-nav a.l[href="points.html"]').click()
+            app.wait_for_timeout(800)
+            assert app.locator("#q").input_value() == "wrist", "Points lost its search on return"
+            assert app.locator("#list li").count() == kept, "Points lost its results on return"
+
+            app.locator('#shu-nav a.l[href="index.html"]').click()
+            app.wait_for_timeout(1200)
+            assert app.locator(".vis-med").count() == 5, "Ring missing after returning to Elements"
+            assert app.locator(".vis-title-name").inner_text() == "Fire", "Ring did not keep its element"
+            app.go_back()
+            app.wait_for_timeout(800)
+            assert app.evaluate("ShuAtlas.view()") == "points", "Back did not return to Points"
+            assert app.evaluate("window.__boot") == 1, "A page load happened inside the app"
+            app.close()
+            record("App Shell In-Place Views", "PASS", "Elements, Channels and Points swap with no reload; filter, search, ring and Back all hold")
+        except Exception as e:
+            record("App Shell In-Place Views", "FAIL", str(e))
+
+        # TEST 21: App shell - a deep link to any view boots the same app
+        try:
+            deep = context.new_page()
+            deep.goto(f"{BASE_URL}/points", wait_until="networkidle")
+            deep.evaluate("window.__boot = 1")
+            deep.locator('#shu-nav a.l[href="index.html"]').click()
+            deep.wait_for_timeout(3200)
+            assert deep.locator(".vis-med").count() == 5, "Ring did not mount from a Points deep link"
+            deep.locator("#cta").click()
+            deep.wait_for_timeout(1200)
+            assert deep.locator(".map .route").count() == 12, "Channels did not mount from the ring"
+            assert deep.evaluate("window.__boot") == 1, "A page load happened inside the app"
+            deep.close()
+            record("App Shell Deep Link", "PASS", "A /points deep link reaches the ring and Channels in place")
+        except Exception as e:
+            record("App Shell Deep Link", "FAIL", str(e))
+
+        # TEST 22: App shell - the header holds one position on every view, desktop and phone
+        try:
+            for size in ({"width": 1440, "height": 900}, {"width": 390, "height": 844}):
+                ctx = browser.new_context(viewport=size)
+                hp = ctx.new_page()
+                boxes = []
+                for route in ("/", "/channels", "/points"):
+                    hp.goto(f"{BASE_URL}{route}", wait_until="networkidle")
+                    nav = hp.locator("#shu-nav").bounding_box()
+                    first = hp.locator("#shu-nav a.l").first.bounding_box()
+                    brand = hp.locator("#shu-nav .home").bounding_box()
+                    boxes.append((round(nav["height"]), round(brand["x"]), round(first["x"]), round(first["y"])))
+                    wide = hp.evaluate("document.documentElement.scrollWidth > window.innerWidth")
+                    assert not wide, f"{route} scrolls sideways at {size['width']}px"
+                assert len(set(boxes)) == 1, f"Header moves between views at {size['width']}px: {boxes}"
+                ctx.close()
+            record("App Shell Fixed Header", "PASS", "Brand and tabs sit at the same position on Elements, Channels and Points")
+        except Exception as e:
+            record("App Shell Fixed Header", "FAIL", str(e))
 
         browser.close()
 
