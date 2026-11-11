@@ -9,7 +9,7 @@ import pathlib, re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SNIP = (ROOT / 'tools' / 'footer-snippet.html').read_text(encoding='utf-8').strip()
-PAGES = ['channels.html', 'points.html', 'learn.html', 'study.html', 'lung-meridian-chart.html'] + sorted(p.name for p in ROOT.glob('*-v4-meridian-chart.html'))
+PAGES = ['channels.html', 'points.html', 'learn.html', 'study.html'] + sorted(p.name for p in ROOT.glob('*meridian-chart.html'))
 BLOCK = re.compile(r'<!-- footer:start.*?<!-- footer:end -->', re.S)
 changed = 0
 for name in PAGES:

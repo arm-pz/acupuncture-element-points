@@ -1,79 +1,1566 @@
 {
- "_about": "Single source for the sixty Shu points. Edit here, then run: python3 tools/sync-points.py. Element per station must follow Yin Wood>Fire>Earth>Metal>Water and Yang Metal>Water>Wood>Fire>Earth; verify any change against a live reference first.",
- "channels": [
-  {"abbr": "LR", "key": "lr", "name": "Liver", "elem": "Wood", "yy": "Yin", "file": "lr-v4-meridian-chart.html"},
-  {"abbr": "GB", "key": "gb", "name": "Gallbladder", "elem": "Wood", "yy": "Yang", "file": "gb-v4-meridian-chart.html"},
-  {"abbr": "HT", "key": "ht", "name": "Heart", "elem": "Fire", "yy": "Yin", "file": "ht-v4-meridian-chart.html"},
-  {"abbr": "SI", "key": "si", "name": "Small Intestine", "elem": "Fire", "yy": "Yang", "file": "si-v4-meridian-chart.html"},
-  {"abbr": "PC", "key": "pc", "name": "Pericardium", "elem": "Fire", "yy": "Yin", "file": "pc-v4-meridian-chart.html"},
-  {"abbr": "TB", "key": "tb", "name": "Triple Burner", "elem": "Fire", "yy": "Yang", "file": "tb-v4-meridian-chart.html"},
-  {"abbr": "SP", "key": "sp", "name": "Spleen", "elem": "Earth", "yy": "Yin", "file": "sp-v4-meridian-chart.html"},
-  {"abbr": "ST", "key": "st", "name": "Stomach", "elem": "Earth", "yy": "Yang", "file": "st-v4-meridian-chart.html"},
-  {"abbr": "LU", "key": "lu", "name": "Lung", "elem": "Metal", "yy": "Yin", "file": "lung-meridian-chart.html"},
-  {"abbr": "LI", "key": "li", "name": "Large Intestine", "elem": "Metal", "yy": "Yang", "file": "li-v4-meridian-chart.html"},
-  {"abbr": "KI", "key": "ki", "name": "Kidney", "elem": "Water", "yy": "Yin", "file": "ki-v4-meridian-chart.html"},
-  {"abbr": "BL", "key": "bl", "name": "Bladder", "elem": "Water", "yy": "Yang", "file": "bl-v4-meridian-chart.html"}
- ],
- "points": [
-  {"code": "LR1", "ch": "LR", "rank": 0, "shu": "Jing-Well", "elem": "Wood", "py": "Dadun", "hz": "大敦", "en": "Large Pile", "note": "Jing-Well point", "loc": "On the big toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.", "cun": "0.1 cun from the lateral corner of the nail."},
-  {"code": "LR2", "ch": "LR", "rank": 1, "shu": "Ying-Spring", "elem": "Fire", "py": "Xingjian", "hz": "行间", "en": "Moving Between", "note": "Ying-Spring point", "loc": "On the dorsum of the foot, between the first and second toes, proximal to the web margin, at the border of the red and white skin.", "cun": "At the web margin between the 1st and 2nd toes; found by the landmark rather than a cun distance."},
-  {"code": "LR3", "ch": "LR", "rank": 2, "shu": "Shu-Stream", "elem": "Earth", "py": "Taichong", "hz": "太冲", "en": "Great Surge", "note": "Shu-Stream and Yuan-Source point", "loc": "On the dorsum of the foot, between the first and second metatarsal bones, in the depression distal to the junction of their bases.", "cun": "In the hollow where the 1st and 2nd metatarsal bases meet; found by the bones rather than a cun distance."},
-  {"code": "LR4", "ch": "LR", "rank": 3, "shu": "Jing-River", "elem": "Metal", "py": "Zhongfeng", "hz": "中封", "en": "Mound Centre", "note": "Jing-River point", "loc": "In front of the medial malleolus, in the depression medial to the tendon of tibialis anterior.", "cun": "In front of the medial malleolus, beside the tibialis anterior tendon."},
-  {"code": "LR8", "ch": "LR", "rank": 4, "shu": "He-Sea", "elem": "Water", "py": "Ququan", "hz": "曲泉", "en": "Spring at the Bend", "note": "He-Sea point", "loc": "With the knee flexed, at the medial end of the popliteal crease, in the depression in front of the tendons of semitendinosus and semimembranosus.", "cun": "At the medial end of the popliteal crease, knee flexed."},
-  {"code": "GB44", "ch": "GB", "rank": 0, "shu": "Jing-Well", "elem": "Metal", "py": "Zuqiaoyin", "hz": "足窍阴", "en": "Foot Portal Yin", "note": "Jing-Well point", "loc": "On the fourth toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.", "cun": "0.1 cun from the lateral corner of the nail."},
-  {"code": "GB43", "ch": "GB", "rank": 1, "shu": "Ying-Spring", "elem": "Water", "py": "Xiaxi", "hz": "侠溪", "en": "Clamped Stream", "note": "Ying-Spring point", "loc": "On the dorsum of the foot, between the fourth and fifth toes, proximal to the web margin, at the border of the red and white skin.", "cun": "At the web margin between the 4th and 5th toes; found by the landmark rather than a cun distance."},
-  {"code": "GB41", "ch": "GB", "rank": 2, "shu": "Shu-Stream", "elem": "Wood", "py": "Zulinqi", "hz": "足临泣", "en": "Foot Governor of Tears", "note": "Shu-Stream point", "loc": "On the dorsum of the foot, distal to the junction of the fourth and fifth metatarsal bases, in the depression lateral to the extensor digiti minimi tendon.", "cun": "Just distal to where the 4th and 5th metatarsal bases meet; found by the bones rather than a cun distance."},
-  {"code": "GB38", "ch": "GB", "rank": 3, "shu": "Jing-River", "elem": "Fire", "py": "Yangfu", "hz": "阳辅", "en": "Yang Support", "note": "Jing-River point", "loc": "On the lateral leg, 4 cun above the prominence of the lateral malleolus, anterior to the fibula.", "cun": "4 cun above the prominence of the lateral malleolus."},
-  {"code": "GB34", "ch": "GB", "rank": 4, "shu": "He-Sea", "elem": "Earth", "py": "Yanglingquan", "hz": "阳陵泉", "en": "Yang Mound Spring", "note": "He-Sea point", "loc": "On the lateral leg, in the depression in front of and below the head of the fibula.", "cun": "In the hollow in front of and below the head of the fibula."},
-  {"code": "HT9", "ch": "HT", "rank": 0, "shu": "Jing-Well", "elem": "Wood", "py": "Shaochong", "hz": "少冲", "en": "Lesser Surge", "note": "Jing-Well point", "loc": "On the little finger, radial to the distal phalanx, 0.1 cun from the radial corner of the nail.", "cun": "0.1 cun from the radial corner of the nail."},
-  {"code": "HT8", "ch": "HT", "rank": 1, "shu": "Ying-Spring", "elem": "Fire", "py": "Shaofu", "hz": "少府", "en": "Lesser Mansion", "note": "Ying-Spring point", "loc": "On the palm, between the fourth and fifth metacarpal bones, in the depression proximal to the fifth metacarpophalangeal joint, where the little finger tip rests in a loose fist.", "cun": "Where the little-finger tip rests in a loose fist; found by the landmark rather than a cun distance."},
-  {"code": "HT7", "ch": "HT", "rank": 2, "shu": "Shu-Stream", "elem": "Earth", "py": "Shenmen", "hz": "神门", "en": "Spirit Gate", "note": "Shu-Stream and Yuan-Source point", "loc": "At the ulnar end of the palmar wrist crease, on the radial side of the flexor carpi ulnaris tendon.", "cun": "At the palmar wrist crease, radial to the flexor carpi ulnaris tendon."},
-  {"code": "HT4", "ch": "HT", "rank": 3, "shu": "Jing-River", "elem": "Metal", "py": "Lingdao", "hz": "灵道", "en": "Spirit Path", "note": "Jing-River point", "loc": "1.5 cun proximal to the palmar wrist crease, on the radial side of the flexor carpi ulnaris tendon.", "cun": "1.5 cun proximal to the palmar wrist crease."},
-  {"code": "HT3", "ch": "HT", "rank": 4, "shu": "He-Sea", "elem": "Water", "py": "Shaohai", "hz": "少海", "en": "Lesser Sea", "note": "He-Sea point", "loc": "With the elbow flexed, midway between the medial end of the cubital crease and the medial epicondyle of the humerus.", "cun": "Midway between the medial end of the cubital crease and the medial epicondyle, elbow flexed."},
-  {"code": "SI1", "ch": "SI", "rank": 0, "shu": "Jing-Well", "elem": "Metal", "py": "Shaoze", "hz": "少泽", "en": "Lesser Marsh", "note": "Jing-Well point", "loc": "On the little finger, ulnar to the distal phalanx, 0.1 cun from the ulnar corner of the nail.", "cun": "0.1 cun from the ulnar corner of the nail."},
-  {"code": "SI2", "ch": "SI", "rank": 1, "shu": "Ying-Spring", "elem": "Water", "py": "Qiangu", "hz": "前谷", "en": "Front Valley", "note": "Ying-Spring point", "loc": "On the ulnar border of the little finger, in the depression distal to the fifth metacarpophalangeal joint, at the border of the red and white skin.", "cun": "Just distal to the 5th metacarpophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "SI3", "ch": "SI", "rank": 2, "shu": "Shu-Stream", "elem": "Wood", "py": "Houxi", "hz": "后溪", "en": "Back Ravine", "note": "Shu-Stream point; opening point of the Du Mai", "loc": "On the ulnar border of the hand, in the depression proximal to the fifth metacarpophalangeal joint, at the border of the red and white skin.", "cun": "Just proximal to the 5th metacarpophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "SI5", "ch": "SI", "rank": 3, "shu": "Jing-River", "elem": "Fire", "py": "Yanggu", "hz": "阳谷", "en": "Yang Valley", "note": "Jing-River point", "loc": "On the ulnar side of the wrist, in the depression between the styloid process of the ulna and the triquetrum.", "cun": "At the wrist, between the ulnar styloid process and the triquetrum."},
-  {"code": "SI8", "ch": "SI", "rank": 4, "shu": "He-Sea", "elem": "Earth", "py": "Xiaohai", "hz": "小海", "en": "Small Sea", "note": "He-Sea point", "loc": "With the elbow flexed, in the depression between the olecranon and the medial epicondyle of the humerus.", "cun": "Between the olecranon and the medial epicondyle, elbow flexed."},
-  {"code": "PC9", "ch": "PC", "rank": 0, "shu": "Jing-Well", "elem": "Wood", "py": "Zhongchong", "hz": "中冲", "en": "Central Hub", "note": "Jing-Well point", "loc": "At the centre of the tip of the middle finger.", "cun": "At the centre of the middle-finger tip; no cun distance."},
-  {"code": "PC8", "ch": "PC", "rank": 1, "shu": "Ying-Spring", "elem": "Fire", "py": "Laogong", "hz": "劳宫", "en": "Palace of Toil", "note": "Ying-Spring point", "loc": "On the palm, between the second and third metacarpal bones, proximal to the metacarpophalangeal joints, where the middle finger tip rests in a loose fist.", "cun": "Where the middle-finger tip rests in a loose fist; found by the landmark rather than a cun distance."},
-  {"code": "PC7", "ch": "PC", "rank": 2, "shu": "Shu-Stream", "elem": "Earth", "py": "Daling", "hz": "大陵", "en": "Great Mound", "note": "Shu-Stream and Yuan-Source point", "loc": "At the midpoint of the palmar wrist crease, between the tendons of palmaris longus and flexor carpi radialis.", "cun": "At the midpoint of the palmar wrist crease."},
-  {"code": "PC5", "ch": "PC", "rank": 3, "shu": "Jing-River", "elem": "Metal", "py": "Jianshi", "hz": "间使", "en": "Intermediary Courier", "note": "Jing-River point", "loc": "3 cun proximal to the palmar wrist crease, between the tendons of palmaris longus and flexor carpi radialis.", "cun": "3 cun proximal to the palmar wrist crease."},
-  {"code": "PC3", "ch": "PC", "rank": 4, "shu": "He-Sea", "elem": "Water", "py": "Quze", "hz": "曲泽", "en": "Marsh at the Bend", "note": "He-Sea point", "loc": "On the cubital crease, in the depression on the ulnar side of the biceps brachii tendon.", "cun": "At the cubital crease, ulnar to the biceps tendon."},
-  {"code": "TB1", "ch": "TB", "rank": 0, "shu": "Jing-Well", "elem": "Metal", "py": "Guanchong", "hz": "关冲", "en": "Passage Hub", "note": "Jing-Well point", "loc": "On the ring finger, ulnar to the distal phalanx, 0.1 cun from the ulnar corner of the nail.", "cun": "0.1 cun from the ulnar corner of the nail."},
-  {"code": "TB2", "ch": "TB", "rank": 1, "shu": "Ying-Spring", "elem": "Water", "py": "Yemen", "hz": "液门", "en": "Fluid Gate", "note": "Ying-Spring point", "loc": "On the dorsum of the hand, in the web between the ring and little fingers, at the border of the red and white skin.", "cun": "At the web margin between the ring and little fingers; found by the landmark rather than a cun distance."},
-  {"code": "TB3", "ch": "TB", "rank": 2, "shu": "Shu-Stream", "elem": "Wood", "py": "Zhongzhu", "hz": "中渚", "en": "Central Islet", "note": "Shu-Stream point", "loc": "On the dorsum of the hand, between the fourth and fifth metacarpal bones, in the depression proximal to the fourth metacarpophalangeal joint.", "cun": "Just proximal to the 4th metacarpophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "TB6", "ch": "TB", "rank": 3, "shu": "Jing-River", "elem": "Fire", "py": "Zhigou", "hz": "支沟", "en": "Branch Ditch", "note": "Jing-River point", "loc": "On the dorsal forearm, 3 cun proximal to the dorsal wrist crease, midway between the radius and the ulna.", "cun": "3 cun proximal to the dorsal wrist crease."},
-  {"code": "TB10", "ch": "TB", "rank": 4, "shu": "He-Sea", "elem": "Earth", "py": "Tianjing", "hz": "天井", "en": "Heavenly Well", "note": "He-Sea point", "loc": "With the elbow flexed, in the depression 1 cun proximal to the tip of the olecranon.", "cun": "1 cun proximal to the tip of the olecranon, elbow flexed."},
-  {"code": "SP1", "ch": "SP", "rank": 0, "shu": "Jing-Well", "elem": "Wood", "py": "Yinbai", "hz": "隐白", "en": "Hidden White", "note": "Jing-Well point", "loc": "On the big toe, medial to the distal phalanx, 0.1 cun from the medial corner of the nail.", "cun": "0.1 cun from the medial corner of the nail."},
-  {"code": "SP2", "ch": "SP", "rank": 1, "shu": "Ying-Spring", "elem": "Fire", "py": "Dadu", "hz": "大都", "en": "Great Metropolis", "note": "Ying-Spring point", "loc": "On the big toe, in the depression distal to the first metatarsophalangeal joint, at the border of the red and white skin.", "cun": "Just distal to the 1st metatarsophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "SP3", "ch": "SP", "rank": 2, "shu": "Shu-Stream", "elem": "Earth", "py": "Taibai", "hz": "太白", "en": "Supreme White", "note": "Shu-Stream and Yuan-Source point", "loc": "On the medial foot, in the depression proximal to the first metatarsophalangeal joint, at the border of the red and white skin.", "cun": "Just proximal to the 1st metatarsophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "SP5", "ch": "SP", "rank": 3, "shu": "Jing-River", "elem": "Metal", "py": "Shangqiu", "hz": "商丘", "en": "Shang Hill", "note": "Jing-River point", "loc": "In the depression anterior and inferior to the medial malleolus, midway between the navicular tuberosity and the tip of the medial malleolus.", "cun": "Midway between the navicular tuberosity and the tip of the medial malleolus."},
-  {"code": "SP9", "ch": "SP", "rank": 4, "shu": "He-Sea", "elem": "Water", "py": "Yinlingquan", "hz": "阴陵泉", "en": "Yin Mound Spring", "note": "He-Sea point", "loc": "On the medial leg, in the depression between the inferior border of the medial condyle of the tibia and the medial border of the tibia.", "cun": "Below the medial condyle of the tibia; found by the bone rather than a cun distance."},
-  {"code": "ST45", "ch": "ST", "rank": 0, "shu": "Jing-Well", "elem": "Metal", "py": "Lidui", "hz": "厉兑", "en": "Strict Exchange", "note": "Jing-Well point", "loc": "On the second toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.", "cun": "0.1 cun from the lateral corner of the nail."},
-  {"code": "ST44", "ch": "ST", "rank": 1, "shu": "Ying-Spring", "elem": "Water", "py": "Neiting", "hz": "内庭", "en": "Inner Court", "note": "Ying-Spring point", "loc": "On the dorsum of the foot, between the second and third toes, proximal to the web margin, at the border of the red and white skin.", "cun": "At the web margin between the 2nd and 3rd toes; found by the landmark rather than a cun distance."},
-  {"code": "ST43", "ch": "ST", "rank": 2, "shu": "Shu-Stream", "elem": "Wood", "py": "Xiangu", "hz": "陷谷", "en": "Sunken Valley", "note": "Shu-Stream point", "loc": "On the dorsum of the foot, between the second and third metatarsal bones, in the depression proximal to the second metatarsophalangeal joint.", "cun": "Just proximal to the 2nd metatarsophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "ST41", "ch": "ST", "rank": 3, "shu": "Jing-River", "elem": "Fire", "py": "Jiexi", "hz": "解溪", "en": "Ravine Divide", "note": "Jing-River point", "loc": "At the front of the ankle, in the depression at the midpoint of the ankle crease, between the tendons of extensor hallucis longus and extensor digitorum longus.", "cun": "At the midpoint of the ankle crease."},
-  {"code": "ST36", "ch": "ST", "rank": 4, "shu": "He-Sea", "elem": "Earth", "py": "Zusanli", "hz": "足三里", "en": "Leg Three Li", "note": "He-Sea point", "loc": "3 cun below ST35, one finger-breadth lateral to the anterior crest of the tibia.", "cun": "3 cun below ST35, one finger-breadth lateral to the tibial crest."},
-  {"code": "LU11", "ch": "LU", "rank": 0, "shu": "Jing-Well", "elem": "Wood", "py": "Shaoshang", "hz": "少商", "en": "Lesser Shang", "note": "Jing-Well point", "loc": "On the thumb, on the radial side, 0.1 cun posterior to the corner of the nail.", "cun": "0.1 cun from the radial corner of the nail."},
-  {"code": "LU10", "ch": "LU", "rank": 1, "shu": "Ying-Spring", "elem": "Fire", "py": "Yuji", "hz": "鱼际", "en": "Fish Border", "note": "Ying-Spring point", "loc": "On the palmar aspect, at the midpoint of the first metacarpal bone, at the edge of the thenar eminence.", "cun": "Midpoint of the 1st metacarpal; found by the bone rather than a cun distance."},
-  {"code": "LU9", "ch": "LU", "rank": 2, "shu": "Shu-Stream", "elem": "Earth", "py": "Taiyuan", "hz": "太渊", "en": "Great Abyss", "note": "Shu-Stream point and Yuan-Source point", "loc": "On the radial end of the wrist crease, in the depression lateral to the radial artery pulse.", "cun": "At the wrist crease, lateral to the radial artery."},
-  {"code": "LU8", "ch": "LU", "rank": 3, "shu": "Jing-River", "elem": "Metal", "py": "Jingqu", "hz": "经渠", "en": "Channel Ditch", "note": "Jing-River point", "loc": "On the radial side of the forearm, 1 cun above the wrist crease, in the depression between the radial styloid process and the radial artery.", "cun": "1 cun proximal to the wrist crease."},
-  {"code": "LU5", "ch": "LU", "rank": 4, "shu": "He-Sea", "elem": "Water", "py": "Chize", "hz": "尺泽", "en": "Cubit Marsh", "note": "He-Sea point", "loc": "In the elbow crease, in the depression at the radial (lateral) side of the biceps brachii tendon.", "cun": "At the cubital crease, radial to the biceps tendon."},
-  {"code": "LI1", "ch": "LI", "rank": 0, "shu": "Jing-Well", "elem": "Metal", "py": "Shangyang", "hz": "商阳", "en": "Shang Yang", "note": "Jing-Well point", "loc": "On the index finger, radial to the distal phalanx, 0.1 cun from the radial corner of the nail.", "cun": "0.1 cun from the radial corner of the nail."},
-  {"code": "LI2", "ch": "LI", "rank": 1, "shu": "Ying-Spring", "elem": "Water", "py": "Erjian", "hz": "二间", "en": "Second Interval", "note": "Ying-Spring point", "loc": "On the index finger, in the depression distal to the radial side of the second metacarpophalangeal joint, at the border of the red and white skin.", "cun": "Just distal to the 2nd metacarpophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "LI3", "ch": "LI", "rank": 2, "shu": "Shu-Stream", "elem": "Wood", "py": "Sanjian", "hz": "三间", "en": "Third Interval", "note": "Shu-Stream point", "loc": "On the dorsum of the hand, in the depression proximal to the radial side of the second metacarpophalangeal joint.", "cun": "Just proximal to the 2nd metacarpophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "LI5", "ch": "LI", "rank": 3, "shu": "Jing-River", "elem": "Fire", "py": "Yangxi", "hz": "阳溪", "en": "Yang Stream", "note": "Jing-River point", "loc": "On the radial side of the dorsal wrist crease, in the anatomical snuffbox, between the tendons of extensor pollicis brevis and longus.", "cun": "In the anatomical snuffbox at the wrist crease."},
-  {"code": "LI11", "ch": "LI", "rank": 4, "shu": "He-Sea", "elem": "Earth", "py": "Quchi", "hz": "曲池", "en": "Pool at the Bend", "note": "He-Sea point", "loc": "With the elbow flexed, at the lateral end of the transverse cubital crease, midway between LU5 and the lateral epicondyle of the humerus.", "cun": "At the lateral end of the cubital crease, elbow flexed."},
-  {"code": "KI1", "ch": "KI", "rank": 0, "shu": "Jing-Well", "elem": "Wood", "py": "Yongquan", "hz": "涌泉", "en": "Gushing Spring", "note": "Jing-Well point", "loc": "On the sole, in the deepest depression when the toes are curled, about one third of the way from the base of the second and third toes to the back of the heel.", "cun": "About a third of the way from the toes to the heel; found by the depression rather than a cun distance."},
-  {"code": "KI2", "ch": "KI", "rank": 1, "shu": "Ying-Spring", "elem": "Fire", "py": "Rangu", "hz": "然谷", "en": "Blazing Valley", "note": "Ying-Spring point", "loc": "On the medial border of the foot, below the tuberosity of the navicular bone, at the border of the red and white skin.", "cun": "Below the navicular tuberosity; found by the bone rather than a cun distance."},
-  {"code": "KI3", "ch": "KI", "rank": 2, "shu": "Shu-Stream", "elem": "Earth", "py": "Taixi", "hz": "太溪", "en": "Great Ravine", "note": "Shu-Stream and Yuan-Source point", "loc": "Behind the medial malleolus, in the depression between the tip of the medial malleolus and the calcaneal tendon.", "cun": "Between the tip of the medial malleolus and the calcaneal tendon."},
-  {"code": "KI7", "ch": "KI", "rank": 3, "shu": "Jing-River", "elem": "Metal", "py": "Fuliu", "hz": "复溜", "en": "Recover Flow", "note": "Jing-River point", "loc": "On the back of the inner leg, 2 cun above KI3, in front of the calcaneal tendon.", "cun": "2 cun above KI3, in front of the calcaneal tendon."},
-  {"code": "KI10", "ch": "KI", "rank": 4, "shu": "He-Sea", "elem": "Water", "py": "Yingu", "hz": "阴谷", "en": "Yin Valley", "note": "He-Sea point", "loc": "At the medial end of the popliteal crease, lateral to the semitendinosus tendon.", "cun": "At the medial end of the popliteal crease."},
-  {"code": "BL67", "ch": "BL", "rank": 0, "shu": "Jing-Well", "elem": "Metal", "py": "Zhiyin", "hz": "至阴", "en": "Reaching Yin", "note": "Jing-Well point", "loc": "On the little toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.", "cun": "0.1 cun from the lateral corner of the nail."},
-  {"code": "BL66", "ch": "BL", "rank": 1, "shu": "Ying-Spring", "elem": "Water", "py": "Zutonggu", "hz": "足通谷", "en": "Foot Valley Passage", "note": "Ying-Spring point", "loc": "On the lateral border of the foot, in the depression distal to the fifth metatarsophalangeal joint, at the border of the red and white skin.", "cun": "Just distal to the 5th metatarsophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "BL65", "ch": "BL", "rank": 2, "shu": "Shu-Stream", "elem": "Wood", "py": "Shugu", "hz": "束骨", "en": "Bundle Bone", "note": "Shu-Stream point", "loc": "On the lateral border of the foot, in the depression proximal to the fifth metatarsophalangeal joint, at the border of the red and white skin.", "cun": "Just proximal to the 5th metatarsophalangeal joint; found by the joint rather than a cun distance."},
-  {"code": "BL60", "ch": "BL", "rank": 3, "shu": "Jing-River", "elem": "Fire", "py": "Kunlun", "hz": "昆仑", "en": "Kunlun Mountains", "note": "Jing-River point", "loc": "Behind the lateral malleolus, in the depression between the tip of the lateral malleolus and the calcaneal tendon.", "cun": "Between the tip of the lateral malleolus and the calcaneal tendon."},
-  {"code": "BL40", "ch": "BL", "rank": 4, "shu": "He-Sea", "elem": "Earth", "py": "Weizhong", "hz": "委中", "en": "Bend Middle", "note": "He-Sea point", "loc": "At the midpoint of the popliteal crease.", "cun": "At the midpoint of the popliteal crease."}
- ]
+  "_about": "Single source for the sixty Shu points. Edit here, then run: python3 tools/sync-points.py. Element per station must follow Yin Wood>Fire>Earth>Metal>Water and Yang Metal>Water>Wood>Fire>Earth; verify any change against a live reference first.",
+  "channels": [
+    {
+      "abbr": "LR",
+      "key": "lr",
+      "name": "Liver",
+      "elem": "Wood",
+      "yy": "Yin",
+      "file": "lr-meridian-chart.html",
+      "pointsCount": 14,
+      "startPoint": "LR1 Dadun",
+      "startLoc": "Lateral side of the great toe, 0.1 cun posterior to the corner of the nail",
+      "endPoint": "LR14 Qimen",
+      "endLoc": "In the 6th intercostal space, on the mamillary line, 4 cun lateral to the anterior midline",
+      "course": "Foot → Chest (Centripetal Yin)",
+      "pathway": "Begins at the lateral/dorsal nail corner of the great toe (LR1), ascends the dorsum of the foot between the 1st and 2nd metatarsals (LR2, LR3 Taichong), passes 1 cun anterior to the medial malleolus (LR4 Zhongfeng), and ascends the medial lower leg along the medial border of the tibia. It crosses 8 cun above the medial malleolus behind the Spleen channel, passes the medial aspect of the knee crease (LR8 Ququan), and ascends the medial thigh to the groin. It encircles the external genitalia, enters the lower abdomen, ascends parallel to the Stomach channel, and connects internally with the Liver and Gallbladder. Penetrating the diaphragm, it spreads across the costal and hypochondriac region, terminating superficially at the 6th intercostal space at LR14 Qimen. An internal branch ascends along the esophagus and posterior pharynx to connect with the eye tissues, forehead, and vertex at GV20 Baihui. Another internal branch separates from the liver, crosses the diaphragm, and enters the lungs to connect with LU1, completing the continuous 12-channel cycle.",
+      "organs": [
+        "Liver",
+        "Gallbladder",
+        "Lung",
+        "Stomach"
+      ],
+      "startDetails": {
+        "code": "LR1",
+        "py": "Dadun",
+        "hz": "大敦",
+        "en": "Large Pile",
+        "landmark": "Lateral Nail Angle · Great Toe",
+        "loc": "On the lateral side of the great toe, 0.1 cun posterior to the corner of the nail."
+      },
+      "endDetails": {
+        "code": "LR14",
+        "py": "Qimen",
+        "hz": "期門",
+        "en": "Cycle Gate",
+        "landmark": "6th Intercostal Space · Mamillary Line",
+        "loc": "In the 6th intercostal space, on the mamillary line, 4 cun lateral to the anterior midline.",
+        "handoff": "Internal branch crosses diaphragm into Lungs (LU1) to restart 12-channel cycle"
+      },
+      "tide": "01:00 – 03:00 · Chou Hour (丑時)",
+      "organAffinities": {
+        "primary": "Liver (肝 · Zang)",
+        "paired": "Gallbladder (膽 · Fu)",
+        "tissues": "Tendons · Ligaments · Eyes · Nails · External Genitalia · Hypochondrium"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Great Toe Dorsum & Pre-Malleolar Ascent",
+          "desc": "Begins at the lateral/dorsal nail angle of the great toe at LR1 Dadun, ascends the dorsum of the foot between the 1st and 2nd metatarsals through LR2 and LR3 Taichong (Yuan-Source), and passes 1 cun anterior to the medial malleolus at LR4 Zhongfeng."
+        },
+        {
+          "num": "02",
+          "title": "Tibial Decussation, Medial Knee & Groin",
+          "desc": "Ascends the medial margin of the lower leg along the tibia, crosses behind the Spleen channel 8 cun above the ankle, passes the medial end of the popliteal crease at LR8 Ququan, and courses up the medial thigh adductor canal to the pubic crest."
+        },
+        {
+          "num": "03",
+          "title": "Genital Encircling & Hypochondriac Terminus",
+          "desc": "Curves in a complete ring around the external genitalia, enters the lower abdomen, climbs parallel to the stomach, penetrates the Liver and Gallbladder, and arches through the diaphragm to spread over the costal margin, terminating superficially at LR14 Qimen in the 6th intercostal space."
+        },
+        {
+          "num": "04",
+          "title": "Cephalic Vertex Ascent & Pulmonary Handoff",
+          "desc": "A deep internal branch ascends through the throat and retro-ocular tissues to reach the vertex of the head at GV20 Baihui. Another internal vessel separates from the Liver, penetrates the diaphragm, and enters the Lungs to connect with LU1 Zhongfu, closing the continuous 12-meridian macro-circulation."
+        }
+      ]
+    },
+    {
+      "abbr": "GB",
+      "key": "gb",
+      "name": "Gallbladder",
+      "elem": "Wood",
+      "yy": "Yang",
+      "file": "gb-meridian-chart.html",
+      "pointsCount": 44,
+      "startPoint": "GB1 Tongziliao",
+      "startLoc": "In the depression 0.5 cun lateral to the outer canthus of the eye",
+      "endPoint": "GB44 Zuqiaoyin",
+      "endLoc": "Lateral side of the 4th toe, 0.1 cun posterior to the corner of the nail",
+      "course": "Face → Foot (Centrifugal Yang)",
+      "pathway": "Begins at the outer canthus of the eye (GB1), ascends to the temporal hairline, zig-zags across the temporal region, loops behind the ear to the occiput at GB20 Fengchi, curves back over the scalp to the forehead above the pupil (GB14), then sweeps back over the head to the crest of the shoulder (GB21 Jianjing). It enters the supraclavicular fossa (ST12), where internal branches descend through the chest to connect with the Liver and Gallbladder. The external branch descends down the lateral axillary line and ribcage (GB24, GB25), loops across the pelvis to the greater trochanter of the femur (GB30 Huantiao). It descends the lateral aspect of the thigh and knee, down the anterior margin of the fibula (GB34 Yanglingquan), passes anterior-inferior to the lateral malleolus (GB40 Qiuxu), traverses the dorsum of the foot between the 4th and 5th metatarsals (GB41 Zulinqi), and terminates at the lateral nail corner of the 4th toe at GB44 Zuqiaoyin. An internal foot branch separates at GB41 and runs to the great toe to link with LR1.",
+      "organs": [
+        "Gallbladder",
+        "Liver"
+      ],
+      "startDetails": {
+        "code": "GB1",
+        "py": "Tongziliao",
+        "hz": "瞳子髎",
+        "en": "Pupil Bone Hole",
+        "landmark": "Outer Canthus · Lateral Orbital Rim",
+        "loc": "In the depression 0.5 cun lateral to the outer canthus of the eye."
+      },
+      "endDetails": {
+        "code": "GB44",
+        "py": "Zuqiaoyin",
+        "hz": "足竅陰",
+        "en": "Foot Portal Yin",
+        "landmark": "Lateral Nail Angle · 4th Toe",
+        "loc": "Lateral side of the fourth toe, 0.1 cun posterior to the corner of the nail.",
+        "handoff": "Internal foot branch leaves GB41 to connect with LR1 Dadun (Great Toe)"
+      },
+      "tide": "23:00 – 01:00 · Zi Hour (子時)",
+      "organAffinities": {
+        "primary": "Gallbladder (膽 · Fu)",
+        "paired": "Liver (肝 · Zang)",
+        "tissues": "Tendons · Sinews · Eyes · Temporal Region · Hips · Flanks"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Cranial Triple-Loop & Suboccipital Base",
+          "desc": "Originates at the outer eye canthus at GB1 Tongziliao, ascends to the temporal hairline, zig-zags across the temple, loops behind the ear to the suboccipital skull at GB20 Fengchi, curves back over the frontal scalp above the pupil (GB14), and sweeps over the shoulder crest at GB21 Jianjing."
+        },
+        {
+          "num": "02",
+          "title": "Supraclavicular Entry, Lateral Ribcage & Hip Joint",
+          "desc": "Dips into the supraclavicular fossa (ST12) sending deep vessels to link with Liver and Gallbladder; the superficial branch descends the mid-axillary line, zig-zags across the hypochondriac ribs (GB24, GB25), and loops over the greater trochanter at GB30 Huantiao."
+        },
+        {
+          "num": "03",
+          "title": "Lateral Thigh, Fibular Crest & Lateral Malleolus",
+          "desc": "Descends the iliotibial band of the lateral thigh, crosses the lateral knee crease, runs down the anterior margin of the fibula through GB34 Yanglingquan, and passes anterior-inferior to the lateral malleolus at GB40 Qiuxu."
+        },
+        {
+          "num": "04",
+          "title": "4th Metatarsal Interspace to 4th Toe Terminus",
+          "desc": "Traverses the dorsum of the foot between the 4th and 5th metatarsal bones at GB41 Zulinqi, terminating at the lateral nail corner of the 4th toe at GB44 Zuqiaoyin. An internal collateral branches from GB41 and travels to the great toe nail to link with LR1 Dadun."
+        }
+      ]
+    },
+    {
+      "abbr": "HT",
+      "key": "ht",
+      "name": "Heart",
+      "elem": "Fire",
+      "yy": "Yin",
+      "file": "ht-meridian-chart.html",
+      "pointsCount": 9,
+      "startPoint": "HT1 Jiquan",
+      "startLoc": "In the center of the axillary fossa, on the medial side of the axillary artery",
+      "endPoint": "HT9 Shaochong",
+      "endLoc": "Radial side of the little finger, 0.1 cun posterior to the corner of the nail",
+      "course": "Chest → Hand (Centrifugal Yin)",
+      "pathway": "Originates deep within the Heart, descends through the diaphragm to connect with the Small Intestine. An ascending internal branch travels alongside the esophagus to the eye and brain. The main somatic branch traverses the lungs and emerges in the axilla at HT1. It descends the postero-medial border of the upper arm (medial to the biceps), passes the medial end of the cubital crease at the elbow (HT3 Shaohai), descends the anterior-medial forearm along the radial side of tendon flexor carpi ulnaris to the pisiform bone and wrist crease (HT7 Shenmen). It then crosses the hypothenar eminence of the palm (HT8) and terminates at the radial nail corner of the little finger at HT9 Shaochong, connecting directly with SI1.",
+      "organs": [
+        "Heart",
+        "Small Intestine",
+        "Lung"
+      ],
+      "startDetails": {
+        "code": "HT1",
+        "py": "Jiquan",
+        "hz": "極泉",
+        "en": "Highest Spring",
+        "landmark": "Axillary Fossa Apex · Axillary Artery",
+        "loc": "In the center of the axillary fossa, on the medial side of the axillary artery."
+      },
+      "endDetails": {
+        "code": "HT9",
+        "py": "Shaochong",
+        "hz": "少衝",
+        "en": "Lesser Surge",
+        "landmark": "Radial Nail Angle · Little Finger",
+        "loc": "Radial side of the little finger, 0.1 cun posterior to the corner of the nail.",
+        "handoff": "Immediate surface link to SI1 Shaoze at little finger"
+      },
+      "tide": "11:00 – 13:00 · Wu Hour (午時)",
+      "organAffinities": {
+        "primary": "Heart (心 · Zang)",
+        "paired": "Small Intestine (小腸 · Fu)",
+        "tissues": "Blood Vessels · Tongue · Complexion · Shen (Mind)"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Cardiocentric Origin & Deep Visceral Branches",
+          "desc": "Originates deep within the Heart, descends through the diaphragm to communicate with the Small Intestine; an ascending visceral branch travels up alongside the esophagus to connect with the ocular system, optic nerve, and brain."
+        },
+        {
+          "num": "02",
+          "title": "Pulmonary Traversal & Axillary Emergence",
+          "desc": "The main superficial trunk travels across the lung tissues and bursts forth in the center of the armpit at HT1 Jiquan, descending along the postero-medial aspect of the upper arm medial to the biceps muscle."
+        },
+        {
+          "num": "03",
+          "title": "Cubital Crease to Pisiform Bone",
+          "desc": "Passes the medial epicondyle of the humerus at HT3 Shaohai, descends the anterior-medial forearm along the radial side of the flexor carpi ulnaris tendon, and reaches the pisiform bone and wrist crease at HT7 Shenmen (Yuan-Source)."
+        },
+        {
+          "num": "04",
+          "title": "Hypothenar Palm to Little Fingertip",
+          "desc": "Crosses the hypothenar eminence between the 4th and 5th metacarpal bones at HT8 Shaofu, and terminates at the radial nail corner of the little finger at HT9 Shaochong (Jing-Well), linking directly with SI1 Shaoze on the ulnar side."
+        }
+      ]
+    },
+    {
+      "abbr": "SI",
+      "key": "si",
+      "name": "Small Intestine",
+      "elem": "Fire",
+      "yy": "Yang",
+      "file": "si-meridian-chart.html",
+      "pointsCount": 19,
+      "startPoint": "SI1 Shaoze",
+      "startLoc": "Ulnar side of the little finger, 0.1 cun posterior to the corner of the nail",
+      "endPoint": "SI19 Tinggong",
+      "endLoc": "In the depression anterior to the tragus and posterior to the mandibular joint condyle",
+      "course": "Hand → Face (Centripetal Yang)",
+      "pathway": "Begins at the ulnar corner of the little fingernail (SI1), travels along the ulnar border of the hand (SI3 Houxi) and wrist (SI5), ascends the posterior-ulnar border of the forearm, and passes between the olecranon process and medial epicondyle of the humerus at the elbow (SI8 Xiaohai). It ascends the posterior upper arm to the shoulder joint, zig-zags across the infraspinous and supraspinous fossae of the scapula (SI9-SI13), meets the midline at the lower cervical spine (GV14 Dazhui), and curves forward over the shoulder into the supraclavicular fossa (ST12). An internal branch plunges downward to connect with the Heart, descends through the diaphragm to the Stomach, and enters the Small Intestine. The ascending superficial branch rises along the lateral neck (SI16, SI17), crosses the cheek to the outer canthus of the eye (linking to BL1), and enters the auditory canal, terminating in front of the tragus at SI19 Tinggong.",
+      "organs": [
+        "Small Intestine",
+        "Heart",
+        "Stomach"
+      ],
+      "startDetails": {
+        "code": "SI1",
+        "py": "Shaoze",
+        "hz": "少澤",
+        "en": "Lesser Marsh",
+        "landmark": "Ulnar Nail Angle · Little Finger",
+        "loc": "On the ulnar side of the little finger, 0.1 cun posterior to the corner of the nail."
+      },
+      "endDetails": {
+        "code": "SI19",
+        "py": "Tinggong",
+        "hz": "聽宮",
+        "en": "Palace of Hearing",
+        "landmark": "Preauricular Depression · Tragus",
+        "loc": "In the depression anterior to the tragus and posterior to the mandibular condyle.",
+        "handoff": "Facial branch links with BL1 Jingming at inner canthus"
+      },
+      "tide": "13:00 – 15:00 · Wei Hour (未時)",
+      "organAffinities": {
+        "primary": "Small Intestine (小腸 · Fu)",
+        "paired": "Heart (心 · Zang)",
+        "tissues": "Ears · Scapular Region · Upper Back · Lower Abdomen"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Digital Ulnar Ascent & Metacarpal Border",
+          "desc": "Begins at the ulnar nail angle of the little finger at SI1 Shaoze, courses along the ulnar margin of the hand past the 5th metacarpal head at SI3 Houxi, crosses the ulnar wrist crease at SI5 Yanggu, and climbs the posterior ulnar crest of the forearm."
+        },
+        {
+          "num": "02",
+          "title": "Olecranon Groove to Scapular Traversal",
+          "desc": "Passes between the olecranon tip and medial epicondyle of the humerus at SI8 Xiaohai, ascends the posterior triceps to the shoulder joint, and zig-zags across the infraspinous and supraspinous fossae of the scapula (SI9–SI13)."
+        },
+        {
+          "num": "03",
+          "title": "Spinal Union & Visceral Penetration",
+          "desc": "Reaches the midline at the 7th cervical vertebra (GV14 Dazhui), arches forward into the supraclavicular fossa (ST12), and sends deep vessels down through the Heart, diaphragm, and Stomach to enter the Small Intestine."
+        },
+        {
+          "num": "04",
+          "title": "Cervical Ascent, Zygoma & Preauricular Tragus",
+          "desc": "The external ascending branch climbs the lateral neck, crosses the cheekbone, divides to send an internal link to the inner eye canthus (BL1), and enters the auditory canal, terminating directly in front of the tragus at SI19 Tinggong."
+        }
+      ]
+    },
+    {
+      "abbr": "PC",
+      "key": "pc",
+      "name": "Pericardium",
+      "elem": "Fire",
+      "yy": "Yin",
+      "file": "pc-meridian-chart.html",
+      "pointsCount": 9,
+      "startPoint": "PC1 Tianchi",
+      "startLoc": "In the 4th intercostal space, 1 cun lateral to the nipple, 5 cun lateral to the anterior midline",
+      "endPoint": "PC9 Zhongchong",
+      "endLoc": "At the center of the tip of the middle finger (or 0.1 cun from the radial nail corner)",
+      "course": "Chest → Hand (Centrifugal Yin)",
+      "pathway": "Originates deep inside the chest in the pericardium, descends through the diaphragm into the abdomen to connect with the upper, middle, and lower burners (San Jiao). A lateral chest branch emerges at PC1 (1 cun lateral to the nipple), arches over the axilla, and travels down the antero-medial aspect of the upper arm between the two heads of the biceps brachii. It crosses the cubital fossa medial to the biceps tendon (PC3 Quze), runs down the midline of the anterior forearm between the tendons of palmaris longus and flexor carpi radialis (passing PC5, PC6 Neiguan, and PC7 Daling at the wrist crease), traverses the center of the palm (PC8 Laogong), and terminates at the tip of the middle finger at PC9 Zhongchong. A collateral branch separates at PC8 and travels to the ulnar tip of the ring finger to connect with TB1.",
+      "organs": [
+        "Pericardium",
+        "Triple Burner (San Jiao)"
+      ],
+      "startDetails": {
+        "code": "PC1",
+        "py": "Tianchi",
+        "hz": "天池",
+        "en": "Heavenly Pool",
+        "landmark": "4th Intercostal Space · 1 Cun Lateral to Nipple",
+        "loc": "In the 4th intercostal space, 1 cun lateral to the nipple, 5 cun lateral to the anterior midline."
+      },
+      "endDetails": {
+        "code": "PC9",
+        "py": "Zhongchong",
+        "hz": "中衝",
+        "en": "Middle Surge",
+        "landmark": "Tip of Middle Finger · Apex",
+        "loc": "At the center of the tip of the middle finger (or 0.1 cun from radial nail corner).",
+        "handoff": "Collateral from PC8 Laogong travels to TB1 Guanchong (Ring Finger)"
+      },
+      "tide": "19:00 – 21:00 · Xu Hour (戌時)",
+      "organAffinities": {
+        "primary": "Pericardium (心包 · Zang)",
+        "paired": "Triple Burner (三焦 · Fu)",
+        "tissues": "Blood Vessels · Chest · Heart Envelope · Mind/Shen"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Cardio-Pericardial Origin & Three Burners",
+          "desc": "Originates deep inside the chest within the pericardium, plunges through the diaphragm into the abdomen, systematically connecting and harmonizing the Upper, Middle, and Lower Burners (San Jiao)."
+        },
+        {
+          "num": "02",
+          "title": "Lateral Pectoral Emergence & Bicipital Arm",
+          "desc": "A chest branch emerges 1 cun lateral to the nipple at PC1 Tianchi, arches over the axilla, and travels down the antero-medial aspect of the arm between the two heads of the biceps brachii muscle."
+        },
+        {
+          "num": "03",
+          "title": "Cubital Fossa to Inter-Tendinous Forearm",
+          "desc": "Crosses the cubital fossa medial to the biceps tendon at PC3 Quze, descends the exact midline of the forearm between the tendons of palmaris longus and flexor carpi radialis through PC6 Neiguan, and reaches the wrist crease at PC7 Daling."
+        },
+        {
+          "num": "04",
+          "title": "Palmar Center to Middle Fingertip",
+          "desc": "Crosses the center of the palm between the 2nd and 3rd metacarpals at PC8 Laogong, and terminates at the central tip of the middle finger at PC9 Zhongchong. An internal branch separates at PC8 to link with TB1 Guanchong on the ring finger."
+        }
+      ]
+    },
+    {
+      "abbr": "TB",
+      "key": "tb",
+      "name": "Triple Burner",
+      "elem": "Fire",
+      "yy": "Yang",
+      "file": "tb-meridian-chart.html",
+      "pointsCount": 23,
+      "startPoint": "TB1 Guanchong",
+      "startLoc": "Ulnar side of the ring finger, 0.1 cun posterior to the corner of the nail",
+      "endPoint": "TB23 Sizhukong",
+      "endLoc": "In the depression at the lateral end of the eyebrow",
+      "course": "Hand → Face (Centripetal Yang)",
+      "pathway": "Begins at the ulnar nail corner of the ring finger (TB1), traverses the dorsum of the hand between the 4th and 5th metacarpal bones (TB3 Zhongzhu), over the dorsal wrist crease (TB4 Yangchi), and ascends the dorsal midline of the forearm between the radius and ulna (TB5 Waiguan, TB6 Zhigou). It passes the tip of the olecranon at the elbow (TB10 Tianjing), ascends the posterior upper arm to the shoulder (TB14), crosses the trapezial ridge (TB15), meets GV14 at the spine, and enters the supraclavicular fossa (ST12). Internally, it descends into the chest, connects with the Pericardium, and penetrates the diaphragm to link the Upper, Middle, and Lower Burners (San Jiao). The ascending superficial branch rises along the neck to the posterior base of the ear (TB17 Yifeng), curves around the posterior and superior rim of the ear, enters the ear, emerges anterior to the ear, crosses the cheek, and terminates in the depression at the lateral tip of the eyebrow at TB23 Sizhukong, linking with GB1 at the outer eye canthus.",
+      "organs": [
+        "Triple Burner (San Jiao)",
+        "Pericardium"
+      ],
+      "startDetails": {
+        "code": "TB1",
+        "py": "Guanchong",
+        "hz": "關衝",
+        "en": "Rushing Pass",
+        "landmark": "Ulnar Nail Angle · Ring Finger",
+        "loc": "On the ulnar side of the ring finger, 0.1 cun posterior to the corner of the nail."
+      },
+      "endDetails": {
+        "code": "TB23",
+        "py": "Sizhukong",
+        "hz": "絲竹空",
+        "en": "Silken Bamboo Hollow",
+        "landmark": "Lateral Eyebrow End · Temporal Depression",
+        "loc": "In the depression at the lateral end of the eyebrow.",
+        "handoff": "Superficial facial branch links with GB1 Tongziliao at outer canthus"
+      },
+      "tide": "21:00 – 23:00 · Hai Hour (亥時)",
+      "organAffinities": {
+        "primary": "Triple Burner (三焦 · Fu)",
+        "paired": "Pericardium (心包 · Zang)",
+        "tissues": "Water Metabolism · Fluid Passages · Lymphatics · Ears · Temples"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Digital Ulnar Genesis & Dorsal Hand",
+          "desc": "Commences at the ulnar nail angle of the ring finger at TB1 Guanchong, courses along the dorsum of the hand between the 4th and 5th metacarpals through TB3 Zhongzhu, over the dorsal wrist crease (TB4), and up the interosseous space of the forearm between radius and ulna (TB5, TB6)."
+        },
+        {
+          "num": "02",
+          "title": "Olecranon Tip, Posterior Triceps & Shoulder",
+          "desc": "Climbs past the olecranon tip at TB10 Tianjing, ascends the posterior triceps surface to the shoulder at TB14, sweeps across the trapezius ridge (TB15), and converges at the spine at GV14 Dazhui."
+        },
+        {
+          "num": "03",
+          "title": "Supraclavicular Entry & San Jiao Visceral Drop",
+          "desc": "Enters the supraclavicular fossa (ST12), dives into the chest to connect with the Pericardium, and penetrates the diaphragm to link and coordinate the Upper, Middle, and Lower Burners (San Jiao)."
+        },
+        {
+          "num": "04",
+          "title": "Auricular Circumference to Eyebrow Tip",
+          "desc": "The cervical branch ascends the side of the neck to retro-auricular TB17 Yifeng, loops around the ear helix into the auditory canal, re-emerges anterior to the ear, and terminates in the depression at the lateral end of the eyebrow at TB23 Sizhukong to meet GB1."
+        }
+      ]
+    },
+    {
+      "abbr": "SP",
+      "key": "sp",
+      "name": "Spleen",
+      "elem": "Earth",
+      "yy": "Yin",
+      "file": "sp-meridian-chart.html",
+      "pointsCount": 21,
+      "startPoint": "SP1 Yinbai",
+      "startLoc": "Medial side of the great toe, 0.1 cun posterior to the corner of the nail",
+      "endPoint": "SP21 Dabao",
+      "endLoc": "On the mid-axillary line, in the 7th intercostal space (or 6th in some texts)",
+      "course": "Foot → Chest (Centripetal Yin)",
+      "pathway": "Begins at the medial corner of the great toenail (SP1), runs along the junction of red and white skin on the medial border of the foot (SP2, SP3 Taibai), passes anterior-inferior to the medial malleolus (SP5), and ascends the postero-medial aspect of the tibia. It crosses anterior to the Liver channel at SP6 Sanyinjiao (8 cun above the malleolus), continues up the medial knee (SP9 Yinlingquan) and antero-medial thigh (SP10 Xuehai) to enter the lower abdomen at SP12. It traverses the abdomen (4 cun lateral to midline) connecting internally with the Spleen and Stomach, penetrates the diaphragm, ascends the chest (6 cun lateral to midline) to SP20, ascends the neck to spread over the lower surface of the tongue. An internal branch branches off in the chest to enter the Heart. A lateral superficial branch curves down the side of the ribcage to terminate at SP21 Dabao on the mid-axillary line as the Great Luo-connecting point of the Spleen.",
+      "organs": [
+        "Spleen",
+        "Stomach",
+        "Heart"
+      ],
+      "startDetails": {
+        "code": "SP1",
+        "py": "Yinbai",
+        "hz": "隱白",
+        "en": "Hidden White",
+        "landmark": "Medial Nail Angle · Great Toe",
+        "loc": "On the medial side of the great toe, 0.1 cun posterior to the corner of the nail."
+      },
+      "endDetails": {
+        "code": "SP21",
+        "py": "Dabao",
+        "hz": "大包",
+        "en": "Great Enfolding",
+        "landmark": "7th Intercostal Space · Mid-Axillary Line",
+        "loc": "On the mid-axillary line, in the 7th intercostal space.",
+        "handoff": "Internal chest branch disperses into the Heart"
+      },
+      "tide": "09:00 – 11:00 · Si Hour (巳時)",
+      "organAffinities": {
+        "primary": "Spleen (脾 · Zang)",
+        "paired": "Stomach (胃 · Fu)",
+        "tissues": "Muscles · Flesh · Lips · Connective Tissues · Blood Vessels"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Medial Pedal Border & Malleolar Bypass",
+          "desc": "Begins at the medial nail angle of the great toe at SP1 Yinbai, courses along the junction of red and white skin past the 1st metatarsophalangeal joint at SP3 Taibai, and sweeps anterior and superior to the medial malleolus at SP5 Shangqiu."
+        },
+        {
+          "num": "02",
+          "title": "Tibial Cruciate Crossing & Medial Knee",
+          "desc": "Climbs the posterior-medial border of the tibia, crosses anterior to the Liver channel at SP6 Sanyinjiao (8 cun above the malleolus), passes the medial condyle of the tibia at SP9 Yinlingquan, and ascends the antero-medial thigh through SP10 Xuehai to the groin."
+        },
+        {
+          "num": "03",
+          "title": "Abdominal Route, Visceral Union & Lingual Root",
+          "desc": "Enters the lower abdomen at SP12, traverses 4 cun lateral to the midline connecting internally with the Spleen and Stomach, ascends through the diaphragm and chest (6 cun lateral) to SP20, and rises along the esophagus to disperse under the lower surface of the tongue."
+        },
+        {
+          "num": "04",
+          "title": "Cardio-Visceral Link & Great Luo (Dabao)",
+          "desc": "An internal branch departs the chest to enter the Heart. The superficial pathway sweeps downward and laterally across the side of the ribcage to terminate at SP21 Dabao in the 7th intercostal space, reigning as the Great Luo-connecting point over all collateral vessels."
+        }
+      ]
+    },
+    {
+      "abbr": "ST",
+      "key": "st",
+      "name": "Stomach",
+      "elem": "Earth",
+      "yy": "Yang",
+      "file": "st-meridian-chart.html",
+      "pointsCount": 45,
+      "startPoint": "ST1 Chengqi",
+      "startLoc": "Directly below the pupil, in the depression between the eyeball and the infraorbital ridge",
+      "endPoint": "ST45 Lidui",
+      "endLoc": "Lateral side of the second toe, 0.1 cun posterior to the corner of the nail",
+      "course": "Face → Foot (Centrifugal Yang)",
+      "pathway": "Begins beside the ala nasi (connecting from LI20), ascends to the inner canthus of the eye (BL1), then descends to the infraorbital ridge at ST1. It enters the upper gums, circles around the mouth to the chin (ST4, CV24), follows the lower jaw angle (ST6 Jiache), and ascends anterior to the ear to the coronal corner of the forehead at ST8 Touwei. A cervical branch descends from the jaw along the neck (ST9) into the supraclavicular fossa (ST12), where deep pathways plunge down through the diaphragm to enter the Stomach and connect with the Spleen. The superficial trunk branch descends across the mamillary line on the chest (4 cun lateral to midline) and abdomen (2 cun lateral to midline) down to the inguinal groove at ST30 Qichong. Continuing down the leg, it travels down the anterior thigh, over the patella and antero-lateral crest of the tibia (ST36 Zusanli), down the lower leg, over the dorsum of the foot (ST41, ST42), and terminates at the lateral nail corner of the 2nd toe at ST45. A branch from ST42 connects with SP1 on the great toe.",
+      "organs": [
+        "Stomach",
+        "Spleen"
+      ],
+      "startDetails": {
+        "code": "ST1",
+        "py": "Chengqi",
+        "hz": "承泣",
+        "en": "Container of Tears",
+        "landmark": "Infraorbital Ridge · Eye Orbit",
+        "loc": "Directly below the pupil, in the depression between the eyeball and the infraorbital ridge."
+      },
+      "endDetails": {
+        "code": "ST45",
+        "py": "Lidui",
+        "hz": "厲兌",
+        "en": "Strict Exchange",
+        "landmark": "Lateral Nail Angle · 2nd Toe",
+        "loc": "Lateral side of the second toe, 0.1 cun posterior to the corner of the nail.",
+        "handoff": "Dorsal foot branch at ST42 connects with SP1 Yinbai (Great Toe)"
+      },
+      "tide": "07:00 – 09:00 · Chen Hour (辰時)",
+      "organAffinities": {
+        "primary": "Stomach (胃 · Fu)",
+        "paired": "Spleen (脾 · Zang)",
+        "tissues": "Muscles · Mouth · Upper Teeth · Gums · Breast · Flesh"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Craniofacial Circuit & Mandibular Arch",
+          "desc": "Originates at the lateral nostril, ascends to the inner eye canthus (BL1), drops to the infraorbital ridge at ST1 Chengqi, enters upper gums, circles around the mouth to the chin groove, sweeps across the jaw angle at ST6 Jiache, and climbs anterior to the ear to the coronal skull at ST8 Touwei."
+        },
+        {
+          "num": "02",
+          "title": "Cervical Drop, Thoracic Mamillary Line & Abdomen",
+          "desc": "Descends along the carotid sheath (ST9 Renying) into the supraclavicular fossa (ST12). Deep internal branches penetrate the diaphragm to enter the Stomach and connect with the Spleen. The external trunk descends 4 cun lateral to the midline on the chest and 2 cun on the abdomen down to ST30 Qichong at the groin."
+        },
+        {
+          "num": "03",
+          "title": "Femoral Descent, Patella & Tibial Crest",
+          "desc": "Emerges at the inguinal crease, descends the anterior thigh along the rectus femoris muscle, crosses the patella into the lateral lower leg alongside the anterior tibial crest through ST36 Zusanli, and continues down the tibialis anterior muscle."
+        },
+        {
+          "num": "04",
+          "title": "Dorsum of Foot to Second Toe Terminus",
+          "desc": "Crosses the ankle joint and dorsum of the foot between the 2nd and 3rd metatarsals (ST41, ST42), terminating at the lateral nail corner of the 2nd toe at ST45 Lidui. A collateral separates at ST42 Chongyang and travels to the medial tip of the great toe to join SP1 Yinbai."
+        }
+      ]
+    },
+    {
+      "abbr": "LU",
+      "key": "lu",
+      "name": "Lung",
+      "elem": "Metal",
+      "yy": "Yin",
+      "file": "lung-meridian-chart.html",
+      "pointsCount": 11,
+      "startPoint": "LU1 Zhongfu",
+      "startLoc": "Anterior-lateral chest wall, 1st intercostal space, 6 cun lateral to the anterior midline",
+      "endPoint": "LU11 Shaoshang",
+      "endLoc": "Radial side of the thumb, 0.1 cun posterior to the corner of the nail",
+      "course": "Chest → Hand (Centrifugal Yin)",
+      "pathway": "Originates in the Middle Burner (stomach region), descends to connect with the Large Intestine, loops upward past the cardiac orifice, traverses the lungs, and ascends to the throat. It emerges antero-laterally at LU1 below the clavicle, runs down the antero-lateral aspect of the upper arm lateral to the biceps, crosses the cubital fossa (LU5), descends the radial forearm to the radial styloid and wrist crease (LU9), passes the thenar eminence (LU10), and terminates at the radial nail corner of the thumb at LU11. An internal branch separates at LU7 and travels directly to the radial index fingertip to connect with LI1.",
+      "organs": [
+        "Lung",
+        "Large Intestine",
+        "Stomach"
+      ],
+      "startDetails": {
+        "code": "LU1",
+        "py": "Zhongfu",
+        "hz": "中府",
+        "en": "Central Treasury",
+        "landmark": "Anterior Chest Wall · 1st Intercostal Space",
+        "loc": "In the 1st intercostal space, 6 cun lateral to the anterior midline, below the clavicle."
+      },
+      "endDetails": {
+        "code": "LU11",
+        "py": "Shaoshang",
+        "hz": "少商",
+        "en": "Lesser Shang",
+        "landmark": "Radial Nail Angle · Thumb",
+        "loc": "On the radial side of the thumb, 0.1 cun posterior to the corner of the nail.",
+        "handoff": "Collateral separates at LU7 to connect with LI1 (Index Finger)"
+      },
+      "tide": "03:00 – 05:00 · Yin Hour (寅時)",
+      "organAffinities": {
+        "primary": "Lung (肺 · Zang)",
+        "paired": "Large Intestine (大腸 · Fu)",
+        "tissues": "Skin · Body Hair · Throat · Nasal Passages"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Middle Burner Internal Genesis",
+          "desc": "Originates internally in the Middle Burner (stomach region), descends to connect with and encircle the Large Intestine, turns back upward to skirt the cardiac orifice of the stomach, traverses the diaphragm, and enters the Lungs (its primary Zang organ)."
+        },
+        {
+          "num": "02",
+          "title": "Respiratory Trunk & Axillary Emergence",
+          "desc": "Ascends the respiratory tract to the larynx and throat, then sweeps laterally to erupt superficially on the antero-lateral chest wall at LU1 Zhongfu (1st intercostal space), ascending to LU2 Yunmen directly below the clavicle."
+        },
+        {
+          "num": "03",
+          "title": "Brachial Descent & Cubital Traversal",
+          "desc": "Arches over the axilla, descends the antero-lateral border of the upper arm lateral to the biceps tendon, passes the cubital crease at LU5 Chize (He-Sea), and proceeds down the radial margin of the anterior forearm along the brachioradialis muscle."
+        },
+        {
+          "num": "04",
+          "title": "Styloid Wrist, Thenar Eminence & Acral Terminus",
+          "desc": "Traverses the radial styloid process at LU7 Lieque, crosses the wrist crease at LU9 Taiyuan (Yuan-Source), sweeps across the fleshy thenar eminence at LU10 Yuji, and terminates at the radial nail corner of the thumb at LU11 Shaoshang (Jing-Well). An internal branch divides at LU7 Lieque to meet LI1 Shangyang on the index finger."
+        }
+      ]
+    },
+    {
+      "abbr": "LI",
+      "key": "li",
+      "name": "Large Intestine",
+      "elem": "Metal",
+      "yy": "Yang",
+      "file": "li-meridian-chart.html",
+      "pointsCount": 20,
+      "startPoint": "LI1 Shangyang",
+      "startLoc": "Radial side of the index finger, 0.1 cun posterior to the corner of the nail",
+      "endPoint": "LI20 Yingxiang",
+      "endLoc": "In the nasolabial groove, level with the midpoint of the lateral border of the ala nasi",
+      "course": "Hand → Face (Centripetal Yang)",
+      "pathway": "Begins at the radial corner of the index fingernail (LI1), travels along the radial border of the index finger and across the dorsum of the hand between the 1st and 2nd metacarpals (LI4 Hegu). It ascends the lateral anterior aspect of the forearm to the lateral elbow crease (LI11 Quchi), continues up the lateral upper arm over the deltoid prominence (LI15 Jianyu), crosses posterior to the shoulder joint to the upper back (GV14 Dazhui), and enters the supraclavicular fossa (ST12). Internally, a branch descends through the lungs, penetrates the diaphragm, and enters the Large Intestine. The external branch ascends the side of the neck, crosses the cheek, enters the lower gum and teeth, curves around the lips, crosses under the philtrum (GV26) to the opposite side of the nose, and terminates at LI20 beside the contralateral nostril to connect with ST1.",
+      "organs": [
+        "Large Intestine",
+        "Lung",
+        "Stomach"
+      ],
+      "startDetails": {
+        "code": "LI1",
+        "py": "Shangyang",
+        "hz": "商陽",
+        "en": "Shang Yang",
+        "landmark": "Radial Nail Angle · Index Finger",
+        "loc": "On the radial side of the index finger, 0.1 cun posterior to the corner of the nail."
+      },
+      "endDetails": {
+        "code": "LI20",
+        "py": "Yingxiang",
+        "hz": "迎香",
+        "en": "Welcome Fragrance",
+        "landmark": "Nasolabial Groove · Ala Nasi",
+        "loc": "In the nasolabial groove, level with the midpoint of the lateral border of the ala nasi.",
+        "handoff": "Internal link meets ST1 Chengqi at the infraorbital ridge"
+      },
+      "tide": "05:00 – 07:00 · Mao Hour (卯時)",
+      "organAffinities": {
+        "primary": "Large Intestine (大腸 · Fu)",
+        "paired": "Lung (肺 · Zang)",
+        "tissues": "Large Intestine · Mucous Membranes · Teeth · Lower Gums"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Digital Ascent & Metacarpal Web",
+          "desc": "Commences at the radial nail angle of the index finger at LI1 Shangyang, ascends the radial margin of the finger across the 1st and 2nd metacarpal interspace at LI4 Hegu, and passes the anatomical snuffbox into the posterior-radial forearm."
+        },
+        {
+          "num": "02",
+          "title": "Lateral Forearm, Elbow Crease & Shoulder",
+          "desc": "Courses up the lateral radial border of the forearm between the extensor muscles, reaches the lateral elbow crease at LI11 Quchi, ascends the lateral arm over the deltoid insertion to the shoulder prominence at LI15 Jianyu, and converges at the spine at GV14 Dazhui."
+        },
+        {
+          "num": "03",
+          "title": "Supraclavicular Entry & Visceral Plunge",
+          "desc": "Arches over the shoulder into the supraclavicular fossa at ST12 Quepen; deep internal vessels plunge into the chest through the Lungs, penetrate the diaphragm, and enter the Large Intestine to regulate fluid absorption."
+        },
+        {
+          "num": "04",
+          "title": "Cervical Ascent, Oral Decussation & Nostril Terminus",
+          "desc": "The superficial branch ascends the lateral neck through the sternocleidomastoid muscle, traverses the mandible, enters the lower gums and lower teeth, encircles the lips, decussates (crosses over) under the philtrum at GV26, and terminates beside the opposite nostril at LI20 Yingxiang to meet ST1."
+        }
+      ]
+    },
+    {
+      "abbr": "KI",
+      "key": "ki",
+      "name": "Kidney",
+      "elem": "Water",
+      "yy": "Yin",
+      "file": "ki-meridian-chart.html",
+      "pointsCount": 27,
+      "startPoint": "KI1 Yongquan",
+      "startLoc": "On the sole of the foot, between the 2nd and 3rd metatarsal bones, one-third of the distance from the web space to the heel",
+      "endPoint": "KI27 Shufu",
+      "endLoc": "In the depression on the lower border of the clavicle, 2 cun lateral to the anterior midline",
+      "course": "Foot → Chest (Centripetal Yin)",
+      "pathway": "Originates on the plantar surface beneath the little toe, traverses diagonally across the sole of the foot to emerge at KI1 Yongquan. It passes under the tuberosity of the navicular bone (KI2), loops behind and inferior to the medial malleolus (KI3 Taixi), encircles the heel, ascends the postero-medial aspect of the lower leg (KI7 Fuliu), and reaches the medial side of the popliteal crease (KI10 Yingu). Ascending the posterior-medial thigh to the base of the spine, it enters the Kidney and connects with the Urinary Bladder. Emerging at the lower abdomen 0.5 cun lateral to the midline (KI11-KI16), it ascends through the abdomen and diaphragm, continuing up the chest 2 cun lateral to the midline (KI21-KI27), terminating just below the clavicle at KI27 Shufu. Deep branches ascend through the Liver, Lungs, and throat to terminate at the root of the tongue.",
+      "organs": [
+        "Kidney",
+        "Bladder",
+        "Liver",
+        "Lung",
+        "Heart"
+      ],
+      "startDetails": {
+        "code": "KI1",
+        "py": "Yongquan",
+        "hz": "湧泉",
+        "en": "Gushing Spring",
+        "landmark": "Plantar Sole · Metatarsal Web Space",
+        "loc": "On the sole of the foot, between the 2nd and 3rd metatarsal heads, 1/3 distance from web to heel."
+      },
+      "endDetails": {
+        "code": "KI27",
+        "py": "Shufu",
+        "hz": "俞府",
+        "en": "Shu Mansion",
+        "landmark": "Infraclavicular Depression · 2 Cun Lateral",
+        "loc": "In the depression on the lower border of the clavicle, 2 cun lateral to the anterior midline.",
+        "handoff": "Internal chest branch disperses into the Heart and Pericardium"
+      },
+      "tide": "17:00 – 19:00 · You Hour (酉時)",
+      "organAffinities": {
+        "primary": "Kidney (腎 · Zang)",
+        "paired": "Bladder (膀胱 · Fu)",
+        "tissues": "Bones · Marrow · Ears · Teeth · Lumbar Spine · Hair"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Plantar Genesis & Retrograde Malleolar Loop",
+          "desc": "Begins on the plantar surface beneath the 5th toe, traverses diagonally across the sole to erupt at KI1 Yongquan, crosses the navicular tuberosity, and loops in a complete retrograde circle behind and below the medial malleolus at KI3 Taixi."
+        },
+        {
+          "num": "02",
+          "title": "Calcaneal Loop & Postero-Medial Popliteal Crease",
+          "desc": "Encircles the heel, ascends the postero-medial lower leg anterior to the Achilles tendon (KI7 Fuliu), reaches the medial end of the popliteal crease at KI10 Yingu, and ascends the medial thigh to the base of the spine at the coccyx."
+        },
+        {
+          "num": "03",
+          "title": "Abdominal & Thoracic Paramedian Ascent",
+          "desc": "Penetrates the Kidneys and Bladder; emerges on the lower abdomen 0.5 cun lateral to midline (KI11–KI16), ascends through the diaphragm, and continues up the chest 2 cun lateral to midline (KI21–KI27), terminating under the clavicle at KI27 Shufu."
+        },
+        {
+          "num": "04",
+          "title": "Hepato-Pulmonary Vessels & Lingual Root",
+          "desc": "Deep internal collaterals ascend through the Liver and Lungs, travel along the throat, and terminate at the root of the tongue, while an internal branch disperses from the chest into the Heart to link with the Pericardium channel."
+        }
+      ]
+    },
+    {
+      "abbr": "BL",
+      "key": "bl",
+      "name": "Bladder",
+      "elem": "Water",
+      "yy": "Yang",
+      "file": "bl-meridian-chart.html",
+      "pointsCount": 67,
+      "startPoint": "BL1 Jingming",
+      "startLoc": "In the depression 0.1 cun superior to the inner canthus of the eye",
+      "endPoint": "BL67 Zhiyin",
+      "endLoc": "Lateral side of the fifth (little) toe, 0.1 cun posterior to the corner of the nail",
+      "course": "Face → Foot (Centrifugal Yang)",
+      "pathway": "The longest channel in the human body (67 points). Originates at the inner canthus of the eye (BL1), ascends over the forehead to the vertex (BL7, GV20), enters the brain, emerges at the occiput, and descends to the nape of the neck at BL10 Tianzhu. From the neck, it divides into two bilateral descending tracks down the dorsal spine: the inner line (1.5 cun lateral to midline, BL11 to BL30 carrying the Back-Shu points) which descends into the lumbar area to enter the Kidneys and Bladder, continuing over the sacrum to the popliteal fossa (BL40 Weizhong); and the outer line (3.0 cun lateral to midline, BL41 to BL54) which descends through the scapular border, gluteal region, and posterior thigh to reunite with the inner line at BL40. The reunited channel descends down the middle of the posterior calf (BL57), curves behind the lateral malleolus (BL60 Kunlun), travels along the lateral margin of the foot (BL65), and terminates at the lateral nail corner of the little toe at BL67 Zhiyin, linking directly with KI1.",
+      "organs": [
+        "Bladder",
+        "Kidney",
+        "Brain"
+      ],
+      "startDetails": {
+        "code": "BL1",
+        "py": "Jingming",
+        "hz": "睛明",
+        "en": "Bright Eyes",
+        "landmark": "Inner Canthus · Nasal Bridge",
+        "loc": "In the depression 0.1 cun superior to the inner canthus of the eye."
+      },
+      "endDetails": {
+        "code": "BL67",
+        "py": "Zhiyin",
+        "hz": "至陰",
+        "en": "Reaching Yin",
+        "landmark": "Lateral Nail Angle · 5th Toe",
+        "loc": "Lateral side of the fifth (little) toe, 0.1 cun posterior to the corner of the nail.",
+        "handoff": "Internal plantar branch links with KI1 Yongquan in the sole"
+      },
+      "tide": "15:00 – 17:00 · Shen Hour (申時)",
+      "organAffinities": {
+        "primary": "Bladder (膀胱 · Fu)",
+        "paired": "Kidney (腎 · Zang)",
+        "tissues": "Bones · Brain · Spinal Cord · Eyes · Dorsal Axial Muscles"
+      },
+      "stages": [
+        {
+          "num": "01",
+          "title": "Canthal Origin, Vertex Crown & Brain Entry",
+          "desc": "Originates at the inner eye canthus at BL1 Jingming, crosses the forehead to the vertex (BL7, GV20), enters the brain to communicate with cerebral marrow, and emerges at the occiput to descend to the nape of the neck at BL10 Tianzhu."
+        },
+        {
+          "num": "02",
+          "title": "Dual Bilateral Paravertebral Columns",
+          "desc": "Bifurcates at the neck into two parallel descending spinal columns: the Inner Line (1.5 cun lateral, housing all Back-Shu points BL11–BL30 which penetrate Kidneys and Bladder) and the Outer Line (3.0 cun lateral, BL41–BL54), both converging at the popliteal crease at BL40 Weizhong."
+        },
+        {
+          "num": "03",
+          "title": "Gastrocnemius Calf Descent to Lateral Malleolus",
+          "desc": "The reunited channel descends down the dorsal midline of the calf bellies through BL57 Chengshan, emerges lateral to the Achilles tendon, and winds behind the prominence of the lateral malleolus at BL60 Kunlun."
+        },
+        {
+          "num": "04",
+          "title": "Lateral Foot Margin to Fifth Toe Terminus",
+          "desc": "Courses along the lateral border of the foot past the tuberosity of the 5th metatarsal at BL65 Shugu, terminating at the lateral nail corner of the little toe at BL67 Zhiyin. A collateral branch dives into the plantar sole to link with KI1 Yongquan."
+        }
+      ]
+    }
+  ],
+  "points": [
+    {
+      "code": "LR1",
+      "ch": "LR",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Wood",
+      "py": "Dadun",
+      "hz": "大敦",
+      "en": "Large Pile",
+      "note": "Jing-Well point",
+      "loc": "On the big toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.",
+      "cun": "0.1 cun from the lateral corner of the nail."
+    },
+    {
+      "code": "LR2",
+      "ch": "LR",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Fire",
+      "py": "Xingjian",
+      "hz": "行间",
+      "en": "Moving Between",
+      "note": "Ying-Spring point",
+      "loc": "On the dorsum of the foot, between the first and second toes, proximal to the web margin, at the border of the red and white skin.",
+      "cun": "At the web margin between the 1st and 2nd toes; found by the landmark rather than a cun distance."
+    },
+    {
+      "code": "LR3",
+      "ch": "LR",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Earth",
+      "py": "Taichong",
+      "hz": "太冲",
+      "en": "Great Surge",
+      "note": "Shu-Stream and Yuan-Source point",
+      "loc": "On the dorsum of the foot, between the first and second metatarsal bones, in the depression distal to the junction of their bases.",
+      "cun": "In the hollow where the 1st and 2nd metatarsal bases meet; found by the bones rather than a cun distance."
+    },
+    {
+      "code": "LR4",
+      "ch": "LR",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Metal",
+      "py": "Zhongfeng",
+      "hz": "中封",
+      "en": "Mound Centre",
+      "note": "Jing-River point",
+      "loc": "In front of the medial malleolus, in the depression medial to the tendon of tibialis anterior.",
+      "cun": "In front of the medial malleolus, beside the tibialis anterior tendon."
+    },
+    {
+      "code": "LR8",
+      "ch": "LR",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Water",
+      "py": "Ququan",
+      "hz": "曲泉",
+      "en": "Spring at the Bend",
+      "note": "He-Sea point",
+      "loc": "With the knee flexed, at the medial end of the popliteal crease, in the depression in front of the tendons of semitendinosus and semimembranosus.",
+      "cun": "At the medial end of the popliteal crease, knee flexed."
+    },
+    {
+      "code": "GB44",
+      "ch": "GB",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Metal",
+      "py": "Zuqiaoyin",
+      "hz": "足窍阴",
+      "en": "Foot Portal Yin",
+      "note": "Jing-Well point",
+      "loc": "On the fourth toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.",
+      "cun": "0.1 cun from the lateral corner of the nail."
+    },
+    {
+      "code": "GB43",
+      "ch": "GB",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Water",
+      "py": "Xiaxi",
+      "hz": "侠溪",
+      "en": "Clamped Stream",
+      "note": "Ying-Spring point",
+      "loc": "On the dorsum of the foot, between the fourth and fifth toes, proximal to the web margin, at the border of the red and white skin.",
+      "cun": "At the web margin between the 4th and 5th toes; found by the landmark rather than a cun distance."
+    },
+    {
+      "code": "GB41",
+      "ch": "GB",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Wood",
+      "py": "Zulinqi",
+      "hz": "足临泣",
+      "en": "Foot Governor of Tears",
+      "note": "Shu-Stream point",
+      "loc": "On the dorsum of the foot, distal to the junction of the fourth and fifth metatarsal bases, in the depression lateral to the extensor digiti minimi tendon.",
+      "cun": "Just distal to where the 4th and 5th metatarsal bases meet; found by the bones rather than a cun distance."
+    },
+    {
+      "code": "GB38",
+      "ch": "GB",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Fire",
+      "py": "Yangfu",
+      "hz": "阳辅",
+      "en": "Yang Support",
+      "note": "Jing-River point",
+      "loc": "On the lateral leg, 4 cun above the prominence of the lateral malleolus, anterior to the fibula.",
+      "cun": "4 cun above the prominence of the lateral malleolus."
+    },
+    {
+      "code": "GB34",
+      "ch": "GB",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Earth",
+      "py": "Yanglingquan",
+      "hz": "阳陵泉",
+      "en": "Yang Mound Spring",
+      "note": "He-Sea point",
+      "loc": "On the lateral leg, in the depression in front of and below the head of the fibula.",
+      "cun": "In the hollow in front of and below the head of the fibula."
+    },
+    {
+      "code": "HT9",
+      "ch": "HT",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Wood",
+      "py": "Shaochong",
+      "hz": "少冲",
+      "en": "Lesser Surge",
+      "note": "Jing-Well point",
+      "loc": "On the little finger, radial to the distal phalanx, 0.1 cun from the radial corner of the nail.",
+      "cun": "0.1 cun from the radial corner of the nail."
+    },
+    {
+      "code": "HT8",
+      "ch": "HT",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Fire",
+      "py": "Shaofu",
+      "hz": "少府",
+      "en": "Lesser Mansion",
+      "note": "Ying-Spring point",
+      "loc": "On the palm, between the fourth and fifth metacarpal bones, in the depression proximal to the fifth metacarpophalangeal joint, where the little finger tip rests in a loose fist.",
+      "cun": "Where the little-finger tip rests in a loose fist; found by the landmark rather than a cun distance."
+    },
+    {
+      "code": "HT7",
+      "ch": "HT",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Earth",
+      "py": "Shenmen",
+      "hz": "神门",
+      "en": "Spirit Gate",
+      "note": "Shu-Stream and Yuan-Source point",
+      "loc": "At the ulnar end of the palmar wrist crease, on the radial side of the flexor carpi ulnaris tendon.",
+      "cun": "At the palmar wrist crease, radial to the flexor carpi ulnaris tendon."
+    },
+    {
+      "code": "HT4",
+      "ch": "HT",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Metal",
+      "py": "Lingdao",
+      "hz": "灵道",
+      "en": "Spirit Path",
+      "note": "Jing-River point",
+      "loc": "1.5 cun proximal to the palmar wrist crease, on the radial side of the flexor carpi ulnaris tendon.",
+      "cun": "1.5 cun proximal to the palmar wrist crease."
+    },
+    {
+      "code": "HT3",
+      "ch": "HT",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Water",
+      "py": "Shaohai",
+      "hz": "少海",
+      "en": "Lesser Sea",
+      "note": "He-Sea point",
+      "loc": "With the elbow flexed, midway between the medial end of the cubital crease and the medial epicondyle of the humerus.",
+      "cun": "Midway between the medial end of the cubital crease and the medial epicondyle, elbow flexed."
+    },
+    {
+      "code": "SI1",
+      "ch": "SI",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Metal",
+      "py": "Shaoze",
+      "hz": "少泽",
+      "en": "Lesser Marsh",
+      "note": "Jing-Well point",
+      "loc": "On the little finger, ulnar to the distal phalanx, 0.1 cun from the ulnar corner of the nail.",
+      "cun": "0.1 cun from the ulnar corner of the nail."
+    },
+    {
+      "code": "SI2",
+      "ch": "SI",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Water",
+      "py": "Qiangu",
+      "hz": "前谷",
+      "en": "Front Valley",
+      "note": "Ying-Spring point",
+      "loc": "On the ulnar border of the little finger, in the depression distal to the fifth metacarpophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just distal to the 5th metacarpophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "SI3",
+      "ch": "SI",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Wood",
+      "py": "Houxi",
+      "hz": "后溪",
+      "en": "Back Ravine",
+      "note": "Shu-Stream point; opening point of the Du Mai",
+      "loc": "On the ulnar border of the hand, in the depression proximal to the fifth metacarpophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just proximal to the 5th metacarpophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "SI5",
+      "ch": "SI",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Fire",
+      "py": "Yanggu",
+      "hz": "阳谷",
+      "en": "Yang Valley",
+      "note": "Jing-River point",
+      "loc": "On the ulnar side of the wrist, in the depression between the styloid process of the ulna and the triquetrum.",
+      "cun": "At the wrist, between the ulnar styloid process and the triquetrum."
+    },
+    {
+      "code": "SI8",
+      "ch": "SI",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Earth",
+      "py": "Xiaohai",
+      "hz": "小海",
+      "en": "Small Sea",
+      "note": "He-Sea point",
+      "loc": "With the elbow flexed, in the depression between the olecranon and the medial epicondyle of the humerus.",
+      "cun": "Between the olecranon and the medial epicondyle, elbow flexed."
+    },
+    {
+      "code": "PC9",
+      "ch": "PC",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Wood",
+      "py": "Zhongchong",
+      "hz": "中冲",
+      "en": "Central Hub",
+      "note": "Jing-Well point",
+      "loc": "At the centre of the tip of the middle finger.",
+      "cun": "At the centre of the middle-finger tip; no cun distance."
+    },
+    {
+      "code": "PC8",
+      "ch": "PC",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Fire",
+      "py": "Laogong",
+      "hz": "劳宫",
+      "en": "Palace of Toil",
+      "note": "Ying-Spring point",
+      "loc": "On the palm, between the second and third metacarpal bones, proximal to the metacarpophalangeal joints, where the middle finger tip rests in a loose fist.",
+      "cun": "Where the middle-finger tip rests in a loose fist; found by the landmark rather than a cun distance."
+    },
+    {
+      "code": "PC7",
+      "ch": "PC",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Earth",
+      "py": "Daling",
+      "hz": "大陵",
+      "en": "Great Mound",
+      "note": "Shu-Stream and Yuan-Source point",
+      "loc": "At the midpoint of the palmar wrist crease, between the tendons of palmaris longus and flexor carpi radialis.",
+      "cun": "At the midpoint of the palmar wrist crease."
+    },
+    {
+      "code": "PC5",
+      "ch": "PC",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Metal",
+      "py": "Jianshi",
+      "hz": "间使",
+      "en": "Intermediary Courier",
+      "note": "Jing-River point",
+      "loc": "3 cun proximal to the palmar wrist crease, between the tendons of palmaris longus and flexor carpi radialis.",
+      "cun": "3 cun proximal to the palmar wrist crease."
+    },
+    {
+      "code": "PC3",
+      "ch": "PC",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Water",
+      "py": "Quze",
+      "hz": "曲泽",
+      "en": "Marsh at the Bend",
+      "note": "He-Sea point",
+      "loc": "On the cubital crease, in the depression on the ulnar side of the biceps brachii tendon.",
+      "cun": "At the cubital crease, ulnar to the biceps tendon."
+    },
+    {
+      "code": "TB1",
+      "ch": "TB",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Metal",
+      "py": "Guanchong",
+      "hz": "关冲",
+      "en": "Passage Hub",
+      "note": "Jing-Well point",
+      "loc": "On the ring finger, ulnar to the distal phalanx, 0.1 cun from the ulnar corner of the nail.",
+      "cun": "0.1 cun from the ulnar corner of the nail."
+    },
+    {
+      "code": "TB2",
+      "ch": "TB",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Water",
+      "py": "Yemen",
+      "hz": "液门",
+      "en": "Fluid Gate",
+      "note": "Ying-Spring point",
+      "loc": "On the dorsum of the hand, in the web between the ring and little fingers, at the border of the red and white skin.",
+      "cun": "At the web margin between the ring and little fingers; found by the landmark rather than a cun distance."
+    },
+    {
+      "code": "TB3",
+      "ch": "TB",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Wood",
+      "py": "Zhongzhu",
+      "hz": "中渚",
+      "en": "Central Islet",
+      "note": "Shu-Stream point",
+      "loc": "On the dorsum of the hand, between the fourth and fifth metacarpal bones, in the depression proximal to the fourth metacarpophalangeal joint.",
+      "cun": "Just proximal to the 4th metacarpophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "TB6",
+      "ch": "TB",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Fire",
+      "py": "Zhigou",
+      "hz": "支沟",
+      "en": "Branch Ditch",
+      "note": "Jing-River point",
+      "loc": "On the dorsal forearm, 3 cun proximal to the dorsal wrist crease, midway between the radius and the ulna.",
+      "cun": "3 cun proximal to the dorsal wrist crease."
+    },
+    {
+      "code": "TB10",
+      "ch": "TB",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Earth",
+      "py": "Tianjing",
+      "hz": "天井",
+      "en": "Heavenly Well",
+      "note": "He-Sea point",
+      "loc": "With the elbow flexed, in the depression 1 cun proximal to the tip of the olecranon.",
+      "cun": "1 cun proximal to the tip of the olecranon, elbow flexed."
+    },
+    {
+      "code": "SP1",
+      "ch": "SP",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Wood",
+      "py": "Yinbai",
+      "hz": "隐白",
+      "en": "Hidden White",
+      "note": "Jing-Well point",
+      "loc": "On the big toe, medial to the distal phalanx, 0.1 cun from the medial corner of the nail.",
+      "cun": "0.1 cun from the medial corner of the nail."
+    },
+    {
+      "code": "SP2",
+      "ch": "SP",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Fire",
+      "py": "Dadu",
+      "hz": "大都",
+      "en": "Great Metropolis",
+      "note": "Ying-Spring point",
+      "loc": "On the big toe, in the depression distal to the first metatarsophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just distal to the 1st metatarsophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "SP3",
+      "ch": "SP",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Earth",
+      "py": "Taibai",
+      "hz": "太白",
+      "en": "Supreme White",
+      "note": "Shu-Stream and Yuan-Source point",
+      "loc": "On the medial foot, in the depression proximal to the first metatarsophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just proximal to the 1st metatarsophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "SP5",
+      "ch": "SP",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Metal",
+      "py": "Shangqiu",
+      "hz": "商丘",
+      "en": "Shang Hill",
+      "note": "Jing-River point",
+      "loc": "In the depression anterior and inferior to the medial malleolus, midway between the navicular tuberosity and the tip of the medial malleolus.",
+      "cun": "Midway between the navicular tuberosity and the tip of the medial malleolus."
+    },
+    {
+      "code": "SP9",
+      "ch": "SP",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Water",
+      "py": "Yinlingquan",
+      "hz": "阴陵泉",
+      "en": "Yin Mound Spring",
+      "note": "He-Sea point",
+      "loc": "On the medial leg, in the depression between the inferior border of the medial condyle of the tibia and the medial border of the tibia.",
+      "cun": "Below the medial condyle of the tibia; found by the bone rather than a cun distance."
+    },
+    {
+      "code": "ST45",
+      "ch": "ST",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Metal",
+      "py": "Lidui",
+      "hz": "厉兑",
+      "en": "Strict Exchange",
+      "note": "Jing-Well point",
+      "loc": "On the second toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.",
+      "cun": "0.1 cun from the lateral corner of the nail."
+    },
+    {
+      "code": "ST44",
+      "ch": "ST",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Water",
+      "py": "Neiting",
+      "hz": "内庭",
+      "en": "Inner Court",
+      "note": "Ying-Spring point",
+      "loc": "On the dorsum of the foot, between the second and third toes, proximal to the web margin, at the border of the red and white skin.",
+      "cun": "At the web margin between the 2nd and 3rd toes; found by the landmark rather than a cun distance."
+    },
+    {
+      "code": "ST43",
+      "ch": "ST",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Wood",
+      "py": "Xiangu",
+      "hz": "陷谷",
+      "en": "Sunken Valley",
+      "note": "Shu-Stream point",
+      "loc": "On the dorsum of the foot, between the second and third metatarsal bones, in the depression proximal to the second metatarsophalangeal joint.",
+      "cun": "Just proximal to the 2nd metatarsophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "ST41",
+      "ch": "ST",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Fire",
+      "py": "Jiexi",
+      "hz": "解溪",
+      "en": "Ravine Divide",
+      "note": "Jing-River point",
+      "loc": "At the front of the ankle, in the depression at the midpoint of the ankle crease, between the tendons of extensor hallucis longus and extensor digitorum longus.",
+      "cun": "At the midpoint of the ankle crease."
+    },
+    {
+      "code": "ST36",
+      "ch": "ST",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Earth",
+      "py": "Zusanli",
+      "hz": "足三里",
+      "en": "Leg Three Li",
+      "note": "He-Sea point",
+      "loc": "3 cun below ST35, one finger-breadth lateral to the anterior crest of the tibia.",
+      "cun": "3 cun below ST35, one finger-breadth lateral to the tibial crest."
+    },
+    {
+      "code": "LU11",
+      "ch": "LU",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Wood",
+      "py": "Shaoshang",
+      "hz": "少商",
+      "en": "Lesser Shang",
+      "note": "Jing-Well point",
+      "loc": "On the thumb, on the radial side, 0.1 cun posterior to the corner of the nail.",
+      "cun": "0.1 cun from the radial corner of the nail."
+    },
+    {
+      "code": "LU10",
+      "ch": "LU",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Fire",
+      "py": "Yuji",
+      "hz": "鱼际",
+      "en": "Fish Border",
+      "note": "Ying-Spring point",
+      "loc": "On the palmar aspect, at the midpoint of the first metacarpal bone, at the edge of the thenar eminence.",
+      "cun": "Midpoint of the 1st metacarpal; found by the bone rather than a cun distance."
+    },
+    {
+      "code": "LU9",
+      "ch": "LU",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Earth",
+      "py": "Taiyuan",
+      "hz": "太渊",
+      "en": "Great Abyss",
+      "note": "Shu-Stream point and Yuan-Source point",
+      "loc": "On the radial end of the wrist crease, in the depression lateral to the radial artery pulse.",
+      "cun": "At the wrist crease, lateral to the radial artery."
+    },
+    {
+      "code": "LU8",
+      "ch": "LU",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Metal",
+      "py": "Jingqu",
+      "hz": "经渠",
+      "en": "Channel Ditch",
+      "note": "Jing-River point",
+      "loc": "On the radial side of the forearm, 1 cun above the wrist crease, in the depression between the radial styloid process and the radial artery.",
+      "cun": "1 cun proximal to the wrist crease."
+    },
+    {
+      "code": "LU5",
+      "ch": "LU",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Water",
+      "py": "Chize",
+      "hz": "尺泽",
+      "en": "Cubit Marsh",
+      "note": "He-Sea point",
+      "loc": "In the elbow crease, in the depression at the radial (lateral) side of the biceps brachii tendon.",
+      "cun": "At the cubital crease, radial to the biceps tendon."
+    },
+    {
+      "code": "LI1",
+      "ch": "LI",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Metal",
+      "py": "Shangyang",
+      "hz": "商阳",
+      "en": "Shang Yang",
+      "note": "Jing-Well point",
+      "loc": "On the index finger, radial to the distal phalanx, 0.1 cun from the radial corner of the nail.",
+      "cun": "0.1 cun from the radial corner of the nail."
+    },
+    {
+      "code": "LI2",
+      "ch": "LI",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Water",
+      "py": "Erjian",
+      "hz": "二间",
+      "en": "Second Interval",
+      "note": "Ying-Spring point",
+      "loc": "On the index finger, in the depression distal to the radial side of the second metacarpophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just distal to the 2nd metacarpophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "LI3",
+      "ch": "LI",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Wood",
+      "py": "Sanjian",
+      "hz": "三间",
+      "en": "Third Interval",
+      "note": "Shu-Stream point",
+      "loc": "On the dorsum of the hand, in the depression proximal to the radial side of the second metacarpophalangeal joint.",
+      "cun": "Just proximal to the 2nd metacarpophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "LI5",
+      "ch": "LI",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Fire",
+      "py": "Yangxi",
+      "hz": "阳溪",
+      "en": "Yang Stream",
+      "note": "Jing-River point",
+      "loc": "On the radial side of the dorsal wrist crease, in the anatomical snuffbox, between the tendons of extensor pollicis brevis and longus.",
+      "cun": "In the anatomical snuffbox at the wrist crease."
+    },
+    {
+      "code": "LI11",
+      "ch": "LI",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Earth",
+      "py": "Quchi",
+      "hz": "曲池",
+      "en": "Pool at the Bend",
+      "note": "He-Sea point",
+      "loc": "With the elbow flexed, at the lateral end of the transverse cubital crease, midway between LU5 and the lateral epicondyle of the humerus.",
+      "cun": "At the lateral end of the cubital crease, elbow flexed."
+    },
+    {
+      "code": "KI1",
+      "ch": "KI",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Wood",
+      "py": "Yongquan",
+      "hz": "涌泉",
+      "en": "Gushing Spring",
+      "note": "Jing-Well point",
+      "loc": "On the sole, in the deepest depression when the toes are curled, about one third of the way from the base of the second and third toes to the back of the heel.",
+      "cun": "About a third of the way from the toes to the heel; found by the depression rather than a cun distance."
+    },
+    {
+      "code": "KI2",
+      "ch": "KI",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Fire",
+      "py": "Rangu",
+      "hz": "然谷",
+      "en": "Blazing Valley",
+      "note": "Ying-Spring point",
+      "loc": "On the medial border of the foot, below the tuberosity of the navicular bone, at the border of the red and white skin.",
+      "cun": "Below the navicular tuberosity; found by the bone rather than a cun distance."
+    },
+    {
+      "code": "KI3",
+      "ch": "KI",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Earth",
+      "py": "Taixi",
+      "hz": "太溪",
+      "en": "Great Ravine",
+      "note": "Shu-Stream and Yuan-Source point",
+      "loc": "Behind the medial malleolus, in the depression between the tip of the medial malleolus and the calcaneal tendon.",
+      "cun": "Between the tip of the medial malleolus and the calcaneal tendon."
+    },
+    {
+      "code": "KI7",
+      "ch": "KI",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Metal",
+      "py": "Fuliu",
+      "hz": "复溜",
+      "en": "Recover Flow",
+      "note": "Jing-River point",
+      "loc": "On the back of the inner leg, 2 cun above KI3, in front of the calcaneal tendon.",
+      "cun": "2 cun above KI3, in front of the calcaneal tendon."
+    },
+    {
+      "code": "KI10",
+      "ch": "KI",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Water",
+      "py": "Yingu",
+      "hz": "阴谷",
+      "en": "Yin Valley",
+      "note": "He-Sea point",
+      "loc": "At the medial end of the popliteal crease, lateral to the semitendinosus tendon.",
+      "cun": "At the medial end of the popliteal crease."
+    },
+    {
+      "code": "BL67",
+      "ch": "BL",
+      "rank": 0,
+      "shu": "Jing-Well",
+      "elem": "Metal",
+      "py": "Zhiyin",
+      "hz": "至阴",
+      "en": "Reaching Yin",
+      "note": "Jing-Well point",
+      "loc": "On the little toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail.",
+      "cun": "0.1 cun from the lateral corner of the nail."
+    },
+    {
+      "code": "BL66",
+      "ch": "BL",
+      "rank": 1,
+      "shu": "Ying-Spring",
+      "elem": "Water",
+      "py": "Zutonggu",
+      "hz": "足通谷",
+      "en": "Foot Valley Passage",
+      "note": "Ying-Spring point",
+      "loc": "On the lateral border of the foot, in the depression distal to the fifth metatarsophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just distal to the 5th metatarsophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "BL65",
+      "ch": "BL",
+      "rank": 2,
+      "shu": "Shu-Stream",
+      "elem": "Wood",
+      "py": "Shugu",
+      "hz": "束骨",
+      "en": "Bundle Bone",
+      "note": "Shu-Stream point",
+      "loc": "On the lateral border of the foot, in the depression proximal to the fifth metatarsophalangeal joint, at the border of the red and white skin.",
+      "cun": "Just proximal to the 5th metatarsophalangeal joint; found by the joint rather than a cun distance."
+    },
+    {
+      "code": "BL60",
+      "ch": "BL",
+      "rank": 3,
+      "shu": "Jing-River",
+      "elem": "Fire",
+      "py": "Kunlun",
+      "hz": "昆仑",
+      "en": "Kunlun Mountains",
+      "note": "Jing-River point",
+      "loc": "Behind the lateral malleolus, in the depression between the tip of the lateral malleolus and the calcaneal tendon.",
+      "cun": "Between the tip of the lateral malleolus and the calcaneal tendon."
+    },
+    {
+      "code": "BL40",
+      "ch": "BL",
+      "rank": 4,
+      "shu": "He-Sea",
+      "elem": "Earth",
+      "py": "Weizhong",
+      "hz": "委中",
+      "en": "Bend Middle",
+      "note": "He-Sea point",
+      "loc": "At the midpoint of the popliteal crease.",
+      "cun": "At the midpoint of the popliteal crease."
+    }
+  ]
 }
