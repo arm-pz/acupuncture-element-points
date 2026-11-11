@@ -524,7 +524,7 @@ function render(id){
   '<div class="p-sec"><h4>Location</h4><p>' + d.loc + '</p></div>' +
   '<div class="p-sec"><h4>Proportional Cun Distance</h4><p>' + d.cun + '</p></div>' +
   '<div class="p-sec"><h4>Clinical Indications</h4><p>' + d.ind + '</p></div>' +
-  (im ? '<figure class="p-diag" style="margin:20px 0 0;"><img src="' + im + '" alt="' + d.code + ' ' + d.pinyin + ' Anatomical Diagram" style="display:block;width:100%;max-width:320px;border-radius:10px;background:#faf6ee;box-shadow:0 0 0 1px rgba(0,0,0,.3);margin:0 auto;"><figcaption style="font-size:11px;color:var(--mute);text-align:center;margin-top:8px;">' + d.code + ' Location Anatomical Diagram (Nalaayan)</figcaption></figure>' : '');
+  (im ? '<figure class="p-diag" style="margin:20px 0 0;"><img src="' + im + '" alt="' + d.code + ' ' + d.pinyin + ' Anatomical Diagram" style="display:block;width:100%;max-width:320px;border-radius:10px;background:#faf6ee;box-shadow:0 0 0 1px rgba(0,0,0,.3);margin:0 auto;"><figcaption style="font-size:11px;color:var(--mute);text-align:center;margin-top:8px;">' + d.code + ' Location Anatomical Diagram</figcaption></figure>' : '');
 }
 
 function selectPoint(id, pushHash){
