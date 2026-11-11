@@ -39,6 +39,12 @@ Production is the Cloudflare Worker `shu-atlas`, which serves <https://acu.caffe
 
 **Manual deploy** from a trusted machine: `tools/deploy.sh`, with `CLOUDFLARE_API_TOKEN` (Workers Scripts → Edit) and `CLOUDFLARE_ACCOUNT_ID` in `~/.config/shu-atlas/cf.env`, never in the repo.
 
+## App shell
+
+Elements, Channels and Points are three views of one app. Whichever of them loads first keeps running: a click on another view's tab (or on "Explore the … channels") fetches that page once, mounts it in place and keeps it alive, so there is no page load, the header never moves, and each view keeps its filters, search and scroll on a round trip. The address and the Back button follow along, and `/`, `/channels` and `/points` each still open directly. Learn, Study and the chart pages stay ordinary standalone pages.
+
+The shell is `tools/shell-snippet.html`: the fixed header, the view router, and the scene painters. The element on stage at the ring (or picked in a filter) stays behind Channels and Points as a glow under the header. After editing the snippet, run `python3 tools/sync-shell.py` to copy it into `index.html`, `channels.html` and `points.html` (`--check` reports stale copies). Opened from disk, or without JavaScript, the tabs are plain links and every page still works on its own.
+
 ## Shared styling
 
 The twelve chart pages share one stylesheet, `tools/chart.css`, in the same midnight shell as Channels, Points, Learn and Study (Jost and IBM Plex Mono, element inks, the anatomy plate on a cream card). After editing it, run `python3 tools/sync-chart-style.py` to copy it into each chart.
