@@ -402,27 +402,39 @@ html body{background:transparent}
   padding-right:max(var(--shu-pad),env(safe-area-inset-right,0px),calc((100% - var(--shu-w))/2 + var(--shu-pad)));
   border-bottom:1px solid rgba(245,243,237,.09);background:rgba(13,16,29,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   font-family:"Jost",system-ui,sans-serif;view-transition-name:shu-nav;transition:background-color .3s ease,border-color .3s ease}
-.shu-nav[data-view="channels"]{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.shu-nav[data-view=index]{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
 .shu-nav .home{display:flex;align-items:baseline;gap:10px;color:#f5f3ed;text-decoration:none;min-width:0;flex:none}
 .shu-nav .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
 .shu-nav .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9ea8bd;white-space:nowrap}
 .shu-nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:3px;border-radius:999px;min-width:0;overflow-x:auto;scrollbar-width:none}
 .shu-nav ul::-webkit-scrollbar{display:none}
-.shu-nav[data-view="channels"] ul{background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.shu-nav[data-view=index] ul{background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .shu-nav a.l{display:block;padding:8px 12px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:#9ea8bd;text-decoration:none;white-space:nowrap;transition:color .16s ease,background-color .16s ease}
-.shu-nav[data-view="channels"] a.l{color:rgba(243,236,224,.74)}
+.shu-nav[data-view=index] a.l{color:rgba(243,236,224,.74)}
 .shu-nav a.l:hover{color:#f5f3ed;background:rgba(245,243,237,.08)}
 .shu-nav a.l[aria-current="page"]{color:#0d101d;background:#f5f3ed;font-weight:600}
 .shu-nav a:focus-visible{outline:2px solid #f5f3ed;outline-offset:2px}
-@media (max-width:700px){.shu-nav{gap:8px}.shu-nav .home .t{display:none}.shu-nav a.l{padding:7px 8px;font-size:12.5px}}
-@media (max-width:380px){.shu-nav a.l{padding:7px 6px;font-size:12px;letter-spacing:0}}
-@media (max-width:340px){.shu-nav{gap:4px}.shu-nav a.l{padding:7px 4px;font-size:11.5px}}
-/* The scene on stage at the ring stays behind the other views as a glow under the header and title. */
+/* Phones: the wordmark stays at the top and the tabs become a dock within reach of the thumb. The bar itself
+   drops its backdrop blur there, because a blurred ancestor would trap the fixed dock inside it. */
+@media (max-width:700px){
+  .shu-nav,.shu-nav[data-view=index]{pointer-events:none;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;background:linear-gradient(180deg,rgba(13,16,29,.86) 30%,rgba(13,16,29,0))}
+  .shu-nav[data-view=index]{background:none}
+  .shu-nav .home{pointer-events:auto}
+  .shu-nav ul,.shu-nav[data-view=index] ul{pointer-events:auto;position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(calc(100vw - 16px),352px);padding:5px;gap:1px;overflow:visible;
+    background:rgba(16,20,33,.8);border:1px solid rgba(245,243,237,.13);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 14px 30px -10px rgba(0,0,0,.75)}
+  /* equal slots, so the dock holds still when the bold current tab changes */
+  .shu-nav li{flex:1 1 0;min-width:0}
+  .shu-nav a.l{padding:11px 0;font-size:12.5px;text-align:center}
+  .shu-scene ~ .cf{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:380px){.shu-nav a.l{font-size:12px;letter-spacing:0}}
+@media (max-width:340px){.shu-nav a.l{font-size:11.5px}}
+/* The scene on stage at the ring stays behind the other views, full height, blurred and dimmed. */
 .shu-scene{position:fixed;inset:0;z-index:-1;background:#0d101d;overflow:hidden;pointer-events:none}
-.shu-scene i{position:absolute;inset:-40px -40px auto -40px;height:440px;background-size:cover;background-position:50% 64%;opacity:0;filter:blur(18px);transition:opacity .9s ease}
+.shu-scene i{position:absolute;inset:-40px;background-size:cover;background-position:50% 60%;opacity:0;filter:blur(12px) brightness(.55) saturate(.9);transition:opacity .9s ease}
 .shu-scene i.on{opacity:1}
-.shu-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,16,29,.5) 0,rgba(13,16,29,.74) 110px,rgba(13,16,29,.94) 210px,#0d101d 310px)}
-.shu-nav[data-view="channels"] + .shu-scene{visibility:hidden}
+.shu-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,16,29,.4) 0,rgba(13,16,29,.7) 44%,rgba(13,16,29,.9) 100%)}
+.shu-nav[data-view=index] + .shu-scene{visibility:hidden}
 /* Channels and Points sit under the fixed header on one shared measure. */
 .shu-scene ~ .wrap{max-width:var(--shu-w);padding-top:var(--shu-nav-h);padding-left:max(var(--shu-pad),env(safe-area-inset-left,0px));padding-right:max(var(--shu-pad),env(safe-area-inset-right,0px))}
 .shu-scene ~ .wrap .controls{top:var(--shu-nav-h)}
@@ -430,6 +442,15 @@ html body{background:transparent}
 .shu-scene ~ .cf .cf-in{max-width:var(--shu-w)}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 ::view-transition-group(shu-nav){z-index:10}
+/* leaving the ring falls through it into the scene; coming back rises out of it */
+html.shu-dive::view-transition-old(root){transform-origin:50% 36%;animation:shu-dive-out .5s cubic-bezier(.5,0,.75,.4) both}
+html.shu-dive::view-transition-new(root){animation:shu-dive-in .55s cubic-bezier(.22,1,.36,1) .12s both}
+html.shu-rise::view-transition-old(root){animation:shu-rise-out .35s ease both}
+html.shu-rise::view-transition-new(root){transform-origin:50% 36%;animation:shu-rise-in .6s cubic-bezier(.22,1,.36,1) both}
+@keyframes shu-dive-out{to{transform:scale(2.1);opacity:0}}
+@keyframes shu-dive-in{from{transform:scale(.93);opacity:0}}
+@keyframes shu-rise-out{to{transform:scale(.93);opacity:0}}
+@keyframes shu-rise-in{from{transform:scale(1.8);opacity:0}}
 @media (prefers-reduced-motion:reduce){.shu-scene i,.shu-nav{transition:none}}
 </style>
 <nav class="shu-nav" id="shu-nav" data-shell data-view="channels" aria-label="Shu Atlas"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html" aria-current="page">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></nav>
@@ -667,7 +688,12 @@ function show(key,href,push){
       /* a kept-alive view reads its filter from the address the same way a fresh load does */
       window.dispatchEvent(new Event('hashchange'));
     };
-    if(key!==current&&document.startViewTransition&&!reduced)document.startViewTransition(go);else go();
+    if(key!==current&&document.startViewTransition&&!reduced){
+      var root=document.documentElement,cls=current==='index'?'shu-dive':key==='index'?'shu-rise':'';
+      if(cls)root.classList.add(cls);
+      var done=function(){root.classList.remove('shu-dive','shu-rise')};
+      document.startViewTransition(go).finished.then(done,done);
+    }else go();
   });
 }
 function onClick(e){

@@ -45,6 +45,7 @@ html,body{height:100%;height:100dvh}
 .vis-glow{position:absolute;left:50%;top:55.5%;width:42vmin;height:42vmin;transform:translate(-50%,-50%);
   background:radial-gradient(closest-side,rgba(var(--glow-rgb),.45),transparent);
   filter:blur(44px);mix-blend-mode:screen;pointer-events:none;opacity:0}
+.vis-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .vis-defs{position:absolute;width:0;height:0;overflow:hidden}
 
 /* the ring */
@@ -147,6 +148,16 @@ html,body{height:100%;height:100dvh}
 .sh-arc.hl,.sh-head.hl,.ke-line.hl,.ke-head.hl{opacity:1;stroke:rgb(var(--accent-rgb));stroke-width:2.2;
   filter:drop-shadow(0 0 5px rgba(var(--accent-rgb),.8))}
 .ke-line.hl,.ke-head.hl{stroke-width:2.4}
+/* the two arrows leaving the element on stage keep moving, so the direction reads without a legend */
+.sh-arc.out{stroke-dasharray:7 9;animation:vis-flow 1.3s linear infinite}
+.ke-line.out{animation:vis-flow-ke 1.6s linear infinite}
+@keyframes vis-flow{to{stroke-dashoffset:-32}}
+@keyframes vis-flow-ke{to{stroke-dashoffset:-26.4}}
+.vis-lab{position:absolute;left:0;top:0;z-index:250;white-space:nowrap;pointer-events:none;font:500 11.5px/1 var(--body);letter-spacing:.06em;color:var(--ink);
+  text-shadow:0 1px 10px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.6);opacity:0;will-change:transform,opacity}
+.vis-lab i{font:400 13px/1 var(--han);font-style:normal;margin-right:6px;color:rgb(var(--accent-rgb))}
+.vis-lab.k i{color:rgb(178,202,236)}
+.phone .vis-lab{font-size:10.5px}
 
 /* yin-yang: sheng is the yang half, ke is the yin half; both on completes it */
 #yy{transition:filter .9s}
@@ -202,9 +213,15 @@ html,body{height:100%;height:100dvh}
 .phone .vis-chip b{font-size:11.5px}
 .phone .vis-nav button{width:40px;height:40px;font-size:18px}
 .phone .vis-rel{display:none}
+/* phones carry the app tabs in a dock at the bottom: the element picker sits above it, and the labels on the ring stand in for the legend */
+@media (max-width:700px){
+  .vis-nav{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .vis-legend{display:none}
+}
 
 @media (prefers-reduced-motion:reduce){
-  .vis-bg{animation:none}
+  .vis-bg,.sh-arc.out,.ke-line.out{animation:none}
+  .vis-fx{display:none}
   .vis-title-inner > *,.vis-title-inner .vis-title-name,.vis-title-inner.first .vis-han,.vis-title-inner.first .vis-title-name,
   .vis-title-inner.first .vis-title-sub,.vis-title-inner.first .vis-meta,.vis-cta{animation-duration:.01ms;animation-delay:0s}
 }
@@ -221,27 +238,39 @@ html body{background:transparent}
   padding-right:max(var(--shu-pad),env(safe-area-inset-right,0px),calc((100% - var(--shu-w))/2 + var(--shu-pad)));
   border-bottom:1px solid rgba(245,243,237,.09);background:rgba(13,16,29,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   font-family:"Jost",system-ui,sans-serif;view-transition-name:shu-nav;transition:background-color .3s ease,border-color .3s ease}
-.shu-nav[data-view="index"]{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.shu-nav[data-view=index]{background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
 .shu-nav .home{display:flex;align-items:baseline;gap:10px;color:#f5f3ed;text-decoration:none;min-width:0;flex:none}
 .shu-nav .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
 .shu-nav .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9ea8bd;white-space:nowrap}
 .shu-nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:3px;border-radius:999px;min-width:0;overflow-x:auto;scrollbar-width:none}
 .shu-nav ul::-webkit-scrollbar{display:none}
-.shu-nav[data-view="index"] ul{background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.shu-nav[data-view=index] ul{background:rgba(10,8,6,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .shu-nav a.l{display:block;padding:8px 12px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:#9ea8bd;text-decoration:none;white-space:nowrap;transition:color .16s ease,background-color .16s ease}
-.shu-nav[data-view="index"] a.l{color:rgba(243,236,224,.74)}
+.shu-nav[data-view=index] a.l{color:rgba(243,236,224,.74)}
 .shu-nav a.l:hover{color:#f5f3ed;background:rgba(245,243,237,.08)}
 .shu-nav a.l[aria-current="page"]{color:#0d101d;background:#f5f3ed;font-weight:600}
 .shu-nav a:focus-visible{outline:2px solid #f5f3ed;outline-offset:2px}
-@media (max-width:700px){.shu-nav{gap:8px}.shu-nav .home .t{display:none}.shu-nav a.l{padding:7px 8px;font-size:12.5px}}
-@media (max-width:380px){.shu-nav a.l{padding:7px 6px;font-size:12px;letter-spacing:0}}
-@media (max-width:340px){.shu-nav{gap:4px}.shu-nav a.l{padding:7px 4px;font-size:11.5px}}
-/* The scene on stage at the ring stays behind the other views as a glow under the header and title. */
+/* Phones: the wordmark stays at the top and the tabs become a dock within reach of the thumb. The bar itself
+   drops its backdrop blur there, because a blurred ancestor would trap the fixed dock inside it. */
+@media (max-width:700px){
+  .shu-nav,.shu-nav[data-view=index]{pointer-events:none;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;background:linear-gradient(180deg,rgba(13,16,29,.86) 30%,rgba(13,16,29,0))}
+  .shu-nav[data-view=index]{background:none}
+  .shu-nav .home{pointer-events:auto}
+  .shu-nav ul,.shu-nav[data-view=index] ul{pointer-events:auto;position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(calc(100vw - 16px),352px);padding:5px;gap:1px;overflow:visible;
+    background:rgba(16,20,33,.8);border:1px solid rgba(245,243,237,.13);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 14px 30px -10px rgba(0,0,0,.75)}
+  /* equal slots, so the dock holds still when the bold current tab changes */
+  .shu-nav li{flex:1 1 0;min-width:0}
+  .shu-nav a.l{padding:11px 0;font-size:12.5px;text-align:center}
+  .shu-scene ~ .cf{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:380px){.shu-nav a.l{font-size:12px;letter-spacing:0}}
+@media (max-width:340px){.shu-nav a.l{font-size:11.5px}}
+/* The scene on stage at the ring stays behind the other views, full height, blurred and dimmed. */
 .shu-scene{position:fixed;inset:0;z-index:-1;background:#0d101d;overflow:hidden;pointer-events:none}
-.shu-scene i{position:absolute;inset:-40px -40px auto -40px;height:440px;background-size:cover;background-position:50% 64%;opacity:0;filter:blur(18px);transition:opacity .9s ease}
+.shu-scene i{position:absolute;inset:-40px;background-size:cover;background-position:50% 60%;opacity:0;filter:blur(12px) brightness(.55) saturate(.9);transition:opacity .9s ease}
 .shu-scene i.on{opacity:1}
-.shu-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,16,29,.5) 0,rgba(13,16,29,.74) 110px,rgba(13,16,29,.94) 210px,#0d101d 310px)}
-.shu-nav[data-view="index"] + .shu-scene{visibility:hidden}
+.shu-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,16,29,.4) 0,rgba(13,16,29,.7) 44%,rgba(13,16,29,.9) 100%)}
+.shu-nav[data-view=index] + .shu-scene{visibility:hidden}
 /* Channels and Points sit under the fixed header on one shared measure. */
 .shu-scene ~ .wrap{max-width:var(--shu-w);padding-top:var(--shu-nav-h);padding-left:max(var(--shu-pad),env(safe-area-inset-left,0px));padding-right:max(var(--shu-pad),env(safe-area-inset-right,0px))}
 .shu-scene ~ .wrap .controls{top:var(--shu-nav-h)}
@@ -249,6 +278,15 @@ html body{background:transparent}
 .shu-scene ~ .cf .cf-in{max-width:var(--shu-w)}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 ::view-transition-group(shu-nav){z-index:10}
+/* leaving the ring falls through it into the scene; coming back rises out of it */
+html.shu-dive::view-transition-old(root){transform-origin:50% 36%;animation:shu-dive-out .5s cubic-bezier(.5,0,.75,.4) both}
+html.shu-dive::view-transition-new(root){animation:shu-dive-in .55s cubic-bezier(.22,1,.36,1) .12s both}
+html.shu-rise::view-transition-old(root){animation:shu-rise-out .35s ease both}
+html.shu-rise::view-transition-new(root){transform-origin:50% 36%;animation:shu-rise-in .6s cubic-bezier(.22,1,.36,1) both}
+@keyframes shu-dive-out{to{transform:scale(2.1);opacity:0}}
+@keyframes shu-dive-in{from{transform:scale(.93);opacity:0}}
+@keyframes shu-rise-out{to{transform:scale(.93);opacity:0}}
+@keyframes shu-rise-in{from{transform:scale(1.8);opacity:0}}
 @media (prefers-reduced-motion:reduce){.shu-scene i,.shu-nav{transition:none}}
 </style>
 <nav class="shu-nav" id="shu-nav" data-shell data-view="index" aria-label="Shu Atlas"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html" aria-current="page">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></nav>
@@ -486,7 +524,12 @@ function show(key,href,push){
       /* a kept-alive view reads its filter from the address the same way a fresh load does */
       window.dispatchEvent(new Event('hashchange'));
     };
-    if(key!==current&&document.startViewTransition&&!reduced)document.startViewTransition(go);else go();
+    if(key!==current&&document.startViewTransition&&!reduced){
+      var root=document.documentElement,cls=current==='index'?'shu-dive':key==='index'?'shu-rise':'';
+      if(cls)root.classList.add(cls);
+      var done=function(){root.classList.remove('shu-dive','shu-rise')};
+      document.startViewTransition(go).finished.then(done,done);
+    }else go();
   });
 }
 function onClick(e){
@@ -528,6 +571,7 @@ return {scene:scene,setElement:setElement,view:function(){return current},elemen
 <!-- shell:end -->
 <section class="vis-root" id="vis" aria-label="The five elements of Chinese medicine">
   <div class="vis-bgwrap" id="bgwrap" aria-hidden="true"></div>
+  <canvas class="vis-fx" id="fx" aria-hidden="true"></canvas>
   <div class="vis-vignette" aria-hidden="true"></div>
   <div class="vis-glow" id="glow" aria-hidden="true"></div>
 
@@ -679,13 +723,27 @@ function setHL(f){
     const ke=i===f||i===mod(f-2,N);      /* ke arrow i runs i to i+2: the focal one controls, and is controlled */
     shArc[i].classList.toggle('hl',sh);shHead[i].classList.toggle('hl',sh);
     keLine[i].classList.toggle('hl',ke);keHead[i].classList.toggle('hl',ke);
+    shArc[i].classList.toggle('out',i===f);keLine[i].classList.toggle('out',i===f);
   }
 }
 function renderRel(i){
   const e=EL[i];
   const bal=showSheng&&showKe?'Yin and yang complete':showSheng?'Yang only · generating':showKe?'Yin only · controlling':'';
+  labS.innerHTML=`<i lang="zh">生</i>${e.rel.replace(e.title+' ','')}`;
+  labK.innerHTML=`<i lang="zh">克</i>${KE[i].replace(e.title+' ','')}`;
   relEl.innerHTML=(showSheng?`<span><i lang="zh">生</i>${e.rel}</span>`:'')+(showKe?`<span><i lang="zh">克</i>${KE[i]}</span>`:'')+
     (bal?`<span class="bal"><i lang="zh">阴阳</i>${bal}</span>`:'');
+}
+/* the same two relations, written on the ring beside the arrows they describe */
+const mkLab=cls=>{const s=document.createElement('span');s.className='vis-lab '+cls;s.setAttribute('aria-hidden','true');orbit.appendChild(s);return s};
+const labS=mkLab('s'),labK=mkLab('k');
+function placeLabels(cx,cy,Re,step_,f,show){
+  const am=angs[f]+step_/2,r=Re+(phone?12:18),sx=cx+r*Math.cos(am),sy=cy+r*Math.sin(am),right=Math.cos(am)>=0;
+  labS.style.transform=`translate(${f1(sx)}px,${f1(sy)}px) translate(${right?'0':'-100%'},-50%)`;
+  labS.style.opacity=(showSheng?show:0).toFixed(2);
+  const k=(f+2)%N,kx=cx+Re*Math.cos(angs[k]),ky=cy+Re*Math.sin(angs[k])+rads[k]+(phone?12:16);
+  labK.style.transform=`translate(${f1(kx)}px,${f1(ky)}px) translate(-50%,0)`;
+  labK.style.opacity=(showKe?show:0).toFixed(2);
 }
 /* yin-yang at the ring centre; a half turn each time the pair is completed */
 const yyG=$('yy'),yySpin=$('yy-spin');
@@ -722,7 +780,7 @@ let W=0,H=0,S=0,phone=false,ringR=0,ringCY=0,d0=150;
 function layout(){
   const r=root.getBoundingClientRect();W=r.width;H=r.height;S=Math.min(W,H);phone=S<640;
   /* On phones, tune vertical offset and radius to ensure breathing room above bottom controls */
-  const cyFrac = phone ? (H < 720 ? 0.01 : 0.028) : K.RING_CY;
+  const cyFrac = phone ? (H < 720 ? -0.01 : 0.012) : K.RING_CY;
   ringCY = H * cyFrac;
   const maxR = phone ? Math.min(S * 0.365, H * 0.235) : S * K.RING_R;
   ringR = maxR;
@@ -786,9 +844,40 @@ function renderTitle(i,first){
     `</dl>`;
   cta.href='channels.html#'+e.key;ShuAtlas.setElement(e.key);
   document.getElementById('cta-label').textContent='Explore the '+e.title+' channels';
-  renderRel(i);setHL(i);
+  renderRel(i);setHL(i);fxNext=e.key;
   navBtns.forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));
 }
+
+/* ----- weather: each element's scene carries its own moving air ----- */
+const fxEl=$('fx'),fxC=fxEl.getContext('2d'),cycSvg=root.querySelector('.vis-cycles');
+const WX={wood:{n:24,c:'214,246,160'},fire:{n:46,c:'255,172,104'},earth:{n:34,c:'244,214,150'},metal:{n:38,c:'232,240,250'},water:{n:48,c:'176,208,250'}};
+let fxKind='',fxNext='wood',fxA=0,fxP=[],fxW=0,fxH=0,fxR=1;
+function sizeWeather(){fxR=Math.min(1.5,window.devicePixelRatio||1);fxW=W;fxH=H;fxEl.width=Math.round(W*fxR);fxEl.height=Math.round(H*fxR)}
+function drawWeather(t){
+  if(reduced||!inView)return;
+  if(fxW!==W||fxH!==H)sizeWeather();
+  if(fxNext!==fxKind){fxA-=.06;if(fxA<=0){fxA=0;fxKind=fxNext;fxP=Array.from({length:WX[fxKind].n},()=>({x:Math.random(),y:Math.random(),z:.35+Math.random()*.85,p:Math.random()*6.28,s:Math.random()}))}}
+  else if(fxA<1)fxA=Math.min(1,fxA+.03);
+  if(!fxKind)return;
+  const c=fxC,k=fxKind,col=WX[k].c,u=1/Math.max(1,H);
+  c.setTransform(fxR,0,0,fxR,0,0);c.clearRect(0,0,W,H);c.globalCompositeOperation='lighter';
+  for(const p of fxP){
+    if(k==='wood'){p.x+=Math.sin(t/1900+p.p)*.25/W;p.y+=Math.cos(t/2300+p.p*2)*.2*u}        /* fireflies wander */
+    else if(k==='fire'){p.y-=(.35+p.s*.7)*u;p.x+=Math.sin(t/600+p.p)*.35/W}                /* embers rise */
+    else if(k==='earth'){p.x+=(.12+.2*p.s)/W;p.y+=Math.sin(t/2000+p.p)*.08*u}              /* dust drifts across */
+    else if(k==='metal'){p.y+=(.18+.3*p.s)*u;p.x+=Math.sin(t/1500+p.p)*.15/W}              /* glints fall */
+    else{p.y+=(5+5*p.z)*u;p.x-=.8/W}                                                       /* rain */
+    p.x=(p.x+1.04)%1.04-.02;p.y=(p.y+1.04)%1.04-.02;
+    const x=p.x*W+parX*22*p.z,y=p.y*H+parY*16*p.z;
+    if(k==='water'){c.strokeStyle=`rgba(${col},${((.14+.2*p.z)*fxA).toFixed(3)})`;c.lineWidth=1;c.beginPath();c.moveTo(x,y);c.lineTo(x-2,y+10+14*p.z);c.stroke()}
+    else{
+      const r=((k==='wood'?2.4:k==='fire'?1.7:1.4)*p.z+.4)*4,a=Math.max(.07,(.34+.44*Math.sin(t/700+p.p))*(k==='earth'?.6:1))*fxA;
+      const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${col},${a.toFixed(3)})`);g.addColorStop(1,`rgba(${col},0)`);
+      c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,7);c.fill();
+    }
+  }
+}
+let parX=0,parY=0,parTX=0,parTY=0,lastPar='';
 
 /* ----- one clock for everything ----- */
 let lastAcc='',lastFilt=[];
@@ -806,7 +895,19 @@ function frame(t){
   const bR=reduced?1:clamp((t-t00-150)/K.BG_MS,0,1),bE=1-Math.pow(1-bR,3);
   if(eR>=1&&!entered){entered=true;lastAdvance=performance.now()}
   if(bR<1){bgwrap.style.opacity=bE;bgwrap.style.transform=`scale(${1.12-.12*bE})`;bgwrap.style.filter=`blur(${(1-bE)*20}px)`}
-  else if(bgwrap.style.filter||bgwrap.style.transform){bgwrap.style.opacity='';bgwrap.style.transform='';bgwrap.style.filter=''}
+  else{
+    if(bgwrap.style.filter){bgwrap.style.opacity='';bgwrap.style.filter=''}
+    /* depth: the scene and the ring drift at different rates with the pointer or the tilt of the phone.
+       The title and its button stay put, so the way in never moves under the pointer. */
+    const ex=parTX-parX,ey=parTY-parY;
+    parX=Math.abs(ex)<.004?parTX:parX+ex*.12;parY=Math.abs(ey)<.004?parTY:parY+ey*.12;
+    const pk=parX.toFixed(3)+','+parY.toFixed(3);
+    if(pk!==lastPar){lastPar=pk;
+      bgwrap.style.transform=`translate3d(${f1(-parX*16)}px,${f1(-parY*11)}px,0) scale(1.035)`;
+      const o=`translate3d(${f1(parX*7)}px,${f1(parY*5)}px,0)`;orbit.style.transform=o;cycSvg.style.transform=o;
+    }
+  }
+  drawWeather(t);
   glowEl.style.opacity=(.32*bE).toFixed(3);
   const eEased=ss(enter),spin=(1-eEased)*K.SPIN,er=.5+.5*eEased;
 
@@ -846,6 +947,8 @@ function frame(t){
     const rot=reduced?0:t*.006+turnCur;
     yyG.setAttribute('transform',`translate(${f1(W/2)} ${f1(H/2+ringCY)}) scale(${(yyR/100*(.6+.4*eEased)).toFixed(3)})`);
     yySpin.setAttribute('transform',`rotate(${rot.toFixed(2)})`);
+    const fl=mod(Math.round(pos),N);
+    placeLabels(W/2,H/2+ringCY,ringR*er,step_,fl,fade*clamp(1-Math.abs(wrapOff(fl-pos))*4,0,1));
   }
   /* soft accent sampled from the scene on stage */
   if(ws>0){
@@ -901,7 +1004,11 @@ root.addEventListener('wheel',e=>{
 },{passive:false});
 
 root.addEventListener('pointerenter',()=>{hover=true});
-root.addEventListener('pointerleave',()=>{hover=false});
+root.addEventListener('pointerleave',()=>{hover=false;parTX=parTY=0});
+if(!reduced){
+  root.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||dragging)return;parTX=clamp(e.clientX/W*2-1,-1,1);parTY=clamp(e.clientY/H*2-1,-1,1)});
+  addEventListener('deviceorientation',e=>{if(e.gamma==null||e.beta==null)return;parTX=clamp(e.gamma/22,-1,1);parTY=clamp((e.beta-42)/26,-1,1)});
+}
 addEventListener('keydown',e=>{
   if(!hover)return;
   const k=e.key;
