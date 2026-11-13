@@ -321,3 +321,13 @@ The map's footnotes, kept as part of the system.
 - **Don't** add per-point outbound links.
 - **Don't** substitute icon fonts or glyph characters for the chevron, ticks, or wordmark; use inline SVG or CSS.
 - **Don't** add narrow-screen rules beyond the ≤374px quick-launcher rule; test the 480px rule at 390px.
+
+## One scene, every screen (2026-11)
+
+The system above was written for the launcher map. The app now reads as one place from the ring to a point:
+
+- **The scene carries through.** The element chosen on the ring stays behind Channels, Points and each chart page, full height, blurred and dimmed. Panels over it are glass (a translucent midnight fill with a backdrop blur and a hairline), so the Hairline-Only rule still governs the map rows while panels that float over the scene may blur what is behind them.
+- **The plate is the page.** A chart opens on its anatomy plate. Text about the channel is folded away until asked for, and the channel is summarised by one line drawn to scale.
+- **Two pictures per point.** The channel map shows order and direction and is labelled “not to scale”; the location diagram shows where the point is. Location and cun text stay beside whichever is showing.
+- **Thumb reach.** On phones the tabs are a dock at the bottom and a chart's details are a sheet that pulls up.
+- **Motion still has an off switch.** Weather, parallax, the card turn and the zoom between views are all removed under reduced motion.

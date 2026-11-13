@@ -228,8 +228,12 @@ def run_tests():
 
         # TEST 11: Premium Gateway Cards & Waypoint Journey on /lu
         try:
+            # The route and relations block is folded under the point details; it opens on request
             banner = page.locator(".meridian-path-banner")
-            assert banner.is_visible(), "Meridian pathway banner (.meridian-path-banner) not visible"
+            assert not banner.is_visible(), "Route and relations should start folded away"
+            page.locator("#more summary").click()
+            page.wait_for_timeout(200)
+            assert banner.is_visible(), "Meridian pathway banner (.meridian-path-banner) not visible once opened"
 
             # Check topbar points count
             topbar = page.locator(".mpb-topbar")
@@ -264,14 +268,15 @@ def run_tests():
             resp = page.goto(f"{BASE_URL}/li", wait_until="networkidle")
             assert resp.status == 200, f"Expected 200 OK, got {resp.status}"
 
+            # the route block is folded until asked for, so read its text rather than its rendered text
             topbar = page.locator(".mpb-topbar")
-            assert "20" in topbar.inner_text(), f"Expected 20 points for LI, got {topbar.inner_text()}"
+            assert "20" in topbar.text_content(), f"Expected 20 points for LI, got {topbar.text_content()}"
 
             origin_card = page.locator(".gateway-card.origin")
-            assert "LI1" in origin_card.inner_text(), f"Expected LI1 origin, got {origin_card.inner_text()}"
+            assert "LI1" in origin_card.text_content(), f"Expected LI1 origin, got {origin_card.text_content()}"
 
             terminus_card = page.locator(".gateway-card.terminus")
-            assert "LI20" in terminus_card.inner_text(), f"Expected LI20 terminus, got {terminus_card.inner_text()}"
+            assert "LI20" in terminus_card.text_content(), f"Expected LI20 terminus, got {terminus_card.text_content()}"
 
             record("Renamed LI Meridian Chart (20 Points & Gateway Cards)", "PASS", "li-meridian-chart.html loads with 20 points, LI1 start, LI20 end")
         except Exception as e:
@@ -283,13 +288,13 @@ def run_tests():
             assert resp.status == 200, f"Expected 200 OK, got {resp.status}"
 
             topbar = page.locator(".mpb-topbar")
-            assert "67" in topbar.inner_text(), f"Expected 67 points for Bladder, got {topbar.inner_text()}"
+            assert "67" in topbar.text_content(), f"Expected 67 points for Bladder, got {topbar.text_content()}"
 
             origin_card = page.locator(".gateway-card.origin")
-            assert "BL1" in origin_card.inner_text(), f"Expected BL1 origin, got {origin_card.inner_text()}"
+            assert "BL1" in origin_card.text_content(), f"Expected BL1 origin, got {origin_card.text_content()}"
 
             terminus_card = page.locator(".gateway-card.terminus")
-            assert "BL67" in terminus_card.inner_text(), f"Expected BL67 terminus, got {terminus_card.inner_text()}"
+            assert "BL67" in terminus_card.text_content(), f"Expected BL67 terminus, got {terminus_card.text_content()}"
 
             record("Renamed Bladder Meridian Chart (67 Points & Gateway Cards)", "PASS", "bl-meridian-chart.html loads with 67 points, BL1 start, BL67 end")
         except Exception as e:
@@ -326,8 +331,15 @@ def run_tests():
             mob_page = mobile_context.new_page()
             mob_page.goto(f"{BASE_URL}/lu", wait_until="networkidle")
 
+            # On a phone the block sits in the details sheet: opening it pulls the sheet up
+            mob_page.locator("#grab").click()
+            mob_page.wait_for_timeout(600)
+            mob_page.locator("#more summary").click()
+            mob_page.wait_for_timeout(300)
             mob_banner = mob_page.locator(".meridian-path-banner")
             assert mob_banner.is_visible(), "Mobile banner not visible"
+            box = mob_banner.bounding_box()
+            assert box and box["width"] <= 390, f"Banner wider than the phone: {box}"
 
             mobile_context.close()
             record("Mobile Viewport Banner Responsiveness", "PASS", "Banner displays cleanly on 390x844 mobile viewport")
@@ -479,6 +491,89 @@ def run_tests():
             record("App Shell Fixed Header", "PASS", "Brand and tabs sit at the same position on Elements, Channels and Points")
         except Exception as e:
             record("App Shell Fixed Header", "FAIL", str(e))
+
+        # TEST 23: Channel page on a phone: plate in view, card turns to the location diagram, sheet pulls up
+        try:
+            mobile_context = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
+            mp = mobile_context.new_page()
+            mp.goto(f"{BASE_URL}/gb", wait_until="networkidle")
+            mp.wait_for_timeout(500)
+
+            leg = mp.locator(".leg").bounding_box()
+            assert leg and leg["y"] >= 0 and leg["y"] + leg["height"] <= 844, f"Plate is not fully on the first screen: {leg}"
+            assert mp.evaluate("document.documentElement.scrollHeight") <= 844, "Channel page should be one fixed screen on a tall phone"
+            ticks = mp.locator(".cline .cl-track i")
+            assert ticks.count() == 5, f"Expected 5 Shu marks on the channel line, found {ticks.count()}"
+
+            mp.locator('.hit[data-id="p34"]').click(force=True)
+            mp.wait_for_timeout(1000)
+            assert mp.evaluate('document.getElementById("stage").classList.contains("loc")'), "Tapping a point should turn the card to its location diagram"
+            img = mp.locator("#loc-img")
+            assert img.is_visible() and "GB34" in (img.get_attribute("alt") or ""), "Location diagram for GB34 not shown"
+            assert mp.locator("#pt-info .loc").is_visible(), "Location text should stay in view under the diagram"
+            loc_box = mp.locator("#pt-info .loc").bounding_box()
+            assert loc_box["y"] + loc_box["height"] <= 844, f"Location text is off screen: {loc_box}"
+
+            mp.locator('.vsw button[data-face="map"]').click()
+            mp.wait_for_timeout(900)
+            assert not mp.evaluate('document.getElementById("stage").classList.contains("loc")'), "Channel map button should turn the card back"
+
+            mp.locator("#grab").click()
+            mp.wait_for_timeout(600)
+            assert mp.locator("#grab").get_attribute("aria-expanded") == "true", "Sheet did not open"
+            mp.screenshot(path=str(SCREENSHOTS_DIR / "23_channel_phone_sheet.png"))
+            mobile_context.close()
+            record("Channel Page Phone Layout", "PASS", "Plate on first screen, card turns to the GB34 diagram and back, location text in view, sheet opens")
+        except Exception as e:
+            record("Channel Page Phone Layout", "FAIL", str(e))
+
+        # TEST 24: Channel page on desktop: diagram beside its location, every chart on the shared layout
+        try:
+            dp = context.new_page()
+            dp.goto(f"{BASE_URL}/gb#GB38", wait_until="networkidle")
+            dp.wait_for_timeout(400)
+            fig = dp.locator("#pt-info figure img")
+            assert fig.is_visible() and "GB38" in (fig.get_attribute("alt") or ""), "Desktop location diagram missing for GB38"
+            assert dp.locator(".leg").bounding_box()["y"] < 900, "Plate should start on the first screen"
+            assert not dp.locator(".vsw").is_visible(), "The map/location switch is for phones only"
+            bad = []
+            for key in ["lu", "li", "st", "sp", "ht", "si", "bl", "ki", "pc", "tb", "gb", "lr"]:
+                dp.goto(f"{BASE_URL}/{key}", wait_until="domcontentloaded")
+                ok = dp.evaluate("""() => !!document.querySelector('main[data-chartapp]') && document.querySelectorAll('.cline .cl-track i').length === 5
+                    && document.querySelectorAll('.hit').length === 5 && !!document.querySelector('#more .meridian-path-banner') && !!document.body.dataset.el""")
+                if not ok:
+                    bad.append(key)
+            assert not bad, f"Charts not on the shared layout: {bad}"
+            dp.close()
+            record("Channel Page Desktop Layout", "PASS", "Diagram sits beside its location; all 12 charts carry the line, 5 points and folded route block")
+        except Exception as e:
+            record("Channel Page Desktop Layout", "FAIL", str(e))
+
+        # TEST 25: Phone dock, ring labels and weather on the home screen
+        try:
+            mobile_context = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
+            mh = mobile_context.new_page()
+            mh.goto(f"{BASE_URL}/", wait_until="networkidle")
+            mh.wait_for_timeout(3600)
+            dock = mh.locator("#shu-nav ul").bounding_box()
+            assert dock and dock["y"] > 844 * 0.8, f"Tabs should sit in a dock at the bottom on a phone: {dock}"
+            assert dock["x"] >= 0 and dock["x"] + dock["width"] <= 390, f"Dock overflows the screen: {dock}"
+            picker = mh.locator("#nav").bounding_box()
+            assert picker["y"] + picker["height"] <= dock["y"], "Element picker overlaps the dock"
+            labs = mh.locator(".vis-lab")
+            assert labs.count() == 2, f"Expected 2 cycle labels on the ring, found {labs.count()}"
+            assert "feeds Fire" in labs.nth(0).inner_text() and "parts Earth" in labs.nth(1).inner_text(), "Ring labels do not name the Wood relations"
+            assert mh.evaluate("""() => { const c = document.getElementById('fx'); const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+                for (let i = 3; i < d.length; i += 4) if (d[i]) return true; return false; }"""), "Weather canvas is empty"
+            mh.locator("#cta").click()
+            mh.wait_for_timeout(1500)
+            assert mh.locator(".map .route").first.is_visible(), "Entering an element should land on Channels"
+            assert mh.evaluate("getComputedStyle(document.querySelector('#shu-scene i.on')).opacity") == "1", "The element scene should stay behind Channels"
+            mh.screenshot(path=str(SCREENSHOTS_DIR / "25_phone_channels_scene.png"))
+            mobile_context.close()
+            record("Phone Dock, Ring Labels, Weather and Scene", "PASS", "Dock at the bottom, labels on the ring, weather drawn, scene carried into Channels")
+        except Exception as e:
+            record("Phone Dock, Ring Labels, Weather and Scene", "FAIL", str(e))
 
         browser.close()
 

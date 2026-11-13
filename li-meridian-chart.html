@@ -16,27 +16,71 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--ground);color:var(--ink);font:400 15px/1.5 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .page{max-width:1100px;margin:0 auto;padding:0 clamp(16px,3vw,40px) 64px}
-.kicker{margin:34px 0 8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.kicker{margin:24px 0 8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01em;line-height:1.1}
-.lede{margin:10px 0 28px;color:var(--ink-2);max-width:62ch}
-.layout{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:clamp(24px,4vw,44px);align-items:start}
-.leg{position:relative;padding:14px;border-radius:16px;background:radial-gradient(115% 95% at 34% 6%,#faf6ee 0%,#f3ebda 52%,#dfd2b8 100%);box-shadow:0 0 0 1px rgba(0,0,0,.35),0 0 0 5px rgba(245,243,237,.03),inset 0 -44px 64px -48px rgba(92,68,32,.5),0 28px 56px -24px rgba(0,0,0,.92);transition:box-shadow .24s var(--ease)}
-.leg svg{display:block;width:100%;height:auto;overflow:visible;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%);mask-image:linear-gradient(to bottom,transparent 0,#000 7%)}
+.lede{display:none}
+
+/* The channel page: the plate stays in view, the point's details sit beside it (desktop) or in a sheet under it (phone). */
+body.chart{background:var(--ground)}
+.cscene{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--ground)}
+.cscene::before{content:"";position:absolute;inset:-40px;background:var(--scene,none) 50% 60%/cover no-repeat;filter:blur(12px) brightness(.5) saturate(.9);opacity:0;transition:opacity 1.4s ease}
+.cscene.on::before{opacity:1}
+.cscene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,16,29,.42) 0,rgba(13,16,29,.66) 46%,rgba(13,16,29,.88) 100%)}
+body[data-el="wood"]{--el:var(--wood);--el-t:#9fd6b4}
+body[data-el="fire"]{--el:var(--fire);--el-t:#f5a79c}
+body[data-el="earth"]{--el:var(--earth);--el-t:#ecc978}
+body[data-el="metal"]{--el:var(--metal);--el-t:#f2f0ea}
+body[data-el="water"]{--el:var(--water);--el-t:#9dbff2}
+.h1x{color:var(--ink-2);font-weight:400}
+
+/* the whole channel on one line, drawn to scale, with the five Shu points where they fall */
+.cline{margin:20px 0 22px;padding:14px 18px 11px;border:1px solid var(--hair);border-radius:16px;background:rgba(16,20,33,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.cl-track{position:relative;height:16px;margin:0 7px}
+.cl-track::before{content:"";position:absolute;left:0;right:0;top:7px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(245,243,237,.22),var(--el-t,var(--ink-2)))}
+.cl-track b{position:absolute;top:1px;width:14px;height:14px;margin-left:-7px;border-radius:50%;border:2px solid var(--ink);background:var(--ground)}
+.cl-track i{position:absolute;top:0;width:4px;height:16px;margin-left:-2px;border-radius:2px;background:var(--c);box-shadow:0 0 0 2px rgba(13,16,29,.9)}
+.cl-lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:8px;font:500 11px/1.3 var(--mono);color:var(--ink-2)}
+.cl-lab span{white-space:nowrap}
+.cl-lab span b{color:var(--ink);font-weight:500}
+.cl-lab em{font:400 10.5px/1.3 "Jost",system-ui,sans-serif;font-style:normal;letter-spacing:.14em;text-transform:uppercase;text-align:center;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:clamp(24px,4vw,48px);align-items:start}
+.stage{position:sticky;top:76px;height:clamp(460px,calc(100vh - 330px),760px);display:flex;flex-direction:column;align-items:center;perspective:1200px}
+.vsw{display:none}
+.flip{position:relative;flex:1;min-height:0;aspect-ratio:64/100;max-width:100%;transform-style:preserve-3d;transform:rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transition:transform .5s var(--spring)}
+.leg{position:absolute;inset:0;display:flex;justify-content:center;padding:14px;border-radius:18px;background:radial-gradient(115% 95% at 34% 6%,#faf6ee 0%,#f3ebda 52%,#dfd2b8 100%);box-shadow:0 0 0 1px rgba(0,0,0,.35),inset 0 -44px 64px -48px rgba(92,68,32,.5),0 36px 60px -26px rgba(0,0,0,.9)}
+.leg svg{display:block;height:100%;width:auto;max-width:100%;overflow:visible;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%);mask-image:linear-gradient(to bottom,transparent 0,#000 7%)}
+.face-b{display:none}
+.ftag{position:absolute;left:10px;top:10px;padding:5px 7px;border-radius:5px;background:rgba(255,255,255,.72);font:500 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#6b6252;pointer-events:none}
+#points circle{fill:var(--pc,#9c1f12);stroke:#2a211a;stroke-width:1.5;pointer-events:none;transform-box:fill-box;transform-origin:center;transition:transform .22s var(--ease),filter .22s var(--ease)}
+#points circle.on{transform:scale(1.5);filter:drop-shadow(0 0 7px var(--accent-ring))}
+.panel{border:1px solid var(--hair);border-radius:20px;background:rgba(16,20,33,.64);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 18px 40px -12px rgba(0,0,0,.6);overflow:hidden}
+.grab{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#pt-info{padding:20px 22px 20px}
+.empty{color:var(--ink-2);font-size:14.5px;padding:6px 0}
+.locrow{display:grid;grid-template-columns:168px minmax(0,1fr);gap:20px;align-items:start;margin-top:18px}
+.locrow .label:first-child{margin-top:0}
+figure{margin:0}
+figure img{display:block;width:100%;border-radius:10px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.pts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px;margin:0;border-bottom:1px solid var(--hair);background:rgba(245,243,237,.03)}
+.more{border-top:1px solid var(--hair)}
+.more summary{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:15px 22px;cursor:pointer;list-style:none;font-size:15px;font-weight:500}
+.more summary::-webkit-details-marker{display:none}
+.more summary small{font:500 11px/1.3 var(--mono);color:var(--ink-2);text-align:right}
+.more summary::after{content:"+";font:400 18px/1 var(--mono);color:var(--ink-2);margin-left:4px}
+.more[open] summary::after{content:"\2212"}
+.more summary:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
 #text-labels text{transition:fill .18s var(--ease)}
 #text-labels text.on{fill:var(--accent);font-weight:700}
-#points circle{fill:#9c1f12;pointer-events:none;transform-box:fill-box;transform-origin:center;transition:transform .22s var(--ease),fill .22s var(--ease),filter .22s var(--ease)}
 #points circle.hover{transform:scale(1.35);filter:drop-shadow(0 0 5px rgba(226,75,56,.75))}
-#points circle.on{fill:var(--accent);transform:scale(1.5);filter:drop-shadow(0 0 7px var(--accent-ring))}
 .hit{fill:transparent;cursor:pointer;outline:none}
 .hit:focus-visible{stroke:#10131f;stroke-width:2}
 .ring{fill:none;stroke:var(--accent);stroke-width:2.5;opacity:0;pointer-events:none;transform-box:fill-box;transform-origin:center}
 .ring.on{opacity:1;animation:ring 2.4s var(--ease) infinite}
 @keyframes ring{0%{transform:scale(.6);opacity:.95}70%,100%{transform:scale(1.65);opacity:0}}
-.panel{position:sticky;top:20px;background:var(--raise);border:1px solid var(--hair);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -12px rgba(0,0,0,.68),0 0 0 1px rgba(255,255,255,.03)}
-#pt-info{padding:22px 22px 18px;min-height:220px}
 #pt-info.enter{animation:enter .22s var(--ease)}
 @keyframes enter{from{opacity:0;transform:translateY(6px) scale(.99)}to{opacity:1;transform:none}}
-.empty{display:flex;flex-direction:column;justify-content:center;min-height:178px;color:var(--ink-2);font-size:14.5px}
 .empty b{display:block;color:var(--ink);font-size:18px;font-weight:500;margin-bottom:4px}
 .eyebrow{display:flex;align-items:center;gap:8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent-t)}
 .eyebrow .sep{width:3px;height:3px;border-radius:50%;background:var(--hair-2)}
@@ -50,9 +94,6 @@ h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.01
 .loc,.cun{margin:0;font-size:15px;line-height:1.55;color:var(--ink)}
 .cun a{color:var(--accent-t);text-decoration:none;border-bottom:1px solid var(--accent-ring);padding-bottom:1px;margin-left:4px;white-space:nowrap;transition:border-color .15s ease,color .15s ease}
 .cun a:hover{border-color:var(--accent-t)}
-figure{margin:18px 0 0}
-figure img{display:block;width:100%;max-width:280px;border-radius:10px;background:#faf6ee;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
-.pts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px;margin:0;background:var(--raise-2);border-top:1px solid var(--hair)}
 .chip{appearance:none;border:0;background:transparent;border-radius:10px;padding:9px 4px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-2);font-family:inherit;transition:background-color .16s ease,color .16s ease,transform .12s var(--ease)}
 .chip:hover{background:rgba(245,243,237,.07);color:var(--ink);transform:translateY(-1px)}
 .chip .s{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
@@ -65,15 +106,6 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
 .note a{color:var(--accent-t);text-decoration:none;border-bottom:1px solid var(--accent-ring);transition:border-color .15s ease}
 .note a:hover{border-color:var(--accent-t)}
 .note{margin:36px 0 0;padding-top:16px;border-top:1px solid var(--hair);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
-@media (max-width:760px){
-  h1{font-size:28px}
-  .lede{margin-bottom:18px}
-  .layout{grid-template-columns:1fr;gap:16px}
-  .leg{max-width:420px;margin:0 auto;width:100%}
-  .panel{position:static}
-  #pt-info{min-height:0}
-  .empty{min-height:0}
-}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .ring.on{opacity:.6}
@@ -92,7 +124,7 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
 .appbar a.l:active{transform:scale(.96)}
 .appbar a.l.here{color:var(--ground);background:var(--ink);font-weight:600}
 .appbar a:focus-visible,.pager a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.pager{display:flex;justify-content:space-between;gap:10px;margin:28px 0 0}
+.pager{display:flex;justify-content:space-between;gap:10px;margin:22px 0 0}
 .pager a{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 15px;border-radius:999px;border:1px solid var(--hair);background:rgba(245,243,237,.03);font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:var(--ink-2);text-decoration:none;transition:border-color .15s ease,color .15s ease,background-color .15s ease,transform .12s var(--ease)}
 .pager a:hover{border-color:var(--hair-2);color:var(--ink);background:rgba(245,243,237,.07);transform:translateY(-1px)}
 .pager a:active{transform:scale(.96)}
@@ -597,13 +629,124 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
     padding: 10px 12px;
   }
 }
-</style><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end --></head><body>
+
+.panel .note{margin:0;padding:14px 22px 18px}
+
+/* the route and relations block now lives inside the details panel, always in its one-column form */
+.more .meridian-path-banner{margin:0;border:0;border-radius:0;box-shadow:none;background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.more .meridian-path-banner:hover{box-shadow:none}
+.more .mpb-topbar{padding:0 22px 12px;background:none;border:0}
+.more .mpb-title{display:none}
+.more .mpb-gateways{grid-template-columns:1fr;gap:10px;padding:14px 22px;background:rgba(0,0,0,.14)}
+.more .gw-conduit{flex-direction:row;padding:2px 0}
+.more .conduit-line{width:2px;height:20px}
+.more .conduit-pulse{display:none}
+.more .conduit-arrow{bottom:-6px;right:auto;transform:rotate(90deg)}
+.more .gateway-card{padding:14px 16px}
+.more .gateway-card:hover{transform:none}
+.more .gw-code{font-size:19px;padding:5px 10px}
+.more .gw-pinyin,.more .gw-hanzi{font-size:16px}
+.more .mpb-journey{padding:16px 22px}
+.more .mpb-timeline{grid-template-columns:1fr;gap:10px}
+.more .stage-card{padding:13px 15px}
+.more .mpb-affinities{grid-template-columns:repeat(2,1fr)}
+
+@media (hover:hover) and (min-width:761px){.flip{transition:transform .25s ease-out}}
+
+/* phones: a card that turns between the channel map and the point's location diagram, over a sheet of details */
+@media (max-width:760px){
+  .appbar{display:none}
+  .page{padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .pager{margin:0}
+  .kicker{margin:14px 0 5px;font-size:10px}
+  h1{font-size:25px}
+  .h1x,.lede{display:none}
+  .cline{margin:12px 0 0;padding:11px 14px 9px}
+  .cl-lab{font-size:10px}
+  .layout{display:block}
+  .stage{position:relative;top:auto;height:340px;min-height:0;max-height:none;margin:10px 0 14px;gap:8px}
+  .vsw{display:flex;gap:3px;padding:3px;border-radius:999px;border:1px solid var(--hair);background:rgba(16,20,33,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);flex:none}
+  .vsw button{appearance:none;border:0;background:none;padding:8px 14px;border-radius:999px;font:500 12.5px/1 "Jost",system-ui,sans-serif;color:var(--ink-2);cursor:pointer}
+  .vsw button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+  .vsw button:disabled{opacity:.45;cursor:default}
+  .vsw button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .flip{aspect-ratio:70/100;transform:rotateY(var(--fl,0deg));transition:transform .8s var(--spring)}
+  .stage.loc .flip{--fl:180deg}
+  .leg{padding:10px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+  .face-b{display:block;position:absolute;inset:0;border-radius:18px;overflow:hidden;background:#fff;transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.35),0 36px 60px -26px rgba(0,0,0,.9)}
+  .face-b img{display:block;width:100%;height:100%;object-fit:contain}
+  .panel{border-radius:20px}
+  #pt-info{padding:14px 18px 16px}
+  .eyebrow{font-size:10.5px}
+  .title{font-size:22px;margin:8px 0 0}
+  .en{font-size:13.5px}
+  .pills{margin-top:9px}
+  .label{margin:14px 0 4px;font-size:10.5px}
+  .loc,.cun{font-size:14px;line-height:1.5}
+  .locrow{display:block;margin-top:0}
+  .locrow figure{display:none}
+  .more summary{padding:14px 18px}
+  .more .mpb-topbar,.more .mpb-gateways,.more .mpb-journey{padding-left:18px;padding-right:18px}
+  .panel .note{padding:14px 18px 18px}
+}
+/* tall phones: one fixed screen, the sheet peeks from the bottom and pulls up */
+@media (max-width:760px) and (min-height:620px){
+  html,body.chart{height:100%;overflow:hidden}
+  body.chart .cf{display:none}
+  .page{--peek:clamp(212px,34dvh,318px);height:100vh;height:100dvh;display:flex;flex-direction:column;padding-bottom:0}
+  .layout{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch}
+  .stage{flex:1;height:auto;margin:10px 0 0;padding-bottom:calc(var(--peek) + 14px)}
+  .panel{position:fixed;z-index:50;left:0;right:0;bottom:0;display:flex;flex-direction:column;min-height:var(--peek);max-height:88vh;max-height:88dvh;border-radius:24px 24px 0 0;border-width:1px 0 0;background:rgba(16,20,33,.8);box-shadow:0 -18px 40px -14px rgba(0,0,0,.7);transform:translateY(calc(100% - var(--peek)));transition:transform .5s var(--spring);touch-action:pan-y}
+  .panel.open{transform:none;background:rgba(14,18,30,.95)}
+  .grab{display:block;appearance:none;border:0;background:none;width:100%;padding:9px 0 7px;cursor:pointer;flex:none;touch-action:none}
+  .grab i{display:block;width:40px;height:4px;margin:0 auto;border-radius:2px;background:var(--ink);opacity:.34}
+  .grab:focus-visible i{opacity:1}
+  .sheet-body{flex:1;min-height:0;overflow:hidden;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .panel.open .sheet-body{overflow-y:auto;overscroll-behavior:contain}
+  .pts{border-top:1px solid var(--hair)}
+}
+</style><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end --></head><body class="chart" data-el="metal" data-yy="Yang">
 <header class="appbar"><div class="in"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l here" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></div></header>
-<main class="page">
+<div class="cscene" id="cscene" aria-hidden="true"></div>
+<main class="page" data-chartapp="1">
 <nav class="pager" aria-label="Channels"><a class="up" href="channels.html#metal">‹ Metal channels</a><a href="lung-meridian-chart.html" aria-label="Previous channel: Lung"><i style="--c:var(--metal)"></i><span class="nm">Lung</span> ←</a><a href="ki-meridian-chart.html" aria-label="Next channel: Kidney">→ <span class="nm">Kidney</span><i style="--c:var(--water)"></i></a></nav>
 <p class="kicker">Hand Yangming · Yang Metal · <span class="badge-pts">20 Points</span></p>
-<h1>Large Intestine Meridian — Five Shu Points</h1>
+<h1>Large Intestine <span class="h1x">Meridian — Five Shu Points</span></h1>
 <p class="lede">Select a point on the arm, or step through them from the hand (Well) to the elbow (Sea) using the buttons under the details panel.</p>
+<!-- chartline:start · generated from data/points.json by tools/sync-chart-app.py; edit there -->
+<div class="cline" role="img" aria-label="The whole Large Intestine channel, LI1 to LI20, 20 points, with its five Shu points marked"><div class="cl-track"><b style="left:0"></b><b style="left:100%"></b><i style="left:0.0%;--c:var(--metal)" title="LI1 · Jing-Well"></i><i style="left:5.3%;--c:var(--water)" title="LI2 · Ying-Spring"></i><i style="left:10.5%;--c:var(--wood)" title="LI3 · Shu-Stream"></i><i style="left:21.1%;--c:var(--fire)" title="LI5 · Jing-River"></i><i style="left:52.6%;--c:var(--earth)" title="LI11 · He-Sea"></i></div><div class="cl-lab"><span><b>LI1</b> · Index Finger</span><em>20 points · Hand → Face</em><span>Nasolabial Groove · <b>LI20</b></span></div></div>
+<!-- chartline:end -->
+<div class="layout">
+<div class="stage" id="stage">
+<div class="vsw" role="group" aria-label="Chart view"><button type="button" data-face="map" aria-pressed="true">Channel map</button><button type="button" data-face="loc" aria-pressed="false" disabled>Point location</button></div>
+<div class="flip" id="flip">
+<div class="leg">
+<svg viewBox="0 0 576 1024" role="group" aria-label="Large Intestine channel chart with its five Shu points" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<g><path id="arm" d="M376.5,49.4C373.6,47.6 375.8,47.9 373.5,49.8C371.2,51.6 368.9,55.8 362.6,60.2C356.4,64.8 343.8,70.9 336.0,76.8C328.2,82.6 321.2,89.4 315.8,95.5C310.2,101.6 306.9,106.4 303.0,113.1C299.1,119.9 295.8,125.9 292.5,136.0C289.2,146.1 285.2,163.5 283.5,173.9C281.8,184.2 282.6,192.9 282.0,198.2C281.4,203.6 284.5,196.4 280.1,205.8C275.8,215.1 261.7,240.4 255.8,254.1C249.8,267.8 246.9,279.0 244.5,287.9C242.1,296.8 242.2,296.1 241.5,307.4C240.8,318.7 241.0,344.0 240.0,355.8C239.0,367.5 236.8,368.9 235.5,377.9C234.2,386.9 235.0,397.2 232.5,409.8C230.0,422.2 223.5,440.4 220.5,452.9C217.5,465.3 215.8,476.3 214.5,484.4C213.2,492.4 215.5,490.5 213.0,501.2C210.5,512.0 202.8,535.2 199.5,548.9C196.2,562.6 195.0,570.3 193.5,583.4C192.0,596.4 191.2,619.2 190.5,627.2C189.8,635.2 189.2,625.9 189.0,631.4C188.8,636.9 189.2,654.8 189.0,660.2C188.8,665.8 188.0,657.4 187.5,664.4C187.0,671.4 186.6,694.2 186.0,702.2C185.4,710.3 185.9,707.3 184.1,712.8C182.4,718.2 176.4,728.2 175.5,734.9C174.6,741.6 178.0,746.3 178.5,752.9C179.0,759.4 179.8,763.7 178.5,774.2C177.2,784.8 174.0,803.3 171.0,816.2C168.0,829.2 162.2,843.4 160.5,851.9C158.8,860.4 160.0,862.5 160.5,867.2C161.0,872.0 162.8,875.1 163.5,880.4C164.2,885.6 163.6,891.6 165.0,898.8C166.4,905.9 166.9,913.7 171.8,923.5C176.6,933.3 186.4,948.2 194.2,957.6C202.1,967.1 213.9,976.1 218.6,980.1C223.3,984.1 219.8,981.6 222.4,981.6C225.0,981.6 230.7,979.3 234.4,980.1C238.1,980.9 241.6,985.6 244.5,986.5C247.4,987.4 249.7,986.8 251.6,985.4C253.6,984.0 255.4,980.5 256.1,978.2C256.9,976.0 256.6,974.1 256.1,971.9C255.6,969.7 256.0,969.0 253.1,965.1C250.2,961.2 241.6,952.2 238.9,948.6C236.1,945.1 237.0,951.6 236.6,943.8C236.2,935.9 237.1,912.7 236.6,901.4C236.1,890.1 233.4,881.4 233.6,875.9C233.8,870.4 235.8,873.6 237.8,868.4C239.7,863.1 243.4,848.9 245.2,844.4C247.1,839.9 246.4,842.2 248.6,841.4C250.8,840.5 255.3,839.4 258.4,839.1C261.4,838.9 264.7,839.1 267.0,839.9C269.3,840.7 270.1,840.6 272.2,844.0C274.4,847.4 277.5,853.4 279.8,860.1C282.0,866.9 283.8,878.8 285.8,884.5C287.8,890.2 289.2,891.7 291.8,894.6C294.3,897.6 298.9,900.6 301.1,902.1C303.3,903.6 303.1,903.5 304.9,903.6C306.7,903.8 309.4,904.5 312.0,902.9C314.6,901.2 319.2,897.1 320.6,893.9C322.0,890.6 321.8,890.2 320.2,883.4C318.8,876.6 314.5,861.4 311.6,853.0C308.8,844.6 304.9,838.8 303.0,832.8C301.1,826.7 301.6,820.8 300.4,816.6C299.2,812.5 300.9,814.9 295.9,808.0C290.9,801.1 277.9,783.8 270.4,775.0C262.9,766.2 254.4,759.8 250.9,755.1C247.3,750.4 243.2,765.1 249.0,746.9C254.8,728.6 278.3,663.9 285.4,645.6C292.4,627.3 288.1,644.3 291.4,637.0C294.6,629.7 299.5,620.1 304.9,601.8C310.2,583.4 320.0,543.0 323.6,526.8C327.2,510.5 326.1,512.8 326.6,504.2C327.1,495.7 325.8,483.8 326.6,475.4C327.5,466.9 326.2,466.7 331.9,453.6C337.5,440.6 352.6,413.6 360.4,397.0C368.2,380.4 374.6,368.1 378.8,353.9C382.9,339.7 380.3,331.2 385.1,311.9C389.9,292.6 403.2,251.6 407.6,238.0C412.0,224.4 404.2,240.6 411.4,230.5C418.5,220.4 444.0,188.6 450.4,177.6C456.8,166.7 451.2,172.3 449.6,164.9C448.0,157.4 445.0,144.3 440.6,133.0C436.2,121.7 428.8,106.2 423.4,97.0C418.0,87.8 413.8,83.6 408.4,77.5C403.0,71.4 396.4,64.9 391.1,60.2C385.8,55.6 379.4,51.1 376.5,49.4Z" style="fill:#fff;stroke:#000;stroke-width:4px;stroke-linejoin:round"/><path d="M221.6,976.4C220.8,975.1 217.7,970.8 216.8,968.5C215.8,966.2 217.1,965.9 216.0,962.9C214.9,959.8 211.6,952.6 210.0,950.1C208.4,947.7 209.6,951.7 206.2,948.2C202.9,944.8 193.4,934.1 190.1,929.5C186.9,924.9 189.1,931.2 186.8,920.5C184.4,909.8 178.1,876.2 176.2,865.0C174.4,853.8 175.2,858.9 175.9,853.4C176.6,847.8 179.6,835.2 180.4,831.6" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M198.4,858.6C199.8,865.4 204.7,883.9 206.6,899.1C208.6,914.3 209.4,941.3 210.0,949.8" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M313.5,896.5C312.3,896.7 308.5,897.8 306.4,897.6C304.2,897.4 302.2,896.6 300.8,895.4C299.3,894.1 298.2,892.1 297.8,890.1C297.3,888.2 297.5,885.5 298.1,883.8C298.8,882.0 299.4,880.8 301.5,879.6C303.6,878.5 308.9,877.2 310.9,877.0C312.9,876.8 312.4,876.4 313.5,878.5C314.6,880.6 316.9,887.6 317.6,889.4" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M237.4,855.2C238.2,852.9 240.6,844.1 242.2,841.0C243.9,837.9 246.0,837.4 247.5,836.9C249.0,836.3 250.6,837.5 251.2,837.6" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M239.2,957.6C239.2,960.2 237.1,969.4 238.9,973.0C240.6,976.6 248.2,977.4 249.8,979.0C251.2,980.6 248.2,982.1 247.9,982.8" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M171.4,905.5C170.8,900.9 168.2,882.7 167.6,878.1" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M165.0,865.8C165.0,864.2 164.1,860.6 165.0,856.4C165.9,852.1 168.5,848.7 170.6,840.2C172.8,831.8 176.6,811.5 177.8,805.8" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/></g>
+<path id="channel" d="M354.4,71.5C354.3,73.2 356.5,75.2 353.5,82.0C350.4,88.8 341.0,101.8 336.0,112.0C331.0,122.2 327.3,132.0 323.6,143.5C319.9,155.0 317.2,165.5 313.8,181.0C310.5,196.5 311.4,211.0 303.3,236.5C295.2,262.0 274.5,307.0 265.3,334.0C256.1,361.0 252.9,382.8 248.2,398.5C243.6,414.2 240.7,415.5 237.6,428.5C234.4,441.5 230.9,459.8 229.4,476.5C228.0,493.2 228.3,504.2 228.9,529.0C229.5,553.8 230.9,591.2 233.1,625.0C235.3,658.8 241.7,705.5 242.2,731.5C242.8,757.5 237.3,769.0 236.5,781.0C235.7,793.0 239.3,794.5 237.5,803.5C235.7,812.5 228.0,826.0 225.5,835.0C223.1,844.0 223.1,846.8 222.7,857.5C222.2,868.2 222.0,882.2 222.8,899.5C223.5,916.8 226.6,950.8 227.4,961.0" style="fill:none;stroke:#ff8956;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round"/>
+<g id="points"><circle id="p1" cx="227.5" cy="956.5" r="6.75"/><circle id="p2" cx="222.8" cy="861.2" r="6.75"/><circle id="p3" cx="225.5" cy="835.0" r="6.75"/><circle id="p5" cx="241.9" cy="743.1" r="6.75"/><circle id="p11" cx="237.7" cy="428.0" r="6.75"/></g>
+<g id="callout-lines" style="fill:none;stroke:#555;stroke-width:1px;"><path d="M136,990L218.5,956.5"/><path d="M136,902L213.8,861.2"/><path d="M136,852L216.5,835.0"/><path d="M136,770L232.9,743.1"/><path d="M136,460L228.7,428.0"/></g>
+<g id="text-labels" style="font-family:ArialMT,Arial,sans-serif;font-size:32px;fill:#555;"><text text-anchor="end" x="130" y="1000">LI1</text><text text-anchor="end" x="130" y="912">LI2</text><text text-anchor="end" x="130" y="862">LI3</text><text text-anchor="end" x="130" y="780">LI5</text><text text-anchor="end" x="130" y="470">LI11</text></g>
+</svg>
+<span class="ftag">Channel map · not to scale</span>
+</div>
+<div class="face-b" aria-hidden="true"><img id="loc-img" alt=""><span class="ftag" id="loc-tag"></span></div>
+</div>
+</div>
+<aside class="panel" id="sheet" aria-label="Point details">
+<button type="button" class="grab" id="grab" aria-expanded="false" aria-controls="sheet-body"><i></i><span class="sr">Show or hide the full details</span></button>
+<div class="sheet-body" id="sheet-body">
+<div class="pts" role="group" aria-label="Shu points, Well to Sea">
+<!-- points:start CHIPS · generated from data/points.json by tools/sync-points.py; edit there -->
+<button type="button" class="chip" data-id="p1" style="--c:var(--metal)"><span class="s">Well</span><span class="c">LI1</span><i></i></button>
+<button type="button" class="chip" data-id="p2" style="--c:var(--water)"><span class="s">Spring</span><span class="c">LI2</span><i></i></button>
+<button type="button" class="chip" data-id="p3" style="--c:var(--wood)"><span class="s">Stream</span><span class="c">LI3</span><i></i></button>
+<button type="button" class="chip" data-id="p5" style="--c:var(--fire)"><span class="s">River</span><span class="c">LI5</span><i></i></button>
+<button type="button" class="chip" data-id="p11" style="--c:var(--earth)"><span class="s">Sea</span><span class="c">LI11</span><i></i></button>
+<!-- points:end -->
+</div>
+<div id="pt-info" aria-live="polite"><div class="empty"><b>Select a point</b>Tap a dot on the chart or a station above for its location, cun measure and diagram.</div></div>
+<details class="more" id="more"><summary><span>Route and relations</span><small>LI1 → LI20 · 4 stages</small></summary>
 <!-- meridian-pathway:start -->
 <section class="meridian-path-banner" aria-label="Meridian Trajectory, Gateway Termini and Waypoint Journey" style="--c:var(--metal)">
   <!-- 1. Top Identity Bar -->
@@ -744,30 +887,11 @@ figure img{display:block;width:100%;max-width:280px;border-radius:10px;backgroun
   </div>
 </section>
 <!-- meridian-pathway:end -->
-<div class="layout">
-<div class="leg">
-<svg viewBox="0 0 576 1024" role="group" aria-label="Large Intestine channel chart with its five Shu points" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<g><path id="arm" d="M376.5,49.4C373.6,47.6 375.8,47.9 373.5,49.8C371.2,51.6 368.9,55.8 362.6,60.2C356.4,64.8 343.8,70.9 336.0,76.8C328.2,82.6 321.2,89.4 315.8,95.5C310.2,101.6 306.9,106.4 303.0,113.1C299.1,119.9 295.8,125.9 292.5,136.0C289.2,146.1 285.2,163.5 283.5,173.9C281.8,184.2 282.6,192.9 282.0,198.2C281.4,203.6 284.5,196.4 280.1,205.8C275.8,215.1 261.7,240.4 255.8,254.1C249.8,267.8 246.9,279.0 244.5,287.9C242.1,296.8 242.2,296.1 241.5,307.4C240.8,318.7 241.0,344.0 240.0,355.8C239.0,367.5 236.8,368.9 235.5,377.9C234.2,386.9 235.0,397.2 232.5,409.8C230.0,422.2 223.5,440.4 220.5,452.9C217.5,465.3 215.8,476.3 214.5,484.4C213.2,492.4 215.5,490.5 213.0,501.2C210.5,512.0 202.8,535.2 199.5,548.9C196.2,562.6 195.0,570.3 193.5,583.4C192.0,596.4 191.2,619.2 190.5,627.2C189.8,635.2 189.2,625.9 189.0,631.4C188.8,636.9 189.2,654.8 189.0,660.2C188.8,665.8 188.0,657.4 187.5,664.4C187.0,671.4 186.6,694.2 186.0,702.2C185.4,710.3 185.9,707.3 184.1,712.8C182.4,718.2 176.4,728.2 175.5,734.9C174.6,741.6 178.0,746.3 178.5,752.9C179.0,759.4 179.8,763.7 178.5,774.2C177.2,784.8 174.0,803.3 171.0,816.2C168.0,829.2 162.2,843.4 160.5,851.9C158.8,860.4 160.0,862.5 160.5,867.2C161.0,872.0 162.8,875.1 163.5,880.4C164.2,885.6 163.6,891.6 165.0,898.8C166.4,905.9 166.9,913.7 171.8,923.5C176.6,933.3 186.4,948.2 194.2,957.6C202.1,967.1 213.9,976.1 218.6,980.1C223.3,984.1 219.8,981.6 222.4,981.6C225.0,981.6 230.7,979.3 234.4,980.1C238.1,980.9 241.6,985.6 244.5,986.5C247.4,987.4 249.7,986.8 251.6,985.4C253.6,984.0 255.4,980.5 256.1,978.2C256.9,976.0 256.6,974.1 256.1,971.9C255.6,969.7 256.0,969.0 253.1,965.1C250.2,961.2 241.6,952.2 238.9,948.6C236.1,945.1 237.0,951.6 236.6,943.8C236.2,935.9 237.1,912.7 236.6,901.4C236.1,890.1 233.4,881.4 233.6,875.9C233.8,870.4 235.8,873.6 237.8,868.4C239.7,863.1 243.4,848.9 245.2,844.4C247.1,839.9 246.4,842.2 248.6,841.4C250.8,840.5 255.3,839.4 258.4,839.1C261.4,838.9 264.7,839.1 267.0,839.9C269.3,840.7 270.1,840.6 272.2,844.0C274.4,847.4 277.5,853.4 279.8,860.1C282.0,866.9 283.8,878.8 285.8,884.5C287.8,890.2 289.2,891.7 291.8,894.6C294.3,897.6 298.9,900.6 301.1,902.1C303.3,903.6 303.1,903.5 304.9,903.6C306.7,903.8 309.4,904.5 312.0,902.9C314.6,901.2 319.2,897.1 320.6,893.9C322.0,890.6 321.8,890.2 320.2,883.4C318.8,876.6 314.5,861.4 311.6,853.0C308.8,844.6 304.9,838.8 303.0,832.8C301.1,826.7 301.6,820.8 300.4,816.6C299.2,812.5 300.9,814.9 295.9,808.0C290.9,801.1 277.9,783.8 270.4,775.0C262.9,766.2 254.4,759.8 250.9,755.1C247.3,750.4 243.2,765.1 249.0,746.9C254.8,728.6 278.3,663.9 285.4,645.6C292.4,627.3 288.1,644.3 291.4,637.0C294.6,629.7 299.5,620.1 304.9,601.8C310.2,583.4 320.0,543.0 323.6,526.8C327.2,510.5 326.1,512.8 326.6,504.2C327.1,495.7 325.8,483.8 326.6,475.4C327.5,466.9 326.2,466.7 331.9,453.6C337.5,440.6 352.6,413.6 360.4,397.0C368.2,380.4 374.6,368.1 378.8,353.9C382.9,339.7 380.3,331.2 385.1,311.9C389.9,292.6 403.2,251.6 407.6,238.0C412.0,224.4 404.2,240.6 411.4,230.5C418.5,220.4 444.0,188.6 450.4,177.6C456.8,166.7 451.2,172.3 449.6,164.9C448.0,157.4 445.0,144.3 440.6,133.0C436.2,121.7 428.8,106.2 423.4,97.0C418.0,87.8 413.8,83.6 408.4,77.5C403.0,71.4 396.4,64.9 391.1,60.2C385.8,55.6 379.4,51.1 376.5,49.4Z" style="fill:#fff;stroke:#000;stroke-width:4px;stroke-linejoin:round"/><path d="M221.6,976.4C220.8,975.1 217.7,970.8 216.8,968.5C215.8,966.2 217.1,965.9 216.0,962.9C214.9,959.8 211.6,952.6 210.0,950.1C208.4,947.7 209.6,951.7 206.2,948.2C202.9,944.8 193.4,934.1 190.1,929.5C186.9,924.9 189.1,931.2 186.8,920.5C184.4,909.8 178.1,876.2 176.2,865.0C174.4,853.8 175.2,858.9 175.9,853.4C176.6,847.8 179.6,835.2 180.4,831.6" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M198.4,858.6C199.8,865.4 204.7,883.9 206.6,899.1C208.6,914.3 209.4,941.3 210.0,949.8" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M313.5,896.5C312.3,896.7 308.5,897.8 306.4,897.6C304.2,897.4 302.2,896.6 300.8,895.4C299.3,894.1 298.2,892.1 297.8,890.1C297.3,888.2 297.5,885.5 298.1,883.8C298.8,882.0 299.4,880.8 301.5,879.6C303.6,878.5 308.9,877.2 310.9,877.0C312.9,876.8 312.4,876.4 313.5,878.5C314.6,880.6 316.9,887.6 317.6,889.4" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M237.4,855.2C238.2,852.9 240.6,844.1 242.2,841.0C243.9,837.9 246.0,837.4 247.5,836.9C249.0,836.3 250.6,837.5 251.2,837.6" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M239.2,957.6C239.2,960.2 237.1,969.4 238.9,973.0C240.6,976.6 248.2,977.4 249.8,979.0C251.2,980.6 248.2,982.1 247.9,982.8" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M171.4,905.5C170.8,900.9 168.2,882.7 167.6,878.1" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/><path d="M165.0,865.8C165.0,864.2 164.1,860.6 165.0,856.4C165.9,852.1 168.5,848.7 170.6,840.2C172.8,831.8 176.6,811.5 177.8,805.8" style="fill:none;stroke:#000;stroke-width:2px;stroke-linecap:round"/></g>
-<path id="channel" d="M354.4,71.5C354.3,73.2 356.5,75.2 353.5,82.0C350.4,88.8 341.0,101.8 336.0,112.0C331.0,122.2 327.3,132.0 323.6,143.5C319.9,155.0 317.2,165.5 313.8,181.0C310.5,196.5 311.4,211.0 303.3,236.5C295.2,262.0 274.5,307.0 265.3,334.0C256.1,361.0 252.9,382.8 248.2,398.5C243.6,414.2 240.7,415.5 237.6,428.5C234.4,441.5 230.9,459.8 229.4,476.5C228.0,493.2 228.3,504.2 228.9,529.0C229.5,553.8 230.9,591.2 233.1,625.0C235.3,658.8 241.7,705.5 242.2,731.5C242.8,757.5 237.3,769.0 236.5,781.0C235.7,793.0 239.3,794.5 237.5,803.5C235.7,812.5 228.0,826.0 225.5,835.0C223.1,844.0 223.1,846.8 222.7,857.5C222.2,868.2 222.0,882.2 222.8,899.5C223.5,916.8 226.6,950.8 227.4,961.0" style="fill:none;stroke:#ff8956;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round"/>
-<g id="points"><circle id="p1" cx="227.5" cy="956.5" r="6.75"/><circle id="p2" cx="222.8" cy="861.2" r="6.75"/><circle id="p3" cx="225.5" cy="835.0" r="6.75"/><circle id="p5" cx="241.9" cy="743.1" r="6.75"/><circle id="p11" cx="237.7" cy="428.0" r="6.75"/></g>
-<g id="callout-lines" style="fill:none;stroke:#555;stroke-width:1px;"><path d="M136,990L218.5,956.5"/><path d="M136,902L213.8,861.2"/><path d="M136,852L216.5,835.0"/><path d="M136,770L232.9,743.1"/><path d="M136,460L228.7,428.0"/></g>
-<g id="text-labels" style="font-family:ArialMT,Arial,sans-serif;font-size:32px;fill:#555;"><text text-anchor="end" x="130" y="1000">LI1</text><text text-anchor="end" x="130" y="912">LI2</text><text text-anchor="end" x="130" y="862">LI3</text><text text-anchor="end" x="130" y="780">LI5</text><text text-anchor="end" x="130" y="470">LI11</text></g>
-</svg>
-</div>
-<aside class="panel" aria-label="Point details">
-<div id="pt-info" aria-live="polite"><div class="empty"><b>Select a point</b>The details show its Shu category, element, location, cun distance and diagram.</div></div>
-<div class="pts" role="group" aria-label="Shu points, Well to Sea">
-<!-- points:start CHIPS · generated from data/points.json by tools/sync-points.py; edit there -->
-<button type="button" class="chip" data-id="p1" style="--c:var(--metal)"><span class="s">Well</span><span class="c">LI1</span><i></i></button>
-<button type="button" class="chip" data-id="p2" style="--c:var(--water)"><span class="s">Spring</span><span class="c">LI2</span><i></i></button>
-<button type="button" class="chip" data-id="p3" style="--c:var(--wood)"><span class="s">Stream</span><span class="c">LI3</span><i></i></button>
-<button type="button" class="chip" data-id="p5" style="--c:var(--fire)"><span class="s">River</span><span class="c">LI5</span><i></i></button>
-<button type="button" class="chip" data-id="p11" style="--c:var(--earth)"><span class="s">Sea</span><span class="c">LI11</span><i></i></button>
-<!-- points:end -->
+</details>
+<p class="note">Side view of the arm, with the thumb toward the viewer, drawn as line art from a user-supplied LI channel illustration (provenance to be confirmed); the channel and its five Shu points are redrawn. Locations are textbook standard, not pixel-derived from the chart. Point diagrams: nalaayan.com (provisional source).</p>
 </div>
 </aside>
 </div>
-<p class="note">Side view of the arm, with the thumb toward the viewer, drawn as line art from a user-supplied LI channel illustration (provenance to be confirmed); the channel and its five Shu points are redrawn. Locations are textbook standard, not pixel-derived from the chart. Point diagrams: nalaayan.com (provisional source).</p>
 </main>
 <script>
 (function(){
@@ -784,19 +908,34 @@ var IMGS = {"LI1": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFB
 /* points:start ORDER · generated from data/points.json by tools/sync-points.py; edit there */
 var ORDER = ['p1','p2','p3','p5','p11'];
 /* points:end */
+/* chartapp:start · generated from tools/chart-app.js by tools/sync-chart-app.py; edit there */
 var ELEM = {Metal:'var(--metal)',Water:'var(--water)',Wood:'var(--wood)',Fire:'var(--fire)',Earth:'var(--earth)'};
 var NS = 'http://www.w3.org/2000/svg';
-var panel = document.getElementById('pt-info');
+var $ = function(id){ return document.getElementById(id); };
+var panel = $('pt-info'), stage = $('stage'), flip = $('flip'), sheet = $('sheet'), grab = $('grab');
+var locImg = $('loc-img'), locTag = $('loc-tag'), faceB = locImg.parentNode;
+var faceBtns = document.querySelectorAll('.vsw button');
 var chips = document.querySelectorAll('.chip');
 var labels = document.querySelectorAll('#text-labels text');
 var narrow = window.matchMedia('(max-width:760px)');
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var YY = document.body.getAttribute('data-yy') || '';
 var ring = document.createElementNS(NS,'circle');
 ring.setAttribute('class','ring'); ring.setAttribute('r','16');
 document.getElementById('points').parentNode.appendChild(ring);
 var hitLayer = document.createElementNS(NS,'g');
 document.getElementById('points').parentNode.appendChild(hitLayer);
 var current = null;
-function select(id, focusChip){
+function src(code){ var im = IMGS[code]; return im ? (im.indexOf('data:')===0 ? im : 'data:image/jpeg;base64,'+im) : ''; }
+// phones: the card shows the channel map on one side and the chosen point's location diagram on the other
+function setFace(face){
+  var loc = face === 'loc' && current && src(DATA[current].code);
+  stage.classList.toggle('loc', !!loc);
+  faceB.setAttribute('aria-hidden', loc ? 'false' : 'true');
+  faceBtns.forEach(function(b){ b.setAttribute('aria-pressed', (b.getAttribute('data-face') === 'loc') === !!loc ? 'true' : 'false'); });
+}
+faceBtns.forEach(function(b){ b.addEventListener('click', function(){ setFace(b.getAttribute('data-face')); }); });
+function select(id, focusChip, fromChart){
   var d = DATA[id], el = document.getElementById(id);
   current = id;
   document.querySelectorAll('#points circle').forEach(function(c){ c.classList.toggle('on', c === el); });
@@ -806,28 +945,32 @@ function select(id, focusChip){
   ring.classList.remove('on'); void ring.getBBox(); ring.classList.add('on');
   chips.forEach(function(c){ var on = c.getAttribute('data-id') === id; c.classList.toggle('on', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); if(on && focusChip) c.focus(); });
   var shu = d.shu.replace(/ point/g,'');
-  var im = IMGS[d.code];
+  var im = src(d.code);
   panel.innerHTML = '<div class="eyebrow"><span>'+d.code+'</span><span class="sep"></span><span class="shu">'+shu+'</span></div>'
     +'<div class="title">'+d.pinyin+'</div><div class="en">'+d.en+'</div>'
-    +'<div class="pills"><span class="pill" style="--c:'+ELEM[d.elem]+'"><i></i>'+d.elem+'</span><span class="pill">Yang channel</span></div>'
-    +'<p class="label">Location</p><p class="loc">'+d.loc+'</p>'
-    +'<p class="label">Cun</p><p class="cun">'+d.cun+'<a href="learn.html#cun">What is a cun?</a></p>'
-    +(im ? '<figure><img alt="Location diagram for '+d.code+'" src="'+(im.indexOf('data:')===0?im:'data:image/jpeg;base64,'+im)+'"></figure>' : '');
+    +'<div class="pills"><span class="pill" style="--c:'+ELEM[d.elem]+'"><i></i>'+d.elem+'</span>'+(YY ? '<span class="pill">'+YY+' channel</span>' : '')+'</div>'
+    +'<div class="locrow">'+(im ? '<figure><img alt="Location diagram for '+d.code+'" src="'+im+'"></figure>' : '')
+    +'<div><p class="label">Location</p><p class="loc">'+d.loc+'</p>'
+    +'<p class="label">Cun</p><p class="cun">'+d.cun+'<a href="learn.html#cun">What is a cun?</a></p></div></div>';
   panel.classList.remove('enter'); void panel.offsetWidth; panel.classList.add('enter');
-  if(narrow.matches && !focusChip) panel.scrollIntoView({block:'nearest',behavior:'smooth'});
+  if(im){ locImg.src = im; locImg.alt = 'Location diagram for '+d.code; locTag.textContent = d.code+' · location'; }
+  faceBtns.forEach(function(b){ if(b.getAttribute('data-face') === 'loc') b.disabled = !im; });
+  // a tap on the chart turns the card to the diagram; the station buttons keep whichever side is showing
+  setFace(fromChart && narrow.matches ? 'loc' : (stage.classList.contains('loc') ? 'loc' : 'map'));
 }
-// Each dot gets an invisible hit circle sized to half the gap to its nearest
-// neighbour, so close-set points never steal each other's clicks.
+// Each dot is drawn in its element's colour and gets an invisible hit circle sized to half the gap
+// to its nearest neighbour, so close-set points never steal each other's clicks.
 function xy(id){ var c = document.getElementById(id); return [+c.getAttribute('cx'), +c.getAttribute('cy')]; }
 ORDER.forEach(function(id){
   var el = document.getElementById(id), d = DATA[id], p = xy(id), r = 18;
+  el.style.setProperty('--pc', ELEM[d.elem]);
   ORDER.forEach(function(o){ if(o!==id){ var q = xy(o); r = Math.min(r, Math.hypot(p[0]-q[0], p[1]-q[1]) / 2); } });
   var h = document.createElementNS(NS,'circle');
   h.setAttribute('class','hit'); h.setAttribute('cx',p[0]); h.setAttribute('cy',p[1]); h.setAttribute('r',r);
   h.setAttribute('data-id',id); h.setAttribute('tabindex','0'); h.setAttribute('role','button');
   h.setAttribute('aria-label', d.code+' '+d.pinyin+', '+d.shu+', '+d.elem);
-  h.addEventListener('click', function(){ select(id); });
-  h.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(id); } });
+  h.addEventListener('click', function(){ select(id, false, true); });
+  h.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(id, false, true); } });
   h.addEventListener('mouseenter', function(){ el.classList.add('hover'); });
   h.addEventListener('mouseleave', function(){ el.classList.remove('hover'); });
   hitLayer.appendChild(h);
@@ -842,20 +985,195 @@ chips.forEach(function(c){
     select(ORDER[(i+ORDER.length)%ORDER.length], true);
   });
 });
+// the sheet: tap the handle or drag it; Escape or a tap on the chart closes it
+function setSheet(open){ sheet.classList.toggle('open', open); grab.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+var gy = null, dragged = false;
+grab.addEventListener('pointerdown', function(e){ gy = e.clientY; dragged = false; });
+window.addEventListener('pointerup', function(e){
+  if(gy === null) return;
+  var dy = e.clientY - gy; gy = null;
+  if(Math.abs(dy) > 24){ dragged = true; setSheet(dy < 0); }
+});
+grab.addEventListener('click', function(){ if(dragged){ dragged = false; return; } setSheet(!sheet.classList.contains('open')); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setSheet(false); });
+stage.addEventListener('click', function(){ if(sheet.classList.contains('open')) setSheet(false); });
+$('more').addEventListener('toggle', function(){ if(this.open && narrow.matches) setSheet(true); });
+// desktop: the plate leans a little toward the pointer
+if(!reduced && window.matchMedia('(hover:hover) and (min-width:761px)').matches){
+  stage.addEventListener('pointermove', function(e){
+    var r = flip.getBoundingClientRect();
+    flip.style.setProperty('--ry', (((e.clientX - r.left) / r.width - .5) * 9).toFixed(2)+'deg');
+    flip.style.setProperty('--rx', (((e.clientY - r.top) / r.height - .5) * -6).toFixed(2)+'deg');
+  });
+  stage.addEventListener('pointerleave', function(){ flip.style.setProperty('--ry','0deg'); flip.style.setProperty('--rx','0deg'); });
+}
 // deep links: chart.html#GB34 opens with that point selected, and selections update the address
 function fromHash(){
   var code = decodeURIComponent(location.hash.slice(1)).toUpperCase();
-  for(var k in DATA){ if(DATA[k].code === code){ select(k); return; } }
+  for(var k in DATA){ if(DATA[k].code === code){ if(k !== current) select(k); return; } }
 }
 var _select = select;
-select = function(id, focusChip){
-  _select(id, focusChip);
+select = function(id, focusChip, fromChart){
+  _select(id, focusChip, fromChart);
   try { history.replaceState(null, '', '#'+DATA[id].code); } catch(e) {}
 };
 window.addEventListener('hashchange', fromHash);
 if(location.hash) fromHash();
+/* chartapp:end */
 })();
 </script>
+<!-- chartscene:start · painters copied from tools/shell-snippet.html by tools/sync-chart-app.py; edit there -->
+<script>
+(function(){
+/* ---------- procedural scenes: one painted world per element ---------- */
+const SW = 1600, SH = 900;
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function noiser(r){const p=new Float32Array(512);for(let i=0;i<512;i++)p[i]=r();return x=>{const i=Math.floor(x),f=x-i,u=f*f*(3-2*f);return p[i&511]*(1-u)+p[(i+1)&511]*u}}
+function fbm(n,x,o){let a=.5,s=0,f=1,m=0;for(let i=0;i<(o||4);i++){s+=a*n(x*f+i*31.7);m+=a;a*=.5;f*=2.03}return s/m}
+const rgba=(c,a)=>`rgba(${c[0]},${c[1]},${c[2]},${a})`;
+function glow(c,x,y,r,col,a){const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,rgba(col,a));g.addColorStop(.35,rgba(col,a*.45));g.addColorStop(1,rgba(col,0));c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2)}
+function spark(c,x,y,rad,col,a){const g=c.createRadialGradient(x,y,0,x,y,rad);g.addColorStop(0,rgba(col,a));g.addColorStop(1,rgba(col,0));c.fillStyle=g;c.beginPath();c.arc(x,y,rad,0,7);c.fill()}
+function sky(c,y0,y1,stops){const g=c.createLinearGradient(0,y0,0,y1);stops.forEach(s=>g.addColorStop(s[0],s[1]));c.fillStyle=g;c.fillRect(0,y0,SW,y1-y0)}
+function mist(c,y,h,col,a){const g=c.createLinearGradient(0,y-h,0,y+h);g.addColorStop(0,rgba(col,0));g.addColorStop(.5,rgba(col,a));g.addColorStop(1,rgba(col,0));c.fillStyle=g;c.fillRect(0,y-h,SW,h*2)}
+function additive(c,fn){c.globalCompositeOperation='lighter';fn();c.globalCompositeOperation='source-over'}
+function ridge(c,o){
+  const n=noiser(rng(o.seed)),pts=[];
+  for(let x=0;x<=SW;x+=4){
+    let v=fbm(n,x/SW*o.freq+o.seed,5);
+    if(o.jag)v=Math.pow(1-Math.abs(2*v-1),3);else v=(v-.25)*2;
+    pts.push([x,o.base-v*o.amp]);
+  }
+  c.beginPath();c.moveTo(0,SH);pts.forEach(p=>c.lineTo(p[0],p[1]));c.lineTo(SW,SH);c.closePath();
+  const g=c.createLinearGradient(0,o.base-o.amp,0,SH);g.addColorStop(0,o.top);g.addColorStop(1,o.bot);
+  c.fillStyle=g;c.fill();return pts;
+}
+function crest(c,pts,col,w,blur,dy){
+  c.save();c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]+(dy||0)):c.moveTo(p[0],p[1]+(dy||0)));
+  c.strokeStyle=col;c.lineWidth=w;c.lineJoin='round';if(blur){c.shadowColor=col;c.shadowBlur=blur}c.stroke();c.restore();
+}
+function stars(c,r,n,maxY,a){c.fillStyle='#fff';for(let i=0;i<n;i++){c.globalAlpha=(.15+r()*.7)*a;const s=.5+r()*1.4;c.fillRect(r()*SW,r()*maxY,s,s)}c.globalAlpha=1}
+function grain(c,r){
+  const t=document.createElement('canvas');t.width=t.height=160;const x=t.getContext('2d'),d=x.createImageData(160,160);
+  for(let i=0;i<d.data.length;i+=4){const v=r()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=22}
+  x.putImageData(d,0,0);c.globalCompositeOperation='overlay';c.fillStyle=c.createPattern(t,'repeat');c.fillRect(0,0,SW,SH);c.globalCompositeOperation='source-over';
+}
+
+/* WOOD: spring dawn through bamboo */
+function paintWood(c,r){
+  sky(c,0,SH,[[0,'#06130f'],[.32,'#123a2e'],[.58,'#5d8f58'],[.74,'#d9e69a'],[1,'#e8efb4']]);
+  additive(c,()=>{glow(c,SW*.5,SH*.62,SW*.42,[255,244,170],.75);glow(c,SW*.5,SH*.62,SW*.1,[255,252,214],.9)});
+  const cols=[['#7fa56a','#4f7a4f'],['#4f7d56','#2f5a3f'],['#2d5a43','#173a2b'],['#173a2b','#0a1f17']];
+  [.66,.72,.79,.88].forEach((b,i)=>{
+    ridge(c,{base:SH*b,amp:90+i*40,freq:2.2+i*.6,seed:11+i*7,top:cols[i][0],bot:cols[i][1]});
+    mist(c,SH*(b+.02),60,[220,238,170],Math.max(.06,.28-i*.07));
+  });
+  const stalk=(x,w,c1,c2,al)=>{
+    const g=c.createLinearGradient(x-w/2,0,x+w/2,0);g.addColorStop(0,c2);g.addColorStop(.35,c1);g.addColorStop(1,c2);
+    c.globalAlpha=al;c.fillStyle=g;c.fillRect(x-w/2,-10,w,SH+10);
+    c.fillStyle='rgba(0,0,0,.3)';
+    for(let y=SH-50;y>0;y-=70+r()*70)c.fillRect(x-w/2-1,y,w+2,Math.max(2,w*.12));
+    c.globalAlpha=1;
+  };
+  for(let i=0;i<22;i++)stalk(r()*SW,5+r()*5,'#2f6a49','#17402e',.42);
+  const side=(a,b)=>r()<.5?SW*(.02+r()*a):SW*(1-.02-r()*b);
+  for(let i=0;i<12;i++)stalk(side(.34,.34),10+r()*7,'#1f5a3b','#0f2f21',.82);
+  for(let i=0;i<6;i++)stalk(side(.2,.2),26+r()*18,'#14392a','#06140f',1);
+  for(let i=0;i<110;i++){
+    const x=r()<.5?SW*r()*.4:SW*(.6+r()*.4),y=SH*(.1+r()*.7);
+    c.save();c.translate(x,y);c.rotate((r()-.5)*2.6);
+    c.fillStyle=`rgba(${90+r()*80|0},${170+r()*70|0},${90+r()*40|0},${.35+r()*.5})`;
+    c.beginPath();c.ellipse(0,0,16+r()*26,3+r()*4,0,0,7);c.fill();c.restore();
+  }
+  additive(c,()=>{for(let i=0;i<80;i++){const s=2+r()*8;spark(c,r()*SW,SH*(.25+r()*.65),s*2.2,[205,240,130],.25+r()*.4);spark(c,r()*SW,SH*(.3+r()*.6),s*.5,[255,255,220],.5)}});
+}
+
+/* FIRE: a furnace glowing between black peaks, sparks rising */
+function paintFire(c,r){
+  sky(c,0,SH,[[0,'#080302'],[.3,'#2a0906'],[.55,'#8a2410'],[.72,'#e0561a'],[1,'#ff9a3c']]);
+  additive(c,()=>{glow(c,SW*.5,SH*.66,SW*.52,[255,120,40],.8);glow(c,SW*.5,SH*.64,SW*.16,[255,200,110],.95);glow(c,SW*.5,SH*.63,SW*.055,[255,240,200],1)});
+  const p1=ridge(c,{base:SH*.72,amp:230,freq:2.4,seed:5,jag:1,top:'#2a0c07',bot:'#0d0403'});
+  crest(c,p1,'rgba(255,150,60,.8)',2,22);
+  for(let i=0;i<14;i++){c.fillStyle='rgba(20,6,4,.20)';const x=SW*(.25+r()*.5),y=SH*(.25+r()*.3),g=c.createRadialGradient(x,y,0,x,y,150+r()*160);g.addColorStop(0,'rgba(30,8,5,.32)');g.addColorStop(1,'rgba(30,8,5,0)');c.fillStyle=g;c.fillRect(x-320,y-320,640,640)}
+  const p2=ridge(c,{base:SH*.82,amp:150,freq:2.8,seed:9,jag:1,top:'#160605',bot:'#050202'});
+  crest(c,p2,'rgba(255,110,40,.35)',1.5,12);
+  ridge(c,{base:SH*.94,amp:90,freq:3.4,seed:21,jag:1,top:'#0b0403',bot:'#020101'});
+  additive(c,()=>{
+    for(let i=0;i<340;i++){
+      const lift=Math.pow(r(),1.4),spread=Math.pow(r(),1.6);
+      const x=SW*.5+(r()-.5)*SW*(.22+spread*.95),y=SH*.7-lift*SH*.78;
+      const s=Math.max(.5,(.7+r()*2.6)*(1-lift*.7));
+      spark(c,x,y,s*3.4,r()<.55?[255,170,70]:[255,96,36],.3+r()*.5);spark(c,x,y,s,[255,240,200],.9);
+    }
+  });
+}
+
+/* EARTH: terraced ochre hills under a hazy low sun */
+function paintEarth(c,r){
+  sky(c,0,SH,[[0,'#2a1c0e'],[.35,'#6e4521'],[.62,'#d79a4c'],[.8,'#f0c57a'],[1,'#f4d594']]);
+  additive(c,()=>{glow(c,SW*.5,SH*.52,SW*.4,[255,222,150],.7);glow(c,SW*.5,SH*.52,SW*.09,[255,246,214],.9)});
+  c.fillStyle='rgba(255,244,214,.93)';c.beginPath();c.arc(SW*.5,SH*.5,56,0,7);c.fill();
+  const L=[{b:.62,a:70,f:1.6,t:'#c98d4a',d:'#a8692f'},{b:.7,a:92,f:2,t:'#b07a3b',d:'#8a5226'},{b:.79,a:112,f:2.4,t:'#8f5a2a',d:'#64391b'},{b:.9,a:126,f:2.8,t:'#5c3519',d:'#34200f'}];
+  L.forEach((o,i)=>{
+    const pts=ridge(c,{base:SH*o.b,amp:o.a,freq:o.f,seed:31+i*13,top:o.t,bot:o.d});
+    for(let k=1;k<=7;k++){c.beginPath();pts.forEach((p,j)=>j?c.lineTo(p[0],p[1]+k*(11+i*5)):c.moveTo(p[0],p[1]+k*(11+i*5)));c.strokeStyle='rgba(30,15,5,'+(.2-k*.014)+')';c.lineWidth=1.6;c.stroke()}
+    crest(c,pts,'rgba(255,226,160,.28)',1.2,0);
+    mist(c,SH*(o.b+.03),50,[245,205,140],Math.max(.05,.24-i*.06));
+  });
+  additive(c,()=>{for(let i=0;i<170;i++){const y=SH*(.2+r()*.7);spark(c,r()*SW,y,1.5+r()*5,[255,214,140],.18+r()*.4)}});
+}
+
+/* METAL: a silver moon ringing over cold, hard peaks */
+function paintMetal(c,r){
+  sky(c,0,SH,[[0,'#070b11'],[.4,'#1a2634'],[.7,'#53697c'],[.9,'#a9bac8'],[1,'#c9d6e0']]);
+  stars(c,r,150,SH*.5,1);
+  const mx=SW*.5,my=SH*.44;
+  additive(c,()=>{glow(c,mx,my,SW*.34,[190,215,240],.55)});
+  for(let k=1;k<=6;k++){c.beginPath();c.arc(mx,my,SW*(.07+k*.045),0,7);c.strokeStyle=rgba([220,235,250],Math.max(.03,.2-k*.028));c.lineWidth=1.2;c.stroke()}
+  const mg=c.createRadialGradient(mx-18,my-18,6,mx,my,SW*.075);mg.addColorStop(0,'#fbfdff');mg.addColorStop(1,'#c3d1de');
+  c.fillStyle=mg;c.beginPath();c.arc(mx,my,SW*.075,0,7);c.fill();
+  for(let i=0;i<9;i++){const a=r()*6.28,d=r()*SW*.05;c.fillStyle='rgba(120,140,160,'+(.06+r()*.1)+')';c.beginPath();c.arc(mx+Math.cos(a)*d,my+Math.sin(a)*d,5+r()*14,0,7);c.fill()}
+  for(let i=0;i<8;i++){c.fillStyle='rgba(220,235,250,'+(.04+r()*.06)+')';c.fillRect(r()*SW*.6,SH*(.3+r()*.35),SW*(.2+r()*.4),1.5)}
+  const p1=ridge(c,{base:SH*.7,amp:260,freq:2.6,seed:41,jag:1,top:'#42586b',bot:'#16222d'});crest(c,p1,'rgba(235,245,255,.6)',1.6,0);
+  const p2=ridge(c,{base:SH*.8,amp:190,freq:3,seed:47,jag:1,top:'#27394a',bot:'#0d151d'});crest(c,p2,'rgba(210,228,245,.32)',1.2,0);
+  mist(c,SH*.82,70,[190,210,230],.16);
+  ridge(c,{base:SH*.93,amp:100,freq:3.6,seed:53,jag:1,top:'#131d27',bot:'#05080c'});
+}
+
+/* WATER: a winter sea, one moon, one ripple */
+function paintWater(c,r){
+  const hy=SH*.56;
+  sky(c,0,hy,[[0,'#02050b'],[.55,'#0a1b32'],[1,'#1d4a78']]);
+  stars(c,r,230,hy*.9,1);
+  additive(c,()=>{glow(c,SW*.5,SH*.34,SW*.22,[170,200,255],.5);glow(c,SW*.5,SH*.34,SW*.05,[230,240,255],.9)});
+  c.fillStyle='#eaf2ff';c.beginPath();c.arc(SW*.5,SH*.34,SW*.03,0,7);c.fill();
+  sky(c,hy,SH,[[0,'#17406b'],[.45,'#07182c'],[1,'#02070e']]);
+  mist(c,hy,36,[120,170,230],.28);
+  for(let y=hy+2;y<SH;y+=5){
+    const p=(y-hy)/(SH-hy),len=(14+p*230)*(.4+r()*.9),x=SW*.5+(r()-.5)*(10+p*70);
+    c.fillStyle=rgba([190,215,255],(1-p*.7)*.5);c.fillRect(x-len/2,y,len,1.5+p*2.5);
+  }
+  for(let y=hy+8;y<SH;y+=Math.max(6,(y-hy)*.09)){
+    const p=(y-hy)/(SH-hy),a=(y-hy)*.012+.6,ph=r()*6;
+    c.beginPath();for(let x=0;x<=SW;x+=16){const yy=y+Math.sin(x*.012*(1-p*.5)+ph)*a;x?c.lineTo(x,yy):c.moveTo(x,yy)}
+    c.strokeStyle='rgba(120,170,230,'+(.05+p*.08)+')';c.lineWidth=1;c.stroke();
+  }
+  for(let k=1;k<=7;k++){const rx=62*k;c.beginPath();c.ellipse(SW*.5,SH*.78,rx,rx*.17,0,0,7);c.strokeStyle=rgba([190,220,255],Math.max(.05,.34-k*.04));c.lineWidth=1.3;c.stroke()}
+  additive(c,()=>{glow(c,SW*.5,SH*.78,SW*.06,[170,205,255],.3)});
+}
+
+const PAINT={wood:paintWood,fire:paintFire,earth:paintEarth,metal:paintMetal,water:paintWater};
+function renderScene(key,seed){
+  const cv=document.createElement('canvas');cv.width=SW;cv.height=SH;
+  const c=cv.getContext('2d');PAINT[key](c,rng(seed));grain(c,rng(seed+99));
+  return cv.toDataURL('image/jpeg',.86);
+}
+var key='metal',el=document.getElementById('cscene');
+function show(){try{el.style.setProperty('--scene','url('+renderScene(key,212)+')');el.classList.add('on')}catch(e){}}
+var idle=window.requestIdleCallback||function(f){return setTimeout(f,60)};
+if(document.readyState==='complete')idle(show);else window.addEventListener('load',function(){idle(show)});
+})();
+</script>
+<!-- chartscene:end -->
 <!-- gloss:start · generated from tools/glossary-snippet.html by tools/sync-glossary.py; edit there, not here -->
 <style>
 .gl{appearance:none;border:0;background:none;margin:0;padding:0;display:inline;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;text-align:inherit;cursor:help;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,currentColor 42%,transparent);text-decoration-thickness:1px;text-underline-offset:3px;transition:text-decoration-color .15s}
