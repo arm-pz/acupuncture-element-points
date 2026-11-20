@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#10131f"><title>3D leg · Shu Atlas</title><meta name="description" content="A 3D right leg with the five Shu points of the six foot channels."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Noto+Sans+SC:wght@300&display=swap"><style>
+/* 3D study views: one fixed screen. A stage holds the model; a rail lists the points and shows the picked one. */
+:root{--ground:#0d101d;--raise:#151928;--raise-2:#1e2338;--ink:#f5f3ed;--ink-2:#9ea8bd;--ink-3:#657088;--hair:rgba(245,243,237,.09);--hair-2:rgba(245,243,237,.20);
+  --wash:rgba(245,243,237,.045);--wash-2:rgba(245,243,237,.085);
+  --wood:#83c7a3;--fire:#f2968a;--earth:#e8c273;--metal:#f2f0ea;--water:#93b8f0;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--ease:cubic-bezier(.16,1,.3,1);
+  --f-han:"Noto Sans SC","PingFang SC","Songti SC",sans-serif;--f-mono:var(--mono);
+  --muted:var(--ink-2);--plain:#c9cfdb;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--ground);height:100%}
+body{margin:0;height:100%;background:var(--ground);color:var(--ink);font:400 14px/1.45 "Jost",system-ui,sans-serif;letter-spacing:.01em;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.shell{height:100%;height:100dvh;display:flex;flex-direction:column;max-width:1440px;margin:0 auto;padding:0 max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px)) 16px}
+
+.appnav{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.appnav .home{display:flex;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none;min-width:0;transition:opacity .16s var(--ease)}
+.appnav .home:hover{opacity:.85}
+.appnav .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
+.appnav .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.appnav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.appnav a.l{display:block;padding:8px 12px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:var(--ink-2);text-decoration:none;transition:color .16s var(--ease),background .16s var(--ease)}
+.appnav a.l:hover{color:var(--ink);background:rgba(245,243,237,.06)}
+.appnav a.l[aria-current="page"]{color:var(--ground);background:var(--ink)}
+
+header.top{flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;padding:18px 0 14px}
+.kicker{margin:0 0 7px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0;font-size:clamp(22px,2.6vw,30px);font-weight:500;letter-spacing:-.01em;line-height:1.1}
+h1 .han{font:300 .8em/1 var(--f-han);margin-left:12px;color:var(--ink-2);letter-spacing:.04em}
+header.top .sub{margin:6px 0 0;color:var(--ink-2);font-size:13.5px}
+.seg{display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:var(--raise);border:1px solid var(--hair)}
+.seg a{color:var(--ink-2);text-decoration:none;font:500 12.5px/1 "Jost",system-ui,sans-serif;padding:9px 16px;border-radius:999px;transition:color .18s,background .18s}
+.seg a:hover{color:var(--ink)}
+.seg a[aria-current="page"]{background:var(--ink);color:var(--ground)}
+
+.app{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:16px}
+.stage{position:relative;min-height:0;min-width:0;overflow:hidden;border-radius:20px;border:1px solid var(--hair);
+  background:radial-gradient(120% 90% at 50% 42%,#1d2236 0%,#151928 55%,#10131f 100%)}
+.stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.stage canvas.drag{cursor:grabbing}
+.stage canvas.hot{cursor:pointer}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;font:500 11px/1.25 var(--mono);letter-spacing:.02em;padding:2px 6px;border-radius:3px;background:rgba(13,16,29,.8);color:var(--ink);border:1px solid var(--hair-2);white-space:nowrap;will-change:transform}
+.lbl.on{background:var(--ink);color:var(--ground);border-color:var(--ink);font-size:12px}
+.hint{position:absolute;left:16px;bottom:13px;margin:0;color:var(--ink-3);font-size:12px;letter-spacing:.02em;pointer-events:none}
+.status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--ink-2);pointer-events:none}
+.views{position:absolute;left:12px;top:12px;right:160px;display:flex;flex-wrap:wrap;gap:5px}
+.tools{position:absolute;right:12px;top:12px;display:flex;gap:5px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--hair-2);background:rgba(13,16,29,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);font:500 12.5px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;cursor:pointer;transition:border-color .15s var(--ease),background .15s var(--ease),transform .12s var(--ease)}
+.btn:hover{border-color:rgba(245,243,237,.45)}
+.btn:active{transform:scale(.96)}
+.icon{width:32px;padding:0;justify-content:center}
+.icon svg{width:16px;height:16px}
+.icon[aria-pressed="true"],.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+
+.rail{min-height:0;min-width:0;overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding:0 4px 4px 0;scrollbar-width:thin;scrollbar-color:var(--hair-2) transparent}
+h2{margin:0 0 8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+h2 .han{font:300 13px/1 var(--f-han);letter-spacing:.04em;margin-left:8px;text-transform:none;color:var(--ink-3)}
+.detail{background:var(--raise);border:1px solid var(--hair);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.detail .top{display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap}
+.detail .big{font:300 32px/1 var(--f-han)}
+.detail .ttl{font-size:17px;font-weight:500;line-height:1.2}
+.detail .ttl .code{font-size:12.5px;padding:3px 7px;border-radius:3px;background:var(--ink);color:var(--ground);margin-right:4px;vertical-align:2px}
+.detail .en{color:var(--ink-2)}
+.detail dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;padding-top:10px;border-top:1px solid var(--hair)}
+.detail dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.detail dd{margin:0;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.detail p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.5}
+.toggles{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--ink-2)}
+.toggles label{display:flex;align-items:center;gap:7px;cursor:pointer;font-family:var(--mono);font-size:12px}
+.toggles label:has(#t-lines),.toggles label:has(#t-labels),.toggles label:has(#t-int),.toggles label:has(#t-both){font-family:"Jost",system-ui,sans-serif;font-size:13.5px}
+.toggles input{accent-color:var(--ink);margin:0}
+.swatch{width:16px;height:3px;border-radius:2px;display:inline-block;flex:none}
+.lists{display:flex;flex-direction:column;gap:18px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0;padding:0;list-style:none;color:var(--ink-2);font-size:12.5px}
+.legend li{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+.wood{background:var(--wood)} .fire{background:var(--fire)} .earth{background:var(--earth)} .metal{background:var(--metal)} .water{background:var(--water)}
+.plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid var(--hair)}
+.plist button{width:100%;display:grid;grid-template-columns:12px 46px minmax(0,1fr) auto;align-items:center;gap:8px;background:none;border:0;border-bottom:1px solid var(--hair);padding:9px 8px;text-align:left;cursor:pointer;transition:background .15s var(--ease)}
+.plist button:hover{background:var(--wash)}
+.plist button[aria-pressed="true"]{background:var(--wash-2);box-shadow:inset 2px 0 0 var(--ink)}
+.code{font:500 12px/1 var(--mono);letter-spacing:.02em}
+.nm{min-width:0;overflow-wrap:anywhere}
+.nm .han{font:300 13px/1 var(--f-han);margin-left:7px;color:var(--ink-2)}
+.kind{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.note{margin:0;color:var(--ink-3);font-size:11.5px;line-height:1.6}
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,56%) minmax(0,1fr);gap:12px}
+  header.top{padding:12px 0 10px}
+  header.top .sub{display:none}
+  .views{top:auto;bottom:10px;left:0;right:0;flex-wrap:nowrap;overflow-x:auto;padding:0 10px;scrollbar-width:none}
+  .views::-webkit-scrollbar{display:none}
+  .views .btn{flex:none}
+  .tools{top:10px;right:10px}
+  .hint{display:none}
+}
+@media (max-width:700px){
+  .shell{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .appnav{padding:14px 0 10px;border-bottom:0}
+  .appnav ul{position:fixed;z-index:400;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(calc(100vw - 16px),352px);padding:5px;gap:1px;border-radius:999px;background:rgba(16,20,33,.8);border:1px solid rgba(245,243,237,.13);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 14px 30px -10px rgba(0,0,0,.75)}
+  .appnav li{flex:1 1 0;min-width:0}
+  .appnav a.l{padding:11px 0;font-size:12.5px;text-align:center}
+  header.top{flex-direction:column;align-items:stretch}
+  .seg{align-self:flex-start}
+}
+@media (max-width:380px){.appnav a.l{font-size:12px}}
+</style><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end --></head>
+<body>
+<div class="shell"><nav class="appnav" aria-label="Shu Atlas"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></nav>
+<header class="top"><div><p class="kicker">3D · Five Shu points</p><h1 id="h1">The leg<span class="han" lang="zh">足 · 五輸穴</span></h1><p class="sub" id="sub">Right leg, the six foot channels</p></div><nav class="seg" aria-label="3D model"><a href="3d.html">Arm</a><a href="3d-leg.html" aria-current="page">Leg</a><a href="3d-channels.html">Channels</a></nav></header>
+<div class="app">
+  <div class="stage" id="stage">
+    <canvas id="gl" aria-label="3D model of a right leg with acupuncture points"></canvas>
+    <div class="labels" id="labels"></div>
+    <div class="status" id="status">Sculpting the leg…</div>
+    <div class="views" role="group" aria-label="Turn the leg to show">
+      <button class="btn" type="button" data-side="front">Front</button>
+      <button class="btn" type="button" data-side="back">Back</button>
+      <button class="btn" type="button" data-side="inner">Inner side</button>
+      <button class="btn" type="button" data-side="outer">Outer side</button>
+      <button class="btn" type="button" data-side="sole">Sole</button>
+    </div>
+    <div class="tools">
+      <button class="btn icon" id="spin" type="button" aria-pressed="false" aria-label="Spin the leg" title="Spin the leg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><path d="M20.5 3.5v5h-5"/></svg>
+      </button>
+      <button class="btn" id="reset" type="button">Reset view</button>
+    </div>
+    <p class="hint">Drag to rotate · scroll or pinch to zoom · click a point</p>
+  </div>
+
+  <aside class="rail">
+    <section class="detail" id="detail" aria-live="polite"></section>
+
+    <section>
+      <h2>Show</h2>
+      <div class="toggles" id="toggles">
+        <label><input type="checkbox" id="t-lines" checked> Channel lines</label>
+        <label><input type="checkbox" id="t-labels" checked> Labels</label>
+      </div>
+    </section>
+    <div class="lists" id="lists"></div>
+
+    <section>
+      <h2>Five elements</h2>
+      <ul class="legend">
+        <li><span class="dot wood"></span>Wood 木</li>
+        <li><span class="dot fire"></span>Fire 火</li>
+        <li><span class="dot earth"></span>Earth 土</li>
+        <li><span class="dot metal"></span>Metal 金</li>
+        <li><span class="dot water"></span>Water 水</li>
+      </ul>
+    </section>
+    <p class="note">Schematic model for study. Point positions follow standard textbook descriptions but are approximate on this simplified leg.</p>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* ---------- point data ---------- */
+const EL = {
+  wood:{name:"Wood",han:"木",hex:0x3e7d5a}, fire:{name:"Fire",han:"火",hex:0xd23b2e},
+  earth:{name:"Earth",han:"土",hex:0xd99a2b}, metal:{name:"Metal",han:"金",hex:0xdfd9cb},
+  water:{name:"Water",han:"水",hex:0x3c6fbd}
+};
+const KIND = {
+  well:{name:"Jing-well",han:"井"}, spring:{name:"Ying-spring",han:"滎"}, stream:{name:"Shu-stream",han:"輸"},
+  river:{name:"Jing-river",han:"經"}, sea:{name:"He-sea",han:"合"}
+};
+const POINTS = [
+  {id:"ST45",ch:"ST",py:"Lidui",han:"厲兌",en:"Strict Exchange",kind:"well",el:"metal",
+   loc:"On the second toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail."},
+  {id:"ST44",ch:"ST",py:"Neiting",han:"內庭",en:"Inner Court",kind:"spring",el:"water",
+   loc:"On the dorsum of the foot, between the second and third toes, proximal to the web margin, at the border of the red and white skin."},
+  {id:"ST43",ch:"ST",py:"Xiangu",han:"陷谷",en:"Sunken Valley",kind:"stream",el:"wood",
+   loc:"On the dorsum of the foot, between the second and third metatarsal bones, in the depression proximal to the second metatarsophalangeal joint."},
+  {id:"ST41",ch:"ST",py:"Jiexi",han:"解谿",en:"Ravine Divide",kind:"river",el:"fire",
+   loc:"At the front of the ankle, in the depression at the midpoint of the ankle crease, between the tendons of extensor hallucis longus and extensor digitorum longus."},
+  {id:"ST36",ch:"ST",py:"Zusanli",han:"足三里",en:"Leg Three Li",kind:"sea",el:"earth",
+   loc:"3 cun below ST35, one finger-breadth lateral to the anterior crest of the tibia."},
+  {id:"SP1",ch:"SP",py:"Yinbai",han:"隱白",en:"Hidden White",kind:"well",el:"wood",
+   loc:"On the big toe, medial to the distal phalanx, 0.1 cun from the medial corner of the nail."},
+  {id:"SP2",ch:"SP",py:"Dadu",han:"大都",en:"Great Metropolis",kind:"spring",el:"fire",
+   loc:"On the big toe, in the depression distal to the first metatarsophalangeal joint, at the border of the red and white skin."},
+  {id:"SP3",ch:"SP",py:"Taibai",han:"太白",en:"Supreme White",kind:"stream",el:"earth",
+   loc:"On the medial foot, in the depression proximal to the first metatarsophalangeal joint, at the border of the red and white skin."},
+  {id:"SP5",ch:"SP",py:"Shangqiu",han:"商丘",en:"Shang Hill",kind:"river",el:"metal",
+   loc:"In the depression anterior and inferior to the medial malleolus, midway between the navicular tuberosity and the tip of the medial malleolus."},
+  {id:"SP9",ch:"SP",py:"Yinlingquan",han:"陰陵泉",en:"Yin Mound Spring",kind:"sea",el:"water",
+   loc:"On the medial leg, in the depression between the inferior border of the medial condyle of the tibia and the medial border of the tibia."},
+  {id:"BL67",ch:"BL",py:"Zhiyin",han:"至陰",en:"Reaching Yin",kind:"well",el:"metal",
+   loc:"On the little toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail."},
+  {id:"BL66",ch:"BL",py:"Zutonggu",han:"足通谷",en:"Foot Valley Passage",kind:"spring",el:"water",
+   loc:"On the lateral border of the foot, in the depression distal to the fifth metatarsophalangeal joint, at the border of the red and white skin."},
+  {id:"BL65",ch:"BL",py:"Shugu",han:"束骨",en:"Bundle Bone",kind:"stream",el:"wood",
+   loc:"On the lateral border of the foot, in the depression proximal to the fifth metatarsophalangeal joint, at the border of the red and white skin."},
+  {id:"BL60",ch:"BL",py:"Kunlun",han:"崑崙",en:"Kunlun Mountains",kind:"river",el:"fire",
+   loc:"Behind the lateral malleolus, in the depression between the tip of the lateral malleolus and the calcaneal tendon."},
+  {id:"BL40",ch:"BL",py:"Weizhong",han:"委中",en:"Bend Middle",kind:"sea",el:"earth",
+   loc:"At the midpoint of the popliteal crease."},
+  {id:"KI1",ch:"KI",py:"Yongquan",han:"湧泉",en:"Gushing Spring",kind:"well",el:"wood",
+   loc:"On the sole, in the deepest depression when the toes are curled, about one third of the way from the base of the second and third toes to the back of the heel."},
+  {id:"KI2",ch:"KI",py:"Rangu",han:"然谷",en:"Blazing Valley",kind:"spring",el:"fire",
+   loc:"On the medial border of the foot, below the tuberosity of the navicular bone, at the border of the red and white skin."},
+  {id:"KI3",ch:"KI",py:"Taixi",han:"太谿",en:"Great Ravine",kind:"stream",el:"earth",
+   loc:"Behind the medial malleolus, in the depression between the tip of the medial malleolus and the calcaneal tendon."},
+  {id:"KI7",ch:"KI",py:"Fuliu",han:"復溜",en:"Recover Flow",kind:"river",el:"metal",
+   loc:"On the back of the inner leg, 2 cun above KI3, in front of the calcaneal tendon."},
+  {id:"KI10",ch:"KI",py:"Yingu",han:"陰谷",en:"Yin Valley",kind:"sea",el:"water",
+   loc:"At the medial end of the popliteal crease, lateral to the semitendinosus tendon."},
+  {id:"GB44",ch:"GB",py:"Zuqiaoyin",han:"足竅陰",en:"Foot Portal Yin",kind:"well",el:"metal",
+   loc:"On the fourth toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail."},
+  {id:"GB43",ch:"GB",py:"Xiaxi",han:"俠谿",en:"Clamped Stream",kind:"spring",el:"water",
+   loc:"On the dorsum of the foot, between the fourth and fifth toes, proximal to the web margin, at the border of the red and white skin."},
+  {id:"GB41",ch:"GB",py:"Zulinqi",han:"足臨泣",en:"Foot Governor of Tears",kind:"stream",el:"wood",
+   loc:"On the dorsum of the foot, distal to the junction of the fourth and fifth metatarsal bases, in the depression lateral to the extensor digiti minimi tendon."},
+  {id:"GB38",ch:"GB",py:"Yangfu",han:"陽輔",en:"Yang Support",kind:"river",el:"fire",
+   loc:"On the lateral leg, 4 cun above the prominence of the lateral malleolus, anterior to the fibula."},
+  {id:"GB34",ch:"GB",py:"Yanglingquan",han:"陽陵泉",en:"Yang Mound Spring",kind:"sea",el:"earth",
+   loc:"On the lateral leg, in the depression in front of and below the head of the fibula."},
+  {id:"LR1",ch:"LR",py:"Dadun",han:"大敦",en:"Large Pile",kind:"well",el:"wood",
+   loc:"On the big toe, lateral to the distal phalanx, 0.1 cun from the lateral corner of the nail."},
+  {id:"LR2",ch:"LR",py:"Xingjian",han:"行間",en:"Moving Between",kind:"spring",el:"fire",
+   loc:"On the dorsum of the foot, between the first and second toes, proximal to the web margin, at the border of the red and white skin."},
+  {id:"LR3",ch:"LR",py:"Taichong",han:"太衝",en:"Great Surge",kind:"stream",el:"earth",
+   loc:"On the dorsum of the foot, between the first and second metatarsal bones, in the depression distal to the junction of their bases."},
+  {id:"LR4",ch:"LR",py:"Zhongfeng",han:"中封",en:"Mound Centre",kind:"river",el:"metal",
+   loc:"In front of the medial malleolus, in the depression medial to the tendon of tibialis anterior."},
+  {id:"LR8",ch:"LR",py:"Ququan",han:"曲泉",en:"Spring at the Bend",kind:"sea",el:"water",
+   loc:"With the knee flexed, at the medial end of the popliteal crease, in the depression in front of the tendons of semitendinosus and semimembranosus."}
+];
+const CHANNELS = [
+  {id:"ST",name:"Stomach",han:"足陽明胃經",desc:"Stomach, foot yangming (yang)",line:"#c2611f"},
+  {id:"SP",name:"Spleen",han:"足太陰脾經",desc:"Spleen, foot taiyin (yin)",line:"#8a5a2b"},
+  {id:"BL",name:"Bladder",han:"足太陽膀胱經",desc:"Bladder, foot taiyang (yang)",line:"#2a62b0"},
+  {id:"KI",name:"Kidney",han:"足少陰腎經",desc:"Kidney, foot shaoyin (yin)",line:"#5a49b8"},
+  {id:"GB",name:"Gallbladder",han:"足少陽膽經",desc:"Gallbladder, foot shaoyang (yang)",line:"#0b7f8a"},
+  {id:"LR",name:"Liver",han:"足厥陰肝經",desc:"Liver, foot jueyin (yin)",line:"#4f7d12"}
+];
+const chById = {}; CHANNELS.forEach(c=>chById[c.id]=c);
+const byId = {}; POINTS.forEach(p=>byId[p.id]=p);
+
+/* ---------- side rail ---------- */
+const $ = id=>document.getElementById(id);
+let selected = null;
+CHANNELS.forEach(c=>{
+  const sec=document.createElement("section");
+  sec.innerHTML='<h2>'+c.name+' channel<span class="han">'+c.han+'</span></h2><ul class="plist" id="list-'+c.id+'"></ul>';
+  $("lists").appendChild(sec);
+  const lab=document.createElement("label");
+  lab.innerHTML='<input type="checkbox" id="t-'+c.id+'" checked><span class="swatch" style="background:'+c.line+'"></span>'+c.id;
+  $("toggles").insertBefore(lab,$("t-lines").parentNode);
+});
+POINTS.forEach(p=>{
+  const li=document.createElement("li"), b=document.createElement("button");
+  b.type="button"; b.id="btn-"+p.id; b.setAttribute("aria-pressed","false");
+  b.innerHTML='<span class="dot '+p.el+'"></span><span class="code">'+p.id+'</span>'+
+    '<span class="nm">'+p.py+'<span class="han">'+p.han+'</span></span>'+
+    '<span class="kind">'+KIND[p.kind].name+'</span>';
+  b.addEventListener("click",()=>select(p.id,true));
+  li.appendChild(b); $("list-"+p.ch).appendChild(li);
+});
+function renderDetail(){
+  const d=$("detail");
+  if(!selected){
+    d.innerHTML='<div class="ttl">Pick a point</div><p class="en">Click a point on the arm or in the lists below. Each channel has five shu points running from the toe to the knee, one for each element.</p>';
+    return;
+  }
+  const p=byId[selected], k=KIND[p.kind], e=EL[p.el];
+  d.innerHTML='<div class="top"><span class="big">'+p.han+'</span><span class="ttl"><span class="code">'+p.id+'</span> '+p.py+'</span><span class="en">'+p.en+'</span></div>'+
+    '<dl><dt>Shu type</dt><dd>'+k.name+' <span class="han" style="font-family:var(--f-han)">'+k.han+'</span></dd>'+
+    '<dt>Element</dt><dd><span class="dot '+p.el+'"></span>'+e.name+' <span style="font-family:var(--f-han)">'+e.han+'</span></dd>'+
+    '<dt>Channel</dt><dd>'+chById[p.ch].desc+'</dd></dl>'+
+    '<p>'+p.loc+'</p>';
+}
+renderDetail();
+
+/* ---------- leg as a signed distance field (cm; x = down the leg, y = front, z = inner side) ---------- */
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]], add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]];
+const mul=(a,s)=>[a[0]*s,a[1]*s,a[2]*s], dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const nrm=a=>{const l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2]/l]};
+const orth=(v,ax)=>nrm(sub(v,mul(ax,dot(v,ax))));
+const mixw=(a,wa,b,wb)=>nrm(add(mul(a,wa),mul(b,wb)));
+const R=Math.PI/180;
+const dirOf=(yaw,pitch)=>[Math.cos(pitch*R)*Math.cos(yaw*R),Math.sin(pitch*R),Math.cos(pitch*R)*Math.sin(yaw*R)];
+
+function mk(a,b,ra,rb){const ba=sub(b,a);return {ax:a[0],ay:a[1],az:a[2],bx:ba[0],by:ba[1],bz:ba[2],il:1/dot(ba,ba),ra:ra,rb:rb,a:a,b:b}}
+function cone(x,y,z,c){
+  const dx=x-c.ax,dy=y-c.ay,dz=z-c.az;
+  let t=(dx*c.bx+dy*c.by+dz*c.bz)*c.il; t=t<0?0:t>1?1:t;
+  const qx=dx-c.bx*t,qy=dy-c.by*t,qz=dz-c.bz*t;
+  return Math.sqrt(qx*qx+qy*qy+qz*qz)-(c.ra+(c.rb-c.ra)*t);
+}
+function smin(a,b,k){const h=Math.max(k-Math.abs(a-b),0)/k;return Math.min(a,b)-h*h*k*0.25}
+
+const ss=(a,b,x)=>{x=(x-a)/(b-a);x=x<0?0:x>1?1:x;return x*x*(3-2*x)};
+/* leg cross-sections from mid thigh to ankle: x, half-width (z), half-depth (y), centre y, centre z */
+const LIMB=[[-24,7.0,7.2,-0.4,0.3],[-16,6.5,6.6,-0.3,0.2],[-9,5.6,5.6,-0.3,0.1],[-4,5.1,5.0,-0.2,0],[0,5.0,4.7,-0.3,0],
+  [3,4.6,4.3,-0.4,0],[7,4.6,4.8,-0.9,0],[11,4.7,5.0,-1.1,0.1],[16,4.3,4.6,-1.0,0.1],[22,3.6,3.8,-0.8,0.1],
+  [28,2.9,3.0,-0.6,0.1],[33,2.6,2.6,-0.5,0.1],[37,2.7,2.7,-0.3,0],[39,2.6,2.4,0,0]];
+const LX0=-24, LX1=39, LSTEP=0.1, LN=Math.round((LX1-LX0)/LSTEP)+1, LUT=new Float32Array(LN*4);
+(function(){
+  const n=LIMB.length, tan=(i,c)=>{const a=Math.max(i-1,0),b=Math.min(i+1,n-1);return (LIMB[b][c]-LIMB[a][c])/(LIMB[b][0]-LIMB[a][0])};
+  for(let s=0,i=0;s<LN;s++){
+    const x=LX0+s*LSTEP; while(i<n-2&&x>LIMB[i+1][0]) i++;
+    const h=LIMB[i+1][0]-LIMB[i][0], u=Math.min(1,(x-LIMB[i][0])/h), u2=u*u, u3=u2*u;
+    for(let c=1;c<5;c++) LUT[s*4+c-1]=(2*u3-3*u2+1)*LIMB[i][c]+(u3-2*u2+u)*h*tan(i,c)+(-2*u3+3*u2)*LIMB[i+1][c]+(u3-u2)*h*tan(i+1,c);
+  }
+})();
+function limb(x,y,z){
+  const xc=x<LX0?LX0:x>LX1?LX1:x, f=(xc-LX0)/LSTEP, i=Math.min(f|0,LN-2), u=f-i, o=i*4;
+  const rz=LUT[o]+(LUT[o+4]-LUT[o])*u, ry=LUT[o+1]+(LUT[o+5]-LUT[o+1])*u;
+  const yy=y-(LUT[o+2]+(LUT[o+6]-LUT[o+2])*u), zz=z-(LUT[o+3]+(LUT[o+7]-LUT[o+3])*u);
+  const a=yy/ry, b=zz/rz, e=Math.sqrt(a*a+b*b);
+  const dr=e<1e-4?-Math.min(ry,rz):e*(e-1)/Math.sqrt(a*a/(ry*ry)+b*b/(rz*rz));
+  const dx=x>LX1?x-LX1:0;
+  if(dx===0) return dr;
+  return dr>0?Math.sqrt(dr*dr+dx*dx):Math.max(dr,dx);
+}
+/* bony and tendinous landmarks */
+const patella=mk([-2.4,3.2,0.4],[0.2,3.1,0.4],2.0,1.9);
+const patLig=mk([1.0,3.5,0.3],[4.4,3.6,0.3],0.75,0.8);
+const tuberosity=mk([4.3,3.4,0.3],[4.9,3.4,0.3],1.0,0.9);
+const condMed=mk([-2.5,0.3,3.9],[0.5,0.0,3.9],1.7,1.7);
+const condLat=mk([-2.5,0.3,-3.8],[0.5,0.0,-3.8],1.5,1.5);
+const tibCondMed=mk([2.0,0.2,3.8],[3.2,0.0,3.7],1.4,1.3);
+const fibHead=mk([3.6,-1.2,-3.9],[4.2,-1.2,-3.9],1.0,1.0);
+const semiT=mk([-10,-5.0,2.7],[2.5,-3.5,3.4],0.75,0.7);
+const bicepsF=mk([-10,-5.0,-2.9],[3.4,-2.4,-3.9],0.8,0.75);
+const tibiaCrest=[mk([5,3.65,0.7],[17,3.3,0.8],0.45,0.45),mk([17,3.3,0.8],[30,2.1,0.8],0.45,0.4)];
+const achilles=mk([26,-3.4,0],[38.5,-3.3,0],0.7,0.75);
+const tibAnt=[mk([31,1.75,1.1],[37,2.3,1.4],0.45,0.45),mk([37,2.3,1.4],[39.4,4.0,1.6],0.45,0.42)];
+const malMed=mk([35.6,-0.2,2.4],[36.6,-0.3,2.4],1.2,1.15);
+const malLat=mk([36.5,-0.8,-2.3],[37.8,-0.9,-2.3],1.1,1.05);
+const heel=mk([39.6,-1.9,0],[41.9,-1.6,0],2.35,2.35);
+const tarsMed=mk([39.4,0,1.2],[41.3,6,1.5],2.5,2.3);
+const tarsLat=mk([40.2,0,-1.0],[41.8,6,-1.6],2.2,2.0);
+const navicular=mk([40.0,4.0,2.6],[40.1,4.6,2.6],0.9,0.9);
+const solePad=mk([42.6,3,0.5],[43.1,13.2,0.3],1.25,1.3);
+const METAS=[mk([41.0,6.0,1.9],[42.85,14.0,2.9],1.5,1.45),mk([41.0,6.5,0.7],[43.2,14.4,1.1],1.2,1.05),
+  mk([41.2,6.5,-0.4],[43.3,13.9,-0.6],1.15,1.0),mk([41.4,6.3,-1.4],[43.4,13.1,-2.0],1.1,0.95),mk([41.7,6.0,-2.3],[43.4,12.1,-3.3],1.2,0.95)];
+const DENTS=[[0.5,-4.8,0,2.0,0.45],[1.4,4.0,-1.9,0.8,0.18],[1.4,4.0,2.0,0.8,0.15],[5.6,-0.6,4.6,0.8,0.18],[5.4,0.4,-4.5,0.7,0.15]];   // popliteal fossa, knee eyes, below the medial tibial condyle (SP9), below the fibula head (GB34): x,y,z,radius,depth
+function chainV(base,dirs,lens,radii,k){
+  const segs=[], joints=[base]; let p=base;
+  for(let i=0;i<lens.length;i++){ const q=add(p,mul(nrm(dirs[i]),lens[i])); segs.push(mk(p,q,radii[i],radii[i+1])); joints.push(q); p=q }
+  return {segs:segs,joints:joints,k:k};
+}
+const T={
+  big:  chainV([42.85,14.5,2.95],[[0.12,1,0.03],[0.2,1,0.03]],[3.0,2.6],[1.35,1.25,1.05],0.6),
+  second:chainV([43.3,14.9,1.15],[[0.15,1,-0.04],[0.4,1,-0.04],[0.45,1,-0.04]],[2.3,1.3,1.1],[0.8,0.72,0.66,0.6],0.4),
+  third:chainV([43.4,14.3,-0.62],[[0.15,1,-0.12],[0.4,1,-0.12],[0.45,1,-0.12]],[2.0,1.2,1.0],[0.75,0.68,0.62,0.56],0.4),
+  fourth:chainV([43.5,13.5,-2.05],[[0.15,1,-0.2],[0.4,1,-0.2],[0.45,1,-0.2]],[1.8,1.1,0.9],[0.72,0.65,0.6,0.54],0.4),
+  little:chainV([43.55,12.5,-3.35],[[0.15,1,-0.3],[0.4,1,-0.3],[0.45,1,-0.3]],[1.4,0.9,0.8],[0.7,0.62,0.57,0.52],0.4)
+};
+const TOES=[T.big,T.second,T.third,T.fourth,T.little];
+
+function sdf(x,y,z){
+  let d=limb(x,y,z);
+  if(x<9){
+    d=smin(d,cone(x,y,z,patella),1.2); d=smin(d,cone(x,y,z,patLig),0.8); d=smin(d,cone(x,y,z,tuberosity),0.9);
+    d=smin(d,cone(x,y,z,condMed),1.5); d=smin(d,cone(x,y,z,condLat),1.5); d=smin(d,cone(x,y,z,tibCondMed),1.2); d=smin(d,cone(x,y,z,fibHead),0.9);
+    d=smin(d,cone(x,y,z,semiT),0.9); d=smin(d,cone(x,y,z,bicepsF),0.9);
+  }
+  if(x>3&&x<32) for(const c of tibiaCrest) d=smin(d,cone(x,y,z,c),0.6);
+  if(x>24){
+    d=smin(d,cone(x,y,z,achilles),0.9); d=smin(d,cone(x,y,z,malMed),0.9); d=smin(d,cone(x,y,z,malLat),0.9);
+    for(const c of tibAnt) d=smin(d,cone(x,y,z,c),0.5);
+  }
+  if(x>34){
+    let f=smin(cone(x,y,z,heel),cone(x,y,z,tarsMed),1.6); f=smin(f,cone(x,y,z,tarsLat),1.4); f=smin(f,cone(x,y,z,navicular),0.7);
+    for(let i=0;i<5;i++) f=smin(f,cone(x,y,z,METAS[i]),0.9);
+    f=smin(f,cone(x,y,z,solePad),1.0);
+    d=smin(d,f,1.8);
+    let r=d;
+    for(let t=0;t<5;t++){
+      const s=TOES[t].segs; let td=cone(x,y,z,s[0]);
+      for(let j=1;j<s.length;j++) td=smin(td,cone(x,y,z,s[j]),0.2);
+      const v=smin(d,td,TOES[t].k); if(v<r) r=v;
+    }
+    d=r;
+  }
+  for(let i=0;i<DENTS.length;i++){
+    const q=DENTS[i], ax=x-q[0]; if(ax>3*q[3]||ax<-3*q[3]) continue;
+    const ay=y-q[1], az=z-q[2]; d+=q[4]*Math.exp(-(ax*ax+ay*ay+az*az)/(q[3]*q[3]));
+  }
+  return Math.max(d,-(x+20.5));
+}
+function grad(p){
+  const e=0.03;
+  return nrm([sdf(p[0]+e,p[1],p[2])-sdf(p[0]-e,p[1],p[2]),sdf(p[0],p[1]+e,p[2])-sdf(p[0],p[1]-e,p[2]),sdf(p[0],p[1],p[2]+e)-sdf(p[0],p[1],p[2]-e)]);
+}
+/* walk outward from a point inside the leg until the skin is reached */
+function exitPoint(inside,out){
+  out=nrm(out); let t=0;
+  const at=s=>add(inside,mul(out,s));
+  while(t<12){const q=at(t); if(sdf(q[0],q[1],q[2])>0) break; t+=0.05}
+  let lo=Math.max(t-0.05,0), hi=t;
+  for(let i=0;i<14;i++){const m=(lo+hi)/2,q=at(m); if(sdf(q[0],q[1],q[2])>0) hi=m; else lo=m}
+  return at(hi);
+}
+function snap(p,off){
+  for(let i=0;i<8;i++){const g=grad(p); p=sub(p,mul(g,sdf(p[0],p[1],p[2])-off))}
+  return p;
+}
+
+/* ---------- where each point sits ---------- */
+function frame(f,i,nailRef,sideRef){
+  const s=f.segs[i], ax=nrm([s.bx,s.by,s.bz]);
+  const nail=orth(nailRef,ax); let side=orth(orth(sideRef,ax),nail);
+  return {a:s.a,b:s.b,ax:ax,len:Math.hypot(s.bx,s.by,s.bz),nail:nail,side:side};
+}
+const UP=[-1,0,0], MED=[0,0,1];          // toenails face up the leg; side = toward the big toe
+const frames=t=>t.segs.map((s,i)=>frame(t,i,UP,MED));
+const bt=frames(T.big), t2=frames(T.second), t4=frames(T.fourth), t5=frames(T.little);
+const last=f=>f[f.length-1];
+const along=(fr,u)=>add(fr.a,mul(fr.ax,fr.len*u));
+const medCorner=fr=>mixw(fr.nail,0.57,fr.side,0.82), latCorner=fr=>mixw(fr.nail,0.57,mul(fr.side,-1),0.82);
+const medSide=fr=>mixw(fr.nail,0.3,fr.side,0.95), latSide=fr=>mixw(fr.nail,0.3,mul(fr.side,-1),0.95);
+const axOf=c=>nrm([c.bx,c.by,c.bz]);
+const KNEE=0.6, MAL=37.0, CUN=(MAL-KNEE)/16;   // popliteal crease to the lateral malleolus is 16 cun
+
+const SITE={
+  ST45:[along(last(t2),0.4),latCorner(last(t2))],
+  ST44:[[43.3,14.7,0.25],[-1,0.15,0]],
+  ST43:[[42.3,12.0,0.25],[-1,0,0]],
+  ST41:[[36.6,0.5,0],[0,1,0]],
+  ST36:[[1.4+3*CUN,0,-1.0],[0,1,-0.45]],
+  SP1: [along(last(bt),0.35),medCorner(last(bt))],
+  SP2: [along(bt[0],0.18),[0.3,0,1]],
+  SP3: [sub(METAS[0].b,mul(axOf(METAS[0]),1.7)),[0.3,0,1]],
+  SP5: [[38.9,1.9,2.0],[0,0.3,1]],
+  SP9: [[5.6,-0.6,2.5],[0,-0.15,1]],
+  BL67:[along(last(t5),0.4),latCorner(last(t5))],
+  BL66:[along(t5[0],0.2),[0.3,0,-1]],
+  BL65:[sub(METAS[4].b,mul(axOf(METAS[4]),1.6)),[0.3,0,-1]],
+  BL60:[[36.8,-2.2,-1.0],[0,-0.35,-1]],
+  BL40:[[KNEE,-2,0],[0,-1,0]],
+  KI1: [[43.0,9.0,0.5],[1,0,0]],
+  KI2: [[41.4,4.6,1.9],[0.45,0,1]],
+  KI3: [[36.2,-2.0,1.0],[0,-0.35,1]],
+  KI7: [[36.2-2*CUN,-1.8,1.0],[0,-0.35,1]],
+  KI10:[[KNEE,-2.0,1.8],[0,-0.85,0.5]],
+  GB44:[along(last(t4),0.4),latCorner(last(t4))],
+  GB43:[[43.4,13.6,-2.75],[-1,0.1,0]],
+  GB41:[[41.8,8.0,-2.2],[-1,0,-0.2]],
+  GB38:[[MAL-4*CUN,0,-1.0],[0,0.3,-1]],
+  GB34:[[5.4,0,-2.6],[0,0.45,-1]],
+  LR1: [along(last(bt),0.35),latCorner(last(bt))],
+  LR2: [[43.1,14.9,2.0],[-1,0.15,0]],
+  LR3: [[42.0,9.0,1.5],[-1,0,0.1]],
+  LR4: [[37.2,1.0,2.0],[0,0.6,0.8]],
+  LR8: [[KNEE,-1.4,2.6],[0,-0.3,1]]
+};
+/* skin creases, drawn as fine lines: [x, from angle, to angle, bow]; angles run from the front of the leg (0°) toward the inner side (+90°) and round to the back (180°) */
+const CREASES=[[KNEE,128,232,0],[36.8,-55,55,-0.25]];
+const ROUTE={
+  ST:["ST45",[last(t2).a,latSide(last(t2))],[t2[1].a,latSide(t2[1])],"ST44","ST43",[[40.0,6,-0.2],[-1,0.3,0]],"ST41",
+      [[24,0,-1.0],[0,1,-0.45]],"ST36",[[1.4,0,-1.9],[0,1,-0.6]],[[-8,0,-1.0],[0,1,-0.3]],[[-19,0,-1.0],[0,1,-0.3]]],
+  SP:["SP1",[last(bt).a,medSide(last(bt))],"SP2","SP3",[[41.5,7.5,1.8],[0.3,0,1]],"SP5",[[30,-0.6,1.2],[0,-0.15,1]],[[18,-0.6,1.5],[0,-0.15,1]],"SP9",
+      [[-8,-0.6,2],[0,0.1,1]],[[-19,-0.4,2],[0,0.1,1]]],
+  BL:["BL67",[last(t5).a,latSide(last(t5))],[t5[1].a,latSide(t5[1])],"BL66","BL65",[[42,6.0,-2.4],[0.3,0,-1]],[[41,1.0,-1.6],[0.2,-0.2,-1]],"BL60",
+      [[28,-1.0,-0.6],[0,-1,-0.4]],[[14,-1.0,-0.4],[0,-1,-0.2]],"BL40",[[-8,-1,-0.6],[0,-1,-0.1]],[[-19,-1,-0.6],[0,-1,-0.1]]],
+  KI:["KI1",[[42.6,6.0,1.6],[0.6,0,0.8]],"KI2",[[38.6,-1.0,1.6],[0.35,-0.4,0.85]],"KI3","KI7",[[18,-1.6,1.0],[0,-0.6,0.8]],"KI10",
+      [[-8,-1.5,1.6],[0,-0.6,0.8]],[[-19,-1.5,1.6],[0,-0.6,0.8]]],
+  GB:["GB44",[last(t4).a,latSide(last(t4))],[t4[1].a,latSide(t4[1])],"GB43","GB41",[[38.9,1.4,-1.6],[0,0.5,-1]],"GB38",
+      [[16,0,-1.2],[0,0.15,-1]],"GB34",[[-8,0,-1],[0,0,-1]],[[-19,0,-1],[0,0,-1]]],
+  LR:["LR1",[last(bt).a,mixw(last(bt).nail,0.7,mul(last(bt).side,-1),0.7)],[bt[0].a,mixw(bt[0].nail,0.7,mul(bt[0].side,-1),0.7)],"LR2","LR3","LR4",
+      [[28,0.6,1.2],[0,0.25,1]],[[14,0,1.5],[0,0.1,1]],"LR8",[[-8,-0.4,2.2],[0,0,1]],[[-19,-0.4,2.2],[0,0,1]]]
+};
+
+/* ---------- skin mesh (surface nets over the field) ---------- */
+function buildSkin(){
+  const h=0.25,x0=-21.5,y0=-7.8,z0=-7.6,nx=271,ny=120,nz=63,nxy=nx*ny;
+  const val=new Float32Array(nx*ny*nz);
+  for(let k=0;k<nz;k++)for(let j=0;j<ny;j++)for(let i=0;i<nx;i++) val[i+nx*j+nxy*k]=sdf(x0+i*h,y0+j*h,z0+k*h);
+  const vid=new Int32Array(nx*ny*nz).fill(-1), pos=[];
+  const co=[[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,0,1],[0,1,1],[1,1,1]];
+  const ed=[[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+  const cv=new Float32Array(8);
+  for(let k=0;k<nz-1;k++)for(let j=0;j<ny-1;j++)for(let i=0;i<nx-1;i++){
+    const o=i+nx*j+nxy*k; let neg=0;
+    for(let c=0;c<8;c++){cv[c]=val[o+co[c][0]+nx*co[c][1]+nxy*co[c][2]]; if(cv[c]<0) neg++}
+    if(neg===0||neg===8) continue;
+    let sx=0,sy=0,sz=0,n=0;
+    for(let e=0;e<12;e++){
+      const a=ed[e][0],b=ed[e][1],va=cv[a],vb=cv[b];
+      if((va<0)===(vb<0)) continue;
+      const t=va/(va-vb);
+      sx+=co[a][0]+(co[b][0]-co[a][0])*t; sy+=co[a][1]+(co[b][1]-co[a][1])*t; sz+=co[a][2]+(co[b][2]-co[a][2])*t; n++;
+    }
+    vid[o]=pos.length/3; pos.push(x0+(i+sx/n)*h,y0+(j+sy/n)*h,z0+(k+sz/n)*h);
+  }
+  const idx=[];
+  const quad=(a,b,c,d,flip)=>{ if(a<0||b<0||c<0||d<0) return; if(flip) idx.push(a,c,b,a,d,c); else idx.push(a,b,c,a,c,d) };
+  for(let k=1;k<nz-1;k++)for(let j=1;j<ny-1;j++)for(let i=1;i<nx-1;i++){
+    const o=i+nx*j+nxy*k, a=val[o], an=a<0;
+    if(an!==(val[o+1]<0))   quad(vid[o-nx-nxy],vid[o-nxy],vid[o],vid[o-nx],!an);
+    if(an!==(val[o+nx]<0))  quad(vid[o-nxy-1],vid[o-1],vid[o],vid[o-nxy],!an);
+    if(an!==(val[o+nxy]<0)) quad(vid[o-1-nx],vid[o-nx],vid[o],vid[o-1],!an);
+  }
+  const nv=pos.length/3, nor=new Float32Array(nv*3), col=new Float32Array(nv*3);
+  const nails=TOES.map(t=>last(frames(t)));
+  for(let v=0;v<nv;v++){
+    const p=[pos[v*3],pos[v*3+1],pos[v*3+2]], g=grad(p);
+    nor[v*3]=g[0];nor[v*3+1]=g[1];nor[v*3+2]=g[2];
+    const palm=ss(-0.2,0.6,g[0])*ss(39,42,p[0]);   // paler sole
+    let r=0.80+0.05*palm,gr=0.63+0.035*palm,b=0.53+0.05*palm, w=0;
+    for(let f=0;f<5;f++){
+      const fr=nails[f], d=sub(p,fr.a), u=dot(d,fr.ax)/fr.len;
+      if(u<0.2||u>1.3) continue;
+      const rad=nrm(sub(d,mul(fr.ax,u*fr.len)));
+      w=Math.max(w,ss(0.56,0.7,dot(rad,fr.nail))*ss(0.3,0.38,u)*(1-ss(0.98,1.12,u)));
+    }
+    col[v*3]=r+(0.93-r)*w; col[v*3+1]=gr+(0.80-gr)*w; col[v*3+2]=b+(0.76-b)*w;
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
+  geo.setAttribute("normal",new THREE.BufferAttribute(nor,3));
+  geo.setAttribute("color",new THREE.BufferAttribute(col,3));
+  geo.setIndex(idx);
+  return geo;
+}
+
+/* ---------- scene ---------- */
+const stage=$("stage"), canvas=$("gl"), labelBox=$("labels");
+let renderer;
+try{ renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true}); }
+catch(e){ $("status").textContent="This browser could not start WebGL, so the 3D leg cannot be shown. The point lists still work."; return; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1,1,400);
+scene.add(camera);
+scene.add(new THREE.HemisphereLight(0xffffff,0x8a8f99,0.62));
+const key=new THREE.DirectionalLight(0xffffff,0.68); key.position.set(-0.9,1.0,0.8); camera.add(key);
+key.target.position.set(0,0,-1); camera.add(key.target);   // aim the key light where the camera looks
+const group=new THREE.Group(); scene.add(group);
+const toV=a=>new THREE.Vector3(a[0],a[1],a[2]);
+
+const view={az:0,el:0,dist:120,target:new THREE.Vector3()};
+let home=null, fly=null;
+const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function orient(){
+  const w=stage.clientWidth,h=stage.clientHeight, m=new THREE.Matrix4();
+  // the leg stands with the toes toward the viewer and the inner side to the viewer's left.
+  // columns = where the leg's x (down the leg), y (front), z (inner side) axes point on screen
+  m.makeBasis(new THREE.Vector3(0,-1,0),new THREE.Vector3(0,0,1),new THREE.Vector3(-1,0,0));
+  group.quaternion.setFromRotationMatrix(m); group.updateMatrixWorld(true);
+  const t=Math.tan(camera.fov*R/2), a=w/h;
+  const dist=Math.max(37.5/t,14/(t*a));
+  home={az:24*R,el:10*R,dist:dist*1.03,target:group.localToWorld(new THREE.Vector3(13.2,4,0))};
+}
+function applyView(){
+  const ce=Math.cos(view.el);
+  camera.position.set(view.target.x+view.dist*ce*Math.sin(view.az),view.target.y+view.dist*Math.sin(view.el),view.target.z+view.dist*ce*Math.cos(view.az));
+  camera.lookAt(view.target);
+}
+function flyTo(to){
+  if(reduce){view.az=to.az;view.el=to.el;view.dist=to.dist;view.target.copy(to.target);fly=null;return}
+  let daz=to.az-view.az; daz=Math.atan2(Math.sin(daz),Math.cos(daz));
+  fly={t0:performance.now(),from:{az:view.az,el:view.el,dist:view.dist,target:view.target.clone()},to:{az:view.az+daz,el:to.el,dist:to.dist,target:to.target.clone()}};
+}
+function resize(){
+  const w=stage.clientWidth,h=stage.clientHeight; if(!w||!h) return;
+  renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+}
+
+const markers=[], chan={}, lines={};
+let ring=null;
+
+function build(){
+  const skin=new THREE.Mesh(buildSkin(),new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.78,metalness:0}));
+  group.add(skin); CHANNELS.forEach(c=>{chan[c.id]=new THREE.Group(); group.add(chan[c.id])});
+  const creaseMat=new THREE.MeshBasicMaterial({color:0x9a6a56});
+  CREASES.forEach(c=>{
+    const pts=[]; for(let a=c[1];a<=c[2];a+=4) pts.push(toV(exitPoint([c[0]+c[3]*a*a/3600,0,0],[0,Math.cos(a*R),Math.sin(a*R)])));
+    group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),pts.length*3,0.03,5,false),creaseMat));
+  });
+
+  const local={};
+  POINTS.forEach(p=>{
+    const s=SITE[p.id], pos=exitPoint(s[0],s[1]), n=grad(pos); local[p.id]=pos;
+    const g=new THREE.Group(); g.position.copy(toV(pos).add(toV(n).multiplyScalar(0.12)));
+    const ball=new THREE.Mesh(new THREE.SphereGeometry(0.36,24,16),new THREE.MeshStandardMaterial({color:EL[p.el].hex,emissive:EL[p.el].hex,emissiveIntensity:0.3,roughness:0.4}));
+    const rim=new THREE.Mesh(new THREE.SphereGeometry(0.45,24,16),new THREE.MeshBasicMaterial({color:0x141a19,side:THREE.BackSide}));
+    g.add(rim); g.add(ball); chan[p.ch].add(g);
+    const el=document.createElement("div"); el.className="lbl"; el.textContent=p.id; labelBox.appendChild(el);
+    markers.push({p:p,g:g,n:toV(n),el:el,wpos:new THREE.Vector3(),wn:new THREE.Vector3()});
+  });
+
+  CHANNELS.map(c=>c.id).forEach(c=>{
+    const way=ROUTE[c].map(w=>typeof w==="string"?local[w]:exitPoint(w[0],w[1])), pts=[];
+    for(let i=0;i<way.length-1;i++){
+      const a=way[i],b=way[i+1],n=Math.max(2,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2])/0.45));
+      for(let s=0;s<n;s++) pts.push(toV(snap(add(a,mul(sub(b,a),s/n)),0.05)));
+    }
+    pts.push(toV(snap(way[way.length-1],0.05)));
+    const tube=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),pts.length*2,0.07,6,false),
+      new THREE.MeshStandardMaterial({color:new THREE.Color(chById[c].line),roughness:0.6}));
+    lines[c]=tube; chan[c].add(tube);
+  });
+
+  ring=new THREE.Mesh(new THREE.RingGeometry(0.62,0.76,48),new THREE.MeshBasicMaterial({color:0x141a19,side:THREE.DoubleSide,transparent:true,opacity:0.9,depthWrite:false}));
+  ring.visible=false; group.add(ring);
+
+  orient(); resize();
+  Object.assign(view,{az:home.az,el:home.el,dist:home.dist}); view.target.copy(home.target);
+  $("status").hidden=true;
+  if(selected) select(selected,true);
+  requestAnimationFrame(tick);
+}
+
+/* ---------- selection ---------- */
+function select(id,move){
+  if(move) setSpin(false);
+  selected=id; renderDetail();
+  POINTS.forEach(p=>$("btn-"+p.id).setAttribute("aria-pressed",String(p.id===id)));
+  const m=markers.find(k=>k.p.id===id); if(!m) return;
+  if(!chan[m.p.ch].visible){ $("t-"+m.p.ch).checked=true; chan[m.p.ch].visible=true }
+  markers.forEach(k=>{k.g.scale.setScalar(k===m?1.3:1); k.el.classList.toggle("on",k===m)});
+  ring.visible=true; ring.position.copy(m.g.position);
+  ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),m.n);
+  if(move){
+    const wn=m.n.clone().applyQuaternion(group.quaternion), wp=group.localToWorld(m.g.position.clone());
+    const el=Math.max(-70*R,Math.min(70*R,Math.asin(wn.y)));
+    flyTo({az:Math.atan2(wn.x,wn.z),el:el,dist:Math.min(home.dist,34),target:wp});
+  }
+}
+
+/* ---------- pointer: orbit, zoom, pick ---------- */
+const ptrs=new Map(); let moved=0, pinch=0;
+const ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
+function pickAt(ev){
+  const r=canvas.getBoundingClientRect(), x=ev.clientX-r.left, y=ev.clientY-r.top;
+  let best=null, bd=22;
+  markers.forEach(m=>{
+    if(!m.vis) return;
+    const d=Math.hypot(m.sx-x,m.sy-y); if(d<bd){bd=d;best=m}
+  });
+  return best;
+}
+canvas.addEventListener("pointerdown",ev=>{
+  canvas.setPointerCapture(ev.pointerId); ptrs.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
+  if(ptrs.size===1) moved=0;
+  if(ptrs.size===2){const a=[...ptrs.values()]; pinch=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)}
+  canvas.classList.add("drag"); fly=null; setSpin(false);
+});
+canvas.addEventListener("pointermove",ev=>{
+  const p=ptrs.get(ev.pointerId);
+  if(!p){ canvas.classList.toggle("hot",!!pickAt(ev)); return }
+  const dx=ev.clientX-p.x, dy=ev.clientY-p.y; p.x=ev.clientX; p.y=ev.clientY;
+  if(ptrs.size===1){
+    moved+=Math.abs(dx)+Math.abs(dy);
+    view.az-=dx*0.007; view.el=Math.max(-85*R,Math.min(85*R,view.el+dy*0.007));
+  }else if(ptrs.size===2){
+    const a=[...ptrs.values()], d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+    if(pinch>0) view.dist=Math.max(9,Math.min(220,view.dist*pinch/d));
+    pinch=d; moved=99;
+  }
+});
+function up(ev){
+  if(!ptrs.has(ev.pointerId)) return;
+  ptrs.delete(ev.pointerId); if(!ptrs.size) canvas.classList.remove("drag");
+  if(ev.type==="pointerup"&&moved<6){const m=pickAt(ev); if(m) select(m.p.id,true)}
+}
+canvas.addEventListener("pointerup",up); canvas.addEventListener("pointercancel",up);
+canvas.addEventListener("wheel",ev=>{
+  ev.preventDefault(); fly=null;
+  view.dist=Math.max(9,Math.min(220,view.dist*Math.exp(ev.deltaY*(ev.deltaMode?0.04:0.0012))));
+},{passive:false});
+
+$("reset").addEventListener("click",()=>{orient(); flyTo(home)});
+const SIDES={front:[0,1,0],back:[0,-1,0],inner:[0,0.25,1],outer:[0,0.25,-1],sole:[1,0.15,0]};
+document.querySelectorAll(".views [data-side]").forEach(b=>b.addEventListener("click",()=>{
+  if(!home) return;
+  const wn=toV(SIDES[b.dataset.side]).normalize().applyQuaternion(group.quaternion);
+  flyTo({az:Math.atan2(wn.x,wn.z),el:Math.max(-75*R,Math.min(75*R,Math.asin(wn.y))),dist:home.dist,target:home.target.clone()});
+}));
+CHANNELS.map(c=>c.id).forEach(c=>$("t-"+c).addEventListener("change",e=>{if(!chan[c]) return; chan[c].visible=e.target.checked; if(ring&&selected&&byId[selected].ch===c) ring.visible=e.target.checked}));
+$("t-lines").addEventListener("change",e=>{for(const c in lines) lines[c].visible=e.target.checked});
+$("t-labels").addEventListener("change",e=>{labelBox.hidden=!e.target.checked});
+if(window.ResizeObserver) new ResizeObserver(resize).observe(stage); else window.addEventListener("resize",resize);
+
+/* ---------- frame loop ---------- */
+const tmp=new THREE.Vector3();
+let spin=false, lastNow=0;
+function setSpin(on){ spin=on; $("spin").setAttribute("aria-pressed",String(on)) }
+$("spin").addEventListener("click",()=>setSpin(!spin));
+function tick(now){
+  const dt=Math.min(0.05,(now-(lastNow||now))/1000); lastNow=now;
+  if(spin&&!fly) view.az+=dt*0.45;
+  if(fly){
+    let t=Math.min(1,(now-fly.t0)/650); const e=t*t*(3-2*t), a=fly.from, b=fly.to;
+    view.az=a.az+(b.az-a.az)*e; view.el=a.el+(b.el-a.el)*e; view.dist=a.dist+(b.dist-a.dist)*e;
+    view.target.lerpVectors(a.target,b.target,e); if(t>=1) fly=null;
+  }
+  applyView();
+  if(ring&&ring.visible&&!reduce){const s=1+0.22*(0.5+0.5*Math.sin(now*0.004)); ring.scale.setScalar(s)}
+  renderer.render(scene,camera);
+  const w=stage.clientWidth,h=stage.clientHeight;
+  markers.forEach(m=>{
+    m.g.getWorldPosition(m.wpos); m.wn.copy(m.n).applyQuaternion(group.quaternion);
+    const facing=m.wn.dot(tmp.copy(camera.position).sub(m.wpos).normalize());
+    tmp.copy(m.wpos).project(camera);
+    m.sx=(tmp.x*0.5+0.5)*w; m.sy=(-tmp.y*0.5+0.5)*h;
+    m.vis=chan[m.p.ch].visible&&facing>0.05&&tmp.z<1;
+    m.el.hidden=!m.vis;
+    if(m.vis){
+      tmp.copy(m.wpos).addScaledVector(m.wn,1.5).project(camera);
+      m.el.style.transform="translate(-50%,-50%) translate("+((tmp.x*0.5+0.5)*w).toFixed(1)+"px,"+((-tmp.y*0.5+0.5)*h).toFixed(1)+"px)";
+    }
+  });
+  requestAnimationFrame(tick);
+}
+
+resize();
+setTimeout(build,30);
+})();
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#10131f"><title>3D arm · Shu Atlas</title><meta name="description" content="A 3D right arm with the five Shu points of the six hand channels."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Noto+Sans+SC:wght@300&display=swap"><style>
+/* 3D study views: one fixed screen. A stage holds the model; a rail lists the points and shows the picked one. */
+:root{--ground:#0d101d;--raise:#151928;--raise-2:#1e2338;--ink:#f5f3ed;--ink-2:#9ea8bd;--ink-3:#657088;--hair:rgba(245,243,237,.09);--hair-2:rgba(245,243,237,.20);
+  --wash:rgba(245,243,237,.045);--wash-2:rgba(245,243,237,.085);
+  --wood:#83c7a3;--fire:#f2968a;--earth:#e8c273;--metal:#f2f0ea;--water:#93b8f0;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;--ease:cubic-bezier(.16,1,.3,1);
+  --f-han:"Noto Sans SC","PingFang SC","Songti SC",sans-serif;--f-mono:var(--mono);
+  --muted:var(--ink-2);--plain:#c9cfdb;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--ground);height:100%}
+body{margin:0;height:100%;background:var(--ground);color:var(--ink);font:400 14px/1.45 "Jost",system-ui,sans-serif;letter-spacing:.01em;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.shell{height:100%;height:100dvh;display:flex;flex-direction:column;max-width:1440px;margin:0 auto;padding:0 max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px)) 16px}
+
+.appnav{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.appnav .home{display:flex;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none;min-width:0;transition:opacity .16s var(--ease)}
+.appnav .home:hover{opacity:.85}
+.appnav .home .han{font:300 19px/1 "Noto Sans SC","PingFang SC",sans-serif}
+.appnav .home .t{font:500 11px/1 "Jost",system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.appnav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.appnav a.l{display:block;padding:8px 12px;border-radius:999px;font:500 13px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;color:var(--ink-2);text-decoration:none;transition:color .16s var(--ease),background .16s var(--ease)}
+.appnav a.l:hover{color:var(--ink);background:rgba(245,243,237,.06)}
+.appnav a.l[aria-current="page"]{color:var(--ground);background:var(--ink)}
+
+header.top{flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;padding:18px 0 14px}
+.kicker{margin:0 0 7px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0;font-size:clamp(22px,2.6vw,30px);font-weight:500;letter-spacing:-.01em;line-height:1.1}
+h1 .han{font:300 .8em/1 var(--f-han);margin-left:12px;color:var(--ink-2);letter-spacing:.04em}
+header.top .sub{margin:6px 0 0;color:var(--ink-2);font-size:13.5px}
+.seg{display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:var(--raise);border:1px solid var(--hair)}
+.seg a{color:var(--ink-2);text-decoration:none;font:500 12.5px/1 "Jost",system-ui,sans-serif;padding:9px 16px;border-radius:999px;transition:color .18s,background .18s}
+.seg a:hover{color:var(--ink)}
+.seg a[aria-current="page"]{background:var(--ink);color:var(--ground)}
+
+.app{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:16px}
+.stage{position:relative;min-height:0;min-width:0;overflow:hidden;border-radius:20px;border:1px solid var(--hair);
+  background:radial-gradient(120% 90% at 50% 42%,#1d2236 0%,#151928 55%,#10131f 100%)}
+.stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.stage canvas.drag{cursor:grabbing}
+.stage canvas.hot{cursor:pointer}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;font:500 11px/1.25 var(--mono);letter-spacing:.02em;padding:2px 6px;border-radius:3px;background:rgba(13,16,29,.8);color:var(--ink);border:1px solid var(--hair-2);white-space:nowrap;will-change:transform}
+.lbl.on{background:var(--ink);color:var(--ground);border-color:var(--ink);font-size:12px}
+.hint{position:absolute;left:16px;bottom:13px;margin:0;color:var(--ink-3);font-size:12px;letter-spacing:.02em;pointer-events:none}
+.status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--ink-2);pointer-events:none}
+.views{position:absolute;left:12px;top:12px;right:160px;display:flex;flex-wrap:wrap;gap:5px}
+.tools{position:absolute;right:12px;top:12px;display:flex;gap:5px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--hair-2);background:rgba(13,16,29,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);font:500 12.5px/1 "Jost",system-ui,sans-serif;letter-spacing:.02em;cursor:pointer;transition:border-color .15s var(--ease),background .15s var(--ease),transform .12s var(--ease)}
+.btn:hover{border-color:rgba(245,243,237,.45)}
+.btn:active{transform:scale(.96)}
+.icon{width:32px;padding:0;justify-content:center}
+.icon svg{width:16px;height:16px}
+.icon[aria-pressed="true"],.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+
+.rail{min-height:0;min-width:0;overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding:0 4px 4px 0;scrollbar-width:thin;scrollbar-color:var(--hair-2) transparent}
+h2{margin:0 0 8px;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+h2 .han{font:300 13px/1 var(--f-han);letter-spacing:.04em;margin-left:8px;text-transform:none;color:var(--ink-3)}
+.detail{background:var(--raise);border:1px solid var(--hair);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.detail .top{display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap}
+.detail .big{font:300 32px/1 var(--f-han)}
+.detail .ttl{font-size:17px;font-weight:500;line-height:1.2}
+.detail .ttl .code{font-size:12.5px;padding:3px 7px;border-radius:3px;background:var(--ink);color:var(--ground);margin-right:4px;vertical-align:2px}
+.detail .en{color:var(--ink-2)}
+.detail dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;padding-top:10px;border-top:1px solid var(--hair)}
+.detail dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.detail dd{margin:0;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.detail p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.5}
+.toggles{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--ink-2)}
+.toggles label{display:flex;align-items:center;gap:7px;cursor:pointer;font-family:var(--mono);font-size:12px}
+.toggles label:has(#t-lines),.toggles label:has(#t-labels),.toggles label:has(#t-int),.toggles label:has(#t-both){font-family:"Jost",system-ui,sans-serif;font-size:13.5px}
+.toggles input{accent-color:var(--ink);margin:0}
+.swatch{width:16px;height:3px;border-radius:2px;display:inline-block;flex:none}
+.lists{display:flex;flex-direction:column;gap:18px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0;padding:0;list-style:none;color:var(--ink-2);font-size:12.5px}
+.legend li{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+.wood{background:var(--wood)} .fire{background:var(--fire)} .earth{background:var(--earth)} .metal{background:var(--metal)} .water{background:var(--water)}
+.plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid var(--hair)}
+.plist button{width:100%;display:grid;grid-template-columns:12px 46px minmax(0,1fr) auto;align-items:center;gap:8px;background:none;border:0;border-bottom:1px solid var(--hair);padding:9px 8px;text-align:left;cursor:pointer;transition:background .15s var(--ease)}
+.plist button:hover{background:var(--wash)}
+.plist button[aria-pressed="true"]{background:var(--wash-2);box-shadow:inset 2px 0 0 var(--ink)}
+.code{font:500 12px/1 var(--mono);letter-spacing:.02em}
+.nm{min-width:0;overflow-wrap:anywhere}
+.nm .han{font:300 13px/1 var(--f-han);margin-left:7px;color:var(--ink-2)}
+.kind{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.note{margin:0;color:var(--ink-3);font-size:11.5px;line-height:1.6}
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,56%) minmax(0,1fr);gap:12px}
+  header.top{padding:12px 0 10px}
+  header.top .sub{display:none}
+  .views{top:auto;bottom:10px;left:0;right:0;flex-wrap:nowrap;overflow-x:auto;padding:0 10px;scrollbar-width:none}
+  .views::-webkit-scrollbar{display:none}
+  .views .btn{flex:none}
+  .tools{top:10px;right:10px}
+  .hint{display:none}
+}
+@media (max-width:700px){
+  .shell{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .appnav{padding:14px 0 10px;border-bottom:0}
+  .appnav ul{position:fixed;z-index:400;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(calc(100vw - 16px),352px);padding:5px;gap:1px;border-radius:999px;background:rgba(16,20,33,.8);border:1px solid rgba(245,243,237,.13);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 14px 30px -10px rgba(0,0,0,.75)}
+  .appnav li{flex:1 1 0;min-width:0}
+  .appnav a.l{padding:11px 0;font-size:12.5px;text-align:center}
+  header.top{flex-direction:column;align-items:stretch}
+  .seg{align-self:flex-start}
+}
+@media (max-width:380px){.appnav a.l{font-size:12px}}
+</style><!-- favicon:start --><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2216%22%20r=%2212.5%22%20fill=%22%23f2f0ea%22%20stroke=%22%23f2f0ea%22%20stroke-width=%221.2%22/%3E%3Cpath%20d=%22M16%203.5a12.5%2012.5%200%200%201%200%2025a6.25%206.25%200%200%201%200-12.5a6.25%206.25%200%200%200%200-12.5z%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%229.75%22%20r=%222%22%20fill=%22%2310131f%22/%3E%3Ccircle%20cx=%2216%22%20cy=%2222.25%22%20r=%222%22%20fill=%22%23f2f0ea%22/%3E%3C/svg%3E"><!-- favicon:end --></head>
+<body>
+<div class="shell"><nav class="appnav" aria-label="Shu Atlas"><a class="home" href="index.html" aria-label="Shu Atlas home"><span class="han" lang="zh" aria-hidden="true">五輸</span><span class="t">Shu Atlas</span></a><ul><li><a class="l" href="index.html">Elements</a></li><li><a class="l" href="channels.html">Channels</a></li><li><a class="l" href="points.html">Points</a></li><li><a class="l" href="learn.html">Learn</a></li><li><a class="l" href="study.html">Study</a></li></ul></nav>
+<header class="top"><div><p class="kicker">3D · Five Shu points</p><h1 id="h1">The arm<span class="han" lang="zh">手 · 五輸穴</span></h1><p class="sub" id="sub">Right arm, the six hand channels</p></div><nav class="seg" aria-label="3D model"><a href="3d.html" aria-current="page">Arm</a><a href="3d-leg.html">Leg</a><a href="3d-channels.html">Channels</a></nav></header>
+<div class="app">
+  <div class="stage" id="stage">
+    <canvas id="gl" aria-label="3D model of a right arm with acupuncture points"></canvas>
+    <div class="labels" id="labels"></div>
+    <div class="status" id="status">Sculpting the arm…</div>
+    <div class="views" role="group" aria-label="Turn the arm to show">
+      <button class="btn" type="button" data-side="palm">Palm side</button>
+      <button class="btn" type="button" data-side="back">Back</button>
+      <button class="btn" type="button" data-side="thumb">Thumb side</button>
+      <button class="btn" type="button" data-side="little">Little-finger side</button>
+    </div>
+    <div class="tools">
+      <button class="btn icon" id="spin" type="button" aria-pressed="false" aria-label="Spin the arm" title="Spin the arm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><path d="M20.5 3.5v5h-5"/></svg>
+      </button>
+      <button class="btn" id="reset" type="button">Reset view</button>
+    </div>
+    <p class="hint">Drag to rotate · scroll or pinch to zoom · click a point</p>
+  </div>
+
+  <aside class="rail">
+    <section class="detail" id="detail" aria-live="polite"></section>
+
+    <section>
+      <h2>Show</h2>
+      <div class="toggles" id="toggles">
+        <label><input type="checkbox" id="t-lines" checked> Channel lines</label>
+        <label><input type="checkbox" id="t-labels" checked> Labels</label>
+      </div>
+    </section>
+    <div class="lists" id="lists"></div>
+
+    <section>
+      <h2>Five elements</h2>
+      <ul class="legend">
+        <li><span class="dot wood"></span>Wood 木</li>
+        <li><span class="dot fire"></span>Fire 火</li>
+        <li><span class="dot earth"></span>Earth 土</li>
+        <li><span class="dot metal"></span>Metal 金</li>
+        <li><span class="dot water"></span>Water 水</li>
+      </ul>
+    </section>
+    <p class="note">Schematic model for study. Point positions follow standard textbook descriptions but are approximate on this simplified arm. Arm outline traced from “Points of lung channel” by Dimitrius, Wikimedia Commons, CC BY-SA 3.0.</p>
+  </aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* ---------- point data ---------- */
+const EL = {
+  wood:{name:"Wood",han:"木",hex:0x3e7d5a}, fire:{name:"Fire",han:"火",hex:0xd23b2e},
+  earth:{name:"Earth",han:"土",hex:0xd99a2b}, metal:{name:"Metal",han:"金",hex:0xdfd9cb},
+  water:{name:"Water",han:"水",hex:0x3c6fbd}
+};
+const KIND = {
+  well:{name:"Jing-well",han:"井"}, spring:{name:"Ying-spring",han:"滎"}, stream:{name:"Shu-stream",han:"輸"},
+  river:{name:"Jing-river",han:"經"}, sea:{name:"He-sea",han:"合"}
+};
+const POINTS = [
+  {id:"LU11",ch:"LU",py:"Shaoshang",han:"少商",en:"Lesser Shang",kind:"well",el:"wood",
+   loc:"Radial side of the thumb, about 0.1 cun from the corner of the nail."},
+  {id:"LU10",ch:"LU",py:"Yuji",han:"魚際",en:"Fish Border",kind:"spring",el:"fire",
+   loc:"On the thenar eminence, radial to the midpoint of the 1st metacarpal, where the red and white skin meet."},
+  {id:"LU9",ch:"LU",py:"Taiyuan",han:"太淵",en:"Great Abyss",kind:"stream",el:"earth",
+   loc:"At the radial end of the wrist crease, in the hollow on the radial side of the radial artery."},
+  {id:"LU8",ch:"LU",py:"Jingqu",han:"經渠",en:"Channel Ditch",kind:"river",el:"metal",
+   loc:"1 cun above the wrist crease, between the radial styloid process and the radial artery."},
+  {id:"LU5",ch:"LU",py:"Chize",han:"尺澤",en:"Cubit Marsh",kind:"sea",el:"water",
+   loc:"On the elbow crease, in the hollow on the radial side of the biceps tendon."},
+  {id:"LI1",ch:"LI",py:"Shangyang",han:"商陽",en:"Shang Yang",kind:"well",el:"metal",
+   loc:"Radial side of the index finger, about 0.1 cun from the corner of the nail."},
+  {id:"LI2",ch:"LI",py:"Erjian",han:"二間",en:"Second Space",kind:"spring",el:"water",
+   loc:"Radial side of the index finger, in the hollow just distal to the knuckle (2nd MCP joint)."},
+  {id:"LI3",ch:"LI",py:"Sanjian",han:"三間",en:"Third Space",kind:"stream",el:"wood",
+   loc:"Radial side of the index finger, in the hollow just proximal to the head of the 2nd metacarpal."},
+  {id:"LI5",ch:"LI",py:"Yangxi",han:"陽谿",en:"Yang Stream",kind:"river",el:"fire",
+   loc:"Radial side of the wrist, in the anatomical snuffbox between the tendons of extensor pollicis longus and brevis."},
+  {id:"LI11",ch:"LI",py:"Quchi",han:"曲池",en:"Pool at the Bend",kind:"sea",el:"earth",
+   loc:"At the lateral end of the elbow crease, midway between LU5 and the lateral epicondyle of the humerus."},
+  {id:"HT9",ch:"HT",py:"Shaochong",han:"少衝",en:"Lesser Surge",kind:"well",el:"wood",
+   loc:"On the little finger, radial to the distal phalanx, 0.1 cun from the radial corner of the nail."},
+  {id:"HT8",ch:"HT",py:"Shaofu",han:"少府",en:"Lesser Mansion",kind:"spring",el:"fire",
+   loc:"On the palm, between the 4th and 5th metacarpals, where the tip of the little finger rests in a loose fist."},
+  {id:"HT7",ch:"HT",py:"Shenmen",han:"神門",en:"Spirit Gate",kind:"stream",el:"earth",
+   loc:"At the ulnar end of the palmar wrist crease, on the radial side of the flexor carpi ulnaris tendon."},
+  {id:"HT4",ch:"HT",py:"Lingdao",han:"靈道",en:"Spirit Path",kind:"river",el:"metal",
+   loc:"1.5 cun above the palmar wrist crease, on the radial side of the flexor carpi ulnaris tendon."},
+  {id:"HT3",ch:"HT",py:"Shaohai",han:"少海",en:"Lesser Sea",kind:"sea",el:"water",
+   loc:"With the elbow bent, midway between the inner end of the elbow crease and the medial epicondyle of the humerus."},
+  {id:"PC9",ch:"PC",py:"Zhongchong",han:"中衝",en:"Central Hub",kind:"well",el:"wood",
+   loc:"At the centre of the tip of the middle finger."},
+  {id:"PC8",ch:"PC",py:"Laogong",han:"勞宮",en:"Palace of Toil",kind:"spring",el:"fire",
+   loc:"On the palm, between the 2nd and 3rd metacarpals, where the tip of the middle finger rests in a loose fist."},
+  {id:"PC7",ch:"PC",py:"Daling",han:"大陵",en:"Great Mound",kind:"stream",el:"earth",
+   loc:"At the midpoint of the palmar wrist crease, between the tendons of palmaris longus and flexor carpi radialis."},
+  {id:"PC5",ch:"PC",py:"Jianshi",han:"間使",en:"Intermediary Courier",kind:"river",el:"metal",
+   loc:"3 cun above the palmar wrist crease, between the tendons of palmaris longus and flexor carpi radialis."},
+  {id:"PC3",ch:"PC",py:"Quze",han:"曲澤",en:"Marsh at the Bend",kind:"sea",el:"water",
+   loc:"On the elbow crease, in the hollow on the ulnar side of the biceps tendon."},
+  {id:"SI1",ch:"SI",py:"Shaoze",han:"少澤",en:"Lesser Marsh",kind:"well",el:"metal",
+   loc:"On the little finger, ulnar to the distal phalanx, 0.1 cun from the ulnar corner of the nail."},
+  {id:"SI2",ch:"SI",py:"Qiangu",han:"前谷",en:"Front Valley",kind:"spring",el:"water",
+   loc:"On the ulnar border of the little finger, in the hollow just distal to the 5th knuckle, where the red and white skin meet."},
+  {id:"SI3",ch:"SI",py:"Houxi",han:"後溪",en:"Back Ravine",kind:"stream",el:"wood",
+   loc:"On the ulnar border of the hand, in the hollow just proximal to the 5th knuckle, where the red and white skin meet."},
+  {id:"SI5",ch:"SI",py:"Yanggu",han:"陽谷",en:"Yang Valley",kind:"river",el:"fire",
+   loc:"On the ulnar side of the wrist, in the hollow between the styloid process of the ulna and the triquetrum."},
+  {id:"SI8",ch:"SI",py:"Xiaohai",han:"小海",en:"Small Sea",kind:"sea",el:"earth",
+   loc:"With the elbow bent, in the hollow between the olecranon and the medial epicondyle of the humerus."},
+  {id:"TB1",ch:"TB",py:"Guanchong",han:"關衝",en:"Passage Hub",kind:"well",el:"metal",
+   loc:"On the ring finger, ulnar to the distal phalanx, 0.1 cun from the ulnar corner of the nail."},
+  {id:"TB2",ch:"TB",py:"Yemen",han:"液門",en:"Fluid Gate",kind:"spring",el:"water",
+   loc:"On the back of the hand, in the web between the ring and little fingers, where the red and white skin meet."},
+  {id:"TB3",ch:"TB",py:"Zhongzhu",han:"中渚",en:"Central Islet",kind:"stream",el:"wood",
+   loc:"On the back of the hand, between the 4th and 5th metacarpals, in the hollow just proximal to the 4th knuckle."},
+  {id:"TB6",ch:"TB",py:"Zhigou",han:"支溝",en:"Branch Ditch",kind:"river",el:"fire",
+   loc:"On the back of the forearm, 3 cun above the dorsal wrist crease, midway between the radius and the ulna."},
+  {id:"TB10",ch:"TB",py:"Tianjing",han:"天井",en:"Heavenly Well",kind:"sea",el:"earth",
+   loc:"With the elbow bent, in the hollow 1 cun above the tip of the olecranon."}
+];
+const CHANNELS = [
+  {id:"LU",name:"Lung",han:"手太陰肺經",desc:"Lung, hand taiyin (yin)",line:"#5a49b8"},
+  {id:"LI",name:"Large Intestine",han:"手陽明大腸經",desc:"Large Intestine, hand yangming (yang)",line:"#0b7f8a"},
+  {id:"HT",name:"Heart",han:"手少陰心經",desc:"Heart, hand shaoyin (yin)",line:"#b0306a"},
+  {id:"PC",name:"Pericardium",han:"手厥陰心包經",desc:"Pericardium, hand jueyin (yin)",line:"#c2611f"},
+  {id:"SI",name:"Small Intestine",han:"手太陽小腸經",desc:"Small Intestine, hand taiyang (yang)",line:"#6b7a12"},
+  {id:"TB",name:"Triple Burner",han:"手少陽三焦經",desc:"Triple Burner, hand shaoyang (yang)",line:"#2a62b0"}
+];
+const chById = {}; CHANNELS.forEach(c=>chById[c.id]=c);
+const byId = {}; POINTS.forEach(p=>byId[p.id]=p);
+
+/* ---------- side rail ---------- */
+const $ = id=>document.getElementById(id);
+let selected = null;
+CHANNELS.forEach(c=>{
+  const sec=document.createElement("section");
+  sec.innerHTML='<h2>'+c.name+' channel<span class="han">'+c.han+'</span></h2><ul class="plist" id="list-'+c.id+'"></ul>';
+  $("lists").appendChild(sec);
+  const lab=document.createElement("label");
+  lab.innerHTML='<input type="checkbox" id="t-'+c.id+'" checked><span class="swatch" style="background:'+c.line+'"></span>'+c.id;
+  $("toggles").insertBefore(lab,$("t-lines").parentNode);
+});
+POINTS.forEach(p=>{
+  const li=document.createElement("li"), b=document.createElement("button");
+  b.type="button"; b.id="btn-"+p.id; b.setAttribute("aria-pressed","false");
+  b.innerHTML='<span class="dot '+p.el+'"></span><span class="code">'+p.id+'</span>'+
+    '<span class="nm">'+p.py+'<span class="han">'+p.han+'</span></span>'+
+    '<span class="kind">'+KIND[p.kind].name+'</span>';
+  b.addEventListener("click",()=>select(p.id,true));
+  li.appendChild(b); $("list-"+p.ch).appendChild(li);
+});
+function renderDetail(){
+  const d=$("detail");
+  if(!selected){
+    d.innerHTML='<div class="ttl">Pick a point</div><p class="en">Click a point on the arm or in the lists below. Each channel has five shu points running from the fingertip to the elbow, one for each element.</p>';
+    return;
+  }
+  const p=byId[selected], k=KIND[p.kind], e=EL[p.el];
+  d.innerHTML='<div class="top"><span class="big">'+p.han+'</span><span class="ttl"><span class="code">'+p.id+'</span> '+p.py+'</span><span class="en">'+p.en+'</span></div>'+
+    '<dl><dt>Shu type</dt><dd>'+k.name+' <span class="han" style="font-family:var(--f-han)">'+k.han+'</span></dd>'+
+    '<dt>Element</dt><dd><span class="dot '+p.el+'"></span>'+e.name+' <span style="font-family:var(--f-han)">'+e.han+'</span></dd>'+
+    '<dt>Channel</dt><dd>'+chById[p.ch].desc+'</dd></dl>'+
+    '<p>'+p.loc+'</p>';
+}
+renderDetail();
+
+/* ---------- arm as a signed distance field (cm; x = toward fingertips, y = palm side, z = thumb side) ---------- */
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]], add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]];
+const mul=(a,s)=>[a[0]*s,a[1]*s,a[2]*s], dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const nrm=a=>{const l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2]/l]};
+const orth=(v,ax)=>nrm(sub(v,mul(ax,dot(v,ax))));
+const mixw=(a,wa,b,wb)=>nrm(add(mul(a,wa),mul(b,wb)));
+const R=Math.PI/180;
+const dirOf=(yaw,pitch)=>[Math.cos(pitch*R)*Math.cos(yaw*R),Math.sin(pitch*R),Math.cos(pitch*R)*Math.sin(yaw*R)];
+
+function mk(a,b,ra,rb){const ba=sub(b,a);return {ax:a[0],ay:a[1],az:a[2],bx:ba[0],by:ba[1],bz:ba[2],il:1/dot(ba,ba),ra:ra,rb:rb,a:a,b:b}}
+function cone(x,y,z,c){
+  const dx=x-c.ax,dy=y-c.ay,dz=z-c.az;
+  let t=(dx*c.bx+dy*c.by+dz*c.bz)*c.il; t=t<0?0:t>1?1:t;
+  const qx=dx-c.bx*t,qy=dy-c.by*t,qz=dz-c.bz*t;
+  return Math.sqrt(qx*qx+qy*qy+qz*qz)-(c.ra+(c.rb-c.ra)*t);
+}
+function smin(a,b,k){const h=Math.max(k-Math.abs(a-b),0)/k;return Math.min(a,b)-h*h*k*0.25}
+
+const WRIST=25.5, CUN=WRIST/12;
+const ss=(a,b,x)=>{x=(x-a)/(b-a);x=x<0?0:x>1?1:x;return x*x*(3-2*x)};
+/* arm cross-sections from mid upper arm to wrist: x, half-width (z), half-thickness (y), centre y, centre z.
+   Half-widths and the forearm's sideways drift are measured from a vector trace of the Wikimedia Commons arm plate. */
+const LIMB=[[-24,3.76,4.52,0.4,0.0],[-17,3.76,4.48,0.6,0.0],[-14,3.46,4.11,0.57,0.0],[-11,3.69,4.36,0.55,0.0],[-8,3.56,4.2,0.45,0.0],[-5,3.28,3.48,0.15,0.0],[-3,3.22,3.09,0.0,0.0],[-1.5,3.09,2.78,-0.1,0.0],[0,3.28,2.79,0.0,0.01],[1.5,3.82,3.13,0.0,0.02],[3,4.08,3.33,0.0,0.07],[5,4.39,3.58,0.0,0.05],[7,4.52,3.67,0.0,-0.08],[9,4.42,3.58,0.0,-0.23],[11.5,4.11,3.31,0.0,-0.34],[14,3.76,3.01,0.0,-0.37],[16.5,3.37,2.63,0.0,-0.31],[19,3.04,2.31,0.0,-0.21],[21,2.94,2.13,0.0,-0.13],[22.5,2.89,2.02,0.0,-0.05],[24,2.87,1.89,0.0,-0.01],[25,2.79,1.79,0.0,-0.03],[25.5,2.72,1.72,0,0],[26.5,2.8,1.65,0,0],[29.5,2.5,1.15,0,0]];
+const LX0=-24, LX1=29.5, LSTEP=0.1, LN=Math.round((LX1-LX0)/LSTEP)+1, LUT=new Float32Array(LN*4);
+(function(){
+  const n=LIMB.length, tan=(i,c)=>{const a=Math.max(i-1,0),b=Math.min(i+1,n-1);return (LIMB[b][c]-LIMB[a][c])/(LIMB[b][0]-LIMB[a][0])};
+  for(let s=0,i=0;s<LN;s++){
+    const x=LX0+s*LSTEP; while(i<n-2&&x>LIMB[i+1][0]) i++;
+    const h=LIMB[i+1][0]-LIMB[i][0], u=Math.min(1,(x-LIMB[i][0])/h), u2=u*u, u3=u2*u;
+    for(let c=1;c<5;c++) LUT[s*4+c-1]=(2*u3-3*u2+1)*LIMB[i][c]+(u3-2*u2+u)*h*tan(i,c)+(-2*u3+3*u2)*LIMB[i+1][c]+(u3-u2)*h*tan(i+1,c);
+  }
+})();
+function limb(x,y,z){
+  const xc=x<LX0?LX0:x>LX1?LX1:x, f=(xc-LX0)/LSTEP, i=Math.min(f|0,LN-2), u=f-i, o=i*4;
+  const rz=LUT[o]+(LUT[o+4]-LUT[o])*u, ry=LUT[o+1]+(LUT[o+5]-LUT[o+1])*u;
+  const yy=y-(LUT[o+2]+(LUT[o+6]-LUT[o+2])*u), zz=z-(LUT[o+3]+(LUT[o+7]-LUT[o+3])*u);
+  const a=yy/ry, b=zz/rz, e=Math.sqrt(a*a+b*b);
+  let dr=e<1e-4?-Math.min(ry,rz):e*(e-1)/Math.sqrt(a*a/(ry*ry)+b*b/(rz*rz));
+  if(x>16&&yy>0){   // flexor tendons standing up on the palm side of the wrist, with the pulse groove beside them
+    const w=ss(16,22,x)*(1-ss(25.3,26.4,x))*ss(0.3,1.2,yy), t1=(zz-0.45)/0.34, t2=(zz+1.95)/0.42, t3=(zz-1.5)/0.4, t4=(zz+0.4)/0.28;
+    dr-=w*(0.14*Math.exp(-t1*t1)+0.09*Math.exp(-t2*t2)+0.1*Math.exp(-t4*t4)-0.05*Math.exp(-t3*t3));
+  }
+  const dx=x>LX1?x-LX1:0;
+  if(dx===0) return dr;
+  return dr>0?Math.sqrt(dr*dr+dx*dx):Math.max(dr,dx);
+}
+/* bony and muscular landmarks */
+const olecranon=mk([-1.6,-1.95,-0.4],[0.4,-1.8,-0.5],1.45,1.15);
+const epiMed=mk([-2.4,-0.6,-2.45],[-0.5,-0.5,-2.7],1.1,1.1);
+const epiLat=mk([-1.6,-0.8,2.4],[-0.6,-0.7,2.6],1.0,1.0);
+const bicepsT=mk([-7,3.3,0.3],[1.0,2.4,0.4],0.7,0.5);
+const brachiorad=mk([-5,0.6,2.2],[9,1.1,3.0],1.1,1.3);
+const styloid=mk([24.3,-0.2,2.4],[25.0,-0.2,2.4],0.85,0.85);
+const ulnaHead=mk([23.9,-1.0,-2.0],[24.5,-1.0,-2.0],1.1,1.1);
+const DENTS=[[1.6,3.0,0.9,1.5,0.3],[26.3,-0.7,2.7,0.7,0.22],[-1.0,-2.0,-2.3,0.6,0.2],[-3.6,-3.1,-0.4,0.9,0.15]];   // cubital fossa, anatomical snuffbox, ulnar groove (SI8), olecranon fossa (TB10): x,y,z,radius,depth
+function chain(base,yaw,pitch,curl,lens,radii,k){
+  const segs=[], joints=[base]; let p=base, pt=pitch;
+  for(let i=0;i<lens.length;i++){
+    const d=dirOf(Array.isArray(yaw)?yaw[i]:yaw,pt), q=add(p,mul(d,lens[i]));
+    segs.push(mk(p,q,radii[i],radii[i+1])); joints.push(q); p=q; pt+=curl;
+  }
+  return {segs:segs,joints:joints,k:k};
+}
+const F={
+  index: chain([34.3,0,2.9],5,4,8,[4.4,2.6,2.2],[1.0,0.9,0.82,0.72],0.45),
+  middle:chain([35.0,0,0.95],0,4,8,[4.9,3.0,2.4],[1.02,0.92,0.84,0.74],0.45),
+  ring:  chain([34.4,0,-1.0],-5,4,8,[4.5,2.8,2.3],[0.97,0.87,0.8,0.7],0.45),
+  little:chain([33.0,0,-2.85],-13,4,8,[3.5,2.1,2.0],[0.85,0.76,0.7,0.62],0.45),
+  thumb: chain([27.2,0.5,2.6],[42,34,26],12,-4,[4.6,3.3,2.8],[1.45,1.15,1.02,0.88],0.9)
+};
+const FINGERS=[F.index,F.middle,F.ring,F.little,F.thumb];
+const TN=[-0.3,-0.45,0.85];
+const DIGITS=FINGERS.map((finger,i)=>finger.segs.map((segment,j)=>{
+  const fr=frame(finger,j,i===4?TN:[0,-1,0],i===4?[0,1,0]:[0,0,1]);
+  return {...fr,ra:segment.ra,rb:segment.rb,tip:j===2};
+}));
+
+// Flatten the pads across the nail axis and keep the joints fuller than the shafts.
+function nailMask(u,side,radius){
+  const v=side/(radius*0.66), length=(u-0.66)/0.49;
+  return 1-ss(0.68,1,v*v+length*length);
+}
+function digitDistance(x,y,z,segment){
+  const dx=x-segment.a[0],dy=y-segment.a[1],dz=z-segment.a[2];
+  const axial=dx*segment.ax[0]+dy*segment.ax[1]+dz*segment.ax[2];
+  const nail=dx*segment.nail[0]+dy*segment.nail[1]+dz*segment.nail[2];
+  const side=dx*segment.side[0]+dy*segment.side[1]+dz*segment.side[2];
+  const u=axial/segment.len, t=Math.max(0,Math.min(1,u));
+  const radius=segment.ra+(segment.rb-segment.ra)*t;
+  const along=axial-t*segment.len;
+  const depth=nail*(nail<0?1.10:1.18);
+  const joint=0.075*(1-ss(0,0.27,t));
+  const plate=segment.tip&&nail>0?0.085*nailMask(u,side,radius):0;
+  return Math.sqrt(along*along+depth*depth+side*side)-radius-joint-plate;
+}
+const metaBaseZ=[1.9,0.65,-0.6,-1.8];
+const METAS=[F.index,F.middle,F.ring,F.little].map((f,i)=>mk([26.3,0,metaBaseZ[i]],add(f.joints[0],[-0.4,0,0]),1.35,1.2));
+const thenar=mk([28.6,0.9,2.6],[30.2,1.1,3.4],1.75,1.75);
+const hypo=mk([27.5,0.5,-2.6],[31.5,0.4,-3.0],1.45,1.35);
+
+function sdf(x,y,z){
+  let d=1e9;
+  if(x<33){
+    d=limb(x,y,z);
+    if(x<13){
+      d=smin(d,cone(x,y,z,brachiorad),1.2);
+      if(x<4){ d=smin(d,cone(x,y,z,bicepsT),0.7); d=smin(d,cone(x,y,z,olecranon),1.3); d=smin(d,cone(x,y,z,epiMed),1.5); d=smin(d,cone(x,y,z,epiLat),1.1) }
+    }
+    if(x>21){ d=smin(d,cone(x,y,z,styloid),0.9); d=smin(d,cone(x,y,z,ulnaHead),1.0) }
+  }
+  if(x>22){
+    let p=cone(x,y,z,METAS[0]);
+    for(let i=1;i<4;i++) p=smin(p,cone(x,y,z,METAS[i]),0.7);
+    p=smin(p,cone(x,y,z,thenar),0.8); p=smin(p,cone(x,y,z,hypo),0.8);
+    d=smin(d,p,1.0);
+    let r=d;
+    for(let f=0;f<5;f++){
+      const s=DIGITS[f];
+      if(x<s[0].a[0]-3||x>s[2].b[0]+2) continue;
+      const fd=smin(smin(digitDistance(x,y,z,s[0]),digitDistance(x,y,z,s[1]),0.27),
+        digitDistance(x,y,z,s[2]),0.23);
+      const v=smin(d,fd,FINGERS[f].k); if(v<r) r=v;
+    }
+    d=r;
+  }
+  for(let i=0;i<DENTS.length;i++){
+    const q=DENTS[i], ax=x-q[0]; if(ax>3*q[3]||ax<-3*q[3]) continue;
+    const ay=y-q[1], az=z-q[2]; d+=q[4]*Math.exp(-(ax*ax+ay*ay+az*az)/(q[3]*q[3]));
+  }
+  return -smin(-d,x+20.5,0.36)+0.07*creaseShade(x,y,z);
+}
+function grad(p){
+  const e=0.03;
+  return nrm([sdf(p[0]+e,p[1],p[2])-sdf(p[0]-e,p[1],p[2]),sdf(p[0],p[1]+e,p[2])-sdf(p[0],p[1]-e,p[2]),sdf(p[0],p[1],p[2]+e)-sdf(p[0],p[1],p[2]-e)]);
+}
+/* walk outward from a point inside the arm until the skin is reached */
+function exitPoint(inside,out){
+  out=nrm(out); let t=0;
+  const at=s=>add(inside,mul(out,s));
+  while(t<12){const q=at(t); if(sdf(q[0],q[1],q[2])>0) break; t+=0.05}
+  let lo=Math.max(t-0.05,0), hi=t;
+  for(let i=0;i<14;i++){const m=(lo+hi)/2,q=at(m); if(sdf(q[0],q[1],q[2])>0) hi=m; else lo=m}
+  return at(hi);
+}
+function snap(p,off){
+  for(let i=0;i<8;i++){const g=grad(p); p=sub(p,mul(g,sdf(p[0],p[1],p[2])-off))}
+  return p;
+}
+
+/* ---------- where each point sits ---------- */
+function frame(f,i,nailRef,sideRef){
+  const s=f.segs[i], ax=nrm([s.bx,s.by,s.bz]);
+  const nail=orth(nailRef,ax); let side=orth(orth(sideRef,ax),nail);
+  return {a:s.a,b:s.b,ax:ax,len:Math.hypot(s.bx,s.by,s.bz),nail:nail,side:side};
+}
+const th=[0,1,2].map(i=>frame(F.thumb,i,TN,[0,1,0]));
+const ix=[0,1,2].map(i=>frame(F.index,i,[0,-1,0],[0,0,1]));
+const along=(fr,u)=>add(fr.a,mul(fr.ax,fr.len*u));
+const corner=fr=>mixw(fr.nail,0.57,fr.side,0.82);
+const meta2=METAS[0], meta2ax=nrm([meta2.bx,meta2.by,meta2.bz]);
+const mf=[0,1,2].map(i=>frame(F.middle,i,[0,-1,0],[0,0,1]));
+const rf=[0,1,2].map(i=>frame(F.ring,i,[0,-1,0],[0,0,1]));
+const lf=[0,1,2].map(i=>frame(F.little,i,[0,-1,0],[0,0,1]));
+const ulnarCorner=fr=>mixw(fr.nail,0.57,mul(fr.side,-1),0.82);
+const ulnarSide=fr=>mixw(fr.nail,0.3,mul(fr.side,-1),0.95);
+const pad=fr=>mul(fr.nail,-1);
+const meta5=METAS[3], meta5ax=nrm([meta5.bx,meta5.by,meta5.bz]);
+
+const SITE={
+  LU11:[along(th[2],0.3),corner(th[2])],
+  LU10:[along(th[0],0.5),mixw(th[0].nail,0.75,th[0].side,0.66)],
+  LU9: [[WRIST,0,2.0],[0,1,0.4]],
+  LU8: [[WRIST-CUN,0,1.9],[0,1,0.35]],
+  LU5: [[0.3,0,1.5],[0,1,0.15]],
+  LI1: [along(ix[2],0.3),corner(ix[2])],
+  LI2: [along(ix[0],0.2),[0,-0.15,1]],
+  LI3: [sub(F.index.joints[0],mul(meta2ax,1.6)),[0,-0.3,1]],
+  LI5: [[WRIST+0.8,0,1.5],[0,-0.55,1]],
+  LI11:[[0.3,0,0],[0,0.45,1]],
+  HT9: [along(lf[2],0.3),corner(lf[2])],
+  HT8: [[30.6,0,-1.5],[0,1,0]],
+  HT7: [[WRIST,0,-1.45],[0,1,-0.35]],
+  HT4: [[WRIST-1.5*CUN,0,-1.45],[0,1,-0.35]],
+  HT3: [[-0.5,0,-0.5],[0,0.35,-1]],
+  PC9: [along(mf[2],0.8),mixw(mf[2].ax,1,pad(mf[2]),0.25)],
+  PC8: [[30.6,0,1.35],[0,1,0]],
+  PC7: [[WRIST,0,0.05],[0,1,0]],
+  PC5: [[WRIST-3*CUN,0,0.05],[0,1,0]],
+  PC3: [[0.3,0,-0.6],[0,1,-0.05]],
+  SI1: [along(lf[2],0.3),ulnarCorner(lf[2])],
+  SI2: [along(lf[0],0.2),[0,-0.15,-1]],
+  SI3: [sub(F.little.joints[0],mul(meta5ax,1.6)),[0,0,-1]],
+  SI5: [[WRIST-0.1,0,-1.2],[0,-0.2,-1]],
+  SI8: [[-1.0,0,-0.6],[0,-0.68,-0.73]],
+  TB1: [along(rf[2],0.3),ulnarCorner(rf[2])],
+  TB2: [[33.7,0,-1.9],[0,-1,0]],
+  TB3: [[32.0,0,-1.75],[0,-1,0]],
+  TB6: [[WRIST-3*CUN,0,0.1],[0,-1,0]],
+  TB10:[[-3.7,0,-0.4],[0,-1,0]]
+};
+// Crease centers in x, angular range from the palm, and curvature toward the edges.
+const CREASES=[[0.3,-58,66,0],[25.5,-62,62,-0.3],[24.6,-50,50,-0.25]];
+function creaseShade(x,y,z){
+  if(y<=0.8||(Math.abs(x)>1.5&&Math.abs(x-25)>1.5)) return 0;
+  const angle=Math.atan2(z,y)/R;
+  let shade=0;
+  for(const [center,from,to,bow] of CREASES){
+    const across=ss(from,from+16,angle)*(1-ss(to-16,to,angle));
+    const offset=(x-center-bow*angle*angle/3600)/0.16;
+    shade=Math.max(shade,across*Math.exp(-offset*offset));
+  }
+  return shade*ss(0.8,1.5,y);
+}
+const ROUTE={
+  LU:[[[-19,0,1.4],[0,1,0.25]],[[-9,0,1.3],[0,1,0.2]],"LU5","LU8","LU9","LU10",[th[1].a,mixw(th[1].nail,0.7,th[1].side,0.7)],[th[2].a,corner(th[2])],"LU11"],
+  LI:["LI1",[ix[2].a,mixw(ix[2].nail,0.35,ix[2].side,0.94)],[ix[1].a,mixw(ix[1].nail,0.25,ix[1].side,0.97)],"LI2","LI3",
+      [[29.6,0,2.4],[0,-0.6,1]],"LI5",[[13,0,0],[0,0.1,1]],"LI11",[[-9,0,0],[0,0.3,1]],[[-19,0,0],[0,0.25,1]]],
+  HT:[[[-19,0,-0.3],[0,0.55,-0.85]],[[-9,0,-0.3],[0,0.5,-0.87]],"HT3",[[12,0,-1.0],[0,1,-0.75]],"HT4","HT7",[[28.5,0,-1.6],[0,1,-0.15]],"HT8",
+      [lf[0].a,mixw(pad(lf[0]),0.6,lf[0].side,0.8)],[lf[1].a,mixw(lf[1].nail,0.3,lf[1].side,0.95)],[lf[2].a,corner(lf[2])],"HT9"],
+  PC:[[[-19,0,0.2],[0,1,0]],[[-9,0,0.2],[0,1,0]],"PC3",[[10,0,0],[0,1,0]],"PC5","PC7","PC8",
+      [mf[0].a,pad(mf[0])],[mf[1].a,pad(mf[1])],[mf[2].a,pad(mf[2])],"PC9"],
+  SI:["SI1",[lf[2].a,ulnarSide(lf[2])],[lf[1].a,ulnarSide(lf[1])],"SI2","SI3",[[29,0,-2.2],[0,-0.2,-1]],"SI5",
+      [[12,0,-1.0],[0,-0.75,-0.65]],"SI8",[[-9,0,-0.4],[0,-0.7,-0.7]],[[-19,0,-0.4],[0,-0.7,-0.7]]],
+  TB:["TB1",[rf[2].a,mixw(rf[2].nail,0.6,mul(rf[2].side,-1),0.8)],[rf[1].a,mixw(rf[1].nail,0.7,mul(rf[1].side,-1),0.7)],"TB2","TB3",
+      [[28,0,-0.8],[0,-1,0]],"TB6",[[10,0,0],[0,-1,0]],"TB10",[[-19,0,-0.3],[0,-1,0]]]
+};
+
+/* ---------- skin mesh (surface nets over the field) ---------- */
+function buildSkin(){
+  const h=0.18,x0=-21.6,y0=-6,z0=-6.4;
+  const nx=Math.ceil((47.5-x0)/h)+1,ny=Math.ceil((6-y0)/h)+1,nz=Math.ceil((10.5-z0)/h)+1,nxy=nx*ny;
+  const val=new Float32Array(nx*ny*nz);
+  for(let k=0;k<nz;k++)for(let j=0;j<ny;j++)for(let i=0;i<nx;i++) val[i+nx*j+nxy*k]=sdf(x0+i*h,y0+j*h,z0+k*h);
+  const vid=new Int32Array(nx*ny*nz).fill(-1), pos=[];
+  const co=[[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,0,1],[0,1,1],[1,1,1]];
+  const ed=[[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+  const cv=new Float32Array(8);
+  for(let k=0;k<nz-1;k++)for(let j=0;j<ny-1;j++)for(let i=0;i<nx-1;i++){
+    const o=i+nx*j+nxy*k; let neg=0;
+    for(let c=0;c<8;c++){cv[c]=val[o+co[c][0]+nx*co[c][1]+nxy*co[c][2]]; if(cv[c]<0) neg++}
+    if(neg===0||neg===8) continue;
+    let sx=0,sy=0,sz=0,n=0;
+    for(let e=0;e<12;e++){
+      const a=ed[e][0],b=ed[e][1],va=cv[a],vb=cv[b];
+      if((va<0)===(vb<0)) continue;
+      const t=va/(va-vb);
+      sx+=co[a][0]+(co[b][0]-co[a][0])*t; sy+=co[a][1]+(co[b][1]-co[a][1])*t; sz+=co[a][2]+(co[b][2]-co[a][2])*t; n++;
+    }
+    vid[o]=pos.length/3; pos.push(x0+(i+sx/n)*h,y0+(j+sy/n)*h,z0+(k+sz/n)*h);
+  }
+  const idx=[];
+  const quad=(a,b,c,d,flip)=>{ if(a<0||b<0||c<0||d<0) return; if(flip) idx.push(a,c,b,a,d,c); else idx.push(a,b,c,a,c,d) };
+  for(let k=1;k<nz-1;k++)for(let j=1;j<ny-1;j++)for(let i=1;i<nx-1;i++){
+    const o=i+nx*j+nxy*k, a=val[o], an=a<0;
+    if(an!==(val[o+1]<0))   quad(vid[o-nx-nxy],vid[o-nxy],vid[o],vid[o-nx],!an);
+    if(an!==(val[o+nx]<0))  quad(vid[o-nxy-1],vid[o-1],vid[o],vid[o-nxy],!an);
+    if(an!==(val[o+nxy]<0)) quad(vid[o-1-nx],vid[o-nx],vid[o],vid[o-1],!an);
+  }
+  const nv=pos.length/3, nor=new Float32Array(nv*3), col=new Float32Array(nv*3);
+  const nails=DIGITS.map(segments=>segments[2]);
+  const skin=new THREE.Color(0xca967d), palmSkin=new THREE.Color(0xe2b199);
+  const muted=new THREE.Color(0xa26f60), nailSkin=new THREE.Color(0xe6bcb0);
+  const tint=new THREE.Color();
+  for(let v=0;v<nv;v++){
+    const o=v*3, p=[pos[o],pos[o+1],pos[o+2]], g=grad(p);
+    nor.set(g,o);
+    const palm=ss(-0.2,0.6,g[1])*ss(22,27,p[0]);
+    tint.copy(skin).lerp(palmSkin,0.75*palm).lerp(muted,0.32*creaseShade(...p));
+    let plate=0;
+    for(const nail of nails){
+      const d=sub(p,nail.a), u=dot(d,nail.ax)/nail.len;
+      if(u<0.17||u>1.18||dot(d,nail.nail)<nail.rb*0.48) continue;
+      const radius=nail.ra+(nail.rb-nail.ra)*Math.min(1,u);
+      plate=Math.max(plate,nailMask(u,dot(d,nail.side),radius));
+    }
+    tint.lerp(nailSkin,0.92*plate).toArray(col,o);
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
+  geo.setAttribute("normal",new THREE.BufferAttribute(nor,3));
+  geo.setAttribute("color",new THREE.BufferAttribute(col,3));
+  geo.setIndex(idx);
+  return geo;
+}
+
+/* ---------- scene ---------- */
+const stage=$("stage"), canvas=$("gl"), labelBox=$("labels");
+let renderer;
+try{ renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true}); }
+catch(e){ $("status").textContent="This browser could not start WebGL, so the 3D arm cannot be shown. The point lists still work."; return; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1,1,400);
+scene.add(camera);
+scene.add(new THREE.HemisphereLight(0xfff7ef,0xa1a9ad,1.25));
+const key=new THREE.DirectionalLight(0xfff5ea,1.55);
+key.position.set(-0.8,1.0,1.5); camera.add(key);
+const fill=new THREE.DirectionalLight(0xe6efff,0.65);
+fill.position.set(1.2,-0.2,-0.6); camera.add(fill);
+key.target.position.set(0,0,-1); camera.add(key.target);   // aim the key light where the camera looks
+const group=new THREE.Group(); scene.add(group);
+const toV=a=>new THREE.Vector3(a[0],a[1],a[2]);
+
+const view={az:0,el:0,dist:120,target:new THREE.Vector3()};
+let home=null, fly=null;
+const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function orient(){
+  const w=stage.clientWidth,h=stage.clientHeight, m=new THREE.Matrix4();
+  // arm hangs with fingertips down and the palm toward the viewer, thumb to the viewer's left (like the Commons plate).
+  // columns = where the arm's x (fingers), y (palm), z (thumb) axes point on screen
+  m.makeBasis(new THREE.Vector3(0,-1,0),new THREE.Vector3(0,0,1),new THREE.Vector3(-1,0,0));
+  group.quaternion.setFromRotationMatrix(m); group.updateMatrixWorld(true);
+  const t=Math.tan(camera.fov*R/2), a=w/h;
+  const dist=Math.max(35.5/t,11/(t*a));
+  home={az:-12*R,el:4*R,dist:dist*1.03,target:group.localToWorld(new THREE.Vector3(12.5,0,0.4))};
+}
+function applyView(){
+  const ce=Math.cos(view.el);
+  camera.position.set(view.target.x+view.dist*ce*Math.sin(view.az),view.target.y+view.dist*Math.sin(view.el),view.target.z+view.dist*ce*Math.cos(view.az));
+  camera.lookAt(view.target);
+}
+function flyTo(to){
+  if(reduce){view.az=to.az;view.el=to.el;view.dist=to.dist;view.target.copy(to.target);fly=null;return}
+  let daz=to.az-view.az; daz=Math.atan2(Math.sin(daz),Math.cos(daz));
+  fly={t0:performance.now(),from:{az:view.az,el:view.el,dist:view.dist,target:view.target.clone()},to:{az:view.az+daz,el:to.el,dist:to.dist,target:to.target.clone()}};
+}
+function resize(){
+  const w=stage.clientWidth,h=stage.clientHeight; if(!w||!h) return;
+  renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+}
+
+const markers=[], chan={}, lines={};
+let ring=null;
+
+function build(){
+  const skin=new THREE.Mesh(buildSkin(),new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.82}));
+  group.add(skin); CHANNELS.forEach(c=>{chan[c.id]=new THREE.Group(); group.add(chan[c.id])});
+
+  const local={};
+  POINTS.forEach(p=>{
+    const s=SITE[p.id], pos=exitPoint(s[0],s[1]), n=grad(pos); local[p.id]=pos;
+    const g=new THREE.Group(); g.position.copy(toV(pos).add(toV(n).multiplyScalar(0.12)));
+    const ball=new THREE.Mesh(new THREE.SphereGeometry(0.36,24,16),new THREE.MeshStandardMaterial({color:EL[p.el].hex,emissive:EL[p.el].hex,emissiveIntensity:0.3,roughness:0.4}));
+    const rim=new THREE.Mesh(new THREE.SphereGeometry(0.45,24,16),new THREE.MeshBasicMaterial({color:0x141a19,side:THREE.BackSide}));
+    g.add(rim); g.add(ball); chan[p.ch].add(g);
+    const el=document.createElement("div"); el.className="lbl"; el.textContent=p.id; labelBox.appendChild(el);
+    markers.push({p:p,g:g,n:toV(n),el:el,wpos:new THREE.Vector3(),wn:new THREE.Vector3()});
+  });
+
+  CHANNELS.map(c=>c.id).forEach(c=>{
+    const way=ROUTE[c].map(w=>typeof w==="string"?local[w]:exitPoint(w[0],w[1])), pts=[];
+    for(let i=0;i<way.length-1;i++){
+      const a=way[i],b=way[i+1],n=Math.max(2,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2])/0.45));
+      for(let s=0;s<n;s++) pts.push(toV(snap(add(a,mul(sub(b,a),s/n)),0.05)));
+    }
+    pts.push(toV(snap(way[way.length-1],0.05)));
+    const tube=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),pts.length*2,0.07,6,false),
+      new THREE.MeshStandardMaterial({color:new THREE.Color(chById[c].line),roughness:0.6}));
+    lines[c]=tube; chan[c].add(tube);
+  });
+
+  ring=new THREE.Mesh(new THREE.RingGeometry(0.62,0.76,48),new THREE.MeshBasicMaterial({color:0x141a19,side:THREE.DoubleSide,transparent:true,opacity:0.9,depthWrite:false}));
+  ring.visible=false; group.add(ring);
+
+  orient(); resize();
+  Object.assign(view,{az:home.az,el:home.el,dist:home.dist}); view.target.copy(home.target);
+  $("status").hidden=true;
+  if(selected) select(selected,true);
+  requestAnimationFrame(tick);
+}
+
+/* ---------- selection ---------- */
+function select(id,move){
+  if(move) setSpin(false);
+  selected=id; renderDetail();
+  POINTS.forEach(p=>$("btn-"+p.id).setAttribute("aria-pressed",String(p.id===id)));
+  const m=markers.find(k=>k.p.id===id); if(!m) return;
+  if(!chan[m.p.ch].visible){ $("t-"+m.p.ch).checked=true; chan[m.p.ch].visible=true }
+  markers.forEach(k=>{k.g.scale.setScalar(k===m?1.3:1); k.el.classList.toggle("on",k===m)});
+  ring.visible=true; ring.position.copy(m.g.position);
+  ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),m.n);
+  if(move){
+    const wn=m.n.clone().applyQuaternion(group.quaternion), wp=group.localToWorld(m.g.position.clone());
+    const el=Math.max(-70*R,Math.min(70*R,Math.asin(wn.y)));
+    flyTo({az:Math.atan2(wn.x,wn.z),el:el,dist:Math.min(home.dist,34),target:wp});
+  }
+}
+
+/* ---------- pointer: orbit, zoom, pick ---------- */
+const ptrs=new Map(); let moved=0, pinch=0;
+const ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
+function pickAt(ev){
+  const r=canvas.getBoundingClientRect(), x=ev.clientX-r.left, y=ev.clientY-r.top;
+  let best=null, bd=22;
+  markers.forEach(m=>{
+    if(!m.vis) return;
+    const d=Math.hypot(m.sx-x,m.sy-y); if(d<bd){bd=d;best=m}
+  });
+  return best;
+}
+canvas.addEventListener("pointerdown",ev=>{
+  canvas.setPointerCapture(ev.pointerId); ptrs.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
+  if(ptrs.size===1) moved=0;
+  if(ptrs.size===2){const a=[...ptrs.values()]; pinch=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)}
+  canvas.classList.add("drag"); fly=null; setSpin(false);
+});
+canvas.addEventListener("pointermove",ev=>{
+  const p=ptrs.get(ev.pointerId);
+  if(!p){ canvas.classList.toggle("hot",!!pickAt(ev)); return }
+  const dx=ev.clientX-p.x, dy=ev.clientY-p.y; p.x=ev.clientX; p.y=ev.clientY;
+  if(ptrs.size===1){
+    moved+=Math.abs(dx)+Math.abs(dy);
+    view.az-=dx*0.007; view.el=Math.max(-85*R,Math.min(85*R,view.el+dy*0.007));
+  }else if(ptrs.size===2){
+    const a=[...ptrs.values()], d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+    if(pinch>0) view.dist=Math.max(9,Math.min(220,view.dist*pinch/d));
+    pinch=d; moved=99;
+  }
+});
+function up(ev){
+  if(!ptrs.has(ev.pointerId)) return;
+  ptrs.delete(ev.pointerId); if(!ptrs.size) canvas.classList.remove("drag");
+  if(ev.type==="pointerup"&&moved<6){const m=pickAt(ev); if(m) select(m.p.id,true)}
+}
+canvas.addEventListener("pointerup",up); canvas.addEventListener("pointercancel",up);
+canvas.addEventListener("wheel",ev=>{
+  ev.preventDefault(); fly=null;
+  view.dist=Math.max(9,Math.min(220,view.dist*Math.exp(ev.deltaY*(ev.deltaMode?0.04:0.0012))));
+},{passive:false});
+
+$("reset").addEventListener("click",()=>{orient(); flyTo(home)});
+const SIDES={palm:[0,1,0],back:[0,-1,0],thumb:[0,0.3,1],little:[0,0.3,-1]};
+document.querySelectorAll(".views [data-side]").forEach(b=>b.addEventListener("click",()=>{
+  if(!home) return;
+  const wn=toV(SIDES[b.dataset.side]).normalize().applyQuaternion(group.quaternion);
+  flyTo({az:Math.atan2(wn.x,wn.z),el:Math.max(-75*R,Math.min(75*R,Math.asin(wn.y))),dist:home.dist,target:home.target.clone()});
+}));
+CHANNELS.map(c=>c.id).forEach(c=>$("t-"+c).addEventListener("change",e=>{if(!chan[c]) return; chan[c].visible=e.target.checked; if(ring&&selected&&byId[selected].ch===c) ring.visible=e.target.checked}));
+$("t-lines").addEventListener("change",e=>{for(const c in lines) lines[c].visible=e.target.checked});
+$("t-labels").addEventListener("change",e=>{labelBox.hidden=!e.target.checked});
+if(window.ResizeObserver) new ResizeObserver(resize).observe(stage); else window.addEventListener("resize",resize);
+
+/* ---------- frame loop ---------- */
+const tmp=new THREE.Vector3();
+let spin=false, lastNow=0;
+function setSpin(on){ spin=on; $("spin").setAttribute("aria-pressed",String(on)) }
+$("spin").addEventListener("click",()=>setSpin(!spin));
+function tick(now){
+  const dt=Math.min(0.05,(now-(lastNow||now))/1000); lastNow=now;
+  if(spin&&!fly) view.az+=dt*0.45;
+  if(fly){
+    let t=Math.min(1,(now-fly.t0)/650); const e=t*t*(3-2*t), a=fly.from, b=fly.to;
+    view.az=a.az+(b.az-a.az)*e; view.el=a.el+(b.el-a.el)*e; view.dist=a.dist+(b.dist-a.dist)*e;
+    view.target.lerpVectors(a.target,b.target,e); if(t>=1) fly=null;
+  }
+  applyView();
+  if(ring&&ring.visible&&!reduce){const s=1+0.22*(0.5+0.5*Math.sin(now*0.004)); ring.scale.setScalar(s)}
+  renderer.render(scene,camera);
+  const w=stage.clientWidth,h=stage.clientHeight;
+  markers.forEach(m=>{
+    m.g.getWorldPosition(m.wpos); m.wn.copy(m.n).applyQuaternion(group.quaternion);
+    const facing=m.wn.dot(tmp.copy(camera.position).sub(m.wpos).normalize());
+    tmp.copy(m.wpos).project(camera);
+    m.sx=(tmp.x*0.5+0.5)*w; m.sy=(-tmp.y*0.5+0.5)*h;
+    m.vis=chan[m.p.ch].visible&&facing>0.05&&tmp.z<1;
+    m.el.hidden=!m.vis;
+    if(m.vis){
+      tmp.copy(m.wpos).addScaledVector(m.wn,1.5).project(camera);
+      m.el.style.transform="translate(-50%,-50%) translate("+((tmp.x*0.5+0.5)*w).toFixed(1)+"px,"+((-tmp.y*0.5+0.5)*h).toFixed(1)+"px)";
+    }
+  });
+  requestAnimationFrame(tick);
+}
+
+resize();
+setTimeout(build,30);
+})();
+</script>
+</div>
+</body>
+</html>

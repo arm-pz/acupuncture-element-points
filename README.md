@@ -14,6 +14,9 @@ Interactive atlas of the five Shu points across the twelve primary channels of a
 | `/learn` | `learn.html` | Ten-module course and reference: the five names (with the Lung hand figure and Nan Jing indications), the element cycle, an element per module, cun, landmarks and a closing read |
 | `/basics` | `basics.html` | Redirect into `/learn` (old section anchors map to the matching module) |
 | `/study` | `study.html` | Recall quiz: Shu category, element and finding the point |
+| `/3d` | `3d.html` | 3D right arm: the five Shu points of the six hand channels, turnable and clickable |
+| `/3d-leg` | `3d-leg.html` | 3D right leg: the five Shu points of the six foot channels |
+| `/3d-channels` | `3d-channels.html` | 3D figure tracing each channel's full course (`#LU`, `#ST` … picks the channel) |
 | `/lu` | `lung-meridian-chart.html` | Lung (LU) — arm, palm view |
 | `/li` | `li-meridian-chart.html` | Large Intestine (LI) — arm, side view with the thumb forward |
 | `/st` | `st-meridian-chart.html` | Stomach (ST) — leg, front view |
@@ -46,6 +49,10 @@ Elements, Channels and Points are three views of one app. Whichever of them load
 The shell is `tools/shell-snippet.html`: the fixed header, the view router, and the scene painters. The element on stage at the ring (or picked in a filter) stays behind Channels and Points as a full-height backdrop, blurred and dimmed, and leaving the ring zooms through it into that scene. On phones (700px and under) the five tabs sit in a dock at the bottom of the screen; Learn and Study carry the same dock.
 
 The ring itself (`index.html`) adds three things on top of the painted scenes: moving weather for each element (fireflies, embers, dust, glints, rain) on a canvas, the two relations of the element on stage written beside their arrows (“feeds Fire”, “parts Earth”), and a little depth, the scene and the ring drifting at different rates with the pointer or the tilt of a phone (the title and its button stay still). All three switch off under reduced motion. After editing the snippet, run `python3 tools/sync-shell.py` to copy it into `index.html`, `channels.html` and `points.html` (`--check` reports stale copies). Opened from disk, or without JavaScript, the tabs are plain links and every page still works on its own.
+
+## 3D views
+
+`/3d`, `/3d-leg` and `/3d-channels` are three study models switched by the Arm / Leg / Channels pill under the title. They use the app's look (midnight ground, Jost and Plex Mono, phase tints for the UI dots, deep phase inks for the 3D point markers, the app nav and the phone dock) and are one fixed screen: the model on a stage, the picked point and point lists in a rail beside it (below it on phones). They load three.js from a CDN (`three@0.159.0` from jsDelivr for the arm, r128 from cdnjs for the leg and the figure), so unlike the other pages they need a network connection to draw the model; the point lists still work without WebGL. The arm is built from a signed distance field, the leg is sculpted the same way, and the full figure is the MakeHuman base mesh (CC0) embedded in the page. Point positions are schematic; the Shu category and element of all sixty points match `data/points.json`.
 
 ## Shared styling
 
@@ -83,6 +90,7 @@ The twelve chart pages are the official meridian charts (they remain in git hist
 - **Arm plates (`/ht4`, `/pc4`, `/si4`, `/tb4`):** reuse the same Dimitrius arm drawing (mirrored for the back view, palm creases removed there), CC BY-SA 3.0. Channel lines and Shu points are drawn for this project.
 - **Leg plates (`/st4`, `/sp4`, `/lr4`, `/gb4`, `/bl4`, `/ki4`):** line art traced from the user-supplied leg charts (Kidney chart for the inner side, Gallbladder chart for the outer side, Stomach charts for the front bones and foot; provenance to be confirmed). The front-view shin outline is traced from “Homo sapiens” by Ivy Livingstone, BIODIDAC (https://omeka.uottawa.ca/biodidac/items/show/5101), CC BY-NC 4.0 — non-commercial use only. Channel lines and Shu points are drawn for this project.
 - **LI arm plate (`/li4`):** side-view line art made from a user-supplied LI illustration, provenance to be confirmed.
+- **3D views:** the arm outline is traced from the same Dimitrius drawing (CC BY-SA 3.0); the full figure is the MakeHuman base mesh (CC0); three.js is MIT.
 - **`commons/`:** standalone SVG files of the arm plates built on the CC BY-SA lung drawing (LU, HT, PC, SI, TB), with sources and licences in `commons/README.md`.
 - **All other channel charts:** user-supplied, provenance to be confirmed. Not licensed for redistribution.
 - **Per-point location diagrams:** nalaayan.com, provisional source; licensing review pending.
